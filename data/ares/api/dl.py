@@ -16,8 +16,9 @@ if __name__ == '__main__':
     rejstrik = sys.argv[1]
     assert rejstrik in ['res', 'or']
 
+    conn = psycopg2.connect(host='localhost')
     while True:
-        with psycopg2.connect(host='localhost') as conn, conn.cursor() as cursor:
+        with conn, conn.cursor() as cursor:
             cursor.execute('select ico from od.ares_raw where rejstrik = %s and xml is null limit 1000',
                        (rejstrik,))
             icos = [j[0] for j in cursor.fetchall()]
