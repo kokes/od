@@ -1,0 +1,94 @@
+{
+  "idGrantoveSchema,grantoveSchemaKod,grantoveSchemaNazev,grantoveSchemaCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "idGrantoveSchema",
+    "nazev": "grantoveSchemaNazev"
+  },
+  "idOpatreni,idPriorita,opatreniKod,opatreniNazev,opatreniCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "idOpatreni",
+    "nazev": "opatreniNazev"
+  },
+  "idOperacniProgram,operacaniProgramKod,operacaniProgramNazev,operacaniProgramCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "idOperacniProgram",
+    "nazev": "operacaniProgramNazev"
+  },
+  "idPodOpatreni,idOpatreni,podOpatreniKod,podOpatreniNazev,podOpatreniCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "idPodOpatreni",
+    "nazev": "podOpatreniNazev"
+  },
+  "idPriorita,idOperacniProgram,idPodprogram,prioritaKod,prioritaNazev,prioritaCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "idPriorita",
+    "nazev": "prioritaNazev"
+  },
+  "id,dotacePoskytovatelKod,dotacePoskytovatelNazev,dotacePoskytovatelNadrizenyKod,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "dotacePoskytovatelNazev"
+  },
+  "id,financniProstredekCleneniKod,financniProstredekCleneniNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "financniProstredekCleneniNazev"
+  },
+  "id,financniZdrojKod,financniZdrojNadrizenyKod,financniZdrojNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "financniZdrojNazev"
+  },
+  "id,rozpoctovaSkladbaParagrafKod,rozpoctovaSkladbaParagrafNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "rozpoctovaSkladbaParagrafNazev"
+  },
+  "id,rozpoctovaSkladbaPolozkaKod,rozpoctovaSkladbaPolozkaNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "rozpoctovaSkladbaPolozkaNazev"
+  },
+  "id,statniRozpocetKapitolaKod,statniRozpocetKapitolaNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "statniRozpocetKapitolaNazev"
+  },
+  "id,idStatniRozpocetKapitola,statniRozpocetUkazatelKod,statniRozpocetKapitolaKod,statniRozpocetUkazatelNadrizenyKod,statniRozpocetUkazatelNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "statniRozpocetUkazatelNazev"
+  },
+  "idUcelZnak,ucelZnakKod,statniRozpocetKapitolaKod,ucelZnakNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "idUcelZnak",
+    "nazev": "ucelZnakNazev"
+  },
+  "id,krajKod,krajNazev,globalniNavrhZmenaIdentifikator,nespravnostIndikator,transakceIdentifikator,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "krajNazev"
+  },
+  "id,mestskyObvodMestskaCastKod,mestskyObvodMestskaCastNazev,obecNad,pad2,pad3,pad4,pad5,pad6,pad7,globalniNavrhZmenaIdentifikator,nespravnostIndikator,transakceIdentifikator,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "mestskyObvodMestskaCastNazev"
+  },
+  "id,obecKod,obecNutsKod,obecNazev,okresNad,pad2,pad3,pad4,pad5,pad6,pad7,globalniNavrhZmenaIdentifikator,nespravnostIndikator,transakceIdentifikator,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "obecNazev"
+  },
+  "id,okresKod,okresNazev,okresNutsKod,krajNad,vuscNad,globalniNavrhZmenaIdentifikator,nespravnostIndikator,transakceIdentifikator,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "okresNazev"
+  },
+  "id,pravniFormaKod,pravniFormaNazev,pravniFormaNazevZkraceny,pravniFormaTypKod,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "pravniFormaNazev"
+  },
+  "id,statKod3Znaky,statKod3Cisla,statKodOmezeny,statNazev,statNazevZkraceny,statNazevEn,statNazevZkracenyEn,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "statNazev"
+  },
+  "id,vuscKod,krajNutsKod,vuscNazev,globalniNavrhZmenaIdentifikator,nespravnostIndikator,transakceIdentifikator,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "vuscNazev"
+  },
+  "id,programKod,programNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "id",
+    "nazev": "programNazev"
+  },
+  "idPodprogram,idOperacniProgram,podprogramKod,podprogramNazev,podprogramCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "idPodprogram",
+    "nazev": "podprogramNazev"
+  },
+  "idDotaceTitul,dotaceTitulKod,dotaceTitulVlastniKod,statniRozpocetKapitolaKod,dotaceTitulNazev,dotaceTitulNazevZkraceny,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+    "id": "idDotaceTitul",
+    "nazev": "dotaceTitulNazev"
+  }
+}
