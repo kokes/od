@@ -4,6 +4,8 @@
 # TODO: CIN, OSK (cinnosti, ostatni skutecnosti), KAP (kapital), REG/SZ (kym zapsano)
 
 import json
+import os
+import csv
 
 import lxml.etree
 import psycopg2
@@ -31,42 +33,61 @@ def get_els(root, mapping, namespace):
             ret[k] = get_els(root, v, namespace)
     return ret
 
-def get_ico(conn):
-    with conn, conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
-        cursor.execute('select ico, xml from od.ares_raw where rejstrik = \'or\' and "xml" is not null and found is true')
-        yield from cursor.fetchall()
+hds = {
+    'udaje': ['ico', 'aktualizace_db', 'datum_vypisu', 'platnost_od', 'datum_zapisu', 'stav_subjektu'],
+    'nazvy': ['ico', 'dod', 'ddo', 'nazev'],
+    'pravni_formy': ['ico', 'dod', 'ddo', 'kpf', 'npf', 'pfo', 'tzu'],
+    'sidla': ['ico', 'dod', 'ddo', 'ulice', 'obec', 'stat', 'psc'],
+    'angos_fo': ['ico', 'dod', 'ddo', 'nazev_ang', 'kategorie_ang', 'funkce', 'clenstvi_zacatek', 'clenstvi_konec', 'funkce_zacatek', 'funkce_konec', 'titul_pred', 'titul_za', 'jmeno', 'prijmeni', 'datum_narozeni'],
+    'angos_po': ['ico', 'dod', 'ddo', 'nazev_ang', 'kategorie_ang', 'funkce', 'clenstvi_zacatek', 'clenstvi_konec', 'funkce_zacatek', 'funkce_konec', 'ico_ang', 'izo_ang', 'nazev', 'pravni_forma', 'stat'],
+}
+
+tdir = 'data/csv'
+os.makedirs(tdir, exist_ok=True)
+
+fhs = {} # file handlers
+cws = {} # csv writers
+for k,v in hds.items():
+    tfn = os.path.join(tdir, f'{k}.csv')
+    fhs[k] = open(tfn, 'w')
+    cws[k] = csv.DictWriter(fhs[k], fieldnames=v)
+    cws[k].writeheader()
 
 conn = psycopg2.connect(host='localhost') # TODO: close
+conn.cursor_factory = psycopg2.extras.DictCursor
 
-for row in tqdm(get_ico(conn)):
-    et = lxml.etree.fromstring(row['xml'].tobytes())
+with conn, conn.cursor('raw_read') as rcursor:
+    rcursor.execute('''select ico, xml from od.ares_raw where rejstrik = \'or\' and "xml" is not null
+        and found is true''')
 
-    vyp = et.find('./are:Odpoved/D:Vypis_OR', namespaces=et.nsmap)
+    for row in tqdm(rcursor):
+        et = lxml.etree.fromstring(row['xml'].tobytes())
 
-    udmap = {
-        'aktualizace_db': './D:UVOD/D:ADB',
-        'datum_vypisu': './D:UVOD/D:DVY',
-        'platnost_od': './D:ZAU/D:POD',
-        # 'ico': './D:ZAU/D:ICO', # nakonec pouzivame ICO z dotazu
-        'datum_zapisu': './D:ZAU/D:DZOR',
-        'stav_subjektu': './D:ZAU/D:S/D:SSU', # TODO: ZAU/S veci: konkurzy atd.    
-    }
+        vyp = et.find('./are:Odpoved/D:Vypis_OR', namespaces=et.nsmap)
 
-    udaje = get_els(vyp, udmap, et.nsmap)
-    ico = int(row['ico']) # lepsi nez - int(udaje['ico']) - da se pak dohledat
+        udmap = {
+            'aktualizace_db': './D:UVOD/D:ADB',
+            'datum_vypisu': './D:UVOD/D:DVY',
+            'platnost_od': './D:ZAU/D:POD',
+            # 'ico': './D:ZAU/D:ICO', # nakonec pouzivame ICO z dotazu
+            'datum_zapisu': './D:ZAU/D:DZOR',
+            'stav_subjektu': './D:ZAU/D:S/D:SSU', # TODO: ZAU/S veci: konkurzy atd.    
+        }
 
-    with conn, conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
-        cursor.execute('delete from od.ares_or_udaje where ico = %s', (ico, )) # tohle kaskaduje do ostatnich tabulek
-        cursor.execute('''insert into od.ares_or_udaje(ico, aktualizace_db, datum_vypisu, platnost_od, datum_zapisu, stav_subjektu)
-                        values(%(ico)s, %(aktualizace_db)s, %(datum_vypisu)s, %(platnost_od)s, %(datum_zapisu)s, %(stav_subjektu)s)
-                        ''', {'ico': ico, **udaje})
+        udaje = get_els(vyp, udmap, et.nsmap)
+        ico = int(row['ico']) # lepsi nez - int(udaje['ico']) - da se pak dohledat
+
+        cws['udaje'].writerow({'ico': ico, **udaje})
 
         # nazev subjektu (v case)
-        # cursor.execute('delete from od.ares_or_nazvy where ico = %s', (ico, ))
         for el in vyp.findall('./D:ZAU/D:OF', namespaces=et.nsmap):
-            of = (ico, el.attrib.get('dod'), el.attrib.get('ddo'), el.text)
-            cursor.execute('''insert into od.ares_or_nazvy(ico, dod, ddo, nazev)
-                            values(%s, %s, %s, %s)''', of)
+            of = {
+                'ico': ico,
+                'dod': el.attrib.get('dod'),
+                'ddo': el.attrib.get('ddo'),
+                'nazev': el.text,
+            }
+            cws['nazvy'].writerow(of)
 
         # pravni formy
         pmp = {
@@ -75,16 +96,13 @@ for row in tqdm(get_ico(conn)):
             'pfo': 'D:PFO',
             'tzu': 'D:TZU',
         }
-        # cursor.execute('delete from od.ares_or_pravni_formy where ico = %s', (ico, ))
 
         for pfobj in vyp.findall('./D:ZAU/D:PFO', namespaces=et.nsmap):
             pfo = get_els(pfobj, pmp, et.nsmap)
-            pfo['od'] = pfobj.attrib.get('dod')
-            pfo['do'] = pfobj.attrib.get('ddo')
+            pfo['dod'] = pfobj.attrib.get('dod')
+            pfo['ddo'] = pfobj.attrib.get('ddo')
 
-            cursor.execute('''insert into od.ares_or_pravni_formy(ico, dod, ddo, kpf, npf, pfo, tzu)
-                        values(%(ico)s, %(od)s, %(do)s, %(kpf)s, %(npf)s, %(pfo)s, %(tzu)s)''',
-                       {'ico': ico, **pfo})
+            cws['pravni_formy'].writerow({'ico': ico, **pfo})
             
         # sidla
         # TODO: zbytek mappingu
@@ -94,15 +112,13 @@ for row in tqdm(get_ico(conn)):
             'ulice': 'D:NU',
             'psc': 'D:PSC',
         }
-        # cursor.execute('delete from od.ares_or_sidla where ico = %s', (ico, ))
+        
         for siobj in vyp.findall('./D:ZAU/D:SI', namespaces=et.nsmap):
             si = get_els(siobj, smp, et.nsmap)
-            si['od'] = siobj.attrib.get('dod')
-            si['do'] = siobj.attrib.get('ddo')
+            si['dod'] = siobj.attrib.get('dod')
+            si['ddo'] = siobj.attrib.get('ddo')
             
-            cursor.execute('''insert into od.ares_or_sidla(ico, dod, ddo, ulice, obec, stat, psc)
-                            values(%(ico)s, %(od)s, %(do)s, %(ulice)s, %(obec)s, %(stat)s, %(psc)s)''',
-                           {'ico': ico, **si})
+            cws['sidla'].writerow({'ico': ico, **si})
 
         # angazovane osoby
         # http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/ares/ares_datatypes/v_1.0.3/ares_datatypes_v_1.0.3.xsd
@@ -164,8 +180,6 @@ for row in tqdm(get_ico(conn)):
             'stat': 'D:SI/D:NS',
         }
 
-        # cursor.execute('delete from od.ares_or_angos_fo where ico = %s', (ico, ))
-        # cursor.execute('delete from od.ares_or_angos_po where ico = %s', (ico, ))
         for nm, ad in ang.items():
             for el in vyp.findall(ad, namespaces=et.nsmap):
                 info = get_els(el, hli, et.nsmap)
@@ -179,18 +193,12 @@ for row in tqdm(get_ico(conn)):
                 else:
                     info['dod'] = el.attrib['dod']
                     info['ddo'] = el.attrib.get('ddo')
-                    
 
                 fo = el.find('D:FO', namespaces=et.nsmap)
                 po = el.find('D:PO', namespaces=et.nsmap)
                 if fo is not None:
                     fo_info = get_els(fo, fomap, et.nsmap)
-                    cursor.execute('''insert into od.ares_or_angos_fo(ico, dod, ddo, nazev_ang, kategorie_ang, funkce,
-                      clenstvi_zacatek, clenstvi_konec, funkce_zacatek, funkce_konec, titul_pred, titul_za,
-                      jmeno, prijmeni, datum_narozeni) values(%(ico)s, %(dod)s, %(ddo)s, %(nazev_ang)s,
-                      %(kategorie_ang)s, %(funkce)s, %(clenstvi_zacatek)s, %(clenstvi_konec)s, %(funkce_zacatek)s,
-                      %(funkce_konec)s, %(titul_pred)s, %(titul_za)s, %(jmeno)s, %(prijmeni)s, %(datum_narozeni)s)''',
-                      {
+                    cws['angos_fo'].writerow({
                           'ico': ico,
                           'nazev_ang': nm,
                           **info,
@@ -199,14 +207,12 @@ for row in tqdm(get_ico(conn)):
 
                 if po is not None:
                     po_info = get_els(po, pomap, et.nsmap)
-                    cursor.execute('''insert into od.ares_or_angos_po(ico, dod, ddo, nazev_ang, kategorie_ang, funkce,
-                      clenstvi_zacatek, clenstvi_konec, funkce_zacatek, funkce_konec, ico_ang, izo_ang, nazev,
-                      pravni_forma, stat) values(%(ico)s, %(dod)s, %(ddo)s, %(nazev_ang)s, %(kategorie_ang)s, %(funkce)s,
-                      %(clenstvi_zacatek)s, %(clenstvi_konec)s, %(funkce_zacatek)s, %(funkce_konec)s, %(ico_ang)s,
-                      %(izo_ang)s, %(nazev)s, %(pravni_forma)s, %(stat)s)''',
-                      {
+                    cws['angos_po'].writerow({
                           'ico': ico,
                           'nazev_ang': nm,
                           **info,
                           **po_info
                       })
+
+for fh in fhs.values():
+    fh.close()
