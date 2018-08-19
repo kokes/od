@@ -1,0 +1,3 @@
+http://data.mfcr.cz/dataset/dotace-dotinfo
+
+http://data.mfcr.cz/sites/default/files/DotInfo_report_13_07_2017.xlsx
