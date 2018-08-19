@@ -31,8 +31,8 @@ if __name__ == '__main__':
                 if b'Chyba 23 - chybn' in dt:
                     raise ValueError('nespravny format ico: {}'.format(ico))
 
-                if (b'<dtt:faultcode>' in dt) or (b'nastala SQL chyba' in dt):
-                    raise ValueError('chyba v API')
+                if (b'<dtt:faultcode>' in dt) or (b'nastala SQL chyba' in dt) or (b'Chyba 900' in dt):
+                    raise ValueError(f'chyba v API ({ico})')
 
                 found = b'Chyba 71 - nenalezeno' not in dt
                 if not found:
