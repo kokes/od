@@ -8,10 +8,20 @@ create table if not exists od.ares_res (
 	pravni_forma_nazev varchar,
 	datum_vzniku date not null,
 	datum_zaniku date,
-	sidlo json,
-	stat_udaje json,
-	nace json
+	sidlo_nazev_obce varchar,
+	sidlo_nazev_casti_obce varchar,
+	sidlo_ulice varchar,
+	sidlo_cislo_domovni int,
+	sidlo_typ_cislo_domovni int,
+	sidlo_cislo_orientacni varchar,
+	sidlo_psc int,
+	esa2010 int,
+	esa2010t varchar,
+	kpp varchar,
+	nace varchar[] -- nemuze byt int, je tam G apod.
 );
+create extension pg_trgm;
+create index res_nazev_trgm ON od.ares_res using gist (nazev gist_trgm_ops);
 
 drop table if exists od.ares_or_udaje cascade;
 create table od.ares_or_udaje (
