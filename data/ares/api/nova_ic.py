@@ -5,6 +5,7 @@ od.ares_raw, kde pak muzeme stahnout jejich udaje.
 import csv
 import os
 import logging
+from contextlib import closing
 
 import requests
 import lxml.etree
@@ -48,7 +49,7 @@ if __name__ == '__main__':
 
     logging.info('vkladam nova ICO do databaze')
     con = psycopg2.connect(host='localhost')
-    with con, con.cursor() as cursor:
+    with closing(con), con, con.cursor() as cursor:
         cursor.execute('drop table if exists od.ares_nova_ic')
         cursor.execute('create table od.ares_nova_ic(ico int, rejstrik varchar)')
         cursor.execute('copy od.ares_nova_ic from \'{}\' csv header'.format(absfn))
