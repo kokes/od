@@ -54,3 +54,4 @@ if __name__ == '__main__':
         cursor.execute('copy od.ares_nova_ic from \'{}\' csv header'.format(absfn))
         cursor.execute('''insert into od.ares_raw(ico, rejstrik)
         (select ico, rejstrik from od.ares_nova_ic) on conflict do nothing''')
+        cursor.execute('drop table od.ares_nova_ic')
