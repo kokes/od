@@ -26,8 +26,7 @@ if __name__ == '__main__':
             with open(fn) as f:
                 hd = next(f).strip()
                 if hd not in csmp:
-                    # print(cfn, fn)
-                    continue
+                    raise ValueError(f'{fn} nema ocekavanou hlavicku: "{hd}"')
                 
                 mp = csmp[hd]
                 hd = hd.split(',')

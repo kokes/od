@@ -7,9 +7,9 @@
     "id": "idOpatreni",
     "nazev": "opatreniNazev"
   },
-  "idOperacniProgram,operacaniProgramKod,operacaniProgramNazev,operacaniProgramCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  "idOperacniProgram,operacniProgramKod,operacniProgramNazev,operacniProgramCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
     "id": "idOperacniProgram",
-    "nazev": "operacaniProgramNazev"
+    "nazev": "operacniProgramNazev"
   },
   "idPodOpatreni,idOpatreni,podOpatreniKod,podOpatreniNazev,podOpatreniCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
     "id": "idPodOpatreni",
