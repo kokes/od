@@ -26,13 +26,15 @@ if __name__ == '__main__':
             with open(fn) as f:
                 hd = next(f).strip()
                 if hd not in csmp:
-                    raise ValueError(f'{fn} nema ocekavanou hlavicku: "{hd}"')
-                
+                    with open('err.log', 'w') as f:
+                        f.write(f'{fn} nema ocekavanou hlavicku: "{hd}"\n')
+                    continue
+
                 mp = csmp[hd]
                 hd = hd.split(',')
                 idn = hd.index(mp['id'])
                 namen = hd.index(mp['nazev'])
-                
+
                 cr = csv.reader(f)
                 for ln in cr:
                     csl[ln[idn]] = ln[namen]
