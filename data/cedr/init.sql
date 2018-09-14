@@ -26,13 +26,13 @@ drop table if exists od.cedr_dotace; create table od.cedr_dotace (
 
 drop table if exists od.cedr_rozhodnuti; create table od.cedr_rozhodnuti (
 	idRozhodnuti char(40) primary key,
-	idDotace char(40),
+	idDotace char(40) references od.cedr_dotace(idDotace),
 	castkaPozadovana numeric(14, 2),
 	castkaRozhodnuta numeric(14, 2),
 	iriPoskytovatelDotace varchar,
 	iriCleneniFinancnichProstredku varchar,
 	iriFinancniZdroj varchar,
-	rokRozhodnuti varchar,
+	rokRozhodnuti smallint,
 	investiceIndikator bool,
 	navratnostIndikator bool,
 	refundaceIndikator bool,
@@ -42,7 +42,7 @@ drop table if exists od.cedr_rozhodnuti; create table od.cedr_rozhodnuti (
 
 drop table if exists od.cedr_rozpoctoveobdobi; create table od.cedr_rozpoctoveobdobi (
 	idObdobi char(40) primary key,
-	idRozhodnuti char(40),
+	idRozhodnuti char(40) references od.cedr_rozhodnuti(idRozhodnuti),
 	castkaCerpana numeric(14, 2),
 	castkaUvolnena numeric(14, 2),
 	castkaVracena numeric(14, 2),
@@ -55,4 +55,6 @@ drop table if exists od.cedr_rozpoctoveobdobi; create table od.cedr_rozpoctoveob
 	dtAktualizace timestamp
 );
 
--- TODO: indexy po copy - dotace(idprijemce) a rozhodnuti(iddotace)
+create index cedr_dotace_idprijemce_idx on od.cedr_dotace(idprijemce);
+create index cedr_rozhodnuti_iddotace_idx on od.cedr_dotace(idprijemce);
+create index cedr_rozpoctoveobdobi_idrozhodnuti_idx on od.cedr_rozpoctoveobdobi(idRozhodnuti);
