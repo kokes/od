@@ -28,9 +28,11 @@ def get_els(root, mapping, namespace):
     ret = {}
     for k, v in mapping.items():
         if isinstance(v, str):
-            ret[k] = get_el(root, v, namespace)
+            el = get_el(root, v, namespace)
+            if el is not None:
+                ret[k] = el
         else:
-            ret[k] = get_els(root, v, namespace)
+            ret[k] = json.dumps(get_els(root, v, namespace), ensure_ascii=False)
     return ret
 
 hds = {
@@ -38,8 +40,8 @@ hds = {
     'nazvy': ['ico', 'dod', 'ddo', 'nazev'],
     'pravni_formy': ['ico', 'dod', 'ddo', 'kpf', 'npf', 'pfo', 'tzu'],
     'sidla': ['ico', 'dod', 'ddo', 'ulice', 'obec', 'stat', 'psc'],
-    'angos_fo': ['ico', 'dod', 'ddo', 'nazev_ang', 'kategorie_ang', 'funkce', 'clenstvi_zacatek', 'clenstvi_konec', 'funkce_zacatek', 'funkce_konec', 'titul_pred', 'titul_za', 'jmeno', 'prijmeni', 'datum_narozeni'],
-    'angos_po': ['ico', 'dod', 'ddo', 'nazev_ang', 'kategorie_ang', 'funkce', 'clenstvi_zacatek', 'clenstvi_konec', 'funkce_zacatek', 'funkce_konec', 'ico_ang', 'izo_ang', 'nazev', 'pravni_forma', 'stat'],
+    'angos_fo': ['ico', 'dod', 'ddo', 'nazev_ang', 'kategorie_ang', 'funkce', 'clenstvi_zacatek', 'clenstvi_konec', 'funkce_zacatek', 'funkce_konec', 'titul_pred', 'titul_za', 'jmeno', 'prijmeni', 'datum_narozeni', 'bydliste'],
+    'angos_po': ['ico', 'dod', 'ddo', 'nazev_ang', 'kategorie_ang', 'funkce', 'clenstvi_zacatek', 'clenstvi_konec', 'funkce_zacatek', 'funkce_konec', 'ico_ang', 'izo_ang', 'nazev', 'pravni_forma', 'stat', 'sidlo'],
 }
 
 tdir = 'data/csv'
@@ -64,6 +66,9 @@ with conn, conn.cursor('raw_read') as rcursor:
         et = lxml.etree.fromstring(row['xml'].tobytes())
 
         vyp = et.find('./are:Odpoved/D:Vypis_OR', namespaces=et.nsmap)
+        if vyp is None:
+            print(f'{row["ico"]} nacteno, ale neobsahuje vypis dat')
+            continue
 
         udmap = {
             'aktualizace_db': './D:UVOD/D:ADB',
@@ -170,6 +175,27 @@ with conn, conn.cursor('raw_read') as rcursor:
             'jmeno': 'D:J',
             'prijmeni': 'D:P',
             'datum_narozeni': 'D:DN',
+            'bydliste': {
+                'ida': 'D:B/D:IDA',
+                'kod_statu': 'D:B/D:KS',
+                'nazev_statu': 'D:B/D:NS',
+                'nazev_oblasti': 'D:B/D:Nazev_oblasti',
+                'nazev_kraje': 'D:B/D:Nazev_kraje',
+                'nazev_okresu': 'D:B/D:NOK',
+                'nazev_obce': 'D:B/D:N',
+                'nazev_obce': 'D:B/D:Nazev_pobvodu',
+                'nazev_casti_obce': 'D:B/D:NCO',
+                'nazev_mestske_casti': 'D:B/D:NMC',
+                'nazev_ulice': 'D:B/D:NU',
+                'cis_dom': 'D:B/D:CD',
+                'typ_cis_dom': 'D:B/D:TCD',
+                'cis_or_sp': 'D:B/D:CO',
+                'cislo_do_adresy': 'D:B/D:CA',
+                'psc': 'D:B/D:PSC',
+                'string': 'D:B/D:Zahr_PSC',
+                'adresa_textem': 'D:B/D:AT',
+                'adresa_UIR': 'D:B/D:AU',
+            },
         }
         # PO
         pomap = {
@@ -177,7 +203,28 @@ with conn, conn.cursor('raw_read') as rcursor:
             'izo_ang': 'D:IZO',
             'nazev': 'D:OF',
             'pravni_forma': 'D:NPF',
-            'stat': 'D:SI/D:NS',
+            'stat': 'D:SI/D:NS', # TODO: redundantni
+            'sidlo': {
+                'ida': 'D:SI/D:IDA',
+                'kod_statu': 'D:SI/D:KS',
+                'nazev_statu': 'D:SI/D:NS',
+                'nazev_oblasti': 'D:SI/D:Nazev_oblasti',
+                'nazev_kraje': 'D:SI/D:Nazev_kraje',
+                'nazev_okresu': 'D:SI/D:NOK',
+                'nazev_obce': 'D:SI/D:N',
+                'nazev_obce': 'D:SI/D:Nazev_pobvodu',
+                'nazev_casti_obce': 'D:SI/D:NCO',
+                'nazev_mestske_casti': 'D:SI/D:NMC',
+                'nazev_ulice': 'D:SI/D:NU',
+                'cis_dom': 'D:SI/D:CD',
+                'typ_cis_dom': 'D:SI/D:TCD',
+                'cis_or_sp': 'D:SI/D:CO',
+                'cislo_do_adresy': 'D:SI/D:CA',
+                'psc': 'D:SI/D:PSC',
+                'string': 'D:SI/D:Zahr_PSC',
+                'adresa_textem': 'D:SI/D:AT',
+                'adresa_UIR': 'D:SI/D:AU',
+            },
         }
 
         for nm, ad in ang.items():

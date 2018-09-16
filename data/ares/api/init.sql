@@ -83,7 +83,8 @@ create table od.ares_or_angos_fo (
 	titul_za varchar,
 	jmeno varchar,
 	prijmeni varchar,
-	datum_narozeni date
+	datum_narozeni date,
+	bydliste jsonb
 );
 create index ares_or_angos_fo_ico_idx on od.ares_or_angos_fo(ico);
 
@@ -104,7 +105,8 @@ create table od.ares_or_angos_po (
 	izo_ang varchar,
 	nazev varchar,
 	pravni_forma varchar,
-	stat varchar
+	stat varchar,
+	sidlo jsonb
 );
 create index ares_or_angos_po_ico_idx on od.ares_or_angos_po(ico);
 create index ares_or_angos_po_ico_ang_idx on od.ares_or_angos_po(ico_ang);
