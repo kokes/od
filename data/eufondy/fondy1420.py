@@ -6,10 +6,10 @@ import xlrd
 with open('hlavicka1420.json') as f:
     hd = json.load(f)
 
-wb = xlrd.open_workbook('data/2014-2020/2018_07_M023a-Seznam-operaci-_-List-of-operations_180701.xls')
+wb = xlrd.open_workbook('data/2014-2020/2018_09_03-Seznam-operaci-_-List-of-operations.xls')
 sh = wb.sheet_by_name('Seznam operací')
 
-fr = [j.value for j in sh.row(5)]
+fr = [j.value for j in sh.row(2)]
 assert fr == hd['ocekavane']
 
 def intify(s):
@@ -31,14 +31,14 @@ def predatuj(s):
 
 with open('data/operace_2014_2020.csv', 'w') as fw:
     cw = csv.writer(fw)
-    cw.writerow(hd['hlavicka'][1:-2])
-    for j in range(6, sh.nrows):
+    cw.writerow(hd['hlavicka'])
+    for j in range(4, sh.nrows):
         row = [l.value for l in sh.row(j)]
         
-        row[7] = intify(row[7]) # ICO
-        row[9] = intify(row[9]) # PSC
+        row[6] = intify(row[6]) # ICO
+        row[8] = intify(row[8]) # PSC
         
-        for cl in [10, 11, 12]:
+        for cl in [9, 10, 11, 28]:
             row[cl] = predatuj(row[cl])
         
-        cw.writerow(row[1:-2])
+        cw.writerow(row)

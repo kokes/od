@@ -18,7 +18,7 @@ create table od.eufondy_1420 (
  	nazev_prioritni_osy varchar,
  	registracni_cislo_operace varchar,
  	nazev_projektu_cz varchar,
- 	anotace_projektu varchar,
+ 	shrnuti_operace varchar,
  	nazev_subjektu varchar,
  	ico int,
  	pravni_forma varchar,
@@ -42,5 +42,6 @@ create table od.eufondy_1420 (
  	vyuctovano_prispevek_unie_czk numeric(14, 2),
  	vyuctovano_narodni_verejne_zdroje_czk numeric(14, 2),
  	vyuctovano_narodni_soukrome_zdroje_czk numeric(14, 2),
- 	mena varchar -- TODO: enum
+ 	datum_aktualizace date,
+ 	ciste_nuts3 varchar
 )
