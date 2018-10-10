@@ -1,0 +1,456 @@
+{
+    "prezident": {
+        "url": {
+            "2013-01-11": [
+                "https://www.volby.cz/opendata/prez2013/PREZ2013reg20130126.zip",
+                "https://www.volby.cz/opendata/prez2013/PREZ2013ciselniky20130126.zip"
+            ],
+            "2018-01-12": [
+                "https://www.volby.cz/opendata/prez2018/PREZ2018reg20180127.zip",
+                "https://www.volby.cz/opendata/prez2018/PREZ2018ciselniky20171215.zip"
+            ]
+        },
+        "ds": {
+            "kandidati": {
+                "fn": [
+                    "perk.xml"
+                ],
+                "klic": "PE_REGKAND_ROW",
+                "schema": [
+                    "CKAND",
+                    "JMENO",
+                    "PRIJMENI",
+                    "TITULPRED",
+                    "TITULZA",
+                    "VEK",
+                    "POVOLANI",
+                    "BYDLISTEN",
+                    "BYDLISTEK",
+                    "PSTRANA",
+                    "NSTRANA",
+                    "POHLAVI",
+                    "PLATNOST",
+                    "HLASY_K1",
+                    "ZVOLEN_K1",
+                    "HLASY_K2",
+                    "ZVOLEN_K2"
+                ]
+            }
+        }
+    },
+    "psp": {
+        "url": {
+            "2006-06-02": [
+                "https://www.volby.cz/opendata/ps2006/PS2006reg2006.zip",
+                "https://www.volby.cz/opendata/ps2006/PS2006ciselniky2006.zip"
+            ],
+            "2010-05-29": [
+                "https://www.volby.cz/opendata/ps2010/PS2010reg2010.zip",
+                "https://www.volby.cz/opendata/ps2006/PS2006ciselniky2006.zip"
+            ],
+            "2013-10-25": [
+                "https://www.volby.cz/opendata/ps2013/PS2013reg20131026.zip",
+                "https://www.volby.cz/opendata/ps2013/PS2013ciselniky20131021.zip"
+            ],
+            "2017-10-20": [
+                "https://www.volby.cz/opendata/ps2017nss/PS2017reg20171122.zip",
+                "https://www.volby.cz/opendata/ps2017nss/PS2017ciselniky20170905.zip"
+            ]
+        },
+        "ds": {
+            "kandidati": {
+                "fn": [
+                    "psrk.xml",
+                    "PSRK.dbf"
+                ],
+                "klic": "PS_REGKAND_ROW",
+                "schema": [
+                    "VOLKRAJ",
+                    "KSTRANA",
+                    "PORCISLO",
+                    "JMENO",
+                    "PRIJMENI",
+                    "TITULPRED",
+                    "TITULZA",
+                    "VEK",
+                    "POVOLANI",
+                    "BYDLISTEN",
+                    "BYDLISTEK",
+                    "PSTRANA",
+                    "NSTRANA",
+                    "PLATNOST",
+                    "POCHLASU",
+                    "POCPROC",
+                    "POCPROCVSE",
+                    "MANDAT",
+                    "PORADIMAND",
+                    "PORADINAHR"
+                ]
+            },
+            "strany": {
+                "fn": [
+                    "psrkl.xml",
+                    "PSRKL.dbf"
+                ],
+                "klic": "PS_RKL_ROW",
+                "schema": [
+                    "KSTRANA",
+                    "VSTRANA",
+                    "NAZEVCELK",
+                    "NAZEV_STRK",
+                    "ZKRATKAK30",
+                    "ZKRATKAK8",
+                    "POCSTRVKO",
+                    "SLOZENI",
+                    "STAVREG",
+                    "PLATNOST",
+                    "PLAT_STR",
+                    "POCMANDAT",
+                    "POCMANDCR",
+                    "SLOZNEPLAT",
+                    "NAZEVPLNY"
+                ]
+            }
+        }
+    },
+    "komunalni": {
+        "url": {
+            "2006-10-20": [
+                "https://volby.cz/opendata/kv2006/KV2006reg20140909.zip",
+                "https://volby.cz/opendata/kv2006/KV2006ciselniky20140909.zip"
+            ],
+            "2010-10-15": [
+                "https://volby.cz/opendata/kv2010/KV2010reg20140903.zip",
+                "https://volby.cz/opendata/kv2010/KV2010ciselniky20140903.zip"
+            ],
+            "2014-10-10": [
+                "https://volby.cz/opendata/kv2014/KV2014reg20141014.zip",
+                "https://volby.cz/opendata/kv2014/KV2014ciselniky20141008.zip"
+            ],
+            "2018-10-05": [
+                "https://volby.cz/opendata/kv2018/KV2018reg20181008.zip",
+                "https://volby.cz/opendata/kv2018/KV2018ciselniky20181004.zip"
+            ]
+        },
+        "ds": {
+            "vysledky_obce": {
+                "fn": [
+                    "kvros.xml"
+                ],
+                "klic": "KV_ROS_ROW",
+                "schema": [
+                    "OKRES",
+                    "KODZASTUP",
+                    "NAZEVZAST",
+                    "COBVODU",
+                    "POR_STR_HL",
+                    "OSTRANA",
+                    "VSTRANA",
+                    "NAZEVCELK",
+                    "ZKRATKAO30",
+                    "ZKRATKAO8",
+                    "POCSTR_SLO",
+                    "SLOZENI",
+                    "HLASY_STR",
+                    "PROCHLSTR",
+                    "MAND_STR"
+                ]
+            },
+            "kandidati": {
+                "fn": [
+                    "kvrk.xml"
+                ],
+                "klic": "KV_REGKAND_ROW",
+                "schema": [
+                    "OKRES",
+                    "KODZASTUP",
+                    "COBVODU",
+                    "POR_STR_HL",
+                    "OSTRANA",
+                    "PORCISLO",
+                    "JMENO",
+                    "PRIJMENI",
+                    "TITULPRED",
+                    "TITULZA",
+                    "VEK",
+                    "POVOLANI",
+                    "BYDLISTEN",
+                    "PSTRANA",
+                    "NSTRANA",
+                    "PLATNOST",
+                    "POCHLASU",
+                    "POCHL_PRES",
+                    "POCPROCVSE",
+                    "MANDAT",
+                    "PORADIMAND",
+                    "PORADINAHR"
+                ]
+            },
+            "strany": {
+                "fn": [
+                    "cvs.xml"
+                ],
+                "klic": "CVS_ROW",
+                "schema": [
+                    "VSTRANA",
+                    "NAZEVCELK",
+                    "NAZEV_STRV",
+                    "ZKRATKAV30",
+                    "ZKRATKAV8",
+                    "POCSTR_SLO",
+                    "SLOZENI",
+                    "ZKRATKA_OF",
+                    "TYPVS"
+                ]
+            }
+        }
+    },
+    "kraje": {
+        "url": {
+            "2008-10-17": [
+                "https://volby.cz/opendata/kz2008/kz2008_data_dbf.zip",
+                "https://volby.cz/opendata/kz2008/ciselnikyKZ2008.zip"
+            ],
+            "2012-10-12": [
+                "https://volby.cz/opendata/kz2012/kz2012_data_dbf.zip",
+                "https://volby.cz/opendata/kz2012/ciselniky20121010.zip"
+            ],
+            "2016-10-07": [
+                "https://volby.cz/opendata/kz2016/KZ2016reg20161008.zip",
+                "https://volby.cz/opendata/kz2016/KZ2016ciselniky20161007.zip"
+            ]
+        },
+        "ds": {
+            "kandidati": {
+                "fn": [
+                    "kzrk.xml",
+                    "KZRK.dbf",
+                    "KZRK.DBF"
+                ],
+                "klic": "KZ_REGKAND_ROW",
+                "schema": [
+                    "KRZAST",
+                    "KSTRANA",
+                    "PORCISLO",
+                    "JMENO",
+                    "PRIJMENI",
+                    "TITULPRED",
+                    "TITULZA",
+                    "VEK",
+                    "POVOLANI",
+                    "BYDLISTEN",
+                    "BYDLISTEK",
+                    "PSTRANA",
+                    "NSTRANA",
+                    "PLATNOST",
+                    "POCHLASU",
+                    "POCPROC",
+                    "POCPROCVSE",
+                    "MANDAT",
+                    "PORADIMAND",
+                    "PORADINAHR",
+                    "PORADIHAHR"
+                ]
+            },
+            "strany_cr": {
+                "fn": [
+                    "kzrkl_s.xml",
+                    "KZRKL_S.dbf",
+                    "KZRKL_S.DBF"
+                ],
+                "klic": "KZ_RKL_SOUHRN_ROW",
+                "schema": [
+                    "KSTRANA",
+                    "VSTRANA",
+                    "NAZEVCELK",
+                    "NAZEV_STRK",
+                    "ZKRATKAK30",
+                    "ZKRATKAK8",
+                    "POCSTRVKO",
+                    "SLOZENI",
+                    "STAVREG",
+                    "PLAT_STR",
+                    "POCMANDCR",
+                    "NAZEVPLNY",
+                    "PLATNOST",
+                    "SLOZNEPLAT"
+                ]
+            },
+            "strany_kraje": {
+                "fn": [
+                    "kzrkl.xml",
+                    "KZRKL.dbf"
+                ],
+                "klic": "KZ_RKL_ROW",
+                "schema": [
+                    "KRZAST",
+                    "KSTRANA",
+                    "VSTRANA",
+                    "NAZEVCELK",
+                    "NAZEV_STRK",
+                    "ZKRATKAK30",
+                    "ZKRATKAK8",
+                    "POCSTRVKO",
+                    "SLOZENI",
+                    "STAVREG",
+                    "PLAT_STR",
+                    "PLATNOST",
+                    "SLOZNEPLAT"
+                ]
+            }
+        }
+    },
+    "ep": {
+        "url": {
+            "2004-06-11": [
+                "https://volby.cz/opendata/ep2004/EP2004reg.zip",
+                "https://volby.cz/opendata/ep2004/EP2004ciselniky.zip"
+            ],
+            "2009-06-05": [
+                "https://volby.cz/opendata/ep2009/EP2009reg.zip",
+                "https://volby.cz/opendata/ep2009/EP2009ciselniky.zip"
+            ],
+            "2014-05-23": [
+                "https://volby.cz/opendata/ep2014/EP2014reg20140521.zip",
+                "https://volby.cz/opendata/ep2014/EP2014ciselniky20140425.zip"
+            ]
+        },
+        "ds": {
+            "kandidati": {
+                "fn": [
+                    "eprk.xml"
+                ],
+                "klic": "EP_REGKAND_ROW",
+                "schema": [
+                    "ESTRANA",
+                    "PORCISLO",
+                    "JMENO",
+                    "PRIJMENI",
+                    "TITULPRED",
+                    "TITULZA",
+                    "VEK",
+                    "STATOBCAN",
+                    "POVOLANI",
+                    "BYDLISTEN",
+                    "BYDLISTEK",
+                    "PSTRANA",
+                    "NSTRANA",
+                    "PLATNOST",
+                    "POCHLASU",
+                    "POCPROC",
+                    "POCPROCVSE",
+                    "MANDAT",
+                    "PORADIMAND",
+                    "PORADINAHR"
+                ]
+            },
+            "strany": {
+                "fn": [
+                    "eprkl.xml"
+                ],
+                "klic": "EP_RKL_ROW",
+                "schema": [
+                    "ESTRANA",
+                    "VSTRANA",
+                    "NAZEVCELK",
+                    "NAZEV_STRE",
+                    "ZKRATKAE30",
+                    "ZKRATKAE8",
+                    "POCSTRVKO",
+                    "SLOZENI",
+                    "STAVREG",
+                    "PLATNOST",
+                    "POCMANDCR",
+                    "NAZEVPLNY"
+                ]
+            }
+        }
+    },
+    "senat": {
+        "url": {
+            "2008-10-17": [
+                "https://volby.cz/opendata/se2008/SE2008reg.zip",
+                "https://volby.cz/opendata/se2008/SE2008ciselniky.zip"
+            ],
+            "2010-10-15": [
+                "https://volby.cz/opendata/se2010/SE2010reg.zip",
+                "https://volby.cz/opendata/se2010/SE2010ciselniky.zip"
+            ],
+            "2011-03-18": [
+                "https://volby.cz/opendata/se2011/SE2011reg.zip",
+                "https://volby.cz/opendata/se2011/SE2011ciselniky.zip"
+            ],
+            "2012-10-12": [
+                "https://volby.cz/opendata/se2012/SE2012reg.zip",
+                "https://volby.cz/opendata/se2012/SE2012ciselniky.zip"
+            ],
+            "2014-01-10": [
+                "https://volby.cz/opendata/se2014leden/SE2014LEDENreg.zip",
+                "https://volby.cz/opendata/se2014leden/SE2014LEDENciselniky.zip"
+            ],
+            "2014-09-19": [
+                "https://volby.cz/opendata/se2014zari/SE2014ZARIreg20140927.zip",
+                "https://volby.cz/opendata/se2014zari/SE2014ZARIciselniky20140901.zip"
+            ],
+            "2014-10-10": [
+                "https://volby.cz/opendata/se2014/SE2014reg20141018.zip",
+                "https://volby.cz/opendata/se2014/SE2014ciselniky20141008.zip"
+            ],
+            "2016-10-07": [
+                "https://volby.cz/opendata/se2016/SE2016reg20161015.zip",
+                "https://volby.cz/opendata/se2016/SE2016ciselniky20161005.zip"
+            ],
+            "2017-01-27": [
+                "https://volby.cz/opendata/se2017/SE2017reg20170128.zip",
+                "https://volby.cz/opendata/se2017/SE2017ciselniky20170125.zip"
+            ],
+            "2018-01-05": [
+                "https://volby.cz/opendata/se2018leden/SE2018reg20180113.zip",
+                "https://volby.cz/opendata/se2018leden/SE2017ciselniky20171222.zip"
+            ],
+            "2018-05-18": [
+                "https://volby.cz/opendata/se2018kveten/SE2018reg20180526.zip",
+                "https://volby.cz/opendata/se2018kveten/SE2018ciselniky20180519.zip"
+            ],
+            "2018-10-05": [
+                "https://volby.cz/opendata/se2018/SE2018reg20181008.zip",
+                "https://volby.cz/opendata/se2018/SE2018ciselnik20181004.zip"
+            ]
+        },
+        "ds": {
+            "kandidati": {
+                "fn": [
+                    "serk.xml"
+                ],
+                "klic": "SE_REGKAND_ROW",
+                "schema": [
+                    "OBVOD",
+                    "CKAND",
+                    "VSTRANA",
+                    "JMENO",
+                    "PRIJMENI",
+                    "TITULPRED",
+                    "TITULZA",
+                    "VEK",
+                    "POVOLANI",
+                    "BYDLISTEN",
+                    "BYDLISTEK",
+                    "PSTRANA",
+                    "NSTRANA",
+                    "PLATNOST",
+                    "HLASY_K1",
+                    "PROC_K1",
+                    "URIZ_PR_K1",
+                    "ZVOLEN_K1",
+                    "LOS_K1",
+                    "HLASY_K2",
+                    "PROC_K2",
+                    "URIZ_PR_K2",
+                    "ZVOLEN_K2",
+                    "LOS_K2",
+                    "NAZEV_VS"
+                ]
+            }
+        }
+    }
+}
