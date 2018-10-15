@@ -1,6 +1,6 @@
 """
 Stahne potencialne nova IC ze zmenovych souboru ARES a vlozi je do
-od.ares_raw, kde pak muzeme stahnout jejich udaje.
+ares.raw, kde pak muzeme stahnout jejich udaje.
 """
 import csv
 import os
@@ -50,9 +50,9 @@ if __name__ == '__main__':
     logging.info('vkladam nova ICO do databaze')
     con = psycopg2.connect(host='localhost')
     with closing(con), con, con.cursor() as cursor:
-        cursor.execute('drop table if exists od.ares_nova_ic')
-        cursor.execute('create table od.ares_nova_ic(ico int, rejstrik varchar)')
-        cursor.execute('copy od.ares_nova_ic from \'{}\' csv header'.format(absfn))
-        cursor.execute('''insert into od.ares_raw(ico, rejstrik)
-        (select ico, rejstrik from od.ares_nova_ic) on conflict do nothing''')
-        cursor.execute('drop table od.ares_nova_ic')
+        cursor.execute('drop table if exists ares.nova_ic')
+        cursor.execute('create table ares.nova_ic(ico int, rejstrik varchar)')
+        cursor.execute('copy ares.nova_ic from \'{}\' csv header'.format(absfn))
+        cursor.execute('''insert into ares.raw(ico, rejstrik)
+        (select ico, rejstrik from ares.nova_ic) on conflict do nothing''')
+        cursor.execute('drop table ares.nova_ic')

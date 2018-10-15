@@ -1,4 +1,4 @@
-drop table if exists od.cedr_dotace; create table od.cedr_dotace (
+drop table if exists cedr.dotace; create table cedr.dotace (
 	idDotace char(40) primary key,
 	idPrijemce int, -- TODO: not null nemuzem, co?
 	projektKod varchar,
@@ -24,9 +24,9 @@ drop table if exists od.cedr_dotace; create table od.cedr_dotace (
 	dtAktualizace timestamp
 );
 
-drop table if exists od.cedr_rozhodnuti; create table od.cedr_rozhodnuti (
+drop table if exists cedr.rozhodnuti; create table cedr.rozhodnuti (
 	idRozhodnuti char(40) primary key,
-	idDotace char(40) references od.cedr_dotace(idDotace),
+	idDotace char(40) references cedr.dotace(idDotace),
 	castkaPozadovana numeric(14, 2),
 	castkaRozhodnuta numeric(14, 2),
 	iriPoskytovatelDotace varchar,
@@ -40,9 +40,9 @@ drop table if exists od.cedr_rozhodnuti; create table od.cedr_rozhodnuti (
 	dtAktualizace timestamp
 );
 
-drop table if exists od.cedr_rozpoctoveobdobi; create table od.cedr_rozpoctoveobdobi (
+drop table if exists cedr.rozpoctoveobdobi; create table cedr.rozpoctoveobdobi (
 	idObdobi char(40) primary key,
-	idRozhodnuti char(40) references od.cedr_rozhodnuti(idRozhodnuti),
+	idRozhodnuti char(40) references cedr.rozhodnuti(idRozhodnuti),
 	castkaCerpana numeric(14, 2),
 	castkaUvolnena numeric(14, 2),
 	castkaVracena numeric(14, 2),
@@ -55,6 +55,6 @@ drop table if exists od.cedr_rozpoctoveobdobi; create table od.cedr_rozpoctoveob
 	dtAktualizace timestamp
 );
 
-create index cedr_dotace_idprijemce_idx on od.cedr_dotace(idprijemce);
-create index cedr_rozhodnuti_iddotace_idx on od.cedr_dotace(idprijemce);
-create index cedr_rozpoctoveobdobi_idrozhodnuti_idx on od.cedr_rozpoctoveobdobi(idRozhodnuti);
+create index cedr_dotace_idprijemce_idx on cedr.dotace(idprijemce);
+create index cedr_rozhodnuti_iddotace_idx on cedr.dotace(idprijemce);
+create index cedr_rozpoctoveobdobi_idrozhodnuti_idx on cedr.rozpoctoveobdobi(idRozhodnuti);

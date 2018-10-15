@@ -30,7 +30,7 @@ def get_els(root, mapping, namespace):
 
 def get_ico(conn):
     with conn, conn.cursor('res_read', cursor_factory=psycopg2.extras.DictCursor) as cursor:
-        cursor.execute('select ico, xml from od.ares_raw where rejstrik = \'res\' and "xml" is not null and found is true')
+        cursor.execute('select ico, xml from ares.raw where rejstrik = \'res\' and "xml" is not null and found is true')
         row = cursor.fetchone()
         while row:
             yield row

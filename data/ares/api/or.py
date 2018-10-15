@@ -1,6 +1,6 @@
 # TODO: bacha, u angazovanych osob jsou ministerstva bez uvedenych ICO (spousta radek to tak ma - filtruj ale jen ty, co maj jako stat cesko)
 # 
-# TODO: dodelat angazovane osoby! (dodelano?) mame 29 mapovani - mame 29 distinct typu? select nazev_ang, count(*) from od.ares_or_angos_fo group by 1;
+# TODO: dodelat angazovane osoby! (dodelano?) mame 29 mapovani - mame 29 distinct typu? select nazev_ang, count(*) from ares.or_angos_fo group by 1;
 # TODO: CIN, OSK (cinnosti, ostatni skutecnosti), KAP (kapital), REG/SZ (kym zapsano)
 
 import json
@@ -59,7 +59,7 @@ conn = psycopg2.connect(host='localhost') # TODO: close
 conn.cursor_factory = psycopg2.extras.DictCursor
 
 with conn, conn.cursor('raw_read') as rcursor:
-    rcursor.execute('''select ico, xml from od.ares_raw where rejstrik = \'or\' and "xml" is not null
+    rcursor.execute('''select ico, xml from ares.raw where rejstrik = \'or\' and "xml" is not null
         and found is true''')
 
     for row in tqdm(rcursor):

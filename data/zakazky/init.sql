@@ -1,7 +1,7 @@
 -- TODO: foreign keys? composite primary keys?
 
-drop table if exists od.zakazky_etrziste_casti_vz;
-create table od.zakazky_etrziste_casti_vz (
+drop table if exists zakazky.etrziste_casti_vz;
+create table zakazky.etrziste_casti_vz (
 	VZsystemoveCislo varchar,
 	CastVZcislo smallint,
 	SmluvniCenaVcetneDPH numeric(14, 2),
@@ -10,8 +10,8 @@ create table od.zakazky_etrziste_casti_vz (
 	SmluvniCenaMena varchar -- TODO: enum?
 );
 
-drop table if exists od.zakazky_etrziste_polozky_vz;
-create table od.zakazky_etrziste_polozky_vz (
+drop table if exists zakazky.etrziste_polozky_vz;
+create table zakazky.etrziste_polozky_vz (
 	VZsystemoveCislo varchar,
 	NIPEZkod varchar,
 	NIPEZnazev varchar,
@@ -23,8 +23,8 @@ create table od.zakazky_etrziste_polozky_vz (
 	NIPEZoperatorVlastnosti varchar
 );
 
-drop table if exists od.zakazky_etrziste_kriteria_vz;
-create table od.zakazky_etrziste_kriteria_vz (
+drop table if exists zakazky.etrziste_kriteria_vz;
+create table zakazky.etrziste_kriteria_vz (
 	VZsystemoveCislo varchar,
 	DilciHodnoticiKriterium varchar,
 	DilciHodnoticiKriteriumVaha numeric(5, 2),
@@ -40,8 +40,8 @@ create table od.zakazky_etrziste_kriteria_vz (
 	SubkriteriumZadavatelPozadovalVlozeniNabidkovychHodnot varchar
 );
 
-drop table if exists od.zakazky_etrziste_dodavatele;
-create table od.zakazky_etrziste_dodavatele (
+drop table if exists zakazky.etrziste_dodavatele;
+create table zakazky.etrziste_dodavatele (
 	VZsystemoveCislo varchar,
 	CastVZcislo smallint,
 	DatumUzavreniSmlouvy timestamp,
@@ -50,8 +50,8 @@ create table od.zakazky_etrziste_dodavatele (
 	DodavatelStat varchar
 );
 
-drop table if exists od.zakazky_etrziste_vz;
-create table od.zakazky_etrziste_vz (
+drop table if exists zakazky.etrziste_vz;
+create table zakazky.etrziste_vz (
 	NazevEtrziste varchar,
 	VZsystemoveCislo varchar,
 	NazevVZ varchar,
@@ -88,8 +88,8 @@ create table od.zakazky_etrziste_vz (
 	dodavatelICO int
 );
 
-drop table if exists od.zakazky_vvz_casti_vz;
-create table od.zakazky_vvz_casti_vz (
+drop table if exists zakazky.vvz_casti_vz;
+create table zakazky.vvz_casti_vz (
 	EvidencniCisloVZnaVVZ varchar,
 	CisloFormulareNaVVZ varchar,
 	CisloCastiZadaniVZ varchar,
@@ -123,8 +123,8 @@ create table od.zakazky_vvz_casti_vz (
 	PlatnyFormular bool
 );
 
-drop table if exists od.zakazky_vvz_vz;
-create table od.zakazky_vvz_vz (
+drop table if exists zakazky.vvz_vz;
+create table zakazky.vvz_vz (
 	EvidencniCisloVZnaVVZ varchar,
 	CisloFormulareNaVVZ varchar,
 	DruhFormulare varchar,
@@ -202,8 +202,8 @@ create table od.zakazky_vvz_vz (
 	PlatnyFormular bool
 );
 
-drop table if exists od.zakazky_zzvz_zadani_vz;
-create table od.zakazky_zzvz_zadani_vz (
+drop table if exists zakazky.zzvz_zadani_vz;
+create table zakazky.zzvz_zadani_vz (
 	ID_Zakazky varchar,
 	EvidencniCisloVZnaVVZ varchar,
 	CisloFormulareNaVVZ varchar,
@@ -229,8 +229,8 @@ create table od.zakazky_zzvz_zadani_vz (
 	PlatnyFormular bool
 );
 
-drop table if exists od.zakazky_zzvz_casti_vz;
-create table od.zakazky_zzvz_casti_vz (
+drop table if exists zakazky.zzvz_casti_vz;
+create table zakazky.zzvz_casti_vz (
 	ID_Zakazky varchar,
 	EvidencniCisloVZnaVVZ varchar,
 	CisloFormulareNaVVZ varchar,
@@ -250,8 +250,8 @@ create table od.zakazky_zzvz_casti_vz (
 	PlatnyFormular bool
 );
 
-drop table if exists od.zakazky_zzvz_dodavatele;
-create table od.zakazky_zzvz_dodavatele (
+drop table if exists zakazky.zzvz_dodavatele;
+create table zakazky.zzvz_dodavatele (
 	ID_Zakazky varchar,
 	EvidencniCisloVZnaVVZ varchar,
 	CisloFormulareNaVVZ varchar,
@@ -270,8 +270,8 @@ create table od.zakazky_zzvz_dodavatele (
 	PlatnyFormular bool
 );
 
-drop table if exists od.zakazky_zzvz_vz;
-create table od.zakazky_zzvz_vz (
+drop table if exists zakazky.zzvz_vz;
+create table zakazky.zzvz_vz (
 	ID_Zakazky varchar,
 	EvidencniCisloVZnaVVZ varchar,
 	CisloFormulareNaVVZ varchar,
@@ -328,8 +328,8 @@ create table od.zakazky_zzvz_vz (
 	OznameniOVysledkuKS varchar
 );
 
-drop table if exists od.zakazky_zzvz_kriteria_vz;
-create table od.zakazky_zzvz_kriteria_vz (
+drop table if exists zakazky.zzvz_kriteria_vz;
+create table zakazky.zzvz_kriteria_vz (
 	ID_Zakazky varchar,
 	ID_PopisuCastiZakazky varchar,
 	EvidencniCisloVZnaVVZ varchar,

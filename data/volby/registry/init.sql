@@ -1,6 +1,6 @@
-drop table if exists od.volby_prezident_kandidati;
+drop table if exists volby.prezident_kandidati;
 
-create table od.volby_prezident_kandidati (
+create table volby.prezident_kandidati (
     datum date,
     ckand smallint not null,
     jmeno varchar not null,
@@ -21,9 +21,9 @@ create table od.volby_prezident_kandidati (
     zvolen_k2 smallint not null
 );
 
-drop table if exists od.volby_psp_kandidati;
+drop table if exists volby.psp_kandidati;
 
-create table od.volby_psp_kandidati (
+create table volby.psp_kandidati (
     datum date,
     volkraj smallint not null,
     kstrana smallint not null,
@@ -47,9 +47,9 @@ create table od.volby_psp_kandidati (
     poradinahr smallint
 );
 
-drop table if exists od.volby_psp_strany;
+drop table if exists volby.psp_strany;
 
-create table od.volby_psp_strany (
+create table volby.psp_strany (
     datum date,
     kstrana smallint not null,
     vstrana smallint not null,
@@ -68,9 +68,9 @@ create table od.volby_psp_strany (
     nazevplny varchar
 );
 
-drop table if exists od.volby_komunalni_vysledky_obce;
+drop table if exists volby.komunalni_vysledky_obce;
 
-create table od.volby_komunalni_vysledky_obce (
+create table volby.komunalni_vysledky_obce (
     datum date,
     okres smallint not null,
     kodzastup int not null,
@@ -89,9 +89,9 @@ create table od.volby_komunalni_vysledky_obce (
     mand_str smallint
 );
 
-drop table if exists od.volby_komunalni_kandidati;
+drop table if exists volby.komunalni_kandidati;
 
-create table od.volby_komunalni_kandidati (
+create table volby.komunalni_kandidati (
     datum date,
     okres smallint not null,
     kodzastup int not null,
@@ -117,9 +117,9 @@ create table od.volby_komunalni_kandidati (
     poradinahr smallint
 );
 
-drop table if exists od.volby_komunalni_strany;
+drop table if exists volby.komunalni_strany;
 
-create table od.volby_komunalni_strany (
+create table volby.komunalni_strany (
     datum date,
     vstrana smallint not null,
     nazevcelk varchar not null,
@@ -132,9 +132,9 @@ create table od.volby_komunalni_strany (
     typvs varchar not null
 );
 
-drop table if exists od.volby_kraje_kandidati;
+drop table if exists volby.kraje_kandidati;
 
-create table od.volby_kraje_kandidati (
+create table volby.kraje_kandidati (
     datum date,
     krzast smallint not null,
     kstrana smallint not null,
@@ -159,9 +159,9 @@ create table od.volby_kraje_kandidati (
     poradihahr smallint
 );
 
-drop table if exists od.volby_kraje_strany_cr;
+drop table if exists volby.kraje_strany_cr;
 
-create table od.volby_kraje_strany_cr (
+create table volby.kraje_strany_cr (
     datum date,
     kstrana smallint not null,
     vstrana smallint not null,
@@ -179,9 +179,9 @@ create table od.volby_kraje_strany_cr (
     slozneplat varchar
 );
 
-drop table if exists od.volby_kraje_strany_kraje;
+drop table if exists volby.kraje_strany_kraje;
 
-create table od.volby_kraje_strany_kraje (
+create table volby.kraje_strany_kraje (
     datum date,
     krzast smallint not null,
     kstrana smallint not null,
@@ -198,9 +198,9 @@ create table od.volby_kraje_strany_kraje (
     slozneplat varchar
 );
 
-drop table if exists od.volby_ep_kandidati;
+drop table if exists volby.ep_kandidati;
 
-create table od.volby_ep_kandidati (
+create table volby.ep_kandidati (
     datum date,
     estrana smallint not null,
     porcislo smallint not null,
@@ -224,9 +224,9 @@ create table od.volby_ep_kandidati (
     poradinahr smallint
 );
 
-drop table if exists od.volby_ep_strany;
+drop table if exists volby.ep_strany;
 
-create table od.volby_ep_strany (
+create table volby.ep_strany (
     datum date,
     estrana smallint not null,
     vstrana smallint not null,
@@ -242,9 +242,9 @@ create table od.volby_ep_strany (
     nazevplny varchar
 );
 
-drop table if exists od.volby_senat_kandidati;
+drop table if exists volby.senat_kandidati;
 
-create table od.volby_senat_kandidati (
+create table volby.senat_kandidati (
     datum date,
     obvod smallint not null,
     ckand smallint not null,

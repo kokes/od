@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS od.psp_steno_psp;
-CREATE TABLE IF NOT EXISTS od.psp_steno_psp (
+DROP TABLE IF EXISTS psp.steno_psp;
+CREATE TABLE IF NOT EXISTS psp.steno_psp (
 	rok smallint,
 	datum varchar,
 	schuze smallint not null,

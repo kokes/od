@@ -59,7 +59,7 @@ for volby, mp in mps.items():
         for fn in spec['fn']:
             fnmap[fn] = (ds, spec)
         
-        sch.append(f'''drop table if exists od.volby_{volby}_{ds};\ncreate table od.volby_{volby}_{ds} (datum date,
+        sch.append(f'''drop table if exists volby.{volby}_{ds};\ncreate table volby.{volby}_{ds} (datum date,
 {" varchar not null,".join(spec['schema'])} varchar not null);
 ''')
     for datum, urls in mp['url'].items():
@@ -70,7 +70,7 @@ for volby, mp in mps.items():
                     if ff not in fnmap: continue
                     ds, fmp = fnmap[ff]
                     tfn = os.path.join(csv_dir, f'{datum}_{ds}.csv')
-                    qq.append(f"echo {tfn}\ncat {tfn} | psql -c 'copy od.volby_{volby}_{ds} from stdin csv header'")
+                    qq.append(f"echo {tfn}\ncat {tfn} | psql -c 'copy volby.{volby}_{ds} from stdin csv header'")
                     if os.path.isfile(tfn): continue # TODO: smaz
                     with open(tfn, 'w') as fw:
                         cw = csv.DictWriter(fw, fieldnames=['DATUM'] + fmp['schema'])

@@ -1,5 +1,5 @@
-drop table if exists od.eufondy_0713;
-create table od.eufondy_0713 (
+drop table if exists eufondy.dotace_0713;
+create table eufondy.dotace_0713 (
 	prijemce varchar,
 	ico int,
 	projekt varchar not null,
@@ -12,8 +12,8 @@ create table od.eufondy_0713 (
 	stav varchar -- TODO: enum
 );
 
-drop table if exists od.eufondy_1420;
-create table od.eufondy_1420 (
+drop table if exists eufondy.dotace_1420;
+create table eufondy.dotace_1420 (
  	nazev_programu varchar,
  	nazev_prioritni_osy varchar,
  	registracni_cislo_operace varchar,

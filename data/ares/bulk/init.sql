@@ -1,5 +1,5 @@
-drop table if exists od.vreo_firmy;
-create table od.vreo_firmy(
+drop table if exists ares.vreo_firmy;
+create table ares.vreo_firmy(
     zdroj varchar not null,
 	aktualizace_db date not null,
 	datum_vypisu date not null,
@@ -13,8 +13,8 @@ create table od.vreo_firmy(
 	sidlo json
 );
 
-drop table if exists od.vreo_fosoby;
-create table od.vreo_fosoby(
+drop table if exists ares.vreo_fosoby;
+create table ares.vreo_fosoby(
 	ico int not null,
 	nazev_organu varchar,
 	datum_zapisu date not null,

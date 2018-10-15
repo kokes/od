@@ -1,5 +1,5 @@
-drop table if exists od.ares_res;
-create table if not exists od.ares_res (
+drop table if exists ares.res;
+create table if not exists ares.res (
 	ico int not null primary key,
 	aktualizace_db date not null,
 	datum_vypisu date not null,
@@ -21,10 +21,10 @@ create table if not exists od.ares_res (
 	nace varchar[] -- nemuze byt int, je tam G apod.
 );
 create extension pg_trgm;
-create index res_nazev_trgm ON od.ares_res using gist (nazev gist_trgm_ops);
+create index res_nazev_trgm ON ares.res using gist (nazev gist_trgm_ops);
 
-drop table if exists od.ares_or_udaje cascade;
-create table od.ares_or_udaje (
+drop table if exists ares.or_udaje cascade;
+create table ares.or_udaje (
 	ico int not null primary key,
 	aktualizace_db date,
 	datum_vypisu date,
@@ -33,18 +33,18 @@ create table od.ares_or_udaje (
 	stav_subjektu varchar
 );
 
-drop table if exists od.ares_or_nazvy;
-create table od.ares_or_nazvy (
-	ico int not null references od.ares_or_udaje(ico) on delete cascade,
+drop table if exists ares.or_nazvy;
+create table ares.or_nazvy (
+	ico int not null references ares.or_udaje(ico) on delete cascade,
 	dod date,
 	ddo date,
 	nazev varchar
 );
-create index ares_or_nazvy_ico_idx on od.ares_or_nazvy(ico);
+create index ares_or_nazvy_ico_idx on ares.or_nazvy(ico);
 
-drop table if exists od.ares_or_pravni_formy;
-create table od.ares_or_pravni_formy (
-	ico int not null references od.ares_or_udaje(ico) on delete cascade,
+drop table if exists ares.or_pravni_formy;
+create table ares.or_pravni_formy (
+	ico int not null references ares.or_udaje(ico) on delete cascade,
 	dod date,
 	ddo date,
 	kpf int,
@@ -52,11 +52,11 @@ create table od.ares_or_pravni_formy (
 	pfo varchar,
 	tzu varchar
 );
-create index ares_or_pravni_formy_ico_idx on od.ares_or_pravni_formy(ico);
+create index ares_or_pravni_formy_ico_idx on ares.or_pravni_formy(ico);
 
-drop table if exists od.ares_or_sidla;
-create table od.ares_or_sidla (
-	ico int not null references od.ares_or_udaje(ico) on delete cascade,
+drop table if exists ares.or_sidla;
+create table ares.or_sidla (
+	ico int not null references ares.or_udaje(ico) on delete cascade,
 	dod date,
 	ddo date,
 	ulice varchar,
@@ -64,11 +64,11 @@ create table od.ares_or_sidla (
 	stat varchar,
 	psc varchar
 );
-create index ares_or_sidla_ico_idx on od.ares_or_sidla(ico);
+create index ares_or_sidla_ico_idx on ares.or_sidla(ico);
 
-drop table if exists od.ares_or_angos_fo;
-create table od.ares_or_angos_fo (
-	ico int not null references od.ares_or_udaje(ico) on delete cascade,
+drop table if exists ares.or_angos_fo;
+create table ares.or_angos_fo (
+	ico int not null references ares.or_udaje(ico) on delete cascade,
 	dod date,
 	ddo date,
 	nazev_ang varchar,
@@ -86,11 +86,11 @@ create table od.ares_or_angos_fo (
 	datum_narozeni date,
 	bydliste jsonb
 );
-create index ares_or_angos_fo_ico_idx on od.ares_or_angos_fo(ico);
+create index ares_or_angos_fo_ico_idx on ares.or_angos_fo(ico);
 
-drop table if exists od.ares_or_angos_po;
-create table od.ares_or_angos_po (
-	ico int not null references od.ares_or_udaje(ico) on delete cascade,
+drop table if exists ares.or_angos_po;
+create table ares.or_angos_po (
+	ico int not null references ares.or_udaje(ico) on delete cascade,
 	dod date,
 	ddo date,
 	nazev_ang varchar,
@@ -108,5 +108,5 @@ create table od.ares_or_angos_po (
 	stat varchar,
 	sidlo jsonb
 );
-create index ares_or_angos_po_ico_idx on od.ares_or_angos_po(ico);
-create index ares_or_angos_po_ico_ang_idx on od.ares_or_angos_po(ico_ang);
+create index ares_or_angos_po_ico_idx on ares.or_angos_po(ico);
+create index ares_or_angos_po_ico_ang_idx on ares.or_angos_po(ico_ang);
