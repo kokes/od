@@ -1,4 +1,5 @@
 cat data/csv/res.csv | psql -c 'copy ares.res from stdin csv header'
+cat data/csv/res_nace.csv | psql -c 'copy ares.res_nace from stdin csv header'
 
 cat data/csv/udaje.csv | psql -c 'copy ares.or_udaje from stdin csv header'
 cat data/csv/nazvy.csv | psql -c 'copy ares.or_nazvy from stdin csv header'

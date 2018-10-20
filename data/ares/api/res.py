@@ -1,4 +1,3 @@
-# TODO: ulozit NACE bokem?
 import json
 import csv
 
@@ -38,11 +37,18 @@ def get_ico(conn):
 
 hd = ['ico', 'aktualizace_db', 'datum_vypisu', 'nazev', 'pravni_forma_id', 'pravni_forma_nazev', 'datum_vzniku', 'datum_zaniku',\
 'sidlo_nazev_obce', 'sidlo_nazev_casti_obce', 'sidlo_ulice', 'sidlo_cislo_domovni', 'sidlo_typ_cislo_domovni', 'sidlo_cislo_orientacni', 'sidlo_psc', \
-'zuj_nzuj', 'zuj_nuts4', 'zuj_nazev_nuts4', 'esa2010', 'esa2010t', 'kpp', 'nace']
+'zuj_nzuj', 'zuj_nuts4', 'zuj_nazev_nuts4', 'esa2010', 'esa2010t', 'kpp', 'nace_id']
+hd_nace = ['id', 'nazev']
 
-with psycopg2.connect(database='ondrej') as conn, conn.cursor() as cursor, open('data/csv/res.csv', 'w') as fw:
+with psycopg2.connect(database='ondrej') as conn, conn.cursor() as cursor, \
+        open('data/csv/res.csv', 'w') as fw, \
+        open('data/csv/res_nace.csv', 'w') as fnw:
     cw = csv.DictWriter(fw, fieldnames=hd)
+    cnw = csv.DictWriter(fnw, fieldnames=hd_nace)
     cw.writeheader()
+    cnw.writeheader()
+
+    nace_have = set()
     for row in tqdm(get_ico(conn)):
         et = lxml.etree.fromstring(row['xml'].tobytes())
 
@@ -72,16 +78,19 @@ with psycopg2.connect(database='ondrej') as conn, conn.cursor() as cursor, open(
         }
 
         nid = get_el_all(vyp, './D:Nace/D:NACE', et.nsmap)
-        #nn = get_el_all(vyp, './D:Nace/D:Nazev_NACE', et.nsmap)
+        nn = get_el_all(vyp, './D:Nace/D:Nazev_NACE', et.nsmap)
+
+        for a, b in zip(nid, nn):
+            if a in nace_have: continue
+            cnw.writerow({'id': a, 'nazev': b})
+            nace_have.add(a)
 
         dt = {
             'ico': row['ico'],
             **get_els(vyp, udaje, et.nsmap),
-            'nace': '{%s}' % ','.join(nid),
+            'nace_id': '{%s}' % ','.join(nid),
         }
-        # TODO: radsi to ulozime do CSV a pak az do DB? nebo bude tohle proste transakcni vec?
         
-        # psycopg2 nepodporuje dict jako json hodnotu - musime serializovat
         for k, v in dt.items():
             if isinstance(v, dict):
                 dt[k] = json.dumps(v, ensure_ascii=False)

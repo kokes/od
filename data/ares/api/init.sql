@@ -21,10 +21,16 @@ create table if not exists ares.res (
 	esa2010 int,
 	esa2010t varchar,
 	kpp varchar,
-	nace varchar[] -- nemuze byt int, je tam G apod.
+	nace_id varchar[] -- nemuze byt int, je tam G apod.
 );
 create extension pg_trgm;
 create index res_nazev_trgm ON ares.res using gist (nazev gist_trgm_ops);
+
+drop table if exists ares.res_nace;
+create table if not exists ares.res_nace (
+	id varchar not null primary key,
+	nazev varchar not null
+);
 
 drop table if exists ares.or_udaje cascade;
 create table ares.or_udaje (
