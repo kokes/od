@@ -36,7 +36,9 @@ def get_ico(conn):
             yield row
             row = cursor.fetchone()
 
-hd = ['ico', 'aktualizace_db', 'datum_vypisu', 'nazev', 'pravni_forma_id', 'pravni_forma_nazev', 'datum_vzniku', 'datum_zaniku', 'sidlo_nazev_obce', 'sidlo_nazev_casti_obce', 'sidlo_ulice', 'sidlo_cislo_domovni', 'sidlo_typ_cislo_domovni', 'sidlo_cislo_orientacni', 'sidlo_psc', 'esa2010', 'esa2010t', 'kpp', 'nace']
+hd = ['ico', 'aktualizace_db', 'datum_vypisu', 'nazev', 'pravni_forma_id', 'pravni_forma_nazev', 'datum_vzniku', 'datum_zaniku',\
+'sidlo_nazev_obce', 'sidlo_nazev_casti_obce', 'sidlo_ulice', 'sidlo_cislo_domovni', 'sidlo_typ_cislo_domovni', 'sidlo_cislo_orientacni', 'sidlo_psc', \
+'zuj_nzuj', 'zuj_nuts4', 'zuj_nazev_nuts4', 'esa2010', 'esa2010t', 'kpp', 'nace']
 
 with psycopg2.connect(database='ondrej') as conn, conn.cursor() as cursor, open('data/csv/res.csv', 'w') as fw:
     cw = csv.DictWriter(fw, fieldnames=hd)
@@ -61,7 +63,9 @@ with psycopg2.connect(database='ondrej') as conn, conn.cursor() as cursor, open(
             'sidlo_typ_cislo_domovni': './D:SI/D:TCD',
             'sidlo_cislo_orientacni': './D:SI/D:CO',
             'sidlo_psc': './D:SI/D:PSC',
-            # TODO: chceme ZUJ?
+            'zuj_nzuj': './D:ZUJ/D:NZUJ',
+            'zuj_nuts4': './D:ZUJ/D:NUTS4',
+            'zuj_nazev_nuts4': './D:ZUJ/D:Nazev_NUTS4',
             'esa2010': './D:SU/D:Esa2010',
             'esa2010t': './D:SU/D:Esa2010t',
             'kpp': './D:SU/D:KPP',
