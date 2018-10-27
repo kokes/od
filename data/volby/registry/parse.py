@@ -29,11 +29,15 @@ def load_remote_data(url: str):
 def extract_elements(zf, fn, nodename):
     if fn.lower().endswith('.xml'):
         with zf.open(fn) as f:
-            et = lxml.etree.parse(f).getroot()
-            ns = et.nsmap[None]
+            et = lxml.etree.iterparse(f)
 
-        for node in et.iterfind(f'./{{{ns}}}{nodename}'):
-            yield dict((j.tag[j.tag.rindex('}')+1:], j.text) for j in node.iterchildren())
+            for _, node in et:
+                if not node.tag.endswith(f'}}{nodename}'):
+                    continue
+
+                yield dict((j.tag[j.tag.rindex('}')+1:], j.text) for j in node.iterchildren())
+                node.clear()
+
     elif fn.lower().endswith('dbf'):
         with zf.open(fn) as f, NamedTemporaryFile() as temp:
             shutil.copyfileobj(f, temp)  # dbfread neumi cist z filehandleru, https://github.com/olemb/dbfread/issues/25

@@ -51,10 +51,13 @@ if __name__ == '__main__':
             rok, mesic = None, None
 
             with gzip.open(fn) as gf:
-                et = lxml.etree.parse(gf).getroot()
+                et = lxml.etree.iterparse(gf)
 
-                for el in tqdm(et, desc=bn):
+                for _, el in tqdm(et, desc=bn):
                     eln = strip_ns(el)
+                    if eln not in ('zaznam', 'mesic', 'rok'):
+                        continue
+
                     if eln != 'zaznam':
                         if eln == 'mesic':
                             mesic = el_dict(el)
@@ -64,6 +67,7 @@ if __name__ == '__main__':
 
                     assert not (rok is None or mesic is None), 'rok a mesic musi predchazet data'
                     dt = el_dict(el) # parsuj data
+                    el.clear()
                     ts = f'{rok}-{mesic}'
 
                     # smlouva samotna
