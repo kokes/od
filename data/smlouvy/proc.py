@@ -36,6 +36,7 @@ nin = hdu.index('ico') # kde mame ciselne ICO?
 tdir = 'data/csv/'
 
 if __name__ == '__main__':
+    os.makedirs(tdir, exist_ok=True)
     for fn in tqdm(glob('data/raw/*.gz')):
         bn = os.path.split(fn)[-1]
         tbn = bn[:bn.rindex('.xml.gz')]

@@ -19,7 +19,7 @@ def unpack(fn: str):
 if __name__ == '__main__':
     with open('ciselnik.json') as f:
         csmp = json.load(f)
-    
+
     csl = dict()
     for cfn in glob('data/raw/ciselnik*.csv.7z'):
         for fn in unpack(cfn):

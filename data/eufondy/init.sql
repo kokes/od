@@ -1,3 +1,4 @@
+create schema if not exists eufondy;
 drop table if exists eufondy.dotace_0713;
 create table eufondy.dotace_0713 (
 	prijemce varchar,
@@ -42,6 +43,5 @@ create table eufondy.dotace_1420 (
  	vyuctovano_prispevek_unie_czk numeric(14, 2),
  	vyuctovano_narodni_verejne_zdroje_czk numeric(14, 2),
  	vyuctovano_narodni_soukrome_zdroje_czk numeric(14, 2),
- 	datum_aktualizace date,
- 	ciste_nuts3 varchar
+ 	mena varchar
 )

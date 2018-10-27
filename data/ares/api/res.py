@@ -1,3 +1,4 @@
+import os
 import json
 import csv
 
@@ -40,7 +41,8 @@ hd = ['ico', 'aktualizace_db', 'datum_vypisu', 'nazev', 'pravni_forma_id', 'prav
 'zuj_nzuj', 'zuj_nuts4', 'zuj_nazev_nuts4', 'esa2010', 'esa2010t', 'kpp', 'nace_id']
 hd_nace = ['id', 'nazev']
 
-with psycopg2.connect(database='ondrej') as conn, conn.cursor() as cursor, \
+os.makedirs('data/csv', exist_ok=True)
+with psycopg2.connect(host='localhost') as conn, conn.cursor() as cursor, \
         open('data/csv/res.csv', 'w') as fw, \
         open('data/csv/res_nace.csv', 'w') as fnw:
     cw = csv.DictWriter(fw, fieldnames=hd)

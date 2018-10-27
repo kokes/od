@@ -37,6 +37,8 @@ if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
     tdir = os.path.dirname(os.path.abspath(__file__))
     tfn = 'data/nova_ic.csv'
+    if not os.path.isdir('data'):
+        os.mkdir('data')
     absfn = os.path.join(tdir, tfn)
 
     with open(absfn, 'w') as fw:

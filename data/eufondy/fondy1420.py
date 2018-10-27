@@ -6,11 +6,11 @@ import xlrd
 with open('hlavicka1420.json') as f:
     hd = json.load(f)
 
-wb = xlrd.open_workbook('data/2014-2020/2018_09_03-Seznam-operaci-_-List-of-operations.xls')
+wb = xlrd.open_workbook('data/2014-2020/2018_10_01-M023a-Seznam-operaci-_-List-of-operations.xls')
 sh = wb.sheet_by_name('Seznam operací')
 
-fr = [j.value for j in sh.row(2)]
-assert fr == hd['ocekavane']
+fr = [j.value.strip() for j in sh.row(2)]
+assert fr == hd['ocekavane'], list(filter(lambda x: x[0] != x[1], zip(fr, hd['ocekavane'])))
 
 def intify(s):
     if isinstance(s, str) and len(s) == 0:
@@ -38,7 +38,7 @@ with open('data/operace_2014_2020.csv', 'w') as fw:
         row[6] = intify(row[6]) # ICO
         row[8] = intify(row[8]) # PSC
         
-        for cl in [9, 10, 11, 28]:
+        for cl in [9, 10, 11]:
             row[cl] = predatuj(row[cl])
         
         cw.writerow(row)

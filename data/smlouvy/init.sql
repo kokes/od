@@ -1,3 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS smlouvy;
 drop table if exists smlouvy.smlouvy cascade;
 create table smlouvy.smlouvy (
   zdroj char(7), -- 2018-07

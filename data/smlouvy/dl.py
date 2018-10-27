@@ -25,6 +25,7 @@ tdir = 'data/raw'
 url = 'https://data.smlouvy.gov.cz/'
 
 if __name__ == '__main__':
+    os.makedirs(tdir, exist_ok=True)
     r = urlopen(url)
     et = lxml.etree.parse(r).getroot()
 
@@ -36,7 +37,7 @@ if __name__ == '__main__':
         fn = os.path.split(dt['odkaz'])[-1]
         tfn = os.path.join(tdir, fn + '.gz')
         if not os.path.isfile(tfn) or dt['hashDumpu'] != hash_gzipped_file(tfn):
+            # TODO: urlretrieve?
             r = urlopen(dt['odkaz'])
             with gzip.open(tfn, 'w') as gf:
                 shutil.copyfileobj(r, gf)
-

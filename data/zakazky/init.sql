@@ -1,5 +1,7 @@
 -- TODO: foreign keys? composite primary keys?
 
+CREATE SCHEMA IF NOT EXISTS zakazky;
+
 drop table if exists zakazky.etrziste_casti_vz;
 create table zakazky.etrziste_casti_vz (
 	VZsystemoveCislo varchar,

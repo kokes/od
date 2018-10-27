@@ -1,3 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS volby;
 drop table if exists volby.prezident_kandidati;
 
 create table volby.prezident_kandidati (

@@ -1,3 +1,4 @@
+create schema if not exists dotinfo;
 drop table if exists dotinfo.dotace;
 create table dotinfo.dotace (
 	evidencni_cislo_dotace varchar,

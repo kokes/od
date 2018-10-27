@@ -1,3 +1,4 @@
+create schema if not exists ares;
 drop table if exists ares.raw;
 create table if not exists ares.raw (
 	rejstrik varchar not null,

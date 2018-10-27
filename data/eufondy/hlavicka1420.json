@@ -28,8 +28,7 @@
         "Finanční prostředky vyúčtované v žádostech o platbu (příspěvek Unie, CZK)",
         "Finanční prostředky vyúčtované v žádostech o platbu (národní veřejné zdroje, CZK)",
         "Finanční prostředky vyúčtované v žádostech o platbu (národní soukromé zdroje / soukromé zdroje, CZK)",
-        "Datum poslední aktualizace seznamu operací",
-        "\"čisté NUTS3\""
+        "Měna"
     ],
     "hlavicka": [
         "nazev_programu",
@@ -60,7 +59,6 @@
         "financni_prostredky_vyuctovane_v_zadostech_o_platbu_prispevek_unie_czk",
         "financni_prostredky_vyuctovane_v_zadostech_o_platbu_narodni_verejne_zdroje_czk",
         "financni_prostredky_vyuctovane_v_zadostech_o_platbu_narodni_soukrome_zdroje_soukrome_zdroje_czk",
-        "datum_aktualizace",
-        "ciste_nuts3"
+        "mena"
     ]
 }

@@ -1,3 +1,4 @@
+create schema if not exists ares;
 drop table if exists ares.res;
 create table if not exists ares.res (
 	ico int not null primary key,
