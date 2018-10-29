@@ -46,7 +46,7 @@
             ],
             "2010-05-29": [
                 "https://www.volby.cz/opendata/ps2010/PS2010reg2010.zip",
-                "https://www.volby.cz/opendata/ps2006/PS2006ciselniky2006.zip"
+                "https://www.volby.cz/opendata/ps2010/PS2010ciselniky2010.zip"
             ],
             "2013-10-25": [
                 "https://www.volby.cz/opendata/ps2013/PS2013reg20131026.zip",
@@ -413,7 +413,7 @@
                 "https://volby.cz/opendata/se2018kveten/SE2018ciselniky20180519.zip"
             ],
             "2018-10-05": [
-                "https://volby.cz/opendata/se2018/SE2018reg20181008.zip",
+                "https://volby.cz/opendata/se2018/SE2018reg20181013.zip",
                 "https://volby.cz/opendata/se2018/SE2018ciselnik20181004.zip"
             ]
         },
