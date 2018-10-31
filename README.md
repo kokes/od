@@ -20,6 +20,8 @@ Najdete zde několik sad kódů, v tuto chvíli nejsou nějak značně sešňero
 
 Posledním aspektem je aktualizace dat. V tuto chvíli máme hotové jednorázové nalití všech dat, postupně promýšlíme, jak by se ideálně dal provádět update.
 
+**Již v tuto chvíli ale funguje základní princip tohoto projektu - jakmile člověk dostane datasety do jednoho systému/databáze, může se dotazovat napříč - například seznam zakázek pro firmu, která splňuje nějaká kritéria na základě informací z ARES a je propojena s určitými politicky aktivními lidmi.**
+
 ## Doménová znalost a kvalita dat
 
 Než se dostaneme k datasetům samotným, je třeba zmínit klíčový předpoklad pro správnou interpretaci dat, tím je doménová znalost, tedy pochopení dané problematiky na věcné úrovni, ne pouhé technické zpracování dat.
