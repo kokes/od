@@ -33,6 +33,7 @@ def get_els(root, mapping, namespace):
                 ret[k] = el
         else:
             ret[k] = json.dumps(get_els(root, v, namespace), ensure_ascii=False)
+
     return ret
 
 hds = {
@@ -168,7 +169,6 @@ with conn, conn.cursor('raw_read') as rcursor:
             'funkce_konec': 'D:VF/D:DK',
         }
         # FO
-        # TODO: chybi bydliste
         fomap = {
             'titul_pred': 'D:TP',
             'titul_za': 'D:TZ',
@@ -183,7 +183,7 @@ with conn, conn.cursor('raw_read') as rcursor:
                 'nazev_kraje': 'D:B/D:Nazev_kraje',
                 'nazev_okresu': 'D:B/D:NOK',
                 'nazev_obce': 'D:B/D:N',
-                'nazev_obce': 'D:B/D:Nazev_pobvodu',
+                'nazev_obvodu': 'D:B/D:Nazev_pobvodu',
                 'nazev_casti_obce': 'D:B/D:NCO',
                 'nazev_mestske_casti': 'D:B/D:NMC',
                 'nazev_ulice': 'D:B/D:NU',
