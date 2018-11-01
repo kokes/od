@@ -10,9 +10,9 @@ V praxi se s tím pracuje celkem snadno, je to prostě jen normalizovaný datase
 SELECT
     *
 FROM
-    psp_osoby os
-    INNER JOIN psp_zarazeni za USING (id_osoba)
-    INNER JOIN psp_organy org ON org.id_organ = za.id_of
+    psp.poslanci_osoby os
+    INNER JOIN psp.poslanci_zarazeni za USING (id_osoba)
+    INNER JOIN psp.poslanci_organy org ON org.id_organ = za.id_of
 WHERE
 	za.cl_funkce = 0
     AND org.zkratka = 'PSP8'
