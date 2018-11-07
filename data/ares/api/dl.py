@@ -31,7 +31,7 @@ if __name__ == '__main__':
                 if b'Chyba 23 - chybn' in dt:
                     raise ValueError('nespravny format ico: {}'.format(ico))
 
-                if (b'<dtt:faultcode>' in dt) or (b'nastala SQL chyba' in dt) or (b'Chyba 900' in dt):
+                if (b'<dtt:faultcode>' in dt) or (b'nastala SQL chyba' in dt) or (b'Chyba 900' in dt) or (b'MAX. DOBA DOTAZU' in dt):
                     raise ValueError(f'chyba v API ({ico})')
 
                 found = b'Chyba 71 - nenalezeno' not in dt
@@ -41,3 +41,4 @@ if __name__ == '__main__':
                 # TODO: upsert? (kdybychom meli ICO odjinud)
                 cursor.execute('update ares.raw set modified_on=%s, xml=%s, found=%s where rejstrik = %s and ico = %s',
                     (datetime.utcnow(), dt, found, rejstrik, ico))
+                conn.commit()
