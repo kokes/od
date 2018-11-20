@@ -3,7 +3,7 @@ import json
 
 import xlrd
 
-with open('hlavicka1420.json') as f:
+with open('hlavicka1420.json', encoding='utf8') as f:
     hd = json.load(f)
 
 wb = xlrd.open_workbook('data/2014-2020/2018_10_01-M023a-Seznam-operaci-_-List-of-operations.xls')
@@ -29,7 +29,7 @@ def predatuj(s):
     d, m, y = map(int, s.split('.'))
     return f'{y}-{m:02d}-{d:02d}'
 
-with open('data/operace_2014_2020.csv', 'w') as fw:
+with open('data/operace_2014_2020.csv', 'w', encoding='utf8') as fw:
     cw = csv.writer(fw)
     cw.writerow(hd['hlavicka'])
     for j in range(4, sh.nrows):

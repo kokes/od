@@ -23,7 +23,7 @@ def predatuj(s):
 cws = re.compile('\s+')
 
 
-with open('data/operace_2007_2013.csv', 'w') as fw:
+with open('data/operace_2007_2013.csv', 'w', encoding='utf8') as fw:
     cw = csv.writer(fw)
     hd = ['prijemce', 'ico', 'projekt', 'operacni_program', 'fond_eu', 'datum_alokace', 'castka_alokovana', 'datum_platby', 'castka_proplacena', 'stav']
     cw.writerow(hd)
