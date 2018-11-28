@@ -69,10 +69,7 @@ create table ares.or_sidla (
 	ico int not null references ares.or_udaje(ico) on delete cascade,
 	dod date,
 	ddo date,
-	ulice varchar,
-	obec varchar,
-	stat varchar,
-	psc varchar
+	sidlo jsonb
 );
 create index ares_or_sidla_ico_idx on ares.or_sidla(ico);
 

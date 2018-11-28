@@ -1,5 +1,5 @@
 # TODO: bacha, u angazovanych osob jsou ministerstva bez uvedenych ICO (spousta radek to tak ma - filtruj ale jen ty, co maj jako stat cesko)
-# 
+#
 # TODO: dodelat angazovane osoby! (dodelano?) mame 29 mapovani - mame 29 distinct typu? select nazev_ang, count(*) from ares.or_angos_fo group by 1;
 # TODO: CIN, OSK (cinnosti, ostatni skutecnosti), KAP (kapital), REG/SZ (kym zapsano)
 
@@ -12,17 +12,20 @@ import psycopg2
 import psycopg2.extras
 from tqdm import tqdm
 
+
 def get_el(root, address, namespace):
     el = root.find(address, namespaces=namespace)
     if el is None:
         return el
     return el.text
 
+
 def get_el_all(root, address, namespace):
     el = root.findall(address, namespaces=namespace)
     if el is None:
         return el
     return [j.text for j in el]
+
 
 def get_els(root, mapping, namespace):
     ret = {}
@@ -36,11 +39,12 @@ def get_els(root, mapping, namespace):
 
     return ret
 
+
 hds = {
     'udaje': ['ico', 'aktualizace_db', 'datum_vypisu', 'platnost_od', 'datum_zapisu', 'stav_subjektu'],
     'nazvy': ['ico', 'dod', 'ddo', 'nazev'],
     'pravni_formy': ['ico', 'dod', 'ddo', 'kpf', 'npf', 'pfo', 'tzu'],
-    'sidla': ['ico', 'dod', 'ddo', 'ulice', 'obec', 'stat', 'psc'],
+    'sidla': ['ico', 'dod', 'ddo', 'sidlo'],
     'angos_fo': ['ico', 'dod', 'ddo', 'nazev_ang', 'kategorie_ang', 'funkce', 'clenstvi_zacatek', 'clenstvi_konec', 'funkce_zacatek', 'funkce_konec', 'titul_pred', 'titul_za', 'jmeno', 'prijmeni', 'datum_narozeni', 'bydliste'],
     'angos_po': ['ico', 'dod', 'ddo', 'nazev_ang', 'kategorie_ang', 'funkce', 'clenstvi_zacatek', 'clenstvi_konec', 'funkce_zacatek', 'funkce_konec', 'ico_ang', 'izo_ang', 'nazev', 'pravni_forma', 'stat', 'sidlo'],
 }
@@ -48,15 +52,15 @@ hds = {
 tdir = 'data/csv'
 os.makedirs(tdir, exist_ok=True)
 
-fhs = {} # file handlers
-cws = {} # csv writers
-for k,v in hds.items():
+fhs = {}  #  file handlers
+cws = {}  #  csv writers
+for k, v in hds.items():
     tfn = os.path.join(tdir, f'{k}.csv')
     fhs[k] = open(tfn, 'w')
     cws[k] = csv.DictWriter(fhs[k], fieldnames=v)
     cws[k].writeheader()
 
-conn = psycopg2.connect(host='localhost') # TODO: close
+conn = psycopg2.connect(host='localhost')  # TODO: close
 conn.cursor_factory = psycopg2.extras.DictCursor
 
 with conn, conn.cursor('raw_read') as rcursor:
@@ -77,11 +81,11 @@ with conn, conn.cursor('raw_read') as rcursor:
             'platnost_od': './D:ZAU/D:POD',
             # 'ico': './D:ZAU/D:ICO', # nakonec pouzivame ICO z dotazu
             'datum_zapisu': './D:ZAU/D:DZOR',
-            'stav_subjektu': './D:ZAU/D:S/D:SSU', # TODO: ZAU/S veci: konkurzy atd.    
+            'stav_subjektu': './D:ZAU/D:S/D:SSU',  #  TODO: ZAU/S veci: konkurzy atd.
         }
 
         udaje = get_els(vyp, udmap, et.nsmap)
-        ico = int(row['ico']) # lepsi nez - int(udaje['ico']) - da se pak dohledat
+        ico = int(row['ico'])  #  lepsi nez - int(udaje['ico']) - da se pak dohledat
 
         cws['udaje'].writerow({'ico': ico, **udaje})
 
@@ -109,24 +113,44 @@ with conn, conn.cursor('raw_read') as rcursor:
             pfo['ddo'] = pfobj.attrib.get('ddo')
 
             cws['pravni_formy'].writerow({'ico': ico, **pfo})
-            
+
         # sidla
         # TODO: zbytek mappingu
         smp = {
-            'stat': 'D:NS',
-            'obec': 'D:N',
-            'ulice': 'D:NU',
-            'psc': 'D:PSC',
+            'sidlo': {
+                'ida': 'D:IDA',
+                'kod_statu': 'D:KS',
+                'nazev_statu': 'D:NS',
+                'nazev_oblasti': 'D:Nazev_oblasti',
+                'nazev_kraje': 'D:Nazev_kraje',
+                'nazev_okresu': 'D:NOK',
+                'nazev_obce': 'D:N',
+                'nazev_obvodu': 'D:Nazev_pobvodu',
+                'nazev_casti_obce': 'D:NCO',
+                'nazev_mestske_casti': 'D:NMC',
+                'nazev_ulice': 'D:NU',
+                'cis_dom': 'D:CD',
+                'typ_cis_dom': 'D:TCD',
+                'cis_or_sp': 'D:CO',
+                'cislo_do_adresy': 'D:CA',
+                'psc': 'D:PSC',
+                'zahr_psc': 'D:Zahr_PSC',
+                'adresa_textem': 'D:AT',
+                'adresa_UIR': 'D:AU',
+            },
         }
-        
-        for siobj in vyp.findall('./D:ZAU/D:SI', namespaces=et.nsmap):
-            si = get_els(siobj, smp, et.nsmap)
-            si['dod'] = siobj.attrib.get('dod')
-            si['ddo'] = siobj.attrib.get('ddo')
-            
-            cws['sidla'].writerow({'ico': ico, **si})
 
-        # angazovane osoby
+        for siobj in vyp.findall('./D:ZAU/D:SI', namespaces=et.nsmap):
+            si = {
+                'ico': ico,
+                'dod': siobj.attrib.get('dod'),
+                'ddo': siobj.attrib.get('ddo'),
+                **get_els(siobj, smp, et.nsmap),
+            }
+
+            cws['sidla'].writerow(si)
+
+        # angazovane osoby
         # http://wwwinfo.mfcr.cz/ares/xml_doc/schemas/ares/ares_datatypes/v_1.0.3/ares_datatypes_v_1.0.3.xsd
         ang = {
             'statutarni_organ': 'D:SO/D:CSO/D:C',
@@ -159,9 +183,9 @@ with conn, conn.cursor('raw_read') as rcursor:
             'komplementari': 'D:KPI/D:CSK/D:C',
             'clenove_sdruzeni': 'D:CLS/D:CS',
         }
-        # high level info
+        # high level info
         hli = {
-            'kategorie_ang': 'D:KAN', # kod angazovanosti
+            'kategorie_ang': 'D:KAN',  #  kod angazovanosti
             'funkce': 'D:F',
             'clenstvi_zacatek': 'D:CLE/D:DZA',
             'clenstvi_konec': 'D:CLE/D:DK',
@@ -192,7 +216,7 @@ with conn, conn.cursor('raw_read') as rcursor:
                 'cis_or_sp': 'D:B/D:CO',
                 'cislo_do_adresy': 'D:B/D:CA',
                 'psc': 'D:B/D:PSC',
-                'string': 'D:B/D:Zahr_PSC',
+                'zahr_psc': 'D:B/D:Zahr_PSC',
                 'adresa_textem': 'D:B/D:AT',
                 'adresa_UIR': 'D:B/D:AU',
             },
@@ -203,7 +227,7 @@ with conn, conn.cursor('raw_read') as rcursor:
             'izo_ang': 'D:IZO',
             'nazev': 'D:OF',
             'pravni_forma': 'D:NPF',
-            'stat': 'D:SI/D:NS', # TODO: redundantni
+            'stat': 'D:SI/D:NS',  # TODO: redundantni
             'sidlo': {
                 'ida': 'D:SI/D:IDA',
                 'kod_statu': 'D:SI/D:KS',
@@ -212,7 +236,7 @@ with conn, conn.cursor('raw_read') as rcursor:
                 'nazev_kraje': 'D:SI/D:Nazev_kraje',
                 'nazev_okresu': 'D:SI/D:NOK',
                 'nazev_obce': 'D:SI/D:N',
-                'nazev_obce': 'D:SI/D:Nazev_pobvodu',
+                'nazev_obvodu': 'D:SI/D:Nazev_pobvodu',
                 'nazev_casti_obce': 'D:SI/D:NCO',
                 'nazev_mestske_casti': 'D:SI/D:NMC',
                 'nazev_ulice': 'D:SI/D:NU',
@@ -221,7 +245,7 @@ with conn, conn.cursor('raw_read') as rcursor:
                 'cis_or_sp': 'D:SI/D:CO',
                 'cislo_do_adresy': 'D:SI/D:CA',
                 'psc': 'D:SI/D:PSC',
-                'string': 'D:SI/D:Zahr_PSC',
+                'zahr_psc': 'D:SI/D:Zahr_PSC',
                 'adresa_textem': 'D:SI/D:AT',
                 'adresa_UIR': 'D:SI/D:AU',
             },
@@ -233,7 +257,7 @@ with conn, conn.cursor('raw_read') as rcursor:
 
                 if ad.endswith('/D:C'):
                     # dozorci rada a stat. organy maj cleny
-                    # takze platnost je o koren vyse
+                    # takze platnost je o koren vyse
                     pr = el.getparent()
                     info['dod'] = pr.attrib['dod']
                     info['ddo'] = pr.attrib.get('ddo')
@@ -246,20 +270,20 @@ with conn, conn.cursor('raw_read') as rcursor:
                 if fo is not None:
                     fo_info = get_els(fo, fomap, et.nsmap)
                     cws['angos_fo'].writerow({
-                          'ico': ico,
-                          'nazev_ang': nm,
-                          **info,
-                          **fo_info
-                      })
+                        'ico': ico,
+                        'nazev_ang': nm,
+                        **info,
+                        **fo_info
+                    })
 
                 if po is not None:
                     po_info = get_els(po, pomap, et.nsmap)
                     cws['angos_po'].writerow({
-                          'ico': ico,
-                          'nazev_ang': nm,
-                          **info,
-                          **po_info
-                      })
+                        'ico': ico,
+                        'nazev_ang': nm,
+                        **info,
+                        **po_info
+                    })
 
 for fh in fhs.values():
     fh.close()
