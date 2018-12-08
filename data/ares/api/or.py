@@ -41,7 +41,7 @@ def get_els(root, mapping, namespace):
 
 
 hds = {
-    'udaje': ['ico', 'aktualizace_db', 'datum_vypisu', 'platnost_od', 'datum_zapisu', 'stav_subjektu'],
+    'udaje': ['ico', 'aktualizace_db', 'datum_vypisu', 'platnost_od', 'datum_zapisu', 'datum_zaniku', 'stav_subjektu'],
     'nazvy': ['ico', 'dod', 'ddo', 'nazev'],
     'pravni_formy': ['ico', 'dod', 'ddo', 'kpf', 'npf', 'pfo', 'tzu'],
     'sidla': ['ico', 'dod', 'ddo', 'sidlo'],
@@ -81,6 +81,7 @@ with conn, conn.cursor('raw_read') as rcursor:
             'platnost_od': './D:ZAU/D:POD',
             # 'ico': './D:ZAU/D:ICO', # nakonec pouzivame ICO z dotazu
             'datum_zapisu': './D:ZAU/D:DZOR',
+            'datum_zaniku': './D:ZAU/D:DZ',
             'stav_subjektu': './D:ZAU/D:S/D:SSU',  #  TODO: ZAU/S veci: konkurzy atd.
         }
 

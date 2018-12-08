@@ -40,6 +40,7 @@ create table ares.or_udaje (
 	datum_vypisu date,
 	platnost_od date,
 	datum_zapisu date,
+	datum_zaniku date,
 	stav_subjektu varchar
 );
 
