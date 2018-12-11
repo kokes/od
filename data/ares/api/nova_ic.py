@@ -55,6 +55,6 @@ if __name__ == '__main__':
         cursor.execute('drop table if exists ares.nova_ic')
         cursor.execute('create table ares.nova_ic(ico int, rejstrik varchar)')
         cursor.execute('copy ares.nova_ic from \'{}\' csv header'.format(absfn))
-        cursor.execute('''insert into ares.raw(ico, rejstrik)
-        (select ico, rejstrik from ares.nova_ic) on conflict do nothing''')
+        cursor.execute('''insert into ares.raw(ico, rejstrik, modified_on)
+        (select ico, rejstrik, '-infinity'::timestamp from ares.nova_ic) on conflict do nothing''')
         cursor.execute('drop table ares.nova_ic')

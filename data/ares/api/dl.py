@@ -23,7 +23,7 @@ if __name__ == '__main__':
     conn = psycopg2.connect(host='localhost')
     while True:
         with conn, conn.cursor() as cursor:
-            cursor.execute('select ico from ares.raw where rejstrik = %s and xml is null limit 25',
+            cursor.execute('select ico from ares.raw where rejstrik = %s order by modified_on asc limit 250',
                        (rejstrik,))
             icos = [j[0] for j in cursor.fetchall()]
             if len(icos) == 0: break
