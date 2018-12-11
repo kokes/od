@@ -15,7 +15,7 @@ Máme zde několik nesourodých souborů, tak se podívejme, co nám nabízí:
 - `nova_ic.py` - MFČR vydává seznam změnových souborů, resp. seznam IČO, pro které se změnily údaje v rejstřících. My můžeme stahovat tyto soubory a přidávat nová IČO do databáze, abychom pro ně stáhli nové údaje z API.
 - `dl.py` - **hlavní skript** na stahování dat, nedělá ale vesměs nic podstatného. Nahlíží do databáze a stahuje údaje pro ty firmy, pro které ještě žádné údaje nemáme. Až budete spokojeni s rozsahem dat ve vaší databázi, můžete upravit SQL dotaz, aby místo stahování nových dat aktualizoval ta stará (ideálně seřazená podle data modifikace).
 - `res.py` - načítá surová data pro RES a parsuje je do CSV
-- `or.py` - to stejné jako `res.py`, ale pro obchodní rejstřík. Tento skript generuje celou řadu souborů, protože datový model obchodního rejstříku, zvlášť když máme historizovaná data, je celkem košatý.
+- `parse_or.py` - to stejné jako `res.py`, ale pro obchodní rejstřík. Tento skript generuje celou řadu souborů, protože datový model obchodního rejstříku, zvlášť když máme historizovaná data, je celkem košatý.
 - `copy.sh` - kopíruje data z CSV do databáze
 - `postcopy.sql` -  přidává několik indexů do naparsovaných dat, nejdůležitější je index na jmény u angažovaných osob a několik indexů nad IČO pro rychlé joiny nejen v rámci ARES dat, ale napříč datasety
 

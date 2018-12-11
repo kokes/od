@@ -4,7 +4,11 @@ from datetime import datetime
 from urllib.request import urlopen
 
 import psycopg2
+import psycopg2.sql as pql
+import lxml.etree
 from tqdm import tqdm
+
+from parse_or import parse_listing
 
 def ares_url(rejstrik, ico):
     if rejstrik == 'or':
@@ -41,4 +45,23 @@ if __name__ == '__main__':
                 # TODO: upsert? (kdybychom meli ICO odjinud)
                 cursor.execute('update ares.raw set modified_on=%s, xml=%s, found=%s where rejstrik = %s and ico = %s',
                     (datetime.utcnow(), dt, found, rejstrik, ico))
+
+                if rejstrik == 'or':
+                    et = lxml.etree.fromstring(dt)
+                    data = parse_listing(et, ico)
+                    if data is None:
+                        print('nenaparsovano', ico) # TODO: eh?
+                        continue
+
+                    cursor.execute('delete from ares.or_udaje where ico = %s', (ico, ))
+                    for table, rows in data.items():
+                        for row in rows:
+                            columns = list(row.keys())
+                            pvalues = [f'%({j})s' for j in columns]
+                            # updates = [f'"{j}" = EXCLUDED."{j}"' for j in columns if j != 'ico'] # nebude treba asi
+                            query = f'''
+                                INSERT INTO ares."or_{table}"({', '.join(columns)}) VALUES({', '.join(pvalues)})
+                            '''
+                            cursor.execute(query, row)
+
                 conn.commit()
