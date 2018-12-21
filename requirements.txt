@@ -1,0 +1,7 @@
+dbfread
+lxml
+openpyxl
+psycopg2-binary
+requests
+tqdm
+xlrd
