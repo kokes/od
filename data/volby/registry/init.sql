@@ -133,6 +133,30 @@ create table volby.komunalni_strany (
     typvs varchar not null
 );
 
+drop table if exists volby.komunalni_obce;
+
+create table volby.komunalni_obce (
+    datum date,
+    kraj varchar not null,
+    okres smallint not null,
+    typzastup smallint not null,
+    druhzastup smallint not null,
+    kodzastup int not null,
+    nazevzast varchar not null,
+    obec int not null,
+    nazevobce varchar not null,
+    orp varchar,
+    cpou int not null,
+    regurad int not null,
+    obvody smallint not null,
+    cobvodu smallint not null,
+    mandaty smallint not null,
+    pocobyv int not null,
+    typduvodu smallint not null,
+    pocet_vs smallint not null,
+    stav_obce smallint not null
+);
+
 drop table if exists volby.kraje_kandidati;
 
 create table volby.kraje_kandidati (

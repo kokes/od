@@ -80,6 +80,9 @@ for volby, mp in mps.items():
                         cw = csv.DictWriter(fw, fieldnames=['DATUM'] + fmp['schema'])
                         cw.writeheader()
                         for el in extract_elements(zf, ff, fmp['klic']):
+                            for k in fmp.get('vynechej', []):
+                                el.pop(k, None)
+
                             cw.writerow({
                                 'DATUM': datum,
                                 **el,

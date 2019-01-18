@@ -202,6 +202,55 @@
                     "ZKRATKA_OF",
                     "TYPVS"
                 ]
+            },
+            "obce": {
+                "fn": [
+                    "kvrzcoco.xml"
+                ],
+                "klic": "KV_RZCOCO_ROW",
+                "schema": [
+                    "KRAJ",
+                    "OKRES",
+                    "TYPZASTUP",
+                    "DRUHZASTUP",
+                    "KODZASTUP",
+                    "NAZEVZAST",
+                    "OBEC",
+                    "NAZEVOBCE",
+                    "ORP",
+                    "CPOU",
+                    "REGURAD",
+                    "OBVODY",
+                    "COBVODU",
+                    "MANDATY",
+                    "POCOBYV",
+                    "TYPDUVODU",
+                    "POCET_VS",
+                    "STAV_OBCE"
+                ],
+                "vynechej": [
+                    "MAXOKRSEK7",
+                    "MINOKRSEK1",
+                    "MAXOKRSEK5",
+                    "MAXOKRSEK4",
+                    "MINOKRSEK4",
+                    "MAXOKRSEK8",
+                    "MINOKRSE10",
+                    "MAXOKRSEK3",
+                    "MINOKRSEK7",
+                    "MINOKRSEK2",
+                    "MINOKRSEK9",
+                    "MAXOKRSEK2",
+                    "MAXOKRSEK6",
+                    "MINOKRSEK6",
+                    "MAXOKRSEK1",
+                    "MAXOKRSE10",
+                    "MINOKRSEK5",
+                    "MINOKRSEK8",
+                    "MAXOKRSEK9",
+                    "MINOKRSEK3",
+                    "COBROP"
+                ]
             }
         }
     },
