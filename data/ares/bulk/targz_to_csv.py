@@ -65,9 +65,9 @@ def organi(root, ico):
 
 with tarfile.open(os.path.join(
         vstupy, 'ares_vreo_all.tar.gz'), 'r:gz') as tf, open(
-            os.path.join(vystupy, 'firmy.csv'), 'w') as ud, open(
-                os.path.join(vystupy, 'fosoby.csv'), 'w') as fo, open(
-                    os.path.join(vystupy, 'posoby.csv'), 'w') as po:
+            os.path.join(vystupy, 'firmy.csv'), 'w', encoding='utf8') as ud, open(
+                os.path.join(vystupy, 'fosoby.csv'), 'w', encoding='utf8') as fo, open(
+                    os.path.join(vystupy, 'posoby.csv'), 'w', encoding='utf8') as po:
     udc = csv.writer(ud)
     foc = csv.writer(fo)
     poc = csv.writer(po)

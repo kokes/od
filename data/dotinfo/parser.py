@@ -42,7 +42,7 @@ if __name__ == '__main__':
     hd = [j.value for j in first]
     assert hd[:len(exphd)] == exphd
 
-    with open('data/dotinfo.csv', 'w') as fw:
+    with open('data/dotinfo.csv', 'w', encoding='utf8') as fw:
         cw = csv.writer(fw)
         cw.writerow(hdclean)
 

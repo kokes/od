@@ -43,8 +43,8 @@ hd_nace = ['id', 'nazev']
 
 os.makedirs('data/csv', exist_ok=True)
 with psycopg2.connect(host='localhost') as conn, conn.cursor() as cursor, \
-        open('data/csv/res.csv', 'w') as fw, \
-        open('data/csv/res_nace.csv', 'w') as fnw:
+        open('data/csv/res.csv', 'w', encoding='utf8') as fw, \
+        open('data/csv/res_nace.csv', 'w', encoding='utf8') as fnw:
     cw = csv.DictWriter(fw, fieldnames=hd)
     cnw = csv.DictWriter(fnw, fieldnames=hd_nace)
     cw.writeheader()

@@ -43,7 +43,7 @@ if __name__ == '__main__':
         tfn = os.path.join(tdir, tbn + '_smlouvy.csv')
         tfnu = os.path.join(tdir, tbn + '_ucastnici.csv')
 
-        with open(tfn, 'w') as fw, open(tfnu, 'w') as fwu:
+        with open(tfn, 'w', encoding='utf8') as fw, open(tfnu, 'w', encoding='utf8') as fwu:
             cw = csv.writer(fw)
             cwu = csv.writer(fwu)
             cw.writerow(hds)

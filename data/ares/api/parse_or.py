@@ -277,7 +277,7 @@ if __name__ == '__main__':
     cws = {}  #  csv writers
     for k, v in hds.items():
         tfn = os.path.join(tdir, f'{k}.csv')
-        fhs[k] = open(tfn, 'w')
+        fhs[k] = open(tfn, 'w', encoding='utf8')
         cws[k] = csv.DictWriter(fhs[k], fieldnames=v)
         cws[k].writeheader()
 

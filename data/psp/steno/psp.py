@@ -101,7 +101,7 @@ for rok, url in urls.items():
     os.makedirs(csv_dir, exist_ok=True)
     csv_fn = os.path.join(csv_dir, f'{rok}.csv')
 
-    with open(csv_fn, 'w') as fw:
+    with open(csv_fn, 'w', encoding='utf8') as fw:
         cw = csv.DictWriter(fw, fieldnames=['rok', 'datum', 'schuze', 'fn', 'autor', 'funkce', 'tema', 'text'])
         cw.writeheader()
         for fn in iglob(os.path.join(raw_dir, '*.zip')):

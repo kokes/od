@@ -76,7 +76,7 @@ for volby, mp in mps.items():
                     tfn = os.path.join(csv_dir, f'{datum}_{ds}.csv')
                     qq.append(f"echo {tfn}\ncat {tfn} | psql -c 'copy volby.{volby}_{ds} from stdin csv header'")
                     if os.path.isfile(tfn): continue # TODO: smaz
-                    with open(tfn, 'w') as fw:
+                    with open(tfn, 'w', encoding='utf8') as fw:
                         cw = csv.DictWriter(fw, fieldnames=['DATUM'] + fmp['schema'])
                         cw.writeheader()
                         for el in extract_elements(zf, ff, fmp['klic']):
@@ -88,9 +88,9 @@ for volby, mp in mps.items():
                                 **el,
                             })
 
-with open('init_raw.sql', 'w') as f:
+with open('init_raw.sql', 'w', encoding='utf8') as f:
     f.write('\n'.join(sch))
     
-with open('copy.sh', 'w') as f:
+with open('copy.sh', 'w', encoding='utf8') as f:
     f.write('psql < init.sql\n')
     f.write('\n'.join(qq))

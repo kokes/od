@@ -54,7 +54,7 @@ if __name__ == '__main__':
         os.mkdir('data')
     absfn = os.path.join(tdir, tfn)
 
-    with open(absfn, 'w') as fw:
+    with open(absfn, 'w', encoding='utf8') as fw:
         logging.info('zapisuju nova ICO ze zmenovych souboru do %s', absfn)
         cw = csv.writer(fw)
         cw.writerow(['ico', 'rejstrik'])
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     # stahni export z ARES otevrenych dat
     bfn = 'balik.csv.7z'
     urlretrieve('https://wwwinfo.mfcr.cz/ares/ares_seznamIC_VR_balik.csv.7z', bfn)
-    with open(absfn, 'a') as fw:
+    with open(absfn, 'a', encoding='utf8') as fw:
         logging.info('zapisuju nova ICO z dumpu ARES otevrenych dat')
         cw = csv.writer(fw)
         for fn in unpack(bfn):

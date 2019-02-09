@@ -82,7 +82,7 @@ if __name__ == '__main__':
 
 
         for k, v in tblmap.items():
-            with open(get_fn(ds, v), 'w') as fw:
+            with open(get_fn(ds, v), 'w', encoding='utf8') as fw:
                 cw = csv.writer(fw)
                 cw.writerow(k)
 
@@ -97,7 +97,7 @@ if __name__ == '__main__':
                         hd = tuple(next(cr))
                         tpmap = najdi_typy(hd, mapping['typy'])
                         tp = tblmap[hd] # document type
-                        f = open(get_fn(ds, tp), 'a')
+                        f = open(get_fn(ds, tp), 'a', encoding='utf8')
                         cw = csv.writer(f)
                         continue
                         
