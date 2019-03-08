@@ -954,7 +954,7 @@
             },
             {
                 "sloupec": "zm_lhuty",
-                "typ": "int",
+                "typ": "char(X)",
                 "popis": "Příznak změny lhůty k projednání výbory. 1 - zkrácení, 2 - prodloužení, viz též tisky:lhuta."
             },
             {
@@ -1068,7 +1068,7 @@
             },
             {
                 "sloupec": "zaver_sb_cislo",
-                "typ": "int",
+                "typ": "char(X)",
                 "popis": "Čislo ve Sbírce, číslo za lomítkem se vezme jako část rok z hist:datum."
             },
             {
