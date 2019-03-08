@@ -3,6 +3,7 @@
 
 import json
 import csv
+import os
 import zipfile
 from contextlib import contextmanager
 from functools import lru_cache
@@ -21,54 +22,71 @@ def dl(url):
     assert r.ok, r.status_code
     return BytesIO(r.content)
 
+
 @contextmanager
 def read_compressed(zipname, filename):
     burl = 'http://www.psp.cz/eknih/cdrom/opendata/{}'
     with zipfile.ZipFile(dl(burl.format(zipname))) as zf:
         yield TextIOWrapper(zf.open(filename), 'cp1250', errors='ignore')  # tisky.unl maj encoding chyby
 
-def read_compressed_csv(zf, fn, cols):
-    datetypes = { 'date', 'datetime(year to hour)', 'datum', 'datetime(year to minute)', 'datetime(year to second, fraction)', 'datetime year to hour', 'datetime year to minute', 'datetime year to day', 'datetime(year to second)' }
+
+def read_compressed_csv(zf, fn, mp):
+    datetypes = {'date', 'datetime(year to hour)', 'datum', 'datetime(year to minute)', 'datetime(year to second, fraction)',
+                 'datetime year to hour', 'datetime year to minute', 'datetime year to day', 'datetime(year to second)'}
+
+    cols = [j['sloupec'] for j in mp]
+    types = {j['sloupec']: j['typ'] for j in mp}
     with read_compressed(zf, fn) as f:
         cr = csv.reader(f, delimiter='|')
         for el in cr:
             dt = {}
             for k, v in zip(cols, el):
-                if v == '':
+                if v.strip() == '':
                     dt[k] = None
                 elif types[k] in datetypes:
                     dt[k] = parse(v)
                 else:
                     dt[k] = v
-                    
+
             yield dt
 
 
-pg = psycopg2.connect(host='localhost')
+def nm_fn(tema, tabulka):
+    tbl = f'{mp["tema"]}_{mp["tabulka"]}'
+    tfn = os.path.join(csv_dir, f'{tbl}.csv')
+    return tbl, tfn
 
 
+csv_dir = 'data/csv'
+os.makedirs(csv_dir, exist_ok=True)
+run_csv = False
+run_sql = True
 with open('mapping.json') as f:
     mapping = json.load(f)
 
 
-for mp in mapping:
-    schema = 'psp'
-    tbl = f'{mp["tema"]}_{mp["tabulka"]}'
-    print(tbl)
-    cols = [j['sloupec'] for j in mp['sloupce']]
-    types = {j['sloupec']: j['typ'] for j in mp['sloupce']}
-    qq = 'INSERT INTO {{}}.{{}}({{}}) VALUES({})'.format(', '.join(['%({})s'.format(j) for j in cols]))
-    with pg, pg.cursor() as cur:
-        cur.execute(pql.SQL('DELETE FROM {}.{}').format(pql.Identifier(schema), pql.Identifier(tbl)))
-        for ffn in mp['soubory']:
-            print('\t', ffn)
-            zf, fn = ffn.split('/')
-#             for el in read_compressed_csv(zf, fn, cols):
-#                 cur.execute(pql.SQL(qq).format(pql.Identifier(schema), pql.Identifier(tbl),
-#                                               pql.SQL(',').join([pql.Identifier(j) for j in cols])), el)
+if run_csv:
+    for mp in mapping:
+        tbl, tfn = nm_fn(mp["tema"], mp["tabulka"])
+        print(tbl)
+        cols = [j['sloupec'] for j in mp['sloupce']]
+        with open(tfn, 'w') as fw:
+            cw = csv.DictWriter(fw, fieldnames=cols)
+            cw.writeheader()
+            for ffn in mp['soubory']:
+                print('\t', ffn)
+                zf, fn = ffn.split('/')
+                for el in read_compressed_csv(zf, fn, mp['sloupce']):
+                    cw.writerow(el)
 
-            query = pql.SQL(qq).format(pql.Identifier(schema), pql.Identifier(tbl),
-                                              pql.SQL(',').join([pql.Identifier(j) for j in cols]))
-            data = read_compressed_csv(zf, fn, cols)
-            
-            psycopg2.extras.execute_batch(cur, query, data, page_size=1000)
+if run_sql:
+    pg = psycopg2.connect(host='localhost')
+    schema = 'psp'
+    for mp in mapping:
+        tbl, tfn = nm_fn(mp["tema"], mp["tabulka"])
+        absfn = os.path.abspath(tfn)
+        print(tbl)
+        with pg, pg.cursor() as cur:
+            cur.execute(pql.SQL('TRUNCATE {}.{}').format(pql.Identifier(schema), pql.Identifier(tbl)))
+            cur.execute(pql.SQL("COPY {{}}.{{}} FROM '{}' CSV HEADER".format(
+                absfn)).format(pql.Identifier(schema), pql.Identifier(tbl)))
