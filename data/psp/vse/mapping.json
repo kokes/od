@@ -424,19 +424,20 @@
         "tema": "hlasovani",
         "tabulka": "hl_hlasovani",
         "soubory": [
-          "hl-1993ps.zip/hl1993s.unl",
-          "hl-1996ps.zip/hl1996s.unl",
-          "hl-1998ps.zip/hl1998s.unl",
-          "hl-2002ps.zip/hl2002s.unl",
-          "hl-2006ps.zip/hl2006s.unl",
-          "hl-2010ps.zip/hl2010s.unl",
-          "hl-2013ps.zip/hl2013s.unl",
-          "hl-2017ps.zip/hl2017s.unl"
+            "hl-1993ps.zip/hl1993s.unl",
+            "hl-1996ps.zip/hl1996s.unl",
+            "hl-1998ps.zip/hl1998s.unl",
+            "hl-2002ps.zip/hl2002s.unl",
+            "hl-2006ps.zip/hl2006s.unl",
+            "hl-2010ps.zip/hl2010s.unl",
+            "hl-2013ps.zip/hl2013s.unl",
+            "hl-2017ps.zip/hl2017s.unl"
         ],
         "sloupce": [
             {
                 "sloupec": "id_hlasovani",
                 "typ": "int",
+                "unique": true,
                 "popis": "Identifikátor hlasování"
             },
             {
@@ -525,23 +526,29 @@
         "tema": "hlasovani",
         "tabulka": "hl_poslanec",
         "soubory": [
-          "hl-1993ps.zip/hl1993h1.unl",
-          "hl-1993ps.zip/hl1993h2.unl",
-          "hl-1996ps.zip/hl1996h1.unl",
-          "hl-1998ps.zip/hl1998h1.unl",
-          "hl-1998ps.zip/hl1998h2.unl",
-          "hl-1998ps.zip/hl1998h3.unl",
-          "hl-2002ps.zip/hl2002h1.unl",
-          "hl-2002ps.zip/hl2002h2.unl",
-          "hl-2002ps.zip/hl2002h3.unl",
-          "hl-2006ps.zip/hl2006h1.unl",
-          "hl-2006ps.zip/hl2006h2.unl",
-          "hl-2010ps.zip/hl2010h1.unl",
-          "hl-2010ps.zip/hl2010h2.unl",
-          "hl-2013ps.zip/hl2013h1.unl",
-          "hl-2013ps.zip/hl2013h2.unl",
-          "hl-2017ps.zip/hl2017h1.unl",
-          "hl-2017ps.zip/hl2017h2.unl"
+            "hl-1993ps.zip/hl1993h1.unl",
+            "hl-1993ps.zip/hl1993h2.unl",
+            "hl-1996ps.zip/hl1996h1.unl",
+            "hl-1998ps.zip/hl1998h1.unl",
+            "hl-1998ps.zip/hl1998h2.unl",
+            "hl-1998ps.zip/hl1998h3.unl",
+            "hl-2002ps.zip/hl2002h1.unl",
+            "hl-2002ps.zip/hl2002h2.unl",
+            "hl-2002ps.zip/hl2002h3.unl",
+            "hl-2006ps.zip/hl2006h1.unl",
+            "hl-2006ps.zip/hl2006h2.unl",
+            "hl-2010ps.zip/hl2010h1.unl",
+            "hl-2010ps.zip/hl2010h2.unl",
+            "hl-2013ps.zip/hl2013h1.unl",
+            "hl-2013ps.zip/hl2013h2.unl",
+            "hl-2017ps.zip/hl2017h1.unl",
+            "hl-2017ps.zip/hl2017h2.unl"
+        ],
+        "index": [
+            [
+                "id_poslanec",
+                "id_hlasovani"
+            ]
         ],
         "sloupce": [
             {
@@ -565,14 +572,14 @@
         "tema": "hlasovani",
         "tabulka": "omluvy",
         "soubory": [
-          "hl-1993ps.zip/omluvy.unl",
-          "hl-1996ps.zip/omluvy.unl",
-          "hl-1998ps.zip/omluvy.unl",
-          "hl-2002ps.zip/omluvy.unl",
-          "hl-2006ps.zip/omluvy.unl",
-          "hl-2010ps.zip/omluvy.unl",
-          "hl-2013ps.zip/omluvy.unl",
-          "hl-2017ps.zip/omluvy.unl"
+            "hl-1993ps.zip/omluvy.unl",
+            "hl-1996ps.zip/omluvy.unl",
+            "hl-1998ps.zip/omluvy.unl",
+            "hl-2002ps.zip/omluvy.unl",
+            "hl-2006ps.zip/omluvy.unl",
+            "hl-2010ps.zip/omluvy.unl",
+            "hl-2013ps.zip/omluvy.unl",
+            "hl-2017ps.zip/omluvy.unl"
         ],
         "sloupce": [
             {
@@ -606,24 +613,27 @@
         "tema": "hlasovani",
         "tabulka": "hl_check",
         "soubory": [
-          "hl-2010ps.zip/hl2010z.unl",
-          "hl-2013ps.zip/hl2013z.unl",
-          "hl-2017ps.zip/hl2017z.unl"
+            "hl-2010ps.zip/hl2010z.unl",
+            "hl-2013ps.zip/hl2013z.unl",
+            "hl-2017ps.zip/hl2017z.unl"
         ],
         "sloupce": [
             {
                 "sloupec": "id_hlasovani",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani, které bylo zpochybněno."
             },
             {
                 "sloupec": "turn",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Číslo stenozáznamu, ve kterém je první zmínka o zpochybnění hlasování."
             },
             {
                 "sloupec": "mode",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Typ zpochybnění: 0 - žádost o opakování hlasování - v tomto případě se o této žádosti neprodleně hlasuje a teprve je-li tato žádost přijata, je hlasování opakováno; 1 - pouze sdělení pro stenozáznam, není požadováno opakování hlasování."
             },
             {
@@ -642,9 +652,9 @@
         "tema": "hlasovani",
         "tabulka": "hl_zposlanec",
         "soubory": [
-          "hl-2010ps.zip/hl2010x.unl",
-          "hl-2013ps.zip/hl2013x.unl",
-          "hl-2017ps.zip/hl2017x.unl"
+            "hl-2010ps.zip/hl2010x.unl",
+            "hl-2013ps.zip/hl2013x.unl",
+            "hl-2017ps.zip/hl2017x.unl"
         ],
         "sloupce": [
             {
@@ -668,9 +678,9 @@
         "tema": "hlasovani",
         "tabulka": "hl_vazby",
         "soubory": [
-          "hl-2010ps.zip/hl2010v.unl",
-          "hl-2013ps.zip/hl2013v.unl",
-          "hl-2017ps.zip/hl2017v.unl"
+            "hl-2010ps.zip/hl2010v.unl",
+            "hl-2013ps.zip/hl2013v.unl",
+            "hl-2017ps.zip/hl2017v.unl"
         ],
         "sloupce": [
             {
@@ -694,14 +704,14 @@
         "tema": "hlasovani",
         "tabulka": "zmatecne",
         "soubory": [
-          "hl-1993ps.zip/zmatecne.unl",
-          "hl-1996ps.zip/zmatecne.unl",
-          "hl-1998ps.zip/zmatecne.unl",
-          "hl-2002ps.zip/zmatecne.unl",
-          "hl-2006ps.zip/zmatecne.unl",
-          "hl-2010ps.zip/zmatecne.unl",
-          "hl-2013ps.zip/zmatecne.unl",
-          "hl-2017ps.zip/zmatecne.unl"
+            "hl-1993ps.zip/zmatecne.unl",
+            "hl-1996ps.zip/zmatecne.unl",
+            "hl-1998ps.zip/zmatecne.unl",
+            "hl-2002ps.zip/zmatecne.unl",
+            "hl-2006ps.zip/zmatecne.unl",
+            "hl-2010ps.zip/zmatecne.unl",
+            "hl-2013ps.zip/zmatecne.unl",
+            "hl-2017ps.zip/zmatecne.unl"
         ],
         "sloupce": [
             {
@@ -1407,7 +1417,7 @@
         "tema": "interp",
         "tabulka": "ui_stav",
         "soubory": [
-          "interp.zip/p-stav.unl"
+            "interp.zip/p-stav.unl"
         ],
         "sloupce": [
             {
@@ -1679,27 +1689,32 @@
         "tema": "dokumenty",
         "tabulka": "sd_dokument",
         "soubory": [
-          "sd.zip/sd_dokument.unl"
+            "sd.zip/sd_dokument.unl"
         ],
         "sloupce": [
             {
                 "sloupec": "id_dokument",
                 "typ": "int",
+                "nullable": false,
+                "unique": true,
                 "popis": "Identifikátor sněmovního dokumentu"
             },
             {
                 "sloupec": "id_obdobi",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor volebního období, viz org:id_org"
             },
             {
                 "sloupec": "cislo",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Číslo sněmovního dokumentu"
             },
             {
                 "sloupec": "typ",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Typ sněmovního dokumentu, 12 - Podklady pro jednání PS, 13 - Písemné pozměňovací návrhy"
             },
             {
@@ -1725,6 +1740,7 @@
             {
                 "sloupec": "end",
                 "typ": "datetime(year to second)",
+                "nullable": false,
                 "popis": "Ukončení editace sněmovního dokumentu (u některých typů zároveň čas zveřejnění)"
             }
         ]

@@ -10,9 +10,6 @@ from functools import lru_cache
 from io import BytesIO, TextIOWrapper
 
 from dateutil.parser import parse
-import psycopg2
-import psycopg2.extras
-import psycopg2.sql as pql
 import requests
 
 
@@ -51,42 +48,21 @@ def read_compressed_csv(zf, fn, mp):
             yield dt
 
 
-def nm_fn(tema, tabulka):
-    tbl = f'{mp["tema"]}_{mp["tabulka"]}'
-    tfn = os.path.join(csv_dir, f'{tbl}.csv')
-    return tbl, tfn
-
-
 csv_dir = 'data/csv'
 os.makedirs(csv_dir, exist_ok=True)
-run_csv = False
-run_sql = True
 with open('mapping.json') as f:
     mapping = json.load(f)
 
 
-if run_csv:
-    for mp in mapping:
-        tbl, tfn = nm_fn(mp["tema"], mp["tabulka"])
-        print(tbl)
-        cols = [j['sloupec'] for j in mp['sloupce']]
-        with open(tfn, 'w') as fw:
-            cw = csv.DictWriter(fw, fieldnames=cols)
-            cw.writeheader()
-            for ffn in mp['soubory']:
-                print('\t', ffn)
-                zf, fn = ffn.split('/')
-                for el in read_compressed_csv(zf, fn, mp['sloupce']):
-                    cw.writerow(el)
-
-if run_sql:
-    pg = psycopg2.connect(host='localhost')
-    schema = 'psp'
-    for mp in mapping:
-        tbl, tfn = nm_fn(mp["tema"], mp["tabulka"])
-        absfn = os.path.abspath(tfn)
-        print(tbl)
-        with pg, pg.cursor() as cur:
-            cur.execute(pql.SQL('TRUNCATE {}.{}').format(pql.Identifier(schema), pql.Identifier(tbl)))
-            cur.execute(pql.SQL("COPY {{}}.{{}} FROM '{}' CSV HEADER".format(
-                absfn)).format(pql.Identifier(schema), pql.Identifier(tbl)))
+for mp in mapping:
+    tbl = f'{mp["tema"]}_{mp["tabulka"]}'
+    tfn = os.path.join(csv_dir, f'{tbl}.csv') print(tbl)
+    cols = [j['sloupec'] for j in mp['sloupce']]
+    with open(tfn, 'w') as fw:
+        cw = csv.DictWriter(fw, fieldnames=cols)
+        cw.writeheader()
+        for ffn in mp['soubory']:
+            print('\t', ffn)
+            zf, fn = ffn.split('/')
+            for el in read_compressed_csv(zf, fn, mp['sloupce']):
+                cw.writerow(el)

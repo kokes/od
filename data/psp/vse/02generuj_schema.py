@@ -1,12 +1,11 @@
-# TODO: not null, primary key
-
 import json
+import os
 
 with open('mapping.json') as f:
     mapping = json.load(f)
 
 typemap = {
-    'int': 'int', 
+    'int': 'int',
     'char(X)': 'varchar',
     'date': 'date',
     'datetime(year to hour)': 'timestamp',
@@ -22,25 +21,45 @@ typemap = {
     'datetime(year to second)': 'timestamp',
 }
 
-q = []
-q.append('CREATE SCHEMA IF NOT EXISTS psp;')
+schema = 'psp'
+csv_dir = 'data/csv'
+q, cp, cm, idx = [], [], [], []  # CTEs, COPY, COMMENT, indexes
+q.append('CREATE SCHEMA IF NOT EXISTS {};'.format(schema))
 
 for mp in mapping:
-    tbl = f'psp.{mp["tema"]}_{mp["tabulka"]}'
-    q.append(f'DROP TABLE IF EXISTS {tbl};')
-    q.append(f'CREATE TABLE {tbl} (')
+    tbl = f'{mp["tema"]}_{mp["tabulka"]}'
+    full_tbl = f'{schema}.{tbl}'
+
+    tfn = os.path.abspath(os.path.join(csv_dir, f'{tbl}.csv'))
+
+    print(tbl)
+
+    q.append(f'DROP TABLE IF EXISTS {full_tbl};')
+    q.append(f'CREATE TABLE {full_tbl} (')
     for j, col in enumerate(mp['sloupce']):
+        # CTE
         comma = ',' if j < len(mp['sloupce'])-1 else ''
         typ = typemap[col["typ"]]
-        q.append(f'\t"{col["sloupec"]}" {typ}{comma}')
-    
-    q.append(');\n')
-                 
-    for col in mp['sloupce']:
-        desc = (col['popis'] or '').replace("'", '')
-        q.append(f"COMMENT ON COLUMN {tbl}.{col['sloupec']} IS '{desc}';")
+        null = '' if col.get('nullable', True) else ' NOT NULL '
+        q.append(f'\t"{col["sloupec"]}" {typ}{null}{comma}')
 
-    q.append('\n\n')
-    
+        # comments
+        desc = (col['popis'] or '').replace("'", '')
+        cm.append(f"COMMENT ON COLUMN {full_tbl}.{col['sloupec']} IS '{desc}';")
+
+        # indexes
+        if col.get('unique'):
+            idx.append(
+                f'CREATE UNIQUE INDEX {schema}_{tbl}_{col["sloupec"]}_unique_idx ON {schema}.{tbl}({col["sloupec"]});')
+
+    # more indexes (non unique)
+    for el in mp.get('index', []):
+        idx.append(f'CREATE INDEX {schema}_{tbl}_{"_".join(el)}_idx ON {schema}.{tbl}({", ".join(el)});')
+
+    # COPY
+    cp.append(f'COPY {full_tbl} FROM \'{tfn}\' CSV HEADER;')
+
+    q.append(');\n')
+
 with open('schema.sql', 'w') as fw:
-    fw.write('\n'.join(q))
+    fw.write('\n'.join(q + cm + cp + idx))
