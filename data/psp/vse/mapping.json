@@ -9,6 +9,7 @@
             {
                 "sloupec": "id_typ_org",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor typu orgánu"
             },
             {
@@ -19,6 +20,7 @@
             {
                 "sloupec": "nazev_typ_org_cz",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Název typu orgánu v češtině"
             },
             {
@@ -48,16 +50,19 @@
             {
                 "sloupec": "id_typ_funkce",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor typu funkce"
             },
             {
                 "sloupec": "id_typ_org",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor typu orgánu, viz typ_organu:id_typ_org"
             },
             {
                 "sloupec": "typ_funkce_cz",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Název typu funkce v češtině"
             },
             {
@@ -68,6 +73,7 @@
             {
                 "sloupec": "priorita",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Priorita při výpisu"
             },
             {
@@ -87,26 +93,31 @@
             {
                 "sloupec": "id_funkce",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor funkce, používá se v zarazeni:id_fo"
             },
             {
                 "sloupec": "id_organ",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor orgánu, viz organy:id_organ"
             },
             {
                 "sloupec": "id_typ_funkce",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Typ funkce, viz typ_funkce:id_typ_funkce"
             },
             {
                 "sloupec": "nazev_funkce_cz",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Název funkce, pouze pro interní použití"
             },
             {
                 "sloupec": "priorita",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Priorita výpisu"
             }
         ]
@@ -121,6 +132,7 @@
             {
                 "sloupec": "id_organ",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor orgánu"
             },
             {
@@ -131,6 +143,7 @@
             {
                 "sloupec": "id_typ_organu",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Typ orgánu, viz typ_organu:id_typ_organu"
             },
             {
@@ -141,6 +154,7 @@
             {
                 "sloupec": "nazev_organu_cz",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Název orgánu v češtině"
             },
             {
@@ -151,6 +165,7 @@
             {
                 "sloupec": "od_organ",
                 "typ": "date",
+                "nullable": false,
                 "popis": "Ustavení orgánu"
             },
             {
@@ -180,6 +195,7 @@
             {
                 "sloupec": "id_osoba",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor osoby"
             },
             {
@@ -190,11 +206,13 @@
             {
                 "sloupec": "jmeno",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Jméno"
             },
             {
                 "sloupec": "prijmeni",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Příjmení, v některých případech obsahuje i dodatek typu \"st.\", \"ml.\""
             },
             {
@@ -205,11 +223,13 @@
             {
                 "sloupec": "narozeni",
                 "typ": "date",
+                "nullable": false,
                 "popis": "Datum narození, pokud neznámo, pak 1.1.1900."
             },
             {
                 "sloupec": "pohlavi",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Pohlaví, \"M\" jako muž, ostatní hodnoty žena"
             },
             {
@@ -234,16 +254,19 @@
             {
                 "sloupec": "id_osoba",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor osoby, viz osoba:id_osoba"
             },
             {
                 "sloupec": "id_of",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor orgánu či funkce: pokud je zároveň nastaveno zarazeni:cl_funkce == 0, pak id_o odpovídá organy:id_organ, pokud cl_funkce == 1, pak odpovídá funkce:id_funkce."
             },
             {
                 "sloupec": "cl_funkce",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Status členství nebo funce: pokud je rovno 0, pak jde o členství, pokud 1, pak jde o funkci."
             },
             {
@@ -278,26 +301,31 @@
             {
                 "sloupec": "id_poslanec",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor poslance"
             },
             {
                 "sloupec": "id_osoba",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor osoby, viz osoba:id_osoba"
             },
             {
                 "sloupec": "id_kraj",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Volební kraj, viz organy:id_organu"
             },
             {
                 "sloupec": "id_kandidatka",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Volební strana/hnutí, viz org:id_organu, pouze odkazuje na stranu/hnutí, za kterou byl zvolen a nemusí mít souvislost s členstvím v poslaneckém klubu."
             },
             {
                 "sloupec": "id_obdobi",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Volební období, viz organy:id_organu"
             },
             {
@@ -362,21 +390,25 @@
             {
                 "sloupec": "id_poslanec",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor poslance, viz poslanec:id_poslanec"
             },
             {
                 "sloupec": "adresa",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Adresa kanceláře, jednotlivé položky jsou odděleny středníkem"
             },
             {
                 "sloupec": "sirka",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Severní šířka, WGS 84, formát GG.AABBCCC, GG = stupně, AA - minuty, BB - vteřiny, CCC - tisíciny vteřin"
             },
             {
                 "sloupec": "delka",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Východní délka, WGS 84, formát GG.AABBCCC, GG = stupně, AA - minuty, BB - vteřiny, CCC - tisíciny vteřin"
             }
         ]
@@ -391,31 +423,37 @@
             {
                 "sloupec": "id_osoba",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor osoby, viz osoba:id_osoba"
             },
             {
                 "sloupec": "id_org",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor orgánu, viz org:id_org"
             },
             {
                 "sloupec": "typ",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Typ záznamu, viz výše."
             },
             {
                 "sloupec": "obvod",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Je-li typ = 1, pak jde o číslo senátního obvodu"
             },
             {
                 "sloupec": "strana",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Je-li typ = 1, pak jde o název volební strany/hnutí či označení nezávislého kandidáta"
             },
             {
                 "sloupec": "id_external",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Je-li typ = 1, pak je to identifikátor senátora na senat.cz"
             }
         ]
@@ -554,16 +592,19 @@
             {
                 "sloupec": "id_poslanec",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor poslance, viz poslanec:id_poslanec"
             },
             {
                 "sloupec": "id_hlasovani",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani"
             },
             {
                 "sloupec": "vysledek",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Hlasování jednotlivého poslance. 'A' - ano, 'B' nebo 'N' - ne, 'C' - zdržel se (stiskl tlačítko X), 'F' - nehlasoval (byl přihlášen, ale nestiskl žádné tlačítko), '@' - nepřihlášen, 'M' - omluven, 'W' - hlasování před složením slibu poslance, 'K' - zdržel se/nehlasoval. Viz úvodní vysvětlení zpracování výsledků hlasování."
             }
         ]
@@ -585,16 +626,19 @@
             {
                 "sloupec": "id_organ",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor volebního období, viz organy:id_organ"
             },
             {
                 "sloupec": "id_poslanec",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor poslance, viz poslanec:id_poslanec"
             },
             {
                 "sloupec": "den",
                 "typ": "date",
+                "nullable": false,
                 "popis": "Datum omluvy"
             },
             {
@@ -660,16 +704,19 @@
             {
                 "sloupec": "id_hlasovani",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani a hl_check:id_hlasovani, které bylo zpochybněno."
             },
             {
                 "sloupec": "id_osoba",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor poslance, který zpochybnil hlasování; viz osoby:id_osoba."
             },
             {
                 "sloupec": "mode",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Typ zpochybnění, viz hl_check:mode."
             }
         ]
@@ -686,16 +733,19 @@
             {
                 "sloupec": "id_hlasovani",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani"
             },
             {
                 "sloupec": "turn",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Číslo stenozáznamu"
             },
             {
                 "sloupec": "typ",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Typ vazby: 0 - hlasování je v textu explicitně zmíněno a lze tedy vytvořit odkaz přímo na začátek hlasování, 1 - hlasování není v textu explicitně zmíněno, odkaz lze vytvořit pouze na stenozáznam jako celek."
             }
         ]
@@ -717,6 +767,7 @@
             {
                 "sloupec": "id_hlasovani",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani"
             }
         ]
@@ -731,16 +782,20 @@
             {
                 "sloupec": "id_druh",
                 "typ": "int",
+                "nullable": false,
+                "unique": true,
                 "popis": "Identifikátor druhu tisku"
             },
             {
                 "sloupec": "druh_t",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Typ druhu tisku: T - \"hlavní tisk\", Z - \"následný tisk\", X - historické druhy tisků"
             },
             {
                 "sloupec": "nazev_druh",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Název druhu tisku"
             }
         ]
@@ -755,11 +810,14 @@
             {
                 "sloupec": "id_navrh",
                 "typ": "int",
+                "nullable": false,
+                "unique": true,
                 "popis": "Identifikátor typu navrhovatele"
             },
             {
                 "sloupec": "druh_navrhovatele",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Popis typu navrhovatele"
             }
         ]
@@ -774,6 +832,8 @@
             {
                 "sloupec": "id_typ",
                 "typ": "int",
+                "nullable": false,
+                "unique": true,
                 "popis": "Identifikátor typu stavu projednávání tisku"
             },
             {
@@ -832,11 +892,14 @@
             {
                 "sloupec": "id_akce",
                 "typ": "int",
+                "nullable": false,
+                "unique": true,
                 "popis": "Identifikátor typu přechodu"
             },
             {
                 "sloupec": "popis_akce",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Název typu přechodu"
             }
         ]
@@ -1137,11 +1200,14 @@
             {
                 "sloupec": "id_vysledek",
                 "typ": "int",
+                "nullable": false,
+                "unique": true,
                 "popis": "Identifikátor druhu výsledku"
             },
             {
                 "sloupec": "druh_vysledek",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Popis druhu výsledku"
             }
         ]
@@ -1301,16 +1367,19 @@
             {
                 "sloupec": "id_ui_stav",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor typu výsledku projednávání ústní interpelace"
             },
             {
                 "sloupec": "nazev",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Název typu výsledku ústní interpelace"
             },
             {
                 "sloupec": "priorita",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Priorita výpisu typu výsledku"
             }
         ]
@@ -1325,16 +1394,19 @@
             {
                 "sloupec": "id_los",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor losování interpelací."
             },
             {
                 "sloupec": "datum_los",
                 "typ": "date",
+                "nullable": false,
                 "popis": "Datum interpelací. Změnou jednacího řádu se losování interpelací přesunulo ze začátku schůze na den projednávání interpelací a tak tento datum již není používán."
             },
             {
                 "sloupec": "typ_los",
                 "typ": "char(1)",
+                "nullable": false,
                 "popis": "Typ interpelací: \"M\" - na členy vlády, \"P\" - na předsedu vlády. Interpelace se projednávají v pořadí na předsedu vlády a pak na členy vlády."
             },
             {
@@ -1345,21 +1417,25 @@
             {
                 "sloupec": "id_schuze",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor schůze, viz i_schuze:id_schuze."
             },
             {
                 "sloupec": "id_bod",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor bodu schůze, viz i_bod_schuze:id_bod."
             },
             {
                 "sloupec": "schuze",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Číslo schůze, odvozeno od id_schuze."
             },
             {
                 "sloupec": "id_org",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor volebního období, viz organy:id_org."
             }
         ]
@@ -1374,31 +1450,37 @@
             {
                 "sloupec": "id_poradi",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor pořadí interpelací."
             },
             {
                 "sloupec": "id_losovani",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor losování interpelací, viz los_interpelaci:id_los."
             },
             {
                 "sloupec": "id_poslanec",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor poslance, viz osoba:id_osoba."
             },
             {
                 "sloupec": "id_ministr",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor člena vlády, viz osoba:id_osoba."
             },
             {
                 "sloupec": "vec",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Téma interpelace."
             },
             {
                 "sloupec": "poradi_l",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Pořadí interpelace, dáno losováním. V současné době se losují interpelace po skupinách dle priorit, viz poradi:priorita."
             },
             {
@@ -1423,11 +1505,13 @@
             {
                 "sloupec": "id_poradi",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor přihlášky k interpelaci, viz poradi:id_poradi."
             },
             {
                 "sloupec": "id_typ",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Typ výsledku projednávání interpelace, viz uitypv:id_ui_stav."
             },
             {
@@ -1530,11 +1614,14 @@
             {
                 "sloupec": "id_bod_stav",
                 "typ": "int",
+                "nullable": false,
+                "unique": true,
                 "popis": "Typ stavu bodu schůze: typ 3 - neprojednatelný znamená vyřazen z pořadu či neprojednatelný z důvodu legislativního procesu."
             },
             {
                 "sloupec": "popis",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Popis stavu bodu."
             }
         ]
@@ -1755,11 +1842,13 @@
             {
                 "sloupec": "id_dp",
                 "typ": "int",
+                "nullable": false,
                 "popis": "Identifikátor druhu předpisu."
             },
             {
                 "sloupec": "nazev_druhu",
                 "typ": "char(X)",
+                "nullable": false,
                 "popis": "Název druhu předpisu"
             },
             {
