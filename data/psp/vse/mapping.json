@@ -133,6 +133,7 @@
                 "sloupec": "id_organ",
                 "typ": "int",
                 "nullable": false,
+                "unique": true,
                 "popis": "Identifikátor orgánu"
             },
             {
@@ -204,16 +205,16 @@
                 "popis": "Titul pred jmenem"
             },
             {
-                "sloupec": "jmeno",
-                "typ": "char(X)",
-                "nullable": false,
-                "popis": "Jméno"
-            },
-            {
                 "sloupec": "prijmeni",
                 "typ": "char(X)",
                 "nullable": false,
                 "popis": "Příjmení, v některých případech obsahuje i dodatek typu \"st.\", \"ml.\""
+            },
+            {
+                "sloupec": "jmeno",
+                "typ": "char(X)",
+                "nullable": false,
+                "popis": "Jméno"
             },
             {
                 "sloupec": "za",
@@ -223,8 +224,7 @@
             {
                 "sloupec": "narozeni",
                 "typ": "date",
-                "nullable": false,
-                "popis": "Datum narození, pokud neznámo, pak 1.1.1900."
+                "popis": "Datum narození"
             },
             {
                 "sloupec": "pohlavi",
@@ -470,6 +470,11 @@
             "hl-2010ps.zip/hl2010s.unl",
             "hl-2013ps.zip/hl2013s.unl",
             "hl-2017ps.zip/hl2017s.unl"
+        ],
+        "index": [
+            [
+                "id_organ"
+            ]
         ],
         "sloupce": [
             {
@@ -948,6 +953,7 @@
             {
                 "sloupec": "id_tisk",
                 "typ": "int",
+                "unique": true,
                 "popis": "Identifikátor tisku"
             },
             {
@@ -1073,15 +1079,25 @@
         "soubory": [
             "tisky.zip/hist.unl"
         ],
+        "index": [
+            [
+                "id_hlas"
+            ],
+            [
+                "id_tisk"
+            ]
+        ],
         "sloupce": [
             {
                 "sloupec": "id_hist",
                 "typ": "int",
+                "notnull": true,
                 "popis": "Identifikátor kroku v historii projednávání"
             },
             {
                 "sloupec": "id_tisk",
                 "typ": "int",
+                "notnull": true,
                 "popis": "Identifikátor sněmovního tisku, viz tisky:id_tisk"
             },
             {
@@ -1097,6 +1113,7 @@
             {
                 "sloupec": "id_prechod",
                 "typ": "int",
+                "notnull": true,
                 "popis": "Identifikátor přechodu, viz prechody:id_prechod"
             },
             {

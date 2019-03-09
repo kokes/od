@@ -56,7 +56,8 @@ with open('mapping.json') as f:
 
 for mp in mapping:
     tbl = f'{mp["tema"]}_{mp["tabulka"]}'
-    tfn = os.path.join(csv_dir, f'{tbl}.csv') print(tbl)
+    tfn = os.path.join(csv_dir, f'{tbl}.csv')
+    print(tbl)
     cols = [j['sloupec'] for j in mp['sloupce']]
     with open(tfn, 'w') as fw:
         cw = csv.DictWriter(fw, fieldnames=cols)

@@ -61,5 +61,9 @@ for mp in mapping:
 
     q.append(');\n')
 
+# one-time updates
+otu = []
+otu.append("UPDATE psp.poslanci_osoby SET narozeni = NULL WHERE narozeni = '1900-01-01';")
+
 with open('schema.sql', 'w') as fw:
-    fw.write('\n'.join(q + cm + cp + idx))
+    fw.write('\n'.join(q + cm + cp + otu + idx))
