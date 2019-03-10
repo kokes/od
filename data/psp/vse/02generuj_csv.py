@@ -41,7 +41,7 @@ def read_compressed_csv(zf, fn, mp):
                 if v.strip() == '':
                     dt[k] = None
                 elif types[k] in datetypes:
-                    dt[k] = parse(v)
+                    dt[k] = parse(v, dayfirst=True)
                 else:
                     dt[k] = v
 
