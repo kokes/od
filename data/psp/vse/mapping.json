@@ -891,7 +891,8 @@
                 "sloupec": "nazev_druh",
                 "typ": "char(X)",
                 "nullable": false,
-                "popis": "Název druhu tisku"
+                "popis": "Název druhu tisku",
+                "unique": true
             }
         ]
     },
@@ -913,7 +914,8 @@
                 "sloupec": "druh_navrhovatele",
                 "typ": "char(X)",
                 "nullable": false,
-                "popis": "Popis typu navrhovatele"
+                "popis": "Popis typu navrhovatele",
+                "unique": true
             }
         ]
     },
@@ -1388,7 +1390,8 @@
                 "sloupec": "druh_vysledek",
                 "typ": "char(X)",
                 "nullable": false,
-                "popis": "Popis druhu výsledku"
+                "popis": "Popis druhu výsledku",
+                "unique": true
             }
         ]
     },
@@ -1593,13 +1596,15 @@
                 "sloupec": "nazev",
                 "typ": "char(X)",
                 "nullable": false,
-                "popis": "Název typu výsledku ústní interpelace"
+                "popis": "Název typu výsledku ústní interpelace",
+                "unique": true
             },
             {
                 "sloupec": "priorita",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Priorita výpisu typu výsledku"
+                "popis": "Priorita výpisu typu výsledku",
+                "unique": true
             }
         ]
     },
@@ -1656,7 +1661,11 @@
                 "sloupec": "id_org",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor volebního období, viz organy:id_org."
+                "popis": "Identifikátor volebního období, viz organy:id_org.",
+                "fkey": [
+                    "poslanci_organy",
+                    "id_organ"
+                ]
             }
         ]
     },
@@ -1780,10 +1789,14 @@
                 "sloupec": "id_org",
                 "typ": "int",
                 "popis": "Identifikátor orgánu, viz org:id_org.",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "poslanci_organy",
+                    "id_organ"
+                ]
             },
             {
-                "sloupec": "schůze",
+                "sloupec": "schuze",
                 "typ": "int",
                 "popis": "Číslo schůze.",
                 "nullable": false
@@ -1872,7 +1885,8 @@
                 "sloupec": "popis",
                 "typ": "char(X)",
                 "nullable": false,
-                "popis": "Popis stavu bodu."
+                "popis": "Popis stavu bodu.",
+                "unique": true
             }
         ]
     },
@@ -1881,6 +1895,11 @@
         "tabulka": "bod_schuze",
         "soubory": [
             "schuze.zip/bod_schuze.unl"
+        ],
+        "index": [
+            [
+                "id_schuze"
+            ]
         ],
         "sloupce": [
             {
@@ -1925,6 +1944,42 @@
                 "sloupec": "poznamka",
                 "typ": "char(X)",
                 "popis": "Poznámka k bodu - obvykle obsahuje informaci o pevném zařazení bodu."
+            },
+            {
+                "sloupec": "id_bod_stav",
+                "typ": "int",
+                "popis": "Stav bodu pořadu, viz bod_stav:id_bod_stav. U bodů návrhu pořadu se nepoužije.",
+                "nullable": false
+            },
+            {
+                "sloupec": "pozvanka",
+                "typ": "int",
+                "popis": "Rozlišení záznamu, viz schuze:pozvanka"
+            },
+            {
+                "sloupec": "rj",
+                "typ": "int",
+                "popis": "Režim dle par. 90, odst. 2 jednacího řádu."
+            },
+            {
+                "sloupec": "pozn2",
+                "typ": "char(X)",
+                "popis": "Poznámka k bodu, zkrácený zápis"
+            },
+            {
+                "sloupec": "druh_bodu",
+                "typ": "int",
+                "popis": "Druh bodu: 0 nebo null: normální, 1: odpovědi na ústní interpelace, 2: odpovědi na písemné interpelace, 3: volební bod"
+            },
+            {
+                "sloupec": "id_sd",
+                "typ": "int",
+                "popis": "Identifikátor sněmovního dokumentu, viz sd_dokument:id_dokument. Pokud není null, při výpisu se zobrazuje bod_schuze:uplny_kon."
+            },
+            {
+                "sloupec": "zkratka",
+                "typ": "char(X)",
+                "popis": "Zkrácený název bodu, neoficiální."
             }
         ]
     },

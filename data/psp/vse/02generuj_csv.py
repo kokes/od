@@ -36,6 +36,9 @@ def read_compressed_csv(zf, fn, mp):
     with read_compressed(zf, fn) as f:
         cr = csv.reader(f, delimiter='|')
         for el in cr:
+            # UNL soubory maj jeden extra sloupec
+            # TODO: zapnout tohle, az opravi schema sbirky
+            # assert len(el) == len(cols) + 1, (el, cols)
             dt = {}
             for k, v in zip(cols, el):
                 if v.strip() == '':
