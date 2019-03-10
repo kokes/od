@@ -59,7 +59,11 @@
                 "sloupec": "id_typ_org",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor typu orgánu, viz typ_organu:id_typ_org"
+                "popis": "Identifikátor typu orgánu, viz typ_organu:id_typ_org",
+                "fkey": [
+                    "poslanci_typ_organu",
+                    "id_typ_org"
+                ]
             },
             {
                 "sloupec": "typ_funkce_cz",
@@ -108,13 +112,21 @@
                 "sloupec": "id_organ",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor orgánu, viz organy:id_organ"
+                "popis": "Identifikátor orgánu, viz organy:id_organ",
+                "fkey": [
+                    "poslanci_organy",
+                    "id_organ"
+                ]
             },
             {
                 "sloupec": "id_typ_funkce",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Typ funkce, viz typ_funkce:id_typ_funkce"
+                "popis": "Typ funkce, viz typ_funkce:id_typ_funkce",
+                "fkey": [
+                    "poslanci_typ_funkce",
+                    "id_typ_funkce"
+                ]
             },
             {
                 "sloupec": "nazev_funkce_cz",
@@ -331,7 +343,11 @@
                 "sloupec": "id_osoba",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor osoby, viz osoba:id_osoba"
+                "popis": "Identifikátor osoby, viz osoba:id_osoba",
+                "fkey": [
+                    "poslanci_osoby",
+                    "id_osoba"
+                ]
             },
             {
                 "sloupec": "id_kraj",
@@ -416,7 +432,11 @@
                 "typ": "int",
                 "nullable": false,
                 "unique": true,
-                "popis": "Identifikátor poslance, viz poslanec:id_poslanec"
+                "popis": "Identifikátor poslance, viz poslanec:id_poslanec",
+                "fkey": [
+                    "poslanci_poslanec",
+                    "id_poslanec"
+                ]
             },
             {
                 "sloupec": "adresa",
@@ -449,7 +469,11 @@
                 "sloupec": "id_osoba",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor osoby, viz osoba:id_osoba"
+                "popis": "Identifikátor osoby, viz osoba:id_osoba",
+                "fkey": [
+                    "poslanci_osoby",
+                    "id_osoba"
+                ]
             },
             {
                 "sloupec": "id_org",
@@ -513,7 +537,11 @@
                 "sloupec": "id_organ",
                 "typ": "int",
                 "popis": "Identifikátor orgánu, viz organy:id_organ",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "poslanci_organy",
+                    "id_organ"
+                ]
             },
             {
                 "sloupec": "schuze",
@@ -636,13 +664,21 @@
                 "sloupec": "id_poslanec",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor poslance, viz poslanec:id_poslanec"
+                "popis": "Identifikátor poslance, viz poslanec:id_poslanec",
+                "fkey": [
+                    "poslanci_poslanec",
+                    "id_poslanec"
+                ]
             },
             {
                 "sloupec": "id_hlasovani",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani"
+                "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani",
+                "fkey": [
+                    "hlasovani_hl_hlasovani",
+                    "id_hlasovani"
+                ]
             },
             {
                 "sloupec": "vysledek",
@@ -670,13 +706,21 @@
                 "sloupec": "id_organ",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor volebního období, viz organy:id_organ"
+                "popis": "Identifikátor volebního období, viz organy:id_organ",
+                "fkey": [
+                    "poslanci_organy",
+                    "id_organ"
+                ]
             },
             {
                 "sloupec": "id_poslanec",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor poslance, viz poslanec:id_poslanec"
+                "popis": "Identifikátor poslance, viz poslanec:id_poslanec",
+                "fkey": [
+                    "poslanci_poslanec",
+                    "id_poslanec"
+                ]
             },
             {
                 "sloupec": "den",
@@ -709,7 +753,11 @@
                 "sloupec": "id_hlasovani",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani, které bylo zpochybněno."
+                "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani, které bylo zpochybněno.",
+                "fkey": [
+                    "hlasovani_hl_hlasovani",
+                    "id_hlasovani"
+                ]
             },
             {
                 "sloupec": "turn",
@@ -754,7 +802,11 @@
                 "sloupec": "id_osoba",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor poslance, který zpochybnil hlasování; viz osoby:id_osoba."
+                "popis": "Identifikátor poslance, který zpochybnil hlasování; viz osoby:id_osoba.",
+                "fkey": [
+                    "poslanci_osoby",
+                    "id_osoba"
+                ]
             },
             {
                 "sloupec": "mode",
@@ -904,13 +956,21 @@
                 "sloupec": "id_typ",
                 "typ": "int",
                 "popis": "Typ druhu stavu,typ_stavu:id_typ",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "tisky_typ_stavu",
+                    "id_typ"
+                ]
             },
             {
                 "sloupec": "id_druh",
                 "typ": "int",
                 "popis": "Typ druhu tisku, druh_tisku:id_druh",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "tisky_druh_tisku",
+                    "id_druh"
+                ]
             },
             {
                 "sloupec": "popis",
@@ -969,13 +1029,21 @@
                 "sloupec": "odkud",
                 "typ": "int",
                 "popis": "Výchozí stav, viz stavy:id_stav",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "tisky_stavy",
+                    "id_stav"
+                ]
             },
             {
                 "sloupec": "kam",
                 "typ": "int",
                 "popis": "Koncový stav, viz stavy:id_stav",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "tisky_stavy",
+                    "id_stav"
+                ]
             },
             {
                 "sloupec": "id_akce",
@@ -1009,7 +1077,11 @@
                 "sloupec": "id_druh",
                 "typ": "int",
                 "popis": "Druh tisku, viz druh_tisku:id_druh",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "tisky_druh_tisku",
+                    "id_druh"
+                ]
             },
             {
                 "sloupec": "id_stav",
@@ -1166,14 +1238,22 @@
             {
                 "sloupec": "id_hlas",
                 "typ": "int",
-                "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani"
+                "popis": "Identifikátor hlasování, viz hl_hlasovani:id_hlasovani",
+                "fkey": [
+                    "hlasovani_hl_hlasovani",
+                    "id_hlasovani"
+                ]
             },
             {
                 "sloupec": "id_prechod",
                 "typ": "int",
                 "notnull": true,
                 "popis": "Identifikátor přechodu, viz prechody:id_prechod",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "tisky_prechody",
+                    "id_prechod"
+                ]
             },
             {
                 "sloupec": "id_bod",
@@ -1193,12 +1273,20 @@
             {
                 "sloupec": "orgv_id_posl",
                 "typ": "int",
-                "popis": "Zpravodaj k tisku určený organizačním výborem, viz poslanec:id_poslanec."
+                "popis": "Zpravodaj k tisku určený organizačním výborem, viz poslanec:id_poslanec.",
+                "fkey": [
+                    "poslanci_poslanec",
+                    "id_poslanec"
+                ]
             },
             {
                 "sloupec": "ps_id_posl",
                 "typ": "int",
-                "popis": "Zpravodaj k tisku určený předsedou sněmovny, viz poslanec:id_poslanec."
+                "popis": "Zpravodaj k tisku určený předsedou sněmovny, viz poslanec:id_poslanec.",
+                "fkey": [
+                    "poslanci_poslanec",
+                    "id_poslanec"
+                ]
             },
             {
                 "sloupec": "orgv_p_usn",
@@ -1238,13 +1326,21 @@
                 "sloupec": "id_tisku",
                 "typ": "int",
                 "popis": "Identifikátor tisku, viz tisky:id_tisk",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "tisky_tisky",
+                    "id_tisk"
+                ]
             },
             {
                 "sloupec": "id_organ",
                 "typ": "int",
                 "popis": "Identifikátor orgánu, viz organ:id_organ",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "poslanci_organy",
+                    "id_organ"
+                ]
             },
             {
                 "sloupec": "typ",
@@ -1256,7 +1352,11 @@
                 "sloupec": "id_hist",
                 "typ": "int",
                 "popis": "Identifikátor kroku, viz hist:id_hist, ke kterému se přikázání vztahují.",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "tisky_hist",
+                    "id_hist"
+                ]
             },
             {
                 "sloupec": "id_posl",
@@ -1303,7 +1403,11 @@
                 "sloupec": "id_tisk",
                 "typ": "int",
                 "popis": "Identifikátor sněmovního tisku, viz tisky:id_tisk",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "tisky_tisky",
+                    "id_tisk"
+                ]
             },
             {
                 "sloupec": "cislo_za",
@@ -1321,7 +1425,11 @@
                 "sloupec": "id_druh",
                 "typ": "int",
                 "popis": "Typ sněmovního tisku, viz druh_tisku:id_druh",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "tisky_druh_tisku",
+                    "id_druh"
+                ]
             },
             {
                 "sloupec": "nazev_za",
@@ -1353,7 +1461,11 @@
             {
                 "sloupec": "id_posl",
                 "typ": "int",
-                "popis": "Identifikátor zpravodaje k tisku, viz poslanec:id_poslanec"
+                "popis": "Identifikátor zpravodaje k tisku, viz poslanec:id_poslanec",
+                "fkey": [
+                    "poslanci_poslanec",
+                    "id_poslanec"
+                ]
             },
             {
                 "sloupec": "t_url",
@@ -1363,7 +1475,11 @@
             {
                 "sloupec": "id_vysledek",
                 "typ": "int",
-                "popis": "Identifikátor druhu výsledku, viz vysledek:id_vysledek, pouze pro určité druhy sněmovního tisku"
+                "popis": "Identifikátor druhu výsledku, viz vysledek:id_vysledek, pouze pro určité druhy sněmovního tisku",
+                "fkey": [
+                    "tisky_vysledek",
+                    "id_vysledek"
+                ]
             },
             {
                 "sloupec": "cislo_za_post",
@@ -1404,7 +1520,11 @@
                 "sloupec": "id_osoba",
                 "typ": "int",
                 "popis": "Předkladatel nebo jeho zástupce, viz osoba:id_osoba.",
-                "nullable": false
+                "nullable": false,
+                "fkey": [
+                    "poslanci_osoby",
+                    "id_osoba"
+                ]
             },
             {
                 "sloupec": "poradi",
@@ -1428,12 +1548,20 @@
             {
                 "sloupec": "id_tisk",
                 "typ": "int",
-                "popis": "Identifikátor sněmovního tisku, viz tisky:id_tisk"
+                "popis": "Identifikátor sněmovního tisku, viz tisky:id_tisk",
+                "fkey": [
+                    "tisky_tisky",
+                    "id_tisk"
+                ]
             },
             {
                 "sloupec": "id_osoba",
                 "typ": "int",
-                "popis": "Předkladatel nebo jeho zástupce, viz osoba:id_osoba."
+                "popis": "Předkladatel nebo jeho zástupce, viz osoba:id_osoba.",
+                "fkey": [
+                    "poslanci_osoby",
+                    "id_osoba"
+                ]
             },
             {
                 "sloupec": "stav",
@@ -1550,19 +1678,31 @@
                 "sloupec": "id_losovani",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor losování interpelací, viz los_interpelaci:id_los."
+                "popis": "Identifikátor losování interpelací, viz los_interpelaci:id_los.",
+                "fkey": [
+                    "interp_los_interpelaci",
+                    "id_los"
+                ]
             },
             {
                 "sloupec": "id_poslanec",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor poslance, viz osoba:id_osoba."
+                "popis": "Identifikátor poslance, viz osoba:id_osoba.",
+                "fkey": [
+                    "poslanci_osoby",
+                    "id_osoba"
+                ]
             },
             {
                 "sloupec": "id_ministr",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Identifikátor člena vlády, viz osoba:id_osoba."
+                "popis": "Identifikátor člena vlády, viz osoba:id_osoba.",
+                "fkey": [
+                    "poslanci_osoby",
+                    "id_osoba"
+                ]
             },
             {
                 "sloupec": "vec",
@@ -1600,13 +1740,21 @@
                 "typ": "int",
                 "nullable": false,
                 "popis": "Identifikátor přihlášky k interpelaci, viz poradi:id_poradi.",
-                "unique": true
+                "unique": true,
+                "fkey": [
+                    "interp_poradi",
+                    "id_poradi"
+                ]
             },
             {
                 "sloupec": "id_typ",
                 "typ": "int",
                 "nullable": false,
-                "popis": "Typ výsledku projednávání interpelace, viz uitypv:id_ui_stav."
+                "popis": "Typ výsledku projednávání interpelace, viz uitypv:id_ui_stav.",
+                "fkey": [
+                    "interp_uitypv",
+                    "id_ui_stav"
+                ]
             },
             {
                 "sloupec": "steno",
@@ -1940,7 +2088,11 @@
             {
                 "sloupec": "id_x",
                 "typ": "int",
-                "popis": "Doplňující informace: je-li typ = 12, pak je obsahem id_osoba (viz osoba:id_osoba) poslance, který dokument předkládá."
+                "popis": "Doplňující informace: je-li typ = 12, pak je obsahem id_osoba (viz osoba:id_osoba) poslance, který dokument předkládá.",
+                "fkey": [
+                    "poslanci_osoby",
+                    "id_osoba"
+                ]
             },
             {
                 "sloupec": "end",
@@ -2010,7 +2162,11 @@
             {
                 "sloupec": "id_tisk",
                 "typ": "int",
-                "popis": "Identifikátor tisku, viz tisky:id_tisk; vazba na sněmovní tisk ("
+                "popis": "Identifikátor tisku, viz tisky:id_tisk; vazba na sněmovní tisk (",
+                "fkey": [
+                    "tisky_tisky",
+                    "id_tisk"
+                ]
             },
             {
                 "sloupec": "datum",

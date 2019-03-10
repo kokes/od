@@ -23,7 +23,7 @@ typemap = {
 
 schema = 'psp'
 csv_dir = 'data/csv'
-q, cp, cm, idx = [], [], [], []  # CTEs, COPY, COMMENT, indexes
+q, cp, cm, idx, fk = [], [], [], [], []  # CTEs, COPY, COMMENT, indexes, fkeys
 q.append('CREATE SCHEMA IF NOT EXISTS {};'.format(schema))
 
 for mp in mapping:
@@ -34,7 +34,7 @@ for mp in mapping:
 
     print(tbl)
 
-    q.append(f'DROP TABLE IF EXISTS {full_tbl};')
+    q.append(f'DROP TABLE IF EXISTS {full_tbl} CASCADE;')
     q.append(f'CREATE TABLE {full_tbl} (')
     for j, col in enumerate(mp['sloupce']):
         # CTE
@@ -52,6 +52,14 @@ for mp in mapping:
             idx.append(
                 f'CREATE UNIQUE INDEX {schema}_{tbl}_{col["sloupec"]}_unique_idx ON {schema}.{tbl}({col["sloupec"]});')
 
+        # foreign keys
+        if col.get('fkey'):
+            reftable, refcolumn = col['fkey']
+            fullreftable = f'psp.{reftable}'
+            fkname = 'fk_{}_{}_{}__{}_{}'.format(mp['tema'], mp['tabulka'], col['sloupec'], reftable, refcolumn)
+
+            fk.append(f'ALTER TABLE {full_tbl} ADD CONSTRAINT {fkname} FOREIGN KEY ({col["sloupec"]}) REFERENCES {fullreftable} ({refcolumn});')
+
     # more indexes (non unique)
     for el in mp.get('index', []):
         idx.append(f'CREATE INDEX {schema}_{tbl}_{"_".join(el)}_idx ON {schema}.{tbl}({", ".join(el)});')
@@ -66,4 +74,4 @@ otu = []
 otu.append("UPDATE psp.poslanci_osoby SET narozeni = NULL WHERE narozeni = '1900-01-01';")
 
 with open('schema.sql', 'w') as fw:
-    fw.write('\n'.join(q + cm + cp + otu + idx))
+    fw.write('\n'.join(q + cm + cp + otu + idx + fk))
