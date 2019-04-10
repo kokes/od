@@ -362,6 +362,10 @@
             "2014-05-23": [
                 "https://volby.cz/opendata/ep2014/EP2014reg20140521.zip",
                 "https://volby.cz/opendata/ep2014/EP2014ciselniky20140425.zip"
+            ],
+            "2019-05-24": [
+               "https://www.volby.cz/opendata/ep2019/EP2019reg20190409.zip",
+               "https://www.volby.cz/opendata/ep2019/EP2019ciselniky20190409.zip"
             ]
         },
         "ds": {
@@ -409,6 +413,8 @@
                     "SLOZENI",
                     "STAVREG",
                     "PLATNOST",
+                    "PLAT_STR",
+                    "SLOZNEPLAT",
                     "POCMANDCR",
                     "NAZEVPLNY"
                 ]

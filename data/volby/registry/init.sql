@@ -263,6 +263,8 @@ create table volby.ep_strany (
     slozeni varchar not null,
     stavreg smallint not null,
     platnost smallint,
+    plat_str char(1),
+    slozneplat varchar(40),
     pocmandcr smallint not null,
     nazevplny varchar
 );
