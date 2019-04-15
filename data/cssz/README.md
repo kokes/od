@@ -1,0 +1,1 @@
+První zpracování dat z [ČSSZ](https://data.cssz.cz/). Ve schématech mají spoustu chyb, takže bez ručních úprav toto fungovat nebude. Vše je nahlášeno, tak se to snad časem zlepší.
