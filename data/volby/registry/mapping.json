@@ -470,6 +470,10 @@
             "2018-10-05": [
                 "https://volby.cz/opendata/se2018/SE2018reg20181013.zip",
                 "https://volby.cz/opendata/se2018/SE2018ciselnik20181004.zip"
+            ],
+            "2019-04-05": [
+                "https://volby.cz/opendata/se2019duben/SE2019reg20190413.zip",
+                "https://volby.cz/opendata/se2019duben/SE2019ciselnik20190403.zip"
             ]
         },
         "ds": {
