@@ -22,6 +22,16 @@ create table volby.prezident_kandidati (
     zvolen_k2 smallint not null
 );
 
+DROP TABLE IF EXISTS volby.prezident_strany;
+
+CREATE TABLE volby.prezident_strany (
+	datum date,
+	NSTRANA smallint NOT NULL,
+	NAZEV_STRN varchar NOT NULL,
+	ZKRATKAN30 varchar NOT NULL,
+	ZKRATKAN8 varchar NOT NULL
+);
+
 drop table if exists volby.psp_kandidati;
 
 create table volby.psp_kandidati (

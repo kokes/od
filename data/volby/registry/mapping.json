@@ -35,6 +35,18 @@
                     "HLASY_K2",
                     "ZVOLEN_K2"
                 ]
+            },
+            "strany": {
+                "fn": [
+                    "cns.xml"
+                ],
+                "klic": "CNS_ROW",
+                "schema": [
+                    "NSTRANA",
+                    "NAZEV_STRN",
+                    "ZKRATKAN30",
+                    "ZKRATKAN8"
+                ]
             }
         }
     },
