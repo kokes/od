@@ -1,4 +1,5 @@
 CREATE SCHEMA IF NOT EXISTS volby;
+drop view if exists volby.kandidati;
 drop table if exists volby.prezident_kandidati;
 
 create table volby.prezident_kandidati (
@@ -308,4 +309,91 @@ create table volby.senat_kandidati (
     zvolen_k2 smallint not null,
     los_k2 smallint not null,
     nazev_vs varchar not null
+);
+
+create view volby.kandidati AS (
+    SELECT
+        'senat' AS volby,
+        datum,
+        jmeno || ' ' || prijmeni AS jmeno,
+        nazev_vs AS strana,
+        vek,
+        povolani,
+        (zvolen_k1 = 1) OR (zvolen_k2 = 1) AS zvolen
+    FROM
+        volby.senat_kandidati
+
+    UNION ALL
+
+    SELECT
+        'ep' AS volby,
+        datum,
+        jmeno || ' ' || prijmeni as jmeno,
+        nazevcelk AS strana,
+        vek,
+        povolani,
+        mandat IN ('1', 'A') AS zvolen
+    FROM
+        volby.ep_kandidati
+        INNER JOIN volby.ep_strany USING (datum, estrana)
+
+    UNION ALL
+
+    SELECT
+        'obce' AS volby,
+        kn.datum,
+        jmeno || ' ' || prijmeni AS jmeno,
+        nazevcelk AS strana,
+        vek,
+        povolani,
+        mandat IN ('1', 'A') AS zvolen
+    FROM
+        volby.komunalni_kandidati kn
+        INNER JOIN volby.komunalni_strany ks ON kn.nstrana = ks.vstrana
+            AND kn.datum = ks.datum
+
+    UNION ALL
+
+    SELECT
+        'kraje' AS volby,
+        kn.datum,
+        jmeno || ' ' || prijmeni AS jmeno,
+        nazevcelk AS strana,
+        vek,
+        povolani,
+        mandat IN ('1', 'A') as zvolen
+    FROM
+        volby.kraje_kandidati kn
+        INNER JOIN volby.kraje_strany_cr ks ON kn.nstrana = ks.vstrana
+            AND kn.datum = ks.datum
+
+    UNION ALL
+
+    SELECT
+        'psp' AS volby,
+        kn.datum,
+        jmeno || ' ' || prijmeni AS jmeno,
+        nazevcelk AS strana,
+        vek,
+        povolani,
+        mandat IN ('1', 'A') AS zvolen
+    FROM
+        volby.psp_kandidati kn
+        INNER JOIN volby.psp_strany ks ON ks.datum = kn.datum
+            AND ks.vstrana = kn.nstrana
+
+    UNION ALL
+
+    SELECT
+        'prezident' AS volby,
+        kn.datum,
+        jmeno || ' ' || prijmeni AS jmeno,
+        ps.nazev_strn as strana,
+        vek,
+        povolani,
+        (zvolen_k1 = 1) OR (zvolen_k2 = 1) AS zvolen
+    FROM
+        volby.prezident_kandidati kn
+        INNER JOIN volby.prezident_strany ps ON kn.nstrana = ps.nstrana
+        AND kn.datum = ps.datum
 );
