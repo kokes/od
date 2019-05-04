@@ -521,6 +521,19 @@
                     "LOS_K2",
                     "NAZEV_VS"
                 ]
+            },
+            "obvody": {
+                "fn": [
+                    "secobv.xml"
+                ],
+                "klic": "SE_COBV_ROW",
+                "schema": [
+                    "OBVOD",
+                    "NAZEV_OBV",
+                    "OKRES",
+                    "PRVNI_VO",
+                    "PLATNOST"
+                ]
             }
         }
     }

@@ -311,9 +311,21 @@ create table volby.senat_kandidati (
     nazev_vs varchar not null
 );
 
+DROP TABLE IF EXISTS volby.senat_obvody;
+
+CREATE TABLE volby.senat_obvody (
+	datum date,
+	OBVOD smallint NOT NULL,
+	NAZEV_OBV varchar NOT NULL,
+	OKRES varchar NOT NULL,
+	PRVNI_VO varchar NOT NULL,
+	PLATNOST varchar NOT NULL
+);
+
 create view volby.kandidati AS (
     SELECT
         'senat' AS volby,
+        obvod || ' - ' || nazev_obv as obvod,
         datum,
         jmeno || ' ' || prijmeni AS jmeno,
         nazev_vs AS strana,
@@ -322,11 +334,13 @@ create view volby.kandidati AS (
         (zvolen_k1 = 1) OR (zvolen_k2 = 1) AS zvolen
     FROM
         volby.senat_kandidati
+        INNER JOIN volby.senat_obvody USING(datum, obvod)
 
     UNION ALL
 
     SELECT
         'ep' AS volby,
+        NULL AS obvod,
         datum,
         jmeno || ' ' || prijmeni as jmeno,
         nazevcelk AS strana,
@@ -341,6 +355,7 @@ create view volby.kandidati AS (
 
     SELECT
         'obce' AS volby,
+        NULL AS obvod, -- TODO
         kn.datum,
         jmeno || ' ' || prijmeni AS jmeno,
         nazevcelk AS strana,
@@ -356,6 +371,7 @@ create view volby.kandidati AS (
 
     SELECT
         'kraje' AS volby,
+        NULL AS obvod, -- TODO
         kn.datum,
         jmeno || ' ' || prijmeni AS jmeno,
         nazevcelk AS strana,
@@ -371,6 +387,7 @@ create view volby.kandidati AS (
 
     SELECT
         'psp' AS volby,
+        NULL AS obvod, -- TODO
         kn.datum,
         jmeno || ' ' || prijmeni AS jmeno,
         nazevcelk AS strana,
@@ -386,6 +403,7 @@ create view volby.kandidati AS (
 
     SELECT
         'prezident' AS volby,
+        NULL AS obvod,
         kn.datum,
         jmeno || ' ' || prijmeni AS jmeno,
         ps.nazev_strn as strana,
