@@ -4,7 +4,7 @@ import json
 import os
 import shutil
 import zipfile
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 from contextlib import contextmanager
 from tempfile import NamedTemporaryFile
 
@@ -18,7 +18,8 @@ def load_remote_data(url: str):
     fn = os.path.basename(url)
     tfn = os.path.join(raw_dir, fn)
     if not os.path.isfile(tfn):
-        with urlopen(url) as r, open(tfn, 'wb') as fw:
+        req = Request(url, headers={'User-Agent': 'https://github.com/kokes/od'})
+        with urlopen(req) as r, open(tfn, 'wb') as fw:
             shutil.copyfileobj(r, fw)
     
     zf = zipfile.ZipFile(tfn)
