@@ -33,7 +33,8 @@ def extract(element, mapping):
         ret[k] = []
         for el in els:
             for ak, av in v.get('attrs', {}).items():
-                assert el.attrib[ak] == av, (ak, av)
+                if el.attrib[ak] != av:
+                    raise KeyError('unexpected attribute value: "{}": "{}"'.format(ak, av))
 
             if 'mapping' in v:
                 ret[k].append(extract(el, v['mapping']))
