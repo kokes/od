@@ -1,0 +1,79 @@
+{
+    "delete": [
+        {
+            "column": "application_number",
+            "path": "ApplicationNumber"
+        },
+        {
+            "column": "application_date",
+            "path": "ApplicationDate"
+        }
+    ],
+    "insert": [
+        {
+            "column": "application_number",
+            "path": "ApplicationNumber"
+        },
+        {
+            "column": "application_date",
+            "path": "ApplicationDate"
+        },
+        {
+            "column": "registration_number",
+            "path": "RegistrationNumber"
+        },
+        {
+            "column": "registration_date",
+            "path": "RegistrationDate"
+        },
+        {
+            "column": "expiry_date",
+            "path": "ExpiryDate"
+        },
+        {
+            "column": "current_status_code",
+            "path": "CurrentStatusCode"
+        },
+        {
+            "column": "kind_mark",
+            "path": "KindMark"
+        },
+        {
+            "column": "mark_feature",
+            "path": "MarkFeature"
+        },
+        {
+            "column": "mark_verbal_element",
+            "path": "WordMarkSpecification/MarkVerbalElementText",
+            "attrs": {
+                "languageCode": "cs"
+            }
+        },
+        {
+            "column": "class_description",
+            "path": "GoodsServicesDetails/GoodsServices/ClassDescriptionDetails/ClassDescription",
+            "array": true,
+            "mapping": [
+                {
+                    "column": "class_number",
+                    "path": "ClassNumber"
+                },
+                {
+                    "column": "goods_services_description",
+                    "path": "GoodsServicesDescription",
+                    "mapping": [
+                        {
+                            "column": "text",
+                            "path": null
+                        },
+                        {
+                            "column": "language_code",
+                            "path": "#languageCode"
+                        }
+                    ],
+                    "array": true
+                }
+            ]
+        }
+    ]
+}
