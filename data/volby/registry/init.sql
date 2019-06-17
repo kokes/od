@@ -33,6 +33,31 @@ CREATE TABLE volby.prezident_strany (
 	ZKRATKAN8 varchar NOT NULL
 );
 
+DROP TABLE IF EXISTS volby.prezident_okrsky;
+
+CREATE TABLE volby.prezident_okrsky (
+	datum date,
+	TYP_FORM int NOT NULL,
+	OPRAVA int NOT NULL,
+	CHYBA int NOT NULL,
+	OKRES int NOT NULL,
+	OBEC int NOT NULL,
+	OKRSEK int NOT NULL,
+	KC_1 int NOT NULL,
+	KOLO smallint NOT NULL,
+	VOL_SEZNAM int NOT NULL,
+	VYD_OBALKY int NOT NULL,
+	ODEVZ_OBAL int NOT NULL,
+	PL_HL_CELK int NOT NULL,
+	KC_2 int NOT NULL,
+	KC_3 int NOT NULL,
+	KC_4 int NOT NULL,
+	POSL_KAND smallint NOT NULL,
+	KC_SUM int NOT NULL,
+    STRANY smallint[] NOT NULL,
+    HLASY int[] NOT NULL
+);
+
 drop table if exists volby.psp_kandidati;
 
 create table volby.psp_kandidati (
@@ -78,6 +103,49 @@ create table volby.psp_strany (
     pocmandcr smallint,
     slozneplat varchar,
     nazevplny varchar
+);
+
+DROP TABLE IF EXISTS volby.psp_okrsky_hlasy;
+
+CREATE TABLE volby.psp_okrsky_hlasy (
+	datum date,
+	ID_OKRSKY int,
+	TYP_FORM int NOT NULL,
+	OPRAVA int NOT NULL,
+	CHYBA int NOT NULL,
+	OKRES int NOT NULL,
+	OBEC int NOT NULL,
+	OKRSEK int NOT NULL,
+	KC_1 int NOT NULL,
+	KSTRANA int NOT NULL,
+	POC_HLASU int NOT NULL,
+	KC_2 int NOT NULL,
+	KC_3 int NOT NULL,
+	KC_4 int NOT NULL,
+	POSL_KAND int NOT NULL,
+	KC_SUM int NOT NULL,
+    STRANY int[] NOT NULL,
+    HLASY int[] NOT NULL
+);
+
+DROP TABLE IF EXISTS volby.psp_okrsky_prehled;
+
+CREATE TABLE volby.psp_okrsky_prehled (
+	datum date,
+	ID_OKRSKY int,
+	TYP_FORM int NOT NULL,
+	OPRAVA int NOT NULL,
+	CHYBA int NOT NULL,
+	OKRES int NOT NULL,
+	OBEC int NOT NULL,
+	OKRSEK int NOT NULL,
+	KC_1 int NOT NULL,
+	KC_2 int NOT NULL,
+	ZAKRSTRANA bit(60) NOT NULL,
+	VOL_SEZNAM int NOT NULL,
+	VYD_OBALKY int NOT NULL,
+	ODEVZ_OBAL int NOT NULL,
+	PL_HL_CELK int NOT NULL
 );
 
 drop table if exists volby.komunalni_vysledky_obce;

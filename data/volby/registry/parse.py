@@ -78,11 +78,24 @@ for volby, mp in mps.items():
                     qq.append(f"echo {tfn}\ncat {tfn} | psql -c 'copy volby.{volby}_{ds} from stdin csv header'")
                     if os.path.isfile(tfn): continue # TODO: smaz
                     with open(tfn, 'w', encoding='utf8') as fw:
-                        cw = csv.DictWriter(fw, fieldnames=['DATUM'] + fmp['schema'])
+                        cw = csv.DictWriter(fw, fieldnames=['DATUM'] + fmp['schema'] + fmp.get('extra_schema', []))
                         cw.writeheader()
                         for el in extract_elements(zf, ff, fmp['klic']):
                             for k in fmp.get('vynechej', []):
                                 el.pop(k, None)
+
+                            # TODO: TEST: HLASY_01 vs. HLASY_K1
+                            hk = [k for k in el.keys() if k.startswith('HLASY_') and k.partition('_')[-1].isdigit()]
+                            if hk:
+                                strany, hlasy = [], []
+                                for k in hk:
+                                    strany.append(int(k.partition('_')[-1]))
+                                    hlasy.append(el[k] or 0)
+                                    del el[k]
+
+                                # pg array representation - '{a, b, c}'
+                                el['STRANY'] = '{{{}}}'.format(','.join(map(str, strany)))
+                                el['HLASY'] = '{{{}}}'.format(','.join(map(str, hlasy)))
 
                             cw.writerow({
                                 'DATUM': datum,

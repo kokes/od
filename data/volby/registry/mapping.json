@@ -3,11 +3,13 @@
         "url": {
             "2013-01-11": [
                 "https://www.volby.cz/opendata/prez2013/PREZ2013reg20130126.zip",
-                "https://www.volby.cz/opendata/prez2013/PREZ2013ciselniky20130126.zip"
+                "https://www.volby.cz/opendata/prez2013/PREZ2013ciselniky20130126.zip",
+                "https://volby.cz/opendata/prez2013/PREZ2013data20130126.zip"
             ],
             "2018-01-12": [
                 "https://www.volby.cz/opendata/prez2018/PREZ2018reg20180127.zip",
-                "https://www.volby.cz/opendata/prez2018/PREZ2018ciselniky20171215.zip"
+                "https://www.volby.cz/opendata/prez2018/PREZ2018ciselniky20171215.zip",
+                "https://volby.cz/opendata/prez2018/PREZ2018data20180127_xml_kolo2.zip"
             ]
         },
         "ds": {
@@ -47,6 +49,35 @@
                     "ZKRATKAN30",
                     "ZKRATKAN8"
                 ]
+            },
+            "okrsky": {
+                "fn": [
+                    "pet1.xml"
+                ],
+                "klic": "PE_T1_ROW",
+                "schema": [
+                    "TYP_FORM",
+                    "OPRAVA",
+                    "CHYBA",
+                    "OKRES",
+                    "OBEC",
+                    "OKRSEK",
+                    "KC_1",
+                    "KOLO",
+                    "VOL_SEZNAM",
+                    "VYD_OBALKY",
+                    "ODEVZ_OBAL",
+                    "PL_HL_CELK",
+                    "KC_2",
+                    "KC_3",
+                    "KC_4",
+                    "POSL_KAND",
+                    "KC_SUM"
+                ],
+                "extra_schema": [
+                    "STRANY",
+                    "HLASY"
+                ]
             }
         }
     },
@@ -54,19 +85,23 @@
         "url": {
             "2006-06-02": [
                 "https://www.volby.cz/opendata/ps2006/PS2006reg2006.zip",
-                "https://www.volby.cz/opendata/ps2006/PS2006ciselniky2006.zip"
+                "https://www.volby.cz/opendata/ps2006/PS2006ciselniky2006.zip",
+                "https://volby.cz/opendata/ps2006/PS2006_data_dbf.zip"
             ],
             "2010-05-29": [
                 "https://www.volby.cz/opendata/ps2010/PS2010reg2010.zip",
-                "https://www.volby.cz/opendata/ps2010/PS2010ciselniky2010.zip"
+                "https://www.volby.cz/opendata/ps2010/PS2010ciselniky2010.zip",
+                "https://volby.cz/opendata/ps2010/PS2010_data_dbf.zip"
             ],
             "2013-10-25": [
                 "https://www.volby.cz/opendata/ps2013/PS2013reg20131026.zip",
-                "https://www.volby.cz/opendata/ps2013/PS2013ciselniky20131021.zip"
+                "https://www.volby.cz/opendata/ps2013/PS2013ciselniky20131021.zip",
+                "https://volby.cz/opendata/ps2013/ps2013_dbf_20131026.zip"
             ],
             "2017-10-20": [
                 "https://www.volby.cz/opendata/ps2017nss/PS2017reg20171122.zip",
-                "https://www.volby.cz/opendata/ps2017nss/PS2017ciselniky20170905.zip"
+                "https://www.volby.cz/opendata/ps2017nss/PS2017ciselniky20170905.zip",
+                "https://volby.cz/opendata/ps2017nss/PS2017data20171122.zip"
             ]
         },
         "ds": {
@@ -121,6 +156,57 @@
                     "POCMANDCR",
                     "SLOZNEPLAT",
                     "NAZEVPLNY"
+                ]
+            },
+            "okrsky_hlasy": {
+                "fn": [
+                    "pst4p.xml",
+                    "PST4p.dbf"
+                ],
+                "klic": "PS_T4P_ROW",
+                "schema": [
+                    "ID_OKRSKY",
+                    "TYP_FORM",
+                    "OPRAVA",
+                    "CHYBA",
+                    "OKRES",
+                    "OBEC",
+                    "OKRSEK",
+                    "KC_1",
+                    "KSTRANA",
+                    "POC_HLASU",
+                    "KC_2",
+                    "KC_3",
+                    "KC_4",
+                    "POSL_KAND",
+                    "KC_SUM"                    
+                ],
+                "extra_schema": [
+                    "STRANY",
+                    "HLASY"
+                ]
+            },
+            "okrsky_prehled": {
+                "fn": [
+                    "pst4.xml",
+                    "PST4.dbf"
+                ],
+                "klic": "PS_T4_ROW",
+                "schema": [
+                    "ID_OKRSKY",
+                    "TYP_FORM",
+                    "OPRAVA",
+                    "CHYBA",
+                    "OKRES",
+                    "OBEC",
+                    "OKRSEK",
+                    "KC_1",
+                    "KC_2",
+                    "ZAKRSTRANA",
+                    "VOL_SEZNAM",
+                    "VYD_OBALKY",
+                    "ODEVZ_OBAL",
+                    "PL_HL_CELK"                                      
                 ]
             }
         }
