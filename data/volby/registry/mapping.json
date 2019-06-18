@@ -215,19 +215,23 @@
         "url": {
             "2006-10-20": [
                 "https://volby.cz/opendata/kv2006/KV2006reg20140909.zip",
-                "https://volby.cz/opendata/kv2006/KV2006ciselniky20140909.zip"
+                "https://volby.cz/opendata/kv2006/KV2006ciselniky20140909.zip",
+                "https://volby.cz/opendata/kv2006/KV2006data.zip"
             ],
             "2010-10-15": [
                 "https://volby.cz/opendata/kv2010/KV2010reg20140903.zip",
-                "https://volby.cz/opendata/kv2010/KV2010ciselniky20140903.zip"
+                "https://volby.cz/opendata/kv2010/KV2010ciselniky20140903.zip",
+                "https://volby.cz/opendata/kv2010/KV2010data.zip"
             ],
             "2014-10-10": [
                 "https://volby.cz/opendata/kv2014/KV2014reg20141014.zip",
-                "https://volby.cz/opendata/kv2014/KV2014ciselniky20141008.zip"
+                "https://volby.cz/opendata/kv2014/KV2014ciselniky20141008.zip",
+                "https://volby.cz/opendata/kv2014/KV2014data20141014.zip"
             ],
             "2018-10-05": [
                 "https://volby.cz/opendata/kv2018/KV2018reg20181008.zip",
-                "https://volby.cz/opendata/kv2018/KV2018ciselniky20181004.zip"
+                "https://volby.cz/opendata/kv2018/KV2018ciselniky20181004.zip",
+                "https://volby.cz/opendata/kv2018/KV2018_data_20181008_xml.zip"
             ]
         },
         "ds": {
@@ -348,6 +352,58 @@
                     "MAXOKRSEK9",
                     "MINOKRSEK3",
                     "COBROP"
+                ]
+            },
+            "okrsky_prehled": {
+                "fn": [
+                    "kvt3.xml"
+                ],
+                "klic": "KV_T3_ROW",
+                "schema": [
+                    "ID_OKRSKY",
+                    "TYP_FORM",
+                    "OPRAVA",
+                    "CHYBA",
+                    "OKRES",
+                    "OBEC",
+                    "OKRSEK",
+                    "KC_1",
+                    "TYPZASTUP",
+                    "COBVODU",
+                    "VOL_SEZNAM",
+                    "VYD_OBALKY",
+                    "ODEVZ_OBAL",
+                    "PL_HL_CELK",
+                    "POCET_VS",
+                    "POC_VS_HL",
+                    "KC_2",
+                    "KODZASTUP"
+                ]
+            },
+            "okrsky_hlasy": {
+                "fn": [
+                    "kvhl.xml"
+                ],
+                "klic": "KV_HL_ROW",
+                "schema": [
+                    "ID_OKRSKY",
+                    "TYP_FORM",
+                    "OPRAVA",
+                    "CHYBA",
+                    "OKRES",
+                    "OBEC",
+                    "OKRSEK",
+                    "KC_1",
+                    "TYPZASTUP",
+                    "POR_STR_HL",
+                    "POC_HLASU",
+                    "KC_2",
+                    "POSL_KAND",
+                    "KC_SUM"
+                ],
+                "extra_schema": [
+                    "STRANY",
+                    "HLASY"
                 ]
             }
         }

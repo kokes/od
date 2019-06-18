@@ -236,6 +236,52 @@ create table volby.komunalni_obce (
     stav_obce smallint not null
 );
 
+DROP TABLE IF EXISTS volby.komunalni_okrsky_prehled;
+
+CREATE TABLE volby.komunalni_okrsky_prehled (
+  datum date,
+  ID_OKRSKY int NOT NULL,
+  TYP_FORM smallint NOT NULL,
+  OPRAVA smallint NOT NULL,
+  CHYBA smallint NOT NULL,
+  OKRES int NOT NULL,
+  OBEC int NOT NULL,
+  OKRSEK int NOT NULL,
+  KC_1 int NOT NULL,
+  TYPZASTUP smallint NOT NULL,
+  COBVODU smallint NOT NULL,
+  VOL_SEZNAM int NOT NULL,
+  VYD_OBALKY int NOT NULL,
+  ODEVZ_OBAL int NOT NULL,
+  PL_HL_CELK int NOT NULL,
+  POCET_VS smallint NOT NULL,
+  POC_VS_HL smallint NOT NULL,
+  KC_2 int NOT NULL,
+  KODZASTUP int NOT NULL
+);
+
+DROP TABLE IF EXISTS volby.komunalni_okrsky_hlasy;
+
+CREATE TABLE volby.komunalni_okrsky_hlasy (
+  datum date,
+  ID_OKRSKY int NOT NULL,
+  TYP_FORM smallint NOT NULL,
+  OPRAVA smallint NOT NULL,
+  CHYBA smallint NOT NULL,
+  OKRES int NOT NULL,
+  OBEC int NOT NULL,
+  OKRSEK int NOT NULL,
+  KC_1 int NOT NULL,
+  TYPZASTUP smallint NOT NULL,
+  POR_STR_HL int NOT NULL,
+  POC_HLASU int NOT NULL,
+  KC_2 int NOT NULL,
+  POSL_KAND smallint NOT NULL,
+  KC_SUM int NOT NULL,
+  STRANY int[] NOT NULL,
+  HLASY int[] NOT NULL
+);
+
 drop table if exists volby.kraje_kandidati;
 
 create table volby.kraje_kandidati (
