@@ -302,6 +302,50 @@ create table volby.kraje_strany_kraje (
     slozneplat varchar
 );
 
+DROP TABLE IF EXISTS volby.kraje_okrsky_prehled;
+
+CREATE TABLE volby.kraje_okrsky_prehled (
+	datum date,
+	ID_OKRSKY smallint,
+	TYP_FORM smallint NOT NULL,
+	OPRAVA smallint NOT NULL,
+	CHYBA smallint NOT NULL,
+	OKRES smallint NOT NULL,
+	OBEC int NOT NULL,
+	OKRSEK int NOT NULL,
+	KC_1 int NOT NULL,
+	VOL_SEZNAM smallint NOT NULL,
+	VYD_OBALKY smallint NOT NULL,
+	ODEVZ_OBAL smallint NOT NULL,
+	PL_HL_CELK smallint NOT NULL,
+	KC_2 int NOT NULL,
+	ZAKRSTRANA bit varying(100) NOT NULL
+);
+
+DROP TABLE IF EXISTS volby.kraje_okrsky_hlasy;
+
+CREATE TABLE volby.kraje_okrsky_hlasy (
+	datum date,
+	ID_OKRSKY smallint,
+	TYP_FORM smallint NOT NULL,
+	OPRAVA smallint NOT NULL,
+	CHYBA smallint NOT NULL,
+	OKRES smallint NOT NULL,
+	OBEC int NOT NULL,
+	OKRSEK int NOT NULL,
+	KC_1 int NOT NULL,
+	KSTRANA smallint NOT NULL,
+	POC_HLASU smallint NOT NULL,
+	KC_2 int NOT NULL,
+	KC_3 int NOT NULL,
+	KC_4 int NOT NULL,
+	KC_5 int NOT NULL,
+	POSL_KAND smallint NOT NULL,
+	KC_SUM int NOT NULL,
+    STRANY int[] NOT NULL,
+    HLASY int[] NOT NULL
+);
+
 drop table if exists volby.ep_kandidati;
 
 create table volby.ep_kandidati (

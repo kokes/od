@@ -364,7 +364,8 @@
             ],
             "2016-10-07": [
                 "https://volby.cz/opendata/kz2016/KZ2016reg20161008.zip",
-                "https://volby.cz/opendata/kz2016/KZ2016ciselniky20161007.zip"
+                "https://volby.cz/opendata/kz2016/KZ2016ciselniky20161007.zip",
+                "https://volby.cz/opendata/kz2016/KZ2016data20161008.zip"
             ]
         },
         "ds": {
@@ -443,6 +444,58 @@
                     "PLAT_STR",
                     "PLATNOST",
                     "SLOZNEPLAT"
+                ]
+            },
+            "okrsky_prehled": {
+                "fn": [
+                    "KZT6.dbf",
+                    "kzt6.xml"
+                ],
+                "klic": "KZ_T6_ROW",
+                "schema": [
+                    "ID_OKRSKY",
+                    "TYP_FORM",
+                    "OPRAVA",
+                    "CHYBA",
+                    "OKRES",
+                    "OBEC",
+                    "OKRSEK",
+                    "KC_1",
+                    "VOL_SEZNAM",
+                    "VYD_OBALKY",
+                    "ODEVZ_OBAL",
+                    "PL_HL_CELK",
+                    "KC_2",
+                    "ZAKRSTRANA"
+                ]
+            },
+            "okrsky_hlasy": {
+                "fn": [
+                    "KZT6p.dbf",
+                    "kzt6p-*.xml"
+                ],
+                "klic": "KZ_T6P_ROW",
+                "schema": [
+                    "ID_OKRSKY",
+                    "TYP_FORM",
+                    "OPRAVA",
+                    "CHYBA",
+                    "OKRES",
+                    "OBEC",
+                    "OKRSEK",
+                    "KC_1",
+                    "KSTRANA",
+                    "POC_HLASU",
+                    "KC_2",
+                    "KC_3",
+                    "KC_4",
+                    "KC_5",
+                    "POSL_KAND",
+                    "KC_SUM"
+                ],
+                "extra_schema": [
+                    "STRANY",
+                    "HLASY"
                 ]
             }
         }

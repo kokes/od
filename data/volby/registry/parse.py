@@ -3,7 +3,9 @@ import zipfile
 import json
 import os
 import shutil
+import sys
 import zipfile
+from fnmatch import fnmatch
 from urllib.request import urlopen, Request
 from contextlib import contextmanager
 from tempfile import NamedTemporaryFile
@@ -55,6 +57,7 @@ with open('mapping.json') as f:
 qq = []
 sch=[]
 for volby, mp in mps.items():
+    if len(sys.argv) > 1 and volby != sys.argv[1]: continue
     print(volby)
     csv_dir = f'data/csv/{volby}'
     os.makedirs(csv_dir, exist_ok=True)
@@ -72,14 +75,19 @@ for volby, mp in mps.items():
         for url in urls:
             with load_remote_data(url) as zf:
                 for ff in map(lambda x: x.filename, zf.filelist):
-                    if ff not in fnmap: continue
-                    ds, fmp = fnmap[ff]
+                    patterns = [j for j in fnmap.keys() if fnmatch(ff, j)]
+                    if len(patterns) == 0: continue
+                    if len(patterns) > 1:
+                        raise KeyError('ambiguous keys: {}'.format(patterns))
+
+                    ds, fmp = fnmap.get(patterns[0])
                     tfn = os.path.join(csv_dir, f'{datum}_{ds}.csv')
                     qq.append(f"echo {tfn}\ncat {tfn} | psql -c 'copy volby.{volby}_{ds} from stdin csv header'")
-                    if os.path.isfile(tfn): continue # TODO: smaz
-                    with open(tfn, 'w', encoding='utf8') as fw:
+                    fnexists = os.path.isfile(tfn)
+                    with open(tfn, 'a+', encoding='utf8') as fw:
                         cw = csv.DictWriter(fw, fieldnames=['DATUM'] + fmp['schema'] + fmp.get('extra_schema', []))
-                        cw.writeheader()
+                        if not fnexists:
+                            cw.writeheader()
                         for el in extract_elements(zf, ff, fmp['klic']):
                             for k in fmp.get('vynechej', []):
                                 el.pop(k, None)
@@ -107,4 +115,4 @@ with open('init_raw.sql', 'w', encoding='utf8') as f:
     
 with open('copy.sh', 'w', encoding='utf8') as f:
     f.write('psql < init.sql\n')
-    f.write('\n'.join(qq))
+    f.write('\n'.join(sorted(list(set(qq)))))
