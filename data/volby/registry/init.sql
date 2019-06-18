@@ -390,6 +390,32 @@ CREATE TABLE volby.senat_obvody (
 	PLATNOST varchar NOT NULL
 );
 
+DROP TABLE IF EXISTS volby.senat_okrsky;
+
+CREATE TABLE volby.senat_okrsky (
+	datum date,
+	TYP_FORM smallint NOT NULL,
+	OPRAVA smallint NOT NULL,
+	CHYBA smallint NOT NULL,
+	OBEC int NOT NULL,
+	OKRSEK int NOT NULL,
+	KC_1 smallint NOT NULL,
+	OBVOD int NOT NULL,
+	KOLO smallint NOT NULL,
+	VOL_SEZNAM int NOT NULL,
+	VYD_OBALKY int NOT NULL,
+	ODEVZ_OBAL int NOT NULL,
+	PL_HL_CELK int NOT NULL,
+	KC_2 int NOT NULL,
+	KC_3 int NOT NULL,
+	KC_4 int NOT NULL,
+	POSL_KAND smallint NOT NULL,
+	KC_SUM int NOT NULL,
+    STRANY int[] NOT NULL,
+    HLASY int[] NOT NULL
+);
+
+
 create view volby.kandidati AS (
     SELECT
         'senat' AS volby,
