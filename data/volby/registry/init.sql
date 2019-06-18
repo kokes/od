@@ -54,7 +54,6 @@ CREATE TABLE volby.prezident_okrsky (
 	KC_4 int NOT NULL,
 	POSL_KAND smallint NOT NULL,
 	KC_SUM int NOT NULL,
-    STRANY smallint[] NOT NULL,
     HLASY int[] NOT NULL
 );
 
@@ -124,7 +123,6 @@ CREATE TABLE volby.psp_okrsky_hlasy (
 	KC_4 int NOT NULL,
 	POSL_KAND int NOT NULL,
 	KC_SUM int NOT NULL,
-    STRANY int[] NOT NULL,
     HLASY int[] NOT NULL
 );
 
@@ -278,7 +276,6 @@ CREATE TABLE volby.komunalni_okrsky_hlasy (
   KC_2 int NOT NULL,
   POSL_KAND smallint NOT NULL,
   KC_SUM int NOT NULL,
-  STRANY int[] NOT NULL,
   HLASY int[] NOT NULL
 );
 
@@ -388,7 +385,6 @@ CREATE TABLE volby.kraje_okrsky_hlasy (
 	KC_5 int NOT NULL,
 	POSL_KAND smallint NOT NULL,
 	KC_SUM int NOT NULL,
-    STRANY int[] NOT NULL,
     HLASY int[] NOT NULL
 );
 
@@ -501,7 +497,6 @@ CREATE TABLE volby.senat_okrsky (
 	KC_4 int NOT NULL,
 	POSL_KAND smallint NOT NULL,
 	KC_SUM int NOT NULL,
-    STRANY int[] NOT NULL,
     HLASY int[] NOT NULL
 );
 

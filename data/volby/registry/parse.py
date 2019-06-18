@@ -97,12 +97,10 @@ for volby, mp in mps.items():
                             if hk:
                                 strany, hlasy = [], []
                                 for k in hk:
-                                    strany.append(int(k.partition('_')[-1]))
                                     hlasy.append(el[k] or 0)
                                     del el[k]
 
                                 # pg array representation - '{a, b, c}'
-                                el['STRANY'] = '{{{}}}'.format(','.join(map(str, strany)))
                                 el['HLASY'] = '{{{}}}'.format(','.join(map(str, hlasy)))
 
                             cw.writerow({
