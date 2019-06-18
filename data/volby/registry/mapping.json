@@ -560,19 +560,23 @@
         "url": {
             "2004-06-11": [
                 "https://volby.cz/opendata/ep2004/EP2004reg.zip",
-                "https://volby.cz/opendata/ep2004/EP2004ciselniky.zip"
+                "https://volby.cz/opendata/ep2004/EP2004ciselniky.zip",
+                "https://volby.cz/opendata/ep2004/EP2004okrsky.zip"
             ],
             "2009-06-05": [
                 "https://volby.cz/opendata/ep2009/EP2009reg.zip",
-                "https://volby.cz/opendata/ep2009/EP2009ciselniky.zip"
+                "https://volby.cz/opendata/ep2009/EP2009ciselniky.zip",
+                "https://volby.cz/opendata/ep2009/EP2009okrsky.zip"
             ],
             "2014-05-23": [
                 "https://volby.cz/opendata/ep2014/EP2014reg20140525.zip",
-                "https://volby.cz/opendata/ep2014/EP2014ciselniky20140425.zip"
+                "https://volby.cz/opendata/ep2014/EP2014ciselniky20140425.zip",
+                "https://volby.cz/opendata/ep2014/EP2014okrsky.zip"
             ],
             "2019-05-24": [
                 "https://www.volby.cz/opendata/ep2019/EP2019reg20190526.zip",
-                "https://www.volby.cz/opendata/ep2019/EP2019ciselniky20190513.zip"
+                "https://www.volby.cz/opendata/ep2019/EP2019ciselniky20190513.zip",
+                "https://volby.cz/opendata/ep2019/EP2019data20190526_xml.zip"
             ]
         },
         "ds": {
@@ -624,6 +628,54 @@
                     "SLOZNEPLAT",
                     "POCMANDCR",
                     "NAZEVPLNY"
+                ]
+            },
+            "okrsky_prehled": {
+                "fn": [
+                    "ept2.xml"
+                ],
+                "klic": "EP_T2_ROW",
+                "schema": [
+                    "ID_OKRSKY",
+                    "TYP_FORM",
+                    "OPRAVA",
+                    "CHYBA",
+                    "OKRES",
+                    "OBEC",
+                    "OKRSEK",
+                    "KC_1",
+                    "KC_2",
+                    "ZAKRSTRANA",
+                    "VOL_SEZNAM",
+                    "VYD_OBALKY",
+                    "ODEVZ_OBAL",
+                    "PL_HL_CELK"
+                ]
+            },
+            "okrsky_hlasy": {
+                "fn": [
+                    "ept2p.xml"
+                ],
+                "klic": "EP_T2P_ROW",
+                "schema": [
+                    "ID_OKRSKY",
+                    "TYP_FORM",
+                    "OPRAVA",
+                    "CHYBA",
+                    "OKRES",
+                    "OBEC",
+                    "OKRSEK",
+                    "KC_1",
+                    "ESTRANA",
+                    "POC_HLASU",
+                    "KC_2",
+                    "KC_3",
+                    "KC_4",
+                    "POSL_KAND",
+                    "KC_SUM"
+                ],
+                "extra_schema": [
+                    "HLASY"
                 ]
             }
         }

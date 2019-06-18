@@ -434,6 +434,48 @@ create table volby.ep_strany (
     nazevplny varchar
 );
 
+DROP TABLE IF EXISTS volby.ep_okrsky_prehled;
+
+CREATE TABLE volby.ep_okrsky_prehled (
+  datum date,
+  ID_OKRSKY smallint,
+  TYP_FORM smallint NOT NULL,
+  OPRAVA smallint,
+  CHYBA smallint,
+  OKRES int NOT NULL,
+  OBEC int NOT NULL,
+  OKRSEK int NOT NULL,
+  KC_1 int,
+  KC_2 int,
+  ZAKRSTRANA bit varying(100),
+  VOL_SEZNAM smallint NOT NULL,
+  VYD_OBALKY smallint NOT NULL,
+  ODEVZ_OBAL smallint NOT NULL,
+  PL_HL_CELK smallint NOT NULL
+);
+
+DROP TABLE IF EXISTS volby.ep_okrsky_hlasy;
+
+CREATE TABLE volby.ep_okrsky_hlasy (
+  datum date,
+  ID_OKRSKY smallint,
+  TYP_FORM smallint NOT NULL,
+  OPRAVA smallint,
+  CHYBA smallint,
+  OKRES int NOT NULL,
+  OBEC int NOT NULL,
+  OKRSEK int NOT NULL,
+  KC_1 int,
+  ESTRANA smallint NOT NULL,
+  POC_HLASU int NOT NULL,
+  KC_2 int,
+  KC_3 int,
+  KC_4 int,
+  POSL_KAND smallint,
+  KC_SUM int,
+  HLASY int[] NOT NULL
+);
+
 drop table if exists volby.senat_kandidati;
 
 create table volby.senat_kandidati (
