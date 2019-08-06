@@ -8,6 +8,7 @@ import zipfile
 from contextlib import contextmanager
 from functools import lru_cache
 from io import BytesIO, TextIOWrapper
+from datetime import datetime
 
 from dateutil.parser import parse
 import requests
@@ -44,7 +45,10 @@ def read_compressed_csv(zf, fn, mp):
                 if v.strip() == '':
                     dt[k] = None
                 elif types[k] in datetypes:
-                    dt[k] = parse(v, dayfirst=True)
+                    try:
+                        dt[k] = datetime.strptime(v, '%Y-%m-%d')
+                    except ValueError:
+                        dt[k] = parse(v, dayfirst=True)
                 else:
                     dt[k] = v
 
