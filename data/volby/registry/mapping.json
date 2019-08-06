@@ -75,7 +75,6 @@
                     "KC_SUM"
                 ],
                 "extra_schema": [
-                    "STRANY",
                     "HLASY"
                 ]
             }
@@ -182,7 +181,6 @@
                     "KC_SUM"
                 ],
                 "extra_schema": [
-                    "STRANY",
                     "HLASY"
                 ]
             },
@@ -402,7 +400,6 @@
                     "KC_SUM"
                 ],
                 "extra_schema": [
-                    "STRANY",
                     "HLASY"
                 ]
             }
@@ -550,7 +547,6 @@
                     "KC_SUM"
                 ],
                 "extra_schema": [
-                    "STRANY",
                     "HLASY"
                 ]
             }
@@ -822,7 +818,6 @@
                     "KC_SUM"
                 ],
                 "extra_schema": [
-                    "STRANY",
                     "HLASY"
                 ]
             }
