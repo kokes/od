@@ -6,7 +6,6 @@ Tento informační systém byl dlouho značně nepoužitelný, pak konečně do�
 
 Několik převážně technických poznámek:
 
-- Data jsou zabalená v 7zip, budete tedy potřebovat rozbalovací nástroj - můj skript s tím počítá a bohužel vypisuje spoustu informací na obrazovku během běhu - to se mi nepodařilo potlačit.
 - Existují dva typy datový sad - samotné transakce a číselníky. Relativně komplexní popis vztahů naleznete [na straně 12 v dokumentaci](http://cedropendata.mfcr.cz/c3lod/C3_OpenData%20-%20datov%C3%A1%20sada%20IS%20CEDR%20III.pdf).
 - Pro pohodlnost jsem denormalizoval všechny číselníky do transakcí. Obecně se jakékoliv úpravě dat v tomto repozitáři vyhýbám, ale zde mi to přišlo jako vhodné. Tady jsem neviděl výhody vločkovité normalizace, už takhle je zde spousta vztahů, navíc klíče jsou 160bitové, takže joiny nejsou nejrychlejší.
 - V datasetu dotací jsem zmaterializoval IČO firem, protože vazební dataset, který by měl být exportem z ARES, má v sobě jen a pouze IČO. Není tedy důvod dělat join jen proto, abychom získali IČO.

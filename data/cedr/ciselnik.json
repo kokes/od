@@ -1,94 +1,112 @@
-{
-  "idGrantoveSchema,grantoveSchemaKod,grantoveSchemaNazev,grantoveSchemaCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+[
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrGrantoveSchemav01.csv.gz",
     "id": "idGrantoveSchema",
     "nazev": "grantoveSchemaNazev"
   },
-  "idOpatreni,idPriorita,opatreniKod,opatreniNazev,opatreniCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrOpatreniv01.csv.gz",
     "id": "idOpatreni",
     "nazev": "opatreniNazev"
   },
-  "idOperacniProgram,operacniProgramKod,operacniProgramNazev,operacniProgramCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrOperacniProgramv01.csv.gz",
     "id": "idOperacniProgram",
     "nazev": "operacniProgramNazev"
   },
-  "idPodOpatreni,idOpatreni,podOpatreniKod,podOpatreniNazev,podOpatreniCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrPodOpatreniv01.csv.gz",
     "id": "idPodOpatreni",
     "nazev": "podOpatreniNazev"
   },
-  "idPriorita,idOperacniProgram,idPodprogram,prioritaKod,prioritaNazev,prioritaCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrPrioritav01.csv.gz",
     "id": "idPriorita",
     "nazev": "prioritaNazev"
   },
-  "id,dotacePoskytovatelKod,dotacePoskytovatelNazev,dotacePoskytovatelNadrizenyKod,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikDotacePoskytovatelv01.csv.gz",
     "id": "id",
     "nazev": "dotacePoskytovatelNazev"
   },
-  "id,financniProstredekCleneniKod,financniProstredekCleneniNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikFinancniProstredekCleneniv01.csv.gz",
     "id": "id",
     "nazev": "financniProstredekCleneniNazev"
   },
-  "id,financniZdrojKod,financniZdrojNadrizenyKod,financniZdrojNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikFinancniZdrojv01.csv.gz",
     "id": "id",
     "nazev": "financniZdrojNazev"
   },
-  "id,rozpoctovaSkladbaParagrafKod,rozpoctovaSkladbaParagrafNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikRozpoctovaSkladbaParagrafv01.csv.gz",
     "id": "id",
     "nazev": "rozpoctovaSkladbaParagrafNazev"
   },
-  "id,rozpoctovaSkladbaPolozkaKod,rozpoctovaSkladbaPolozkaNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikRozpoctovaSkladbaPolozkav01.csv.gz",
     "id": "id",
     "nazev": "rozpoctovaSkladbaPolozkaNazev"
   },
-  "id,statniRozpocetKapitolaKod,statniRozpocetKapitolaNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikStatniRozpocetKapitolav01.csv.gz",
     "id": "id",
     "nazev": "statniRozpocetKapitolaNazev"
   },
-  "id,idStatniRozpocetKapitola,statniRozpocetUkazatelKod,statniRozpocetKapitolaKod,statniRozpocetUkazatelNadrizenyKod,statniRozpocetUkazatelNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikStatniRozpocetUkazatelv01.csv.gz",
     "id": "id",
     "nazev": "statniRozpocetUkazatelNazev"
   },
-  "idUcelZnak,ucelZnakKod,statniRozpocetKapitolaKod,ucelZnakNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikUcelZnakv01.csv.gz",
     "id": "idUcelZnak",
     "nazev": "ucelZnakNazev"
   },
-  "id,krajKod,krajNazev,globalniNavrhZmenaIdentifikator,nespravnostIndikator,transakceIdentifikator,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
-    "id": "id",
-    "nazev": "krajNazev"
-  },
-  "id,mestskyObvodMestskaCastKod,mestskyObvodMestskaCastNazev,obecNad,pad2,pad3,pad4,pad5,pad6,pad7,globalniNavrhZmenaIdentifikator,nespravnostIndikator,transakceIdentifikator,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
-    "id": "id",
-    "nazev": "mestskyObvodMestskaCastNazev"
-  },
-  "id,obecKod,obecNutsKod,obecNazev,okresNad,pad2,pad3,pad4,pad5,pad6,pad7,globalniNavrhZmenaIdentifikator,nespravnostIndikator,transakceIdentifikator,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
-    "id": "id",
-    "nazev": "obecNazev"
-  },
-  "id,okresKod,okresNazev,okresNutsKod,krajNad,vuscNad,globalniNavrhZmenaIdentifikator,nespravnostIndikator,transakceIdentifikator,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
-    "id": "id",
-    "nazev": "okresNazev"
-  },
-  "id,pravniFormaKod,pravniFormaNazev,pravniFormaNazevZkraceny,pravniFormaTypKod,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
-    "id": "id",
-    "nazev": "pravniFormaNazev"
-  },
-  "id,statKod3Znaky,statKod3Cisla,statKodOmezeny,statNazev,statNazevZkraceny,statNazevEn,statNazevZkracenyEn,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
-    "id": "id",
-    "nazev": "statNazev"
-  },
-  "id,vuscKod,krajNutsKod,vuscNazev,globalniNavrhZmenaIdentifikator,nespravnostIndikator,transakceIdentifikator,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
-    "id": "id",
-    "nazev": "vuscNazev"
-  },
-  "id,programKod,programNazev,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
-    "id": "id",
-    "nazev": "programNazev"
-  },
-  "idPodprogram,idOperacniProgram,podprogramKod,podprogramNazev,podprogramCislo,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrPodprogramv01.csv.gz",
     "id": "idPodprogram",
     "nazev": "podprogramNazev"
   },
-  "idDotaceTitul,dotaceTitulKod,dotaceTitulVlastniKod,statniRozpocetKapitolaKod,dotaceTitulNazev,dotaceTitulNazevZkraceny,zaznamPlatnostOdDatum,zaznamPlatnostDoDatum": {
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikDotaceTitulv01.csv.gz",
     "id": "idDotaceTitul",
     "nazev": "dotaceTitulNazev"
+  },
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrOperacniProgramv01.csv.gz",
+    "id": "idOperacniProgram",
+    "nazev": "operacniProgramNazev"
+  },
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrPrioritav01.csv.gz",
+    "id": "idPriorita",
+    "nazev": "prioritaNazev"
+  },
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrOpatreniv01.csv.gz",
+    "id": "idOpatreni",
+    "nazev": "opatreniNazev"
+  },
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrPodOpatreniv01.csv.gz",
+    "id": "idPodOpatreni",
+    "nazev": "podOpatreniNazev"
+  },
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrGrantoveSchemav01.csv.gz",
+    "id": "idGrantoveSchema",
+    "nazev": "grantoveSchemaNazev"
+  },
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrPodprogramv01.csv.gz",
+    "id": "idPodprogram",
+    "nazev": "podprogramNazev"
+  },
+  {
+    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikProgramv01.csv.gz",
+    "id": "id",
+    "nazev": "programNazev"
   }
-}
+]
