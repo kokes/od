@@ -55,10 +55,10 @@ if __name__ == '__main__':
 
             for ln in remote_csv(f'{ds}.csv.gz', rdir):
                 # vypln info z ciselniku
-                for j, el in enumerate(ln):
-                    if el.startswith('http://'):
+                for k, v in ln.items():
+                    if v.startswith('http://') or v.startswith('https://'):
                         # tohle proste spadne, kdyz bude chybet klasifikator
-                        ln[j] = csl[el]
+                        ln[k] = csl[v]
 
                 if ds == 'Dotace':
                     ln['idPrijemce'] = mapping[ln['idPrijemce']]  # idPrijemce -> ico
