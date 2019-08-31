@@ -445,75 +445,46 @@
     ],
     "soubor": "angazovane_osoby",
     "schema": {
-      "hlavicka": "hlavicka",
       "zapisDatum": "zapisDatum",
       "vymazDatum": "vymazDatum",
-      "hodnotaText": "hodnotaText",
-      "hodnotaUdaje": {
-        "T": "hodnotaUdaje/T",
-        "textZaOsobu": {
-          "value": "hodnotaUdaje/textZaOsobu/value"
-        },
-        "typ": "hodnotaUdaje/typ",
-        "vklad": {
-          "vklad": {
-            "typ": "hodnotaUdaje/vklad/vklad/typ",
-            "textValue": "hodnotaUdaje/vklad/vklad/textValue"
-          },
-          "splaceni": {
-            "typ": "hodnotaUdaje/vklad/splaceni/typ",
-            "textValue": "hodnotaUdaje/vklad/splaceni/textValue"
-          },
-          "souhrn": {
-            "typ": "hodnotaUdaje/vklad/souhrn/typ",
-            "textValue": "hodnotaUdaje/vklad/souhrn/textValue"
-          }
-        }
-      },
-      "osoba": {
-        "jmeno": "osoba/jmeno",
-        "prijmeni": "osoba/prijmeni",
-        "narozDatum": "osoba/narozDatum",
-        "osobaText": "osoba/osobaText",
-        "nazev": "osoba/nazev",
-        "regCislo": "osoba/regCislo",
-        "titulPred": "osoba/titulPred",
-        "titulZa": "osoba/titulZa",
-        "ico": "osoba/ico",
-        "euid": "osoba/euid"
-      },
-      "adresa": {
-        "statNazev": "adresa/statNazev",
-        "obec": "adresa/obec",
-        "castObce": "adresa/castObce",
-        "ulice": "adresa/ulice",
-        "cisloPo": "adresa/cisloPo",
-        "psc": "adresa/psc",
-        "okres": "adresa/okres",
-        "cisloOr": "adresa/cisloOr",
-        "adresaText": "adresa/adresaText",
-        "cisloEv": "adresa/cisloEv",
-        "doplnujiciText": "adresa/doplnujiciText",
-        "cisloText": "adresa/cisloText"
-      },
-      "bydliste": {
-        "statNazev": "bydliste/statNazev",
-        "ulice": "bydliste/ulice",
-        "obec": "bydliste/obec",
-        "psc": "bydliste/psc",
-        "castObce": "bydliste/castObce",
-        "cisloPo": "bydliste/cisloPo",
-        "cisloOr": "bydliste/cisloOr",
-        "okres": "bydliste/okres",
-        "cisloEv": "bydliste/cisloEv",
-        "cisloText": "bydliste/cisloText",
-        "doplnujiciText": "bydliste/doplnujiciText"
-      },
+      "typ": "udajTyp/nazev",
       "funkce": "funkce",
-      "funkceOd": "funkceOd",
-      "clenstviOd": "clenstviOd",
-      "clenstviDo": "clenstviDo",
-      "funkceDo": "funkceDo"
+      "funkce_od": "funkceOd",
+      "clenstvi_od": "clenstviOd",
+      "clenstvi_do": "clenstviDo",
+      "funkce_do": "funkceDo",
+      "jmeno": "osoba/jmeno",
+      "prijmeni": "osoba/prijmeni",
+      "datum_narozeni": "osoba/narozDatum",
+      "nazev": "osoba/nazev",
+      "regCislo": "osoba/regCislo",
+      "titul_pred": "osoba/titulPred",
+      "titul_za": "osoba/titulZa",
+      "ico": "osoba/ico",
+      "euid": "osoba/euid",
+      "adresa_stat": "adresa/statNazev",
+      "adresa_obec": "adresa/obec",
+      "adresa_cast_obce": "adresa/castObce",
+      "adresa_ulice": "adresa/ulice",
+      "adresa_cislo_po": "adresa/cisloPo",
+      "adresa_psc": "adresa/psc",
+      "adresa_okres": "adresa/okres",
+      "adresa_cislo_or": "adresa/cisloOr",
+      "adresa_adresa_text": "adresa/adresaText",
+      "adresa_cislo_ev": "adresa/cisloEv",
+      "adresa_doplnujici_text": "adresa/doplnujiciText",
+      "adresa_cislo_text": "adresa/cisloText",
+      "bydliste_stat": "bydliste/statNazev",
+      "bydliste_ulice": "bydliste/ulice",
+      "bydliste_obec": "bydliste/obec",
+      "bydliste_psc": "bydliste/psc",
+      "bydliste_cast_obce": "bydliste/castObce",
+      "bydliste_cislo_po": "bydliste/cisloPo",
+      "bydliste_cislo_or": "bydliste/cisloOr",
+      "bydliste_okres": "bydliste/okres",
+      "bydliste_cislo_ev": "bydliste/cisloEv",
+      "bydliste_cislo_text": "bydliste/cisloText",
+      "bydliste_doplnujici_text": "bydliste/doplnujiciText"
     }
   }
 ]
