@@ -52,18 +52,12 @@
       "STATUTAR_ZRIZOVATELE_POCET_CLENU"
     ],
     "soubor": "pocet_clenu",
-    "TODO": "pridat udajTyp",
     "schema": {
       "udaj_typ": "udajTyp/nazev",
       "hlavicka": "hlavicka",
       "zapisDatum": "zapisDatum",
       "hodnotaText": "hodnotaText",
-      "vymazDatum": "vymazDatum",
-      "hodnotaUdaje": {
-        "typ": "hodnotaUdaje/typ",
-        "pocetClenu": "hodnotaUdaje/pocetClenu",
-        "maxPocetClenu": "hodnotaUdaje/maxPocetClenu"
-      }
+      "vymazDatum": "vymazDatum"
     }
   },
   {
