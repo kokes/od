@@ -110,7 +110,7 @@ if __name__ == '__main__':
             fn = el.get('soubor', el['udaj']).replace('/', '-') + '.csv'
             f = open(os.path.join(cdir, fn), 'w')
             cw = csv.DictWriter(
-                f, fieldnames=['ico', 'zdroj'] + list(el['schema'].keys()))
+                f, fieldnames=['ico'] + list(el['schema'].keys()))
             cw.writeheader()
 
             for udaj in udaje:
@@ -150,7 +150,6 @@ if __name__ == '__main__':
                     schema = schemasd[udaj_typ]['schema']
                     row = extrahuj(udaj_raw, schema)
                     row['ico'] = ico
-                    row['zdroj'] = 'udaj'
                     csvs[udaj_typ].writerow(row)
 
                 if udaj_raw.find('podudaje') is not None:
@@ -172,7 +171,6 @@ if __name__ == '__main__':
                             schema = schemasd[podudaj_typ]['schema']
                             row = extrahuj(podudaj_raw, schema)
                             row['ico'] = ico
-                            row['zdroj'] = 'podudaj'
                             csvs[podudaj_typ].writerow(row)
                 else:
                     pass  # TODO: handluj non-podudaje
