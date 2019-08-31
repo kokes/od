@@ -49,6 +49,7 @@ def extrahuj(node, schema):
         else:
             ret[k] = getattr(node.find(v), 'text', None)
 
+    ret = {k: json.dumps(v) if isinstance(v, dict) else v for k, v in ret.items()}
     return ret
 
 
