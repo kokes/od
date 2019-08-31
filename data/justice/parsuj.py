@@ -133,6 +133,8 @@ if __name__ == '__main__':
             zapis = el.find('zapisDatum').text
             ico = getattr(el.find('ico'), 'text', None)
             if not ico:
+                with open('chybejici_ico.log', 'a+') as fw:
+                    fw.write(f'{nazev}\t{el.sourceline}\t{url}\n')
                 continue
 
             for udaj_raw in el.find('udaje').iterchildren():
