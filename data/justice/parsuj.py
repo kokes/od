@@ -2,15 +2,14 @@ import csv
 import gzip
 import json
 import os
-import shutil
 from datetime import date
 from itertools import islice
-from pprint import pprint
 from urllib.parse import urlparse
 from urllib.request import urlretrieve, urlopen
 
 import lxml.etree
 from tqdm import tqdm
+
 
 def gen_schema(element, parent=None):
     ret = {}
@@ -22,35 +21,24 @@ def gen_schema(element, parent=None):
             pass
         else:
             ret[j.tag] = '/'.join((parent or []) + [j.tag])
-            
+
     return ret
 
+
 def merge(a, b, path=None):
-    if path is None: path = []
+    if path is None:
+        path = []
     for key in b:
         if key in a:
             if isinstance(a[key], dict) and isinstance(b[key], dict):
                 merge(a[key], b[key], path + [str(key)])
             elif a[key] == b[key]:
-                pass # same leaf value
+                pass  # same leaf value
             else:
                 raise Exception('Conflict at %s' % '.'.join(path + [str(key)]))
         else:
             a[key] = b[key]
     return a
-
-
-def parsuj_udaj(node, extras):
-    children = {j.tag for j in node.iterchildren()}
-        
-    return {
-        'udaj_kod': node.find('udajTyp/kod').text,
-        'udaj_nazev': node.find('udajTyp/nazev').text,
-        'hlavicka': getattr(node.find('hlavicka'), 'text', None), # redundantni?
-        'zapis': node.find('zapisDatum').text,
-        'vymaz': getattr(node.find('vymazDatum'), 'text', None),
-        'hodnotaText': getattr(node.find('hodnotaText'), 'text', None),
-    }
 
 
 def extrahuj(node, schema):
@@ -60,15 +48,16 @@ def extrahuj(node, schema):
             ret[k] = extrahuj(node, v)
         else:
             ret[k] = getattr(node.find(v), 'text', None)
-            
+
     return ret
+
 
 def nahraj_ds(url):
     fn = os.path.split(urlparse(url).path)[-1]
     tfn = os.path.join(rdir, fn)
     if not os.path.isfile(tfn):
         urlretrieve(url, tfn)
-        
+
     with gzip.open(tfn) as f:
         et = lxml.etree.iterparse(f)
         yield from et
@@ -83,32 +72,33 @@ if __name__ == '__main__':
     dt = json.load(r)
     assert dt['success']
 
-    dss = [ds for ds in dt['result'] if ds.endswith('-{}'.format(year)) and '-full-' in ds]
+    dss = [ds for ds in dt['result'] if ds.endswith(
+        '-{}'.format(year)) and '-full-' in ds]
 
     urls = []
     for ds in tqdm(dss):
-        url = 'https://dataor.justice.cz/api/3/action/package_show?id={}'.format(ds)
-        r = requests.get(url)
-        assert r.ok
-        dtp = r.json()
+        url = 'https://dataor.justice.cz/api/3/action/package_show?id={}'.format(
+            ds)
+        r = urlopen(url)
+        dtp = json.load(r)
         assert dtp['success']
-        ds_url = [j['url'] for j in dtp['result']['resources'] if j['url'].endswith('.xml.gz')]
+        ds_url = [j['url'] for j in dtp['result']
+                  ['resources'] if j['url'].endswith('.xml.gz')]
         assert len(ds_url) == 1
         urls.append(ds_url[0])
-
 
     rdir = 'data/raw'
     cdir = 'data/csv'
     os.makedirs(rdir, exist_ok=True)
     os.makedirs(cdir, exist_ok=True)
 
-    neumim = set() # TODO
+    neumim = set()  #  TODO
 
     schemasd = dict()
-    schema_autogen = dict() # TODO
+    schema_autogen = dict()  # TODO
     fs = dict()
     csvs = dict()
-    with open('schemas_final.json') as f:
+    with open('xml_schema.json') as f:
         schemas = json.load(f)
         for el in schemas:
             udaje = [el['udaj']] if isinstance(el['udaj'], str) else el['udaj']
@@ -116,10 +106,11 @@ if __name__ == '__main__':
                 for udaj in udaje:
                     schemasd[udaj] = el
                 continue
-            
+
             fn = el.get('soubor', el['udaj']).replace('/', '-') + '.csv'
             f = open(os.path.join(cdir, fn), 'w')
-            cw = csv.DictWriter(f, fieldnames=['ico', 'zdroj'] + list(el['schema'].keys()))
+            cw = csv.DictWriter(
+                f, fieldnames=['ico', 'zdroj'] + list(el['schema'].keys()))
             cw.writeheader()
 
             for udaj in udaje:
@@ -130,7 +121,7 @@ if __name__ == '__main__':
     for url in tqdm(urls):
         et = nahraj_ds(url)
 
-        for action, el in et: # islice(et, 1000) pro testovani
+        for action, el in islice(et, int(1e17)):  # sniz pro testovani
             assert action == 'end', action
             if el.tag != 'Subjekt':
                 continue
@@ -150,7 +141,7 @@ if __name__ == '__main__':
                 # beru opet zpet - třeba u zastoupení v dozorčí radě nás zajímá obojí :(
 
                 udaj_typ = udaj_raw.find('udajTyp/kod').text
-                
+
                 if udaj_typ not in schemasd:
                     neumim.add(udaj_typ)
                     continue
@@ -161,7 +152,7 @@ if __name__ == '__main__':
                     row['ico'] = ico
                     row['zdroj'] = 'udaj'
                     csvs[udaj_typ].writerow(row)
-                
+
                 if udaj_raw.find('podudaje') is not None:
                     podudaje = udaj_raw.find('podudaje').getchildren()
                     podpodudaje = udaj_raw.find('podudaje/Udaj/podudaje')
@@ -170,10 +161,11 @@ if __name__ == '__main__':
 
                     for podudaj_raw in podudaje:
                         podudaj_typ = podudaj_raw.find('udajTyp/kod').text
-                        
+
                         if podudaj_typ not in schemasd:
                             neumim.add(podudaj_typ)
-                            schema_autogen[podudaj_typ] = merge(gen_schema(podudaj_raw), schema_autogen.get(podudaj_typ, {}))
+                            schema_autogen[podudaj_typ] = merge(gen_schema(
+                                podudaj_raw), schema_autogen.get(podudaj_typ, {}))
                             continue
 
                         if not schemasd[podudaj_typ].get('ignore', False):
@@ -183,12 +175,12 @@ if __name__ == '__main__':
                             row['zdroj'] = 'podudaj'
                             csvs[podudaj_typ].writerow(row)
                 else:
-                    pass # TODO: handluj non-podudaje
+                    pass  # TODO: handluj non-podudaje
 
             el.clear()
-            
+
     for el in fs.values():
         el.close()
-        
+
     with open('xml_schema_chybejici.json', 'w') as fw:
         json.dump(schema_autogen, fw, indent=2, ensure_ascii=False)
