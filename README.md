@@ -53,6 +53,7 @@ Plánujeme zde zapojit dva typy datasetů - transakční a klasifikační, byť 
 - [**ARES**](data/ares) - nechvalně známý administrativní rejstřík ekonomických subjektů nabízí vhled nejen do právnických subjektů Česka. Klíčové jsou základní informace o subjektech, možná využijeme i obchodní rejstřík. Nová otevřená data ARES nám bohužel moc platná nebudou, více v README (TODO). Tento dataset bude bohužel jediný, který nejde volně stáhnout najednou.
 - [**PSP**](data/psp) - Poslanecká sněmovna Parlamentu nabízí velmi zajímavé datasety pro další zpracování, u nás najdete dva hlavní - informace o osobách (a nejen poslancích, ale i senátorech nebo členech vlád) a zpracování stenoprotokolů.
 - [**Volby**](data/volby) - statistický úřad již nějaký pátek nabízí otevřená data, se kterými se celkem snadno pracuje, ale nejsou připravené k analytice hned po stažení. Navíc se jejich formát měnil v čase, takže se snažíme toto unifikovat.
+- [**Justice**](data/justice) - data od Ministerstva spravedlnosti obsahují informace o jednotlivých ekonomických subjektech, jde o export z veřejných rejstříků, jak jsou mj. dostupné na webu [Justice](http://justice.cz).
 
 ## Identifikace podniků
 Jedním z hlavních zásahů do dat je nahrazení identifikace podniků našimi “vlastními” daty, konkrétně daty z ARES. Problémem je, že místo odkazování do ARES se každý z poskytovatelů dat snaží tvořit si vlastní databázi podniků a v oněch datech jsou často chyby. Z důvodu konzistence a kvality dat proto používáme většinou pouze IČO podniků a dál přebíráme informace z ARES.
