@@ -10,7 +10,7 @@ CREATE TABLE justice.subjekty (
 
 DROP TABLE IF EXISTS justice."spisova_znacka";
 CREATE TABLE justice."spisova_znacka"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"znacka" text,
@@ -21,7 +21,7 @@ CREATE TABLE justice."spisova_znacka"(
 );
 DROP TABLE IF EXISTS justice."nazev";
 CREATE TABLE justice."nazev"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"udaj_typ" text,
@@ -29,7 +29,7 @@ CREATE TABLE justice."nazev"(
 );
 DROP TABLE IF EXISTS justice."pravni_forma";
 CREATE TABLE justice."pravni_forma"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"nazev" text,
@@ -37,7 +37,7 @@ CREATE TABLE justice."pravni_forma"(
 );
 DROP TABLE IF EXISTS justice."predmet_podnikani";
 CREATE TABLE justice."predmet_podnikani"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"kategorie" text,
@@ -45,35 +45,35 @@ CREATE TABLE justice."predmet_podnikani"(
 );
 DROP TABLE IF EXISTS justice."pocet_clenu";
 CREATE TABLE justice."pocet_clenu"(
-	"ico" text,
+	"ico" bigint,
 	"udaj_typ" text,
 	"datum_zapis" date,
 	"text" text,
 	"datum_vymaz" date);
 DROP TABLE IF EXISTS justice."zpusob_jednani";
 CREATE TABLE justice."zpusob_jednani"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"text" text
 );
 DROP TABLE IF EXISTS justice."ostatni_skutecnosti";
 CREATE TABLE justice."ostatni_skutecnosti"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"text" text
 );
 DROP TABLE IF EXISTS justice."zpusob_rizeni";
 CREATE TABLE justice."zpusob_rizeni"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"text" text
 );
 DROP TABLE IF EXISTS justice."akcie";
 CREATE TABLE justice."akcie"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"podoba" text,
@@ -85,7 +85,7 @@ CREATE TABLE justice."akcie"(
 );
 DROP TABLE IF EXISTS justice."vklady";
 CREATE TABLE justice."vklady"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"typ" text,
@@ -95,55 +95,55 @@ CREATE TABLE justice."vklady"(
 );
 DROP TABLE IF EXISTS justice."pravni_duvod_vymazu";
 CREATE TABLE justice."pravni_duvod_vymazu"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"text" text
 );
 DROP TABLE IF EXISTS justice."spolecny_text";
 CREATE TABLE justice."spolecny_text"(
-	"ico" text,
+	"ico" bigint,
 	"udaj_typ" text,
 	"datum_zapis" date,
 	"text" text,
 	"datum_vymaz" date);
 DROP TABLE IF EXISTS justice."exekuce";
 CREATE TABLE justice."exekuce"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"text" text
 );
 DROP TABLE IF EXISTS justice."pravni_forma_text";
 CREATE TABLE justice."pravni_forma_text"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"text" text
 );
 DROP TABLE IF EXISTS justice."nejvyssi_organ";
 CREATE TABLE justice."nejvyssi_organ"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"text" text
 );
 DROP TABLE IF EXISTS justice."vznik";
 CREATE TABLE justice."vznik"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"datum_vznik" date);
 DROP TABLE IF EXISTS justice."majetek";
 CREATE TABLE justice."majetek"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"text" text
 );
 DROP TABLE IF EXISTS justice."spolecnik_zastavni_pravo";
 CREATE TABLE justice."spolecnik_zastavni_pravo"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"datum_vznik_prava" text, -- obcas tam je pitomost
@@ -151,14 +151,14 @@ CREATE TABLE justice."spolecnik_zastavni_pravo"(
 );
 DROP TABLE IF EXISTS justice."text_spravni_rada";
 CREATE TABLE justice."text_spravni_rada"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"text" text
 );
 DROP TABLE IF EXISTS justice."spolecnik_podil";
 CREATE TABLE justice."spolecnik_podil"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"vklad_typ" text,
@@ -172,7 +172,7 @@ CREATE TABLE justice."spolecnik_podil"(
 );
 DROP TABLE IF EXISTS justice."sidlo";
 CREATE TABLE justice."sidlo"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"udaj_typ" text,
@@ -189,7 +189,7 @@ CREATE TABLE justice."sidlo"(
 );
 DROP TABLE IF EXISTS justice."konkurs_prohlaseni";
 CREATE TABLE justice."konkurs_prohlaseni"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"datum_rozhodnuti" date,
@@ -199,7 +199,7 @@ CREATE TABLE justice."konkurs_prohlaseni"(
 );
 DROP TABLE IF EXISTS justice."konkurs_zruseni";
 CREATE TABLE justice."konkurs_zruseni"(
-	"ico" text,
+	"ico" bigint,
 	"hlavicka" text,
 	"datum_zapis" date,
 	"datum_vymaz" date,
@@ -207,7 +207,7 @@ CREATE TABLE justice."konkurs_zruseni"(
 );
 DROP TABLE IF EXISTS justice."insolvencni_zapis";
 CREATE TABLE justice."insolvencni_zapis"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"id" text,
@@ -220,7 +220,7 @@ CREATE TABLE justice."insolvencni_zapis"(
 );
 DROP TABLE IF EXISTS justice."vyrovnani";
 CREATE TABLE justice."vyrovnani"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"udaj_typ" text,
@@ -228,7 +228,7 @@ CREATE TABLE justice."vyrovnani"(
 );
 DROP TABLE IF EXISTS justice."angazovane_osoby";
 CREATE TABLE justice."angazovane_osoby"(
-	"ico" text,
+	"ico" bigint,
 	"datum_zapis" date,
 	"datum_vymaz" date,
 	"udaj_typ" text,
@@ -244,7 +244,7 @@ CREATE TABLE justice."angazovane_osoby"(
 	"reg_Cislo" text,
 	"titul_pred" text,
 	"titul_za" text,
-	"ico_angos" text,
+	"ico_angos" bigint,
 	"euid" text,
 	"adresa_stat" text,
 	"adresa_obec" text,

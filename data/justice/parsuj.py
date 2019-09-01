@@ -139,6 +139,9 @@ if __name__ == '__main__':
 
             cp.append(f"COPY justice.{el['soubor']} FROM '{os.path.abspath(ffn)}' CSV HEADER;")
 
+    sfn = os.path.abspath(os.path.join(cdir, 'subjekty.csv'))
+    cp.insert(0, f"COPY justice.subjekty FROM '{sfn}' CSV HEADER;")
+
     fs['subjekty'] = open(os.path.join(cdir, 'subjekty.csv'), 'w', encoding='utf8')
     csvs['subjekty'] = csv.writer(fs['subjekty'])
     csvs['subjekty'].writerow(['ico', 'nazev', 'datum_zapis', 'datum_vymaz'])
