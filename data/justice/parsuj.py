@@ -49,7 +49,6 @@ def extrahuj(node, schema):
         else:
             ret[k] = getattr(node.find(v), 'text', None)
 
-    ret = {k: json.dumps(v) if isinstance(v, dict) else v for k, v in ret.items()}
     return ret
 
 
@@ -152,6 +151,7 @@ if __name__ == '__main__':
                 if not schemasd[udaj_typ].get('ignore', False):
                     schema = schemasd[udaj_typ]['schema']
                     row = extrahuj(udaj_raw, schema)
+                    row = {k: json.dumps(v) if isinstance(v, dict) else v for k, v in row.items()}
                     row['ico'] = ico
                     csvs[udaj_typ].writerow(row)
 
@@ -173,6 +173,7 @@ if __name__ == '__main__':
                         if not schemasd[podudaj_typ].get('ignore', False):
                             schema = schemasd[podudaj_typ]['schema']
                             row = extrahuj(podudaj_raw, schema)
+                            row = {k: json.dumps(v) if isinstance(v, dict) else v for k, v in row.items()}
                             row['ico'] = ico
                             csvs[podudaj_typ].writerow(row)
                 else:
