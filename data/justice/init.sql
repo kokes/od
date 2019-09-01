@@ -241,7 +241,7 @@ CREATE TABLE justice."angazovane_osoby"(
 	"prijmeni" text,
 	"datum_narozeni" date,
 	"nazev" text,
-	"reg_Cislo" text,
+	"reg_cislo" text,
 	"titul_pred" text,
 	"titul_za" text,
 	"ico_angos" bigint,
