@@ -1,0 +1,474 @@
+[
+  {
+    "udaj": "SPIS_ZN",
+    "soubor": "spisova_znacka",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "znacka": "hodnotaText",
+      "soud_kod": "spisZn/soud/kod",
+      "soud_nazev": "spisZn/soud/nazev",
+      "oddil":  "spisZn/oddil",
+      "vlozka": "spisZn/vlozka"
+    }
+  },
+  {
+    "udaj": ["NAZEV", "CIZI_NAZEV"],
+    "soubor": "nazev",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "udaj_typ": "udajTyp/nazev",
+      "nazev": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "PRAVNI_FORMA",
+    "soubor": "pravni_forma",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "nazev": "pravniForma/nazev",
+      "zkratka": "pravniForma/zkratka"
+    }
+  },
+  {
+    "udaj": ["PREDMET_PODNIKANI", "PREDMET_CINNOSTI", "UCEL_SUBJEKTU", "DOPLNKOVA_CINNOST"],
+    "soubor": "predmet_podnikani",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "kategorie": "udajTyp/nazev",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": [
+      "POCET_CLENU",
+      "POCET_CLENU_SPRAVNI_RADA",
+      "POCET_CLENU_DOZORCI_RADA",
+      "POCET_CLENU_KONTROLNI_KOMISE",
+      "POCET_CLENU_ROZHODCI_KOMISE",
+      "STATUTAR_ZRIZOVATELE_POCET_CLENU"
+    ],
+    "soubor": "pocet_clenu",
+    "schema": {
+      "udaj_typ": "udajTyp/nazev",
+      "datum_zapis": "zapisDatum",
+      "text": "hodnotaText",
+      "datum_vymaz": "vymazDatum"
+    }
+  },
+  {
+    "udaj": "ZPUSOB_JEDNANI",
+    "soubor": "zpusob_jednani",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": [
+      "SPOLECNIK",
+      "ICO",
+      "KOMANDITISTA",
+      "KOMPLEMENTAR",
+      "LIKVIDATOR",
+      "STATUTARNI_ORGAN",
+      "ZAKLADATEL_SEKCE",
+      "PROKURA",
+      "DOZORCI_RADA",
+      "SPRAVNI_RADA",
+      "POBOCNY_SPOLEK_SEKCE",
+      "KATEGORIE_ZAHR_OSOBY",
+      "KONTROLNI_KOMISE",
+      "MAJETEK_SEKCE",
+      "AKCIONAR_SEKCE",
+      "REVIZOR_SEKCE",
+      "STATUTAR_ZRIZOVATELE",
+      "KONKURS_ZAMITNUTI_SEKCE",
+      "OZ_VEDOUCI_SEKCE",
+      "KS_INVEST",
+      "NASTUPCE_ZRIZOVATELE_SEKCE",
+      "OPATROVNIK_SEKCE",
+      "ROZHODCI_KOMISE",
+      "VKLAD_CLEN_DRUZSTVA_SEKCE"
+    ],
+    "ignore": true,
+    "schema": {
+      "hlavicka": "hlavicka",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": [
+      "PODNIKATEL_SEKCE",
+      "OST_SKUTECNOSTI_SEKCE",
+      "PREDMET_CINNOSTI_SEKCE",
+      "PREDMET_PODNIKANI_SEKCE",
+      "KONKURS_SEKCE",
+      "AKCIE_SEKCE",
+      "KONKURS",
+      "EXEKUCE_SEKCE",
+      "INSOLVENCE_SEKCE",
+      "ODSTEPNY_ZAVOD_SEKCE",
+      "VYROVNANI_SEKCE",
+      "CLENSKY_VKLAD_SEKCE",
+      "CIZI_NAZEV_SEKCE",
+      "UCEL_SUBJEKTU_SEKCE",
+      "DOPLNKOVA_CINNOST_SEKCE",
+      "INSOLVENCE"
+    ],
+    "ignore": true,
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "hlavicka": "hlavicka"
+    }
+  },
+  {
+    "udaj": "OST_SKUTECNOSTI",
+    "soubor": "ostatni_skutecnosti",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "ZPUSOB_RIZENI",
+    "soubor": "zpusob_rizeni",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "AKCIE",
+    "soubor": "akcie",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "podoba": "hodnotaUdaje/podoba",
+      "udaj_typ": "hodnotaUdaje/typ",
+      "pocet": "hodnotaUdaje/pocet",
+      "hodnota_typ": "hodnotaUdaje/hodnota/typ",
+      "hodnota": "hodnotaUdaje/hodnota/textValue",
+      "text": "hodnotaUdaje/text"
+    }
+  },
+  {
+    "udaj": ["ZAKLADNI_KAPITAL", "CLENSKY_VKLAD"],
+    "TODO": "nektery vklady jsou v angazovanych osobach, je to cajk? tam je i osobni info",
+    "soubor": "vklady",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "typ": "hlavicka",
+      "vklad_typ": "hodnotaUdaje/vklad/typ",
+      "vklad_hodnota": "hodnotaUdaje/vklad/textValue",
+      "text": "text"
+    }
+  },
+  {
+    "udaj": "PRIZPUSOBENI_OZ",
+    "ignore": true,
+    "TODO": "je to pokazde ten samy zakon",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "text": "hodnotaText",
+      "datum_vymaz": "vymazDatum"
+    }
+  },
+  {
+    "udaj": "PRAVNI_DUVOD_VYMAZU",
+    "soubor": "pravni_duvod_vymazu",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": [
+      "TEXT_LIKVIDATOR",
+      "SPOLECNIK_TEXT",
+      "TEXT_PROKURA",
+      "TEXT_ZAKLADATEL",
+      "TEXT_STATUTAR_ZRIZOVATELE",
+      "TEXT_VKLAD_CLEN_DRUZSTVA",
+      "TEXT_ROZHODCI_KOMISE",
+      "TEXT_POBOCNY_SPOLEK",
+      "TEXT_KONTROLNI_KOMISE",
+      "TEXT_OPATROVNIK",
+      "TEXT_KOMPLEMENTAR",
+      "TEXT_KOMANDITISTA",
+      "TEXT_DOZORCI_RADA"
+    ],
+    "soubor": "spolecny_text",
+    "schema": {
+      "udaj_typ": "udajTyp/nazev",
+      "datum_zapis": "zapisDatum",
+      "text": "hodnotaText",
+      "datum_vymaz": "vymazDatum"
+    }
+  },
+  {
+    "udaj": "EXEKUCE",
+    "soubor": "exekuce",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "TEXT_PRAVNI_FORMA",
+    "soubor": "pravni_forma_text",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "ODSTEPNY_ZAVOD",
+    "TODO": "ignorujem, ale vse pod timhle elementem je odstepny zavod a melo by tak byt oznacene?",
+    "ignore": true,
+    "schema": {
+      "hlavicka": "hlavicka",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum"
+    }
+  },
+  {
+    "udaj": "OBEC_SIDLA",
+    "ignore": true,
+    "schema": {
+      "hlavicka": "hlavicka",
+      "datum_zapis": "zapisDatum",
+      "adresa": {
+        "obec": "adresa/obec",
+        "okres": "adresa/okres"
+      },
+      "datum_vymaz": "vymazDatum"
+    }
+  },
+  {
+    "udaj": "NAZEV_NEJVYSSIHO_ORGANU",
+    "soubor": "nejvyssi_organ",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "VZNIK",
+    "soubor": "vznik",
+    "non_iso_datum": ["datum_vznik"],
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "datum_vznik": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "MAJETEK",
+    "soubor": "majetek",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "SPOLECNIK_ZASTAVNI_PRAVO",
+    "soubor": "spolecnik_zastavni_pravo",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "datum_vznik_prava": "hodnotaUdaje/vznikZastavnihoPrava",
+      "text": "hodnotaUdaje/text"
+    }
+  },
+  {
+    "udaj": "TEXT_SPRAVNI_RADA",
+    "soubor": "text_spravni_rada",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "SPOLECNIK_PODIL",
+    "soubor": "spolecnik_podil",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "vklad_typ": "hodnotaUdaje/vklad/typ",
+      "vklad_hodnota": "hodnotaUdaje/vklad/textValue",
+      "souhrn_typ": "hodnotaUdaje/souhrn/typ",
+      "souhrn_hodnota": "hodnotaUdaje/souhrn/textValue",
+      "splaceni_typ": "hodnotaUdaje/splaceni/typ",
+      "splaceni_hodnota": "hodnotaUdaje/splaceni/textValue",
+      "druh_podilu": "hodnotaUdaje/druhPodilu",
+      "kmenovy_list": "hodnotaUdaje/kmenovyList"
+    }
+  },
+  {
+    "udaj": ["SIDLO", "SIDLO_ZAKLADATELE", "PODNIKATEL_BYDLISTE", "PODNIKATEL_POBYT_CR"],
+    "soubor": "sidlo",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "udaj_typ": "udajTyp/nazev",
+      "stat": "adresa/statNazev",
+      "adresa": "adresa/adresaText",
+      "obec": "adresa/obec",
+      "cast_obce": "adresa/castObce",
+      "ulice": "adresa/ulice",
+      "cislo_po": "adresa/cisloPo",
+      "cislo_or": "adresa/cisloOr",
+      "cislo_text": "adresa/cisloText",
+      "psc": "adresa/psc",
+      "okres": "adresa/okres"
+    }
+  },
+  {
+    "udaj": "KONKURS_PROHLASENI",
+    "soubor": "konkurs_prohlaseni",
+    "non_iso_datum": ["datum_rozhodnuti", "datum_vyveseni"],
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "datum_rozhodnuti": "hodnotaUdaje/datRozhodnutihOs",
+      "spisova_znacka": "hodnotaUdaje/spisZnOs",
+      "datum_vyveseni": "hodnotaUdaje/datVyveseni",
+      "text": "hodnotaUdaje/text"
+    }
+  },
+  {
+    "udaj": "ZRUSENI_KONKURSU",
+    "soubor": "konkurs_zruseni",
+    "schema": {
+      "hlavicka": "hlavicka",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "INSOLVENCNI_ZAPIS",
+    "soubor": "insolvencni_zapis",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "id": "hodnotaUdaje/typZapisu/id/id",
+      "aktivni": "hodnotaUdaje/typZapisu/aktivni",
+      "key": "hodnotaUdaje/typZapisu/key",
+      "nazev": "hodnotaUdaje/typZapisu/nazev",
+      "ciselnik": "hodnotaUdaje/typZapisu/ciselnikClass",
+      "externi_kod": "hodnotaUdaje/typZapisu/externalCodes/int",
+      "text": "hodnotaUdaje/text"
+    }
+  },
+  {
+    "udaj": ["VYROVNANI", "VYROVNANI_POVOLENI", "VYROVNANI_ZAMITNUTI"],
+    "soubor": "vyrovnani",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "udaj_typ": "udajTyp/nazev",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": [
+      "STATUTARNI_ORGAN_CLEN",
+      "SPOLECNIK_OSOBA",
+      "PROKURA_OSOBA",
+      "DOZORCI_RADA_CLEN",
+      "AKCIONAR",
+      "LIKVIDATOR_OSOBA",
+      "KOMPLEMENTAR_OSOBA",
+      "KOMANDITISTA_OSOBA",
+      "KONTROLNI_KOMISE_CLEN",
+      "OPATROVNIK",
+      "VKLAD_CLEN_DRUZSTVA",
+      "SPRAVNI_RADA_CLEN",
+      "ZAKLADATEL",
+      "POBOCNY_SPOLEK",
+      "ROZHODCI_KOMISE_CLEN",
+      "REVIZOR",
+      "STATUTAR_ZRIZOVATELE_OSOBA",
+      "NASTUPCE_ZRIZOVATELE",
+      "PODNIKATEL",
+      "STATUTARNI_ORGAN_ZASTOUPENI",
+      "KONKURSNI_SPRAVCE",
+      "PREDBEZNY_INSOLVENCNI_SPRAVCE",
+      "DOZORCI_RADA_ZASTOUPENI",
+       "INSOLVENCNI_SPRAVCE",
+       "KONTROLNI_KOMISE_ZASTOUPENI",
+       "LIKVIDATOR_ZASTOUPENI",
+       "ODDELENY_INSOLVENCNI_SPRAVCE",
+       "PREDBEZNY_SPRAVCE",
+       "REVIZOR_ZASTUP",
+       "SPOLECNIK_PODILNIK",
+       "SPRAVNI_RADA_ZASTOUPENI",
+       "ZASTUPCE_INSOLVENCNIHO_SPRAVCE",
+       "ZVLASTNI_INSOLVENCNI_SPRAVCE",
+       "ZVLASTNI_SPRAVCE",
+       "STATUTAR_ZRIZOVATELE_ZASTOUPENI",
+       "ZASTUPCE_SPRAVCE"
+    ],
+    "soubor": "angazovane_osoby",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "udaj_typ": "udajTyp/nazev",
+      "funkce": "funkce",
+      "funkce_od": "funkceOd",
+      "clenstvi_od": "clenstviOd",
+      "clenstvi_do": "clenstviDo",
+      "funkce_do": "funkceDo",
+      "jmeno": "osoba/jmeno",
+      "prijmeni": "osoba/prijmeni",
+      "datum_narozeni": "osoba/narozDatum",
+      "nazev": "osoba/nazev",
+      "reg_cislo": "osoba/regCislo",
+      "titul_pred": "osoba/titulPred",
+      "titul_za": "osoba/titulZa",
+      "ico_angos": "osoba/ico",
+      "euid": "osoba/euid",
+      "adresa_stat": "adresa/statNazev",
+      "adresa_obec": "adresa/obec",
+      "adresa_cast_obce": "adresa/castObce",
+      "adresa_ulice": "adresa/ulice",
+      "adresa_cislo_po": "adresa/cisloPo",
+      "adresa_psc": "adresa/psc",
+      "adresa_okres": "adresa/okres",
+      "adresa_cislo_or": "adresa/cisloOr",
+      "adresa_adresa_text": "adresa/adresaText",
+      "adresa_cislo_ev": "adresa/cisloEv",
+      "adresa_doplnujici_text": "adresa/doplnujiciText",
+      "adresa_cislo_text": "adresa/cisloText",
+      "bydliste_stat": "bydliste/statNazev",
+      "bydliste_ulice": "bydliste/ulice",
+      "bydliste_obec": "bydliste/obec",
+      "bydliste_psc": "bydliste/psc",
+      "bydliste_cast_obce": "bydliste/castObce",
+      "bydliste_cislo_po": "bydliste/cisloPo",
+      "bydliste_cislo_or": "bydliste/cisloOr",
+      "bydliste_okres": "bydliste/okres",
+      "bydliste_cislo_ev": "bydliste/cisloEv",
+      "bydliste_cislo_text": "bydliste/cisloText",
+      "bydliste_doplnujici_text": "bydliste/doplnujiciText"
+    }
+  }
+]
