@@ -79,7 +79,7 @@ def nahraj_ds(url):
 
 
 if __name__ == '__main__':
-    limit = int(sys.argv[1]) if len(sys.argv) > 1 else 1e17
+    limit = int(sys.argv[1]) if len(sys.argv) > 1 else int(1e17)
 
     # package_list a package_list_compact se asi lisi - ten nekompaktni endpoint nejde filtrovat??? Tak to asi udelame na klientovi
     year = date.today().year
@@ -108,6 +108,7 @@ if __name__ == '__main__':
     cdir = 'data/csv'
     os.makedirs(rdir, exist_ok=True)
     os.makedirs(cdir, exist_ok=True)
+    cp = []
 
     neumim = set()  #  TODO
 
@@ -124,8 +125,9 @@ if __name__ == '__main__':
                     schemasd[udaj] = el
                 continue
 
-            fn = el.get('soubor', el['udaj']).replace('/', '-') + '.csv'
-            f = open(os.path.join(cdir, fn), 'w', encoding='utf8')
+            fn = el['soubor'] + '.csv'
+            ffn = os.path.join(cdir, fn)
+            f = open(ffn, 'w', encoding='utf8')
             cw = csv.DictWriter(
                 f, fieldnames=['ico'] + list(el['schema'].keys()))
             cw.writeheader()
@@ -134,6 +136,8 @@ if __name__ == '__main__':
                 schemasd[udaj] = el
                 fs[udaj] = f
                 csvs[udaj] = cw
+
+            cp.append(f"COPY justice.{el['soubor']} FROM '{os.path.abspath(ffn)}' CSV HEADER;")
 
     fs['subjekty'] = open(os.path.join(cdir, 'subjekty.csv'), 'w', encoding='utf8')
     csvs['subjekty'] = csv.writer(fs['subjekty'])
@@ -212,3 +216,6 @@ if __name__ == '__main__':
 
     with open('xml_schema_chybejici.json', 'w') as fw:
         json.dump(schema_autogen, fw, indent=2, ensure_ascii=False)
+
+    with open('copy.sql', 'w') as fw:
+        fw.write('\n'.join(cp))
