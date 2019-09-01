@@ -13,7 +13,7 @@ import lxml.etree
 from tqdm import tqdm
 
 
-NON_ISO_DATUM = re.compile(r'^(\d{1,2})\.(\d{1,2})\.(\d{4})$')
+NON_ISO_DATUM = re.compile(r'^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$')
 
 
 def gen_schema(element, parent=None):
@@ -59,6 +59,8 @@ def extrahuj(node, schema):
 def uprav_data(row, mapping):
     'Bude inlinovano behem refactoringu'
     for col in mapping.get('non_iso_datum', []):
+        if not row[col]:
+            continue
         den, mesic, rok = NON_ISO_DATUM.match(row[col]).groups()
         row[col] = date(int(rok), int(mesic), int(den))
 
@@ -135,7 +137,7 @@ if __name__ == '__main__':
 
     fs['subjekty'] = open(os.path.join(cdir, 'subjekty.csv'), 'w', encoding='utf8')
     csvs['subjekty'] = csv.writer(fs['subjekty'])
-    csvs['subjekty'].writerow(['ico', 'nazev', 'zapisDatum', 'vymazDatum'])
+    csvs['subjekty'].writerow(['ico', 'nazev', 'datum_zapis', 'datum_vymaz'])
 
     for url in tqdm(urls):
         et = nahraj_ds(url)

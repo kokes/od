@@ -3,8 +3,8 @@
     "udaj": "SPIS_ZN",
     "soubor": "spisova_znacka",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "znacka": "hodnotaText",
       "soud_kod": "spisZn/soud/kod",
       "soud_nazev": "spisZn/soud/nazev",
@@ -16,9 +16,9 @@
     "udaj": ["NAZEV", "CIZI_NAZEV"],
     "soubor": "nazev",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
-      "typ": "udajTyp/nazev",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "udaj_typ": "udajTyp/nazev",
       "nazev": "hodnotaText"
     }
   },
@@ -26,8 +26,8 @@
     "udaj": "PRAVNI_FORMA",
     "soubor": "pravni_forma",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "nazev": "pravniForma/nazev",
       "zkratka": "pravniForma/zkratka"
     }
@@ -36,8 +36,8 @@
     "udaj": ["PREDMET_PODNIKANI", "PREDMET_CINNOSTI", "UCEL_SUBJEKTU", "DOPLNKOVA_CINNOST"],
     "soubor": "predmet_podnikani",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "kategorie": "udajTyp/nazev",
       "text": "hodnotaText"
     }
@@ -54,18 +54,17 @@
     "soubor": "pocet_clenu",
     "schema": {
       "udaj_typ": "udajTyp/nazev",
-      "hlavicka": "hlavicka",
-      "zapisDatum": "zapisDatum",
-      "hodnotaText": "hodnotaText",
-      "vymazDatum": "vymazDatum"
+      "datum_zapis": "zapisDatum",
+      "text": "hodnotaText",
+      "datum_vymaz": "vymazDatum"
     }
   },
   {
     "udaj": "ZPUSOB_JEDNANI",
     "soubor": "zpusob_jednani",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
     }
   },
@@ -99,9 +98,9 @@
     "ignore": true,
     "schema": {
       "hlavicka": "hlavicka",
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
-      "hodnotaText": "hodnotaText"
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
     }
   },
   {
@@ -125,8 +124,8 @@
     ],
     "ignore": true,
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "hlavicka": "hlavicka"
     }
   },
@@ -134,8 +133,8 @@
     "udaj": "OST_SKUTECNOSTI",
     "soubor": "ostatni_skutecnosti",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
     }
   },
@@ -143,8 +142,8 @@
     "udaj": "ZPUSOB_RIZENI",
     "soubor": "zpusob_rizeni",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
     }
   },
@@ -152,10 +151,10 @@
     "udaj": "AKCIE",
     "soubor": "akcie",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "podoba": "hodnotaUdaje/podoba",
-      "typ": "hodnotaUdaje/typ",
+      "udaj_typ": "hodnotaUdaje/typ",
       "pocet": "hodnotaUdaje/pocet",
       "hodnota_typ": "hodnotaUdaje/hodnota/typ",
       "hodnota": "hodnotaUdaje/hodnota/textValue",
@@ -167,8 +166,8 @@
     "TODO": "nektery vklady jsou v angazovanych osobach, je to cajk? tam je i osobni info",
     "soubor": "vklady",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "typ": "hlavicka",
       "vklad_typ": "hodnotaUdaje/vklad/typ",
       "vklad_hodnota": "hodnotaUdaje/vklad/textValue",
@@ -180,17 +179,17 @@
     "ignore": true,
     "TODO": "je to pokazde ten samy zakon",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "hodnotaText": "hodnotaText",
-      "vymazDatum": "vymazDatum"
+      "datum_zapis": "zapisDatum",
+      "text": "hodnotaText",
+      "datum_vymaz": "vymazDatum"
     }
   },
   {
     "udaj": "PRAVNI_DUVOD_VYMAZU",
     "soubor": "pravni_duvod_vymazu",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
     }
   },
@@ -213,17 +212,17 @@
     "soubor": "spolecny_text",
     "schema": {
       "udaj_typ": "udajTyp/nazev",
-      "zapisDatum": "zapisDatum",
-      "hodnotaText": "hodnotaText",
-      "vymazDatum": "vymazDatum"
+      "datum_zapis": "zapisDatum",
+      "text": "hodnotaText",
+      "datum_vymaz": "vymazDatum"
     }
   },
   {
     "udaj": "EXEKUCE",
     "soubor": "exekuce",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
     }
   },
@@ -231,8 +230,8 @@
     "udaj": "TEXT_PRAVNI_FORMA",
     "soubor": "pravni_forma_text",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
     }
   },
@@ -242,8 +241,8 @@
     "ignore": true,
     "schema": {
       "hlavicka": "hlavicka",
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum"
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum"
     }
   },
   {
@@ -251,39 +250,39 @@
     "ignore": true,
     "schema": {
       "hlavicka": "hlavicka",
-      "zapisDatum": "zapisDatum",
+      "datum_zapis": "zapisDatum",
       "adresa": {
         "obec": "adresa/obec",
         "okres": "adresa/okres"
       },
-      "vymazDatum": "vymazDatum"
+      "datum_vymaz": "vymazDatum"
     }
   },
   {
     "udaj": "NAZEV_NEJVYSSIHO_ORGANU",
     "soubor": "nejvyssi_organ",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
     }
   },
   {
     "udaj": "VZNIK",
     "soubor": "vznik",
-    "non_iso_datum": ["text"],
+    "non_iso_datum": ["datum_vznik"],
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
-      "text": "hodnotaText"
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "datum_vznik": "hodnotaText"
     }
   },
   {
     "udaj": "MAJETEK",
     "soubor": "majetek",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
     }
   },
@@ -291,10 +290,9 @@
     "udaj": "SPOLECNIK_ZASTAVNI_PRAVO",
     "soubor": "spolecnik_zastavni_pravo",
     "schema": {
-      "hlavicka": "hlavicka",
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
-      "datum_vzniku": "hodnotaUdaje/vznikZastavnihoPrava",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "datum_vznik_prava": "hodnotaUdaje/vznikZastavnihoPrava",
       "text": "hodnotaUdaje/text"
     }
   },
@@ -302,9 +300,8 @@
     "udaj": "TEXT_SPRAVNI_RADA",
     "soubor": "text_spravni_rada",
     "schema": {
-      "hlavicka": "hlavicka",
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
     }
   },
@@ -312,34 +309,25 @@
     "udaj": "SPOLECNIK_PODIL",
     "soubor": "spolecnik_podil",
     "schema": {
-      "hlavicka": "hlavicka",
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
-      "hodnotaUdaje": {
-        "vklad": {
-          "typ": "hodnotaUdaje/vklad/typ",
-          "textValue": "hodnotaUdaje/vklad/textValue"
-        },
-        "souhrn": {
-          "typ": "hodnotaUdaje/souhrn/typ",
-          "textValue": "hodnotaUdaje/souhrn/textValue"
-        },
-        "splaceni": {
-          "typ": "hodnotaUdaje/splaceni/typ",
-          "textValue": "hodnotaUdaje/splaceni/textValue"
-        },
-        "druhPodilu": "hodnotaUdaje/druhPodilu",
-        "kmenovyList": "hodnotaUdaje/kmenovyList"
-      }
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "vklad_typ": "hodnotaUdaje/vklad/typ",
+      "vklad_hodnota": "hodnotaUdaje/vklad/textValue",
+      "souhrn_typ": "hodnotaUdaje/souhrn/typ",
+      "souhrn_hodnota": "hodnotaUdaje/souhrn/textValue",
+      "splaceni_typ": "hodnotaUdaje/splaceni/typ",
+      "splaceni_hodnota": "hodnotaUdaje/splaceni/textValue",
+      "druh_podilu": "hodnotaUdaje/druhPodilu",
+      "kmenovy_list": "hodnotaUdaje/kmenovyList"
     }
   },
   {
     "udaj": ["SIDLO", "SIDLO_ZAKLADATELE", "PODNIKATEL_BYDLISTE", "PODNIKATEL_POBYT_CR"],
     "soubor": "sidlo",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
-      "typ": "udajTyp/nazev",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "udaj_typ": "udajTyp/nazev",
       "stat": "adresa/statNazev",
       "adresa": "adresa/adresaText",
       "obec": "adresa/obec",
@@ -355,9 +343,10 @@
   {
     "udaj": "KONKURS_PROHLASENI",
     "soubor": "konkurs_prohlaseni",
+    "non_iso_datum": ["datum_rozhodnuti", "datum_vyveseni"],
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "datum_rozhodnuti": "hodnotaUdaje/datRozhodnutihOs",
       "spisova_znacka": "hodnotaUdaje/spisZnOs",
       "datum_vyveseni": "hodnotaUdaje/datVyveseni",
@@ -369,8 +358,8 @@
     "soubor": "konkurs_zruseni",
     "schema": {
       "hlavicka": "hlavicka",
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
     }
   },
@@ -378,8 +367,8 @@
     "udaj": "INSOLVENCNI_ZAPIS",
     "soubor": "insolvencni_zapis",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "id": "hodnotaUdaje/typZapisu/id/id",
       "aktivni": "hodnotaUdaje/typZapisu/aktivni",
       "key": "hodnotaUdaje/typZapisu/key",
@@ -393,9 +382,9 @@
     "udaj": ["VYROVNANI", "VYROVNANI_POVOLENI", "VYROVNANI_ZAMITNUTI"],
     "soubor": "vyrovnani",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
-      "typ": "udajTyp/nazev",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "udaj_typ": "udajTyp/nazev",
       "text": "hodnotaText"
     }
   },
@@ -440,9 +429,9 @@
     ],
     "soubor": "angazovane_osoby",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
-      "typ": "udajTyp/nazev",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "udaj_typ": "udajTyp/nazev",
       "funkce": "funkce",
       "funkce_od": "funkceOd",
       "clenstvi_od": "clenstviOd",
