@@ -271,6 +271,7 @@
   {
     "udaj": "VZNIK",
     "soubor": "vznik",
+    "non_iso_datum": ["text"],
     "schema": {
       "zapisDatum": "zapisDatum",
       "vymazDatum": "vymazDatum",

@@ -2,6 +2,8 @@ import csv
 import gzip
 import json
 import os
+import sys
+import re
 from datetime import date
 from itertools import islice
 from urllib.parse import urlparse
@@ -9,6 +11,9 @@ from urllib.request import urlretrieve, urlopen
 
 import lxml.etree
 from tqdm import tqdm
+
+
+NON_ISO_DATUM = re.compile(r'^(\d{1,2})\.(\d{1,2})\.(\d{4})$')
 
 
 def gen_schema(element, parent=None):
@@ -51,6 +56,14 @@ def extrahuj(node, schema):
 
     return ret
 
+def uprav_data(row, mapping):
+    'Bude inlinovano behem refactoringu'
+    for col in mapping.get('non_iso_datum', []):
+        den, mesic, rok = NON_ISO_DATUM.match(row[col]).groups()
+        row[col] = date(int(rok), int(mesic), int(den))
+
+    return row
+
 
 def nahraj_ds(url):
     fn = os.path.split(urlparse(url).path)[-1]
@@ -64,6 +77,8 @@ def nahraj_ds(url):
 
 
 if __name__ == '__main__':
+    limit = int(sys.argv[1]) if len(sys.argv) > 1 else 1e17
+
     # package_list a package_list_compact se asi lisi - ten nekompaktni endpoint nejde filtrovat??? Tak to asi udelame na klientovi
     year = date.today().year
     url_pl = 'https://dataor.justice.cz/api/3/action/package_list'
@@ -121,7 +136,7 @@ if __name__ == '__main__':
     for url in tqdm(urls):
         et = nahraj_ds(url)
 
-        for action, el in islice(et, int(1e17)):  # sniz pro testovani
+        for action, el in islice(et, limit):  # sniz pro testovani
             assert action == 'end', action
             if el.tag != 'Subjekt':
                 continue
@@ -151,6 +166,7 @@ if __name__ == '__main__':
                 if not schemasd[udaj_typ].get('ignore', False):
                     schema = schemasd[udaj_typ]['schema']
                     row = extrahuj(udaj_raw, schema)
+                    row = uprav_data(row, schemasd[udaj_typ])
                     row = {k: json.dumps(v) if isinstance(v, dict) else v for k, v in row.items()}
                     row['ico'] = ico
                     csvs[udaj_typ].writerow(row)
@@ -173,6 +189,7 @@ if __name__ == '__main__':
                         if not schemasd[podudaj_typ].get('ignore', False):
                             schema = schemasd[podudaj_typ]['schema']
                             row = extrahuj(podudaj_raw, schema)
+                            row = uprav_data(row, schemasd[podudaj_typ])
                             row = {k: json.dumps(v) if isinstance(v, dict) else v for k, v in row.items()}
                             row['ico'] = ico
                             csvs[podudaj_typ].writerow(row)
