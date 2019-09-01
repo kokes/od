@@ -123,7 +123,7 @@ if __name__ == '__main__':
                 continue
 
             fn = el.get('soubor', el['udaj']).replace('/', '-') + '.csv'
-            f = open(os.path.join(cdir, fn), 'w')
+            f = open(os.path.join(cdir, fn), 'w', encoding='utf8')
             cw = csv.DictWriter(
                 f, fieldnames=['ico'] + list(el['schema'].keys()))
             cw.writeheader()
@@ -132,6 +132,10 @@ if __name__ == '__main__':
                 schemasd[udaj] = el
                 fs[udaj] = f
                 csvs[udaj] = cw
+
+    fs['subjekty'] = open(os.path.join(cdir, 'subjekty.csv'), 'w', encoding='utf8')
+    csvs['subjekty'] = csv.writer(fs['subjekty'])
+    csvs['subjekty'].writerow(['ico', 'nazev', 'zapisDatum', 'vymazDatum'])
 
     for url in tqdm(urls):
         et = nahraj_ds(url)
@@ -146,11 +150,14 @@ if __name__ == '__main__':
 
             nazev = el.find('nazev').text
             zapis = el.find('zapisDatum').text
+            vymaz = getattr(el.find('vymazDatum'), 'text', None)
             ico = getattr(el.find('ico'), 'text', None)
             if not ico:
                 with open('chybejici_ico.log', 'a+') as fw:
                     fw.write(f'{nazev}\t{el.sourceline}\t{url}\n')
                 continue
+
+            csvs['subjekty'].writerow([ico, nazev, zapis, vymaz])
 
             for udaj_raw in el.find('udaje').iterchildren():
                 # tohle je asi irelevantni, asi nas zajimaj jen podudaje??
