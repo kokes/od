@@ -208,6 +208,9 @@ if __name__ == '__main__':
                             row = uprav_data(row, schemasd[podudaj_typ])
                             row = {k: json.dumps(v) if isinstance(v, dict) else v for k, v in row.items()}
                             row['ico'] = ico
+                            # TODO: obezlicka, kterou je treba resit
+                            if 'ico_angos' in row:
+                                row['ico_angos'] = int(row['ico_angos']) if row['ico_angos'] and row['ico_angos'].isdigit() else None
                             csvs[podudaj_typ].writerow(row)
                 else:
                     pass  # TODO: handluj non-podudaje

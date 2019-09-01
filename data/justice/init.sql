@@ -80,7 +80,7 @@ CREATE TABLE justice."akcie"(
 	"udaj_typ" text,
 	"pocet" text,
 	"hodnota_typ" text,
-	"hodnota" decimal(12,2),
+	"hodnota" decimal(16,2),
 	"text" text
 );
 DROP TABLE IF EXISTS justice."vklady";
