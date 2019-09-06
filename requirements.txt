@@ -6,3 +6,4 @@ requests
 tqdm
 xlrd
 cssselect
+python-dateutil
