@@ -2,6 +2,7 @@ import tarfile
 import lxml.etree
 import json, csv
 import os
+from urllib.request import urlretrieve
 
 vstupy = '.'
 vystupy = '.'
@@ -63,8 +64,11 @@ def organi(root, ico):
 
 # -----------------------------------------------------------------------------
 
-with tarfile.open(os.path.join(
-        vstupy, 'ares_vreo_all.tar.gz'), 'r:gz') as tf, open(
+vfn = os.path.join(vstupy, 'ares_vreo_all.tar.gz')
+if not os.path.isfile(vfn):
+    urlretrieve('https://wwwinfo.mfcr.cz/ares/ares_vreo_all.tar.gz', vfn)
+
+with tarfile.open(vfn, 'r:gz') as tf, open(
             os.path.join(vystupy, 'firmy.csv'), 'w', encoding='utf8') as ud, open(
                 os.path.join(vystupy, 'fosoby.csv'), 'w', encoding='utf8') as fo, open(
                     os.path.join(vystupy, 'posoby.csv'), 'w', encoding='utf8') as po:
@@ -148,3 +152,4 @@ with tarfile.open(os.path.join(
                 foc.writerow(j)
             for j in org['posoby']:
                 poc.writerow(j)
+
