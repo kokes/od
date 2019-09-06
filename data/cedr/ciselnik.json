@@ -1,111 +1,111 @@
 [
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrGrantoveSchemav01.csv.gz",
+    "url": "ciselnikCedrGrantoveSchemav01.csv.gz",
     "id": "idGrantoveSchema",
     "nazev": "grantoveSchemaNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrOpatreniv01.csv.gz",
+    "url": "ciselnikCedrOpatreniv01.csv.gz",
     "id": "idOpatreni",
     "nazev": "opatreniNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrOperacniProgramv01.csv.gz",
+    "url": "ciselnikCedrOperacniProgramv01.csv.gz",
     "id": "idOperacniProgram",
     "nazev": "operacniProgramNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrPodOpatreniv01.csv.gz",
+    "url": "ciselnikCedrPodOpatreniv01.csv.gz",
     "id": "idPodOpatreni",
     "nazev": "podOpatreniNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrPrioritav01.csv.gz",
+    "url": "ciselnikCedrPrioritav01.csv.gz",
     "id": "idPriorita",
     "nazev": "prioritaNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikDotacePoskytovatelv01.csv.gz",
+    "url": "ciselnikDotacePoskytovatelv01.csv.gz",
     "id": "id",
     "nazev": "dotacePoskytovatelNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikFinancniProstredekCleneniv01.csv.gz",
+    "url": "ciselnikFinancniProstredekCleneniv01.csv.gz",
     "id": "id",
     "nazev": "financniProstredekCleneniNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikFinancniZdrojv01.csv.gz",
+    "url": "ciselnikFinancniZdrojv01.csv.gz",
     "id": "id",
     "nazev": "financniZdrojNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikRozpoctovaSkladbaParagrafv01.csv.gz",
+    "url": "ciselnikRozpoctovaSkladbaParagrafv01.csv.gz",
     "id": "id",
     "nazev": "rozpoctovaSkladbaParagrafNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikRozpoctovaSkladbaPolozkav01.csv.gz",
+    "url": "ciselnikRozpoctovaSkladbaPolozkav01.csv.gz",
     "id": "id",
     "nazev": "rozpoctovaSkladbaPolozkaNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikStatniRozpocetKapitolav01.csv.gz",
+    "url": "ciselnikStatniRozpocetKapitolav01.csv.gz",
     "id": "id",
     "nazev": "statniRozpocetKapitolaNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikStatniRozpocetUkazatelv01.csv.gz",
+    "url": "ciselnikStatniRozpocetUkazatelv01.csv.gz",
     "id": "id",
     "nazev": "statniRozpocetUkazatelNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikUcelZnakv01.csv.gz",
+    "url": "ciselnikUcelZnakv01.csv.gz",
     "id": "idUcelZnak",
     "nazev": "ucelZnakNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikCedrPodprogramv01.csv.gz",
+    "url": "ciselnikCedrPodprogramv01.csv.gz",
     "id": "idPodprogram",
     "nazev": "podprogramNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikDotaceTitulv01.csv.gz",
+    "url": "ciselnikDotaceTitulv01.csv.gz",
     "id": "idDotaceTitul",
     "nazev": "dotaceTitulNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrOperacniProgramv01.csv.gz",
+    "url": "ciselnikMmrOperacniProgramv01.csv.gz",
     "id": "idOperacniProgram",
     "nazev": "operacniProgramNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrPrioritav01.csv.gz",
+    "url": "ciselnikMmrPrioritav01.csv.gz",
     "id": "idPriorita",
     "nazev": "prioritaNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrOpatreniv01.csv.gz",
+    "url": "ciselnikMmrOpatreniv01.csv.gz",
     "id": "idOpatreni",
     "nazev": "opatreniNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrPodOpatreniv01.csv.gz",
+    "url": "ciselnikMmrPodOpatreniv01.csv.gz",
     "id": "idPodOpatreni",
     "nazev": "podOpatreniNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrGrantoveSchemav01.csv.gz",
+    "url": "ciselnikMmrGrantoveSchemav01.csv.gz",
     "id": "idGrantoveSchema",
     "nazev": "grantoveSchemaNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikMmrPodprogramv01.csv.gz",
+    "url": "ciselnikMmrPodprogramv01.csv.gz",
     "id": "idPodprogram",
     "nazev": "podprogramNazev"
   },
   {
-    "url": "https://cedropendata.mfcr.cz/c3lod/ciselnikProgramv01.csv.gz",
+    "url": "ciselnikProgramv01.csv.gz",
     "id": "id",
     "nazev": "programNazev"
   }

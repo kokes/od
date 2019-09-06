@@ -3,11 +3,14 @@ import gzip
 import logging
 import json
 import os
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
 from urllib.request import urlretrieve
 
 
 def remote_csv(url, cache_dir):
+    if not url.startswith('https://'):
+        url = urljoin('https://cedropendata.mfcr.cz/c3lod/', url)
+
     filename = os.path.split(urlparse(url).path)[-1]
     local_path = os.path.join(cache_dir, filename)
     if not os.path.isfile(local_path):
