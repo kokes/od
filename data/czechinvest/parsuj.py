@@ -49,11 +49,11 @@ if __name__ == '__main__':
         for el in cr:
             firmy[el['firma']] = int(el['ico'])
 
-    wb = xlrd.open_workbook('data/Udelene-investicni-pobidky-k-30-9-2018.xls')
+    wb = xlrd.open_workbook('data/Udelene-investicni-pobidky-k-30-6-2019.xlsx')
     sh = wb.sheet_by_name('PROJEKTY')
 
-    assert mapping['hd1'] == [j.value for j in sh.row(1)]
-    assert mapping['hd2'] == [j.value for j in sh.row(2)]
+    assert mapping['hd1'] == [j.value for j in sh.row(1)], [j.value for j in sh.row(1)]
+    assert mapping['hd2'] == [j.value for j in sh.row(2)], [j.value for j in sh.row(2)]
 
     with open('data/pobidky.csv', 'w', encoding='utf8') as fw:
         cw = csv.DictWriter(fw, fieldnames=mapping['tghd'])
