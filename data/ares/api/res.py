@@ -38,7 +38,7 @@ def get_ico(conn):
 
 hd = ['ico', 'aktualizace_db', 'datum_vypisu', 'nazev', 'pravni_forma_id', 'pravni_forma_nazev', 'datum_vzniku', 'datum_zaniku',\
 'sidlo_nazev_obce', 'sidlo_nazev_casti_obce', 'sidlo_ulice', 'sidlo_cislo_domovni', 'sidlo_typ_cislo_domovni', 'sidlo_cislo_orientacni', 'sidlo_psc', \
-'zuj_nzuj', 'zuj_nuts4', 'zuj_nazev_nuts4', 'esa2010', 'esa2010t', 'kpp', 'nace_id']
+'zuj_orig', 'zuj_nzuj', 'zuj_nuts4', 'zuj_nazev_nuts4', 'esa2010', 'esa2010t', 'kpp', 'nace_id']
 hd_nace = ['id', 'nazev']
 
 os.makedirs('data/csv', exist_ok=True)
@@ -71,6 +71,7 @@ with psycopg2.connect(host='localhost') as conn, conn.cursor() as cursor, \
             'sidlo_typ_cislo_domovni': './D:SI/D:TCD',
             'sidlo_cislo_orientacni': './D:SI/D:CO',
             'sidlo_psc': './D:SI/D:PSC',
+            'zuj_orig': './D:ZUJ/D:Zuj_kod_orig',
             'zuj_nzuj': './D:ZUJ/D:NZUJ',
             'zuj_nuts4': './D:ZUJ/D:NUTS4',
             'zuj_nazev_nuts4': './D:ZUJ/D:Nazev_NUTS4',
