@@ -89,8 +89,8 @@ if __name__ == '__main__':
     dt = json.load(r)
     assert dt['success']
 
-    dss = [ds for ds in dt['result'] if ds.endswith(
-        '-{}'.format(year)) and '-full-' in ds]
+    dss = [ds for ds in dt['result'] if '-full-' in ds]
+    dss.sort(key=lambda x: int(x.rpartition('-')[-1]), reverse=True)
 
     urls = []
     for ds in tqdm(dss):
@@ -146,6 +146,7 @@ if __name__ == '__main__':
     csvs['subjekty'] = csv.writer(fs['subjekty'])
     csvs['subjekty'].writerow(['ico', 'nazev', 'datum_zapis', 'datum_vymaz'])
 
+    icos = set()
     for url in tqdm(urls):
         et = nahraj_ds(url)
 
@@ -161,10 +162,17 @@ if __name__ == '__main__':
             zapis = el.find('zapisDatum').text
             vymaz = getattr(el.find('vymazDatum'), 'text', None)
             ico = getattr(el.find('ico'), 'text', None)
+
             if not ico:
                 with open('chybejici_ico.log', 'a+') as fw:
                     fw.write(f'{nazev}\t{el.sourceline}\t{url}\n')
                 continue
+
+            # kdyz zpracovavame data starsi nez letosni, musime zahazovat jiz zpracovana data
+            if ico in icos:
+                el.clear()
+                continue
+            icos.add(ico)
 
             csvs['subjekty'].writerow([ico, nazev, zapis, vymaz])
 
