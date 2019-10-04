@@ -1,14 +1,13 @@
-from urllib.request import urlopen, urlretrieve
-from tempfile import NamedTemporaryFile
-import shutil
-from zipfile import ZipFile
-from contextlib import closing
-
-from lxml.etree import iterparse
-from itertools import chain
-
 import csv
 import os
+import shutil
+from contextlib import closing
+from itertools import chain
+from tempfile import NamedTemporaryFile
+from urllib.request import urlopen, urlretrieve
+from zipfile import ZipFile
+
+from lxml.etree import iterparse
 
 urls = {
     2018: 'https://www.szif.cz/cs/CmDocument?rid=%2Fapa_anon%2Fcs%2Fdokumenty_ke_stazeni%2Fpkp%2Fspd%2Fopendata%2F1563197121858.zip',
