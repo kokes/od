@@ -54,6 +54,8 @@ Plánujeme zde zapojit dva typy datasetů - transakční a klasifikační, byť 
 - [**PSP**](data/psp) - Poslanecká sněmovna Parlamentu nabízí velmi zajímavé datasety pro další zpracování, u nás najdete dva hlavní - informace o osobách (a nejen poslancích, ale i senátorech nebo členech vlád) a zpracování stenoprotokolů.
 - [**Volby**](data/volby) - statistický úřad již nějaký pátek nabízí otevřená data, se kterými se celkem snadno pracuje, ale nejsou připravené k analytice hned po stažení. Navíc se jejich formát měnil v čase, takže se snažíme toto unifikovat.
 - [**Justice**](data/justice) - data od Ministerstva spravedlnosti obsahují informace o jednotlivých ekonomických subjektech, jde o export z veřejných rejstříků, jak jsou mj. dostupné na webu [Justice](http://justice.cz).
+- [**SZIF**](data/szif) - data od [Státního zemědělského intervenčního fondu](https://www.szif.cz/irj/portal/szif/seznam-prijemcu-dotaci) obsahují informace o příjemcích dotací, včetně rozdělení na národní a evropské zdroje
+
 
 ## Identifikace podniků
 Jedním z hlavních zásahů do dat je nahrazení identifikace podniků našimi “vlastními” daty, konkrétně daty z ARES. Problémem je, že místo odkazování do ARES se každý z poskytovatelů dat snaží tvořit si vlastní databázi podniků a v oněch datech jsou často chyby. Z důvodu konzistence a kvality dat proto používáme většinou pouze IČO podniků a dál přebíráme informace z ARES.
