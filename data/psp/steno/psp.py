@@ -68,7 +68,7 @@ def vyrok(zf):
                 yield {
                     'autor': aut,
                     'funkce': fun,
-                    'schuze': int(re.match('^\d+', zf.filename.rpartition('/')[-1]).group()),
+                    'schuze': int(re.match(r'^\d+', zf.filename.rpartition('/')[-1]).group()),
                     'fn': zfn.filename,
                     'datum': None, # TODO: dokazem ziskat datum z tech detailnich stranek
                     'tema': tema, # TODO: tema je v <b>
