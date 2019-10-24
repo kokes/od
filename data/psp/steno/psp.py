@@ -19,7 +19,7 @@ urls = {
 
 
 poz = []
-with open('pozice.txt') as f:
+with open('pozice.txt', encoding='utf8') as f:
     for ln in f:
         poz.append(ln.strip())
 
@@ -120,4 +120,7 @@ for rok, url in urls.items():
                 print('bad zip file:', fn)
 
 # naparsovali jsme správně politické funkce?
-print(lnm)
+print('\nJe možné, že následující osoby jsme nenaparsovali správně, a bude možná nutné'
+      ' jejich funkce doplnit do souboru pozice.txt\n')
+for (fn, jm), num in sorted(lnm.items(), key=lambda x: (x[0][0], x[0][1])):
+    print('Funkce: {}, jméno: {} ({})'.format(fn, jm, num))
