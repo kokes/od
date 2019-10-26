@@ -58,5 +58,5 @@ drop table if exists cedr.rozpoctoveobdobi cascade; create table cedr.rozpoctove
 
 -- TODO: bylo by lepsi nekde v postcopy
 create index cedr_dotace_idprijemce_idx on cedr.dotace(idprijemce);
-create index cedr_rozhodnuti_iddotace_idx on cedr.dotace(idprijemce);
+create index cedr_rozhodnuti_iddotace_idx on cedr.rozhodnuti(iddotace);
 create index cedr_rozpoctoveobdobi_idrozhodnuti_idx on cedr.rozpoctoveobdobi(idRozhodnuti);
