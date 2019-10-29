@@ -45,8 +45,9 @@ def vyrok(zf):
             continue
 
         ht = lxml.html.parse(zf.open(zfn.filename)).getroot()
+        ps = ht.cssselect('p')
 
-        for p in ht.cssselect('p'):
+        for j, p in enumerate(ps):
             pt = p.text_content().strip().replace('\xa0', ' ')
             if len(pt) == 0: continue
 
@@ -62,7 +63,10 @@ def vyrok(zf):
             
             if od is None:
                 buf += [pt]
-                continue
+                # v posledni iteraci je treba flushnout posledniho recnika, takze
+                # nemuzem preskocit iteraci v tuhle chvili
+                if j < len(ps) - 1:
+                    continue
 
             if len(buf) > 0:
                 yield {
@@ -75,8 +79,9 @@ def vyrok(zf):
                     'text': '\n'.join(buf)
                 }
 
-            fun, aut = depozicuj(od.text_content().strip())
-            buf = [pt[len(od.text_content())+1:].strip()] # pridame soucasny text (ale odseknem autora)
+            if od is not None:
+                fun, aut = depozicuj(od.text_content().strip())
+                buf = [pt[len(od.text_content())+1:].strip()] # pridame soucasny text (ale odseknem autora)
 
 
 lnm = Counter()
