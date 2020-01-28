@@ -40,3 +40,4 @@ with urlopen(url) as f, open('ucjed.csv', 'w', encoding='utf8') as fw:
             row['zrizovatel_ico'] = ''
 
         cw.writerow(row)
+        element.clear()
