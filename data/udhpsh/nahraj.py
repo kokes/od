@@ -38,7 +38,7 @@ if __name__ == '__main__':
     for dataset, mapping in mappings.items():
         print(f'Nahravam dataset: {dataset}')
         with open(os.path.join(tdir, dataset + '.csv'), 'w', encoding='utf8') as fw:
-            columns = ['rok', 'ico_prijemce'] + list(mapping.values())
+            columns = ['rok', 'ico_prijemce', 'nazev_prijemce'] + list(mapping.values())
             cw = csv.DictWriter(fw, fieldnames=columns)
             cw.writeheader()
             for year, index in indices.items():
@@ -55,5 +55,6 @@ if __name__ == '__main__':
                             cw.writerow({
                                 **row,
                                 'rok': year,
-                                'ico_prijemce': party['ic']
+                                'ico_prijemce': party['ic'],
+                                'nazev_prijemce': party['longName'],
                             })
