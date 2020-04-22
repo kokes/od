@@ -42,6 +42,5 @@ create table eufondy.dotace_1420 (
  	vyuctovano_czk numeric(14, 2),
  	vyuctovano_prispevek_unie_czk numeric(14, 2),
  	vyuctovano_narodni_verejne_zdroje_czk numeric(14, 2),
- 	vyuctovano_narodni_soukrome_zdroje_czk numeric(14, 2),
- 	mena varchar
+ 	vyuctovano_narodni_soukrome_zdroje_czk numeric(14, 2)
 )
