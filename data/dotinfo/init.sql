@@ -8,10 +8,10 @@ create table dotinfo.dotace (
 	ic_ucastnika int,
 	ucel_dotace varchar,
 	poskytovatel_dotace varchar,
-	ic_poskytovatele int not null,
+	ic_poskytovatele int,
 	castka_pozadovana numeric(14, 2), 
 	castka_schvalena numeric(14, 2),
-	datum_poskytnuti timestamp
+	datum_poskytnuti timestamp null
 );
 
 -- TODO: tohle chce pustit az po loadu
