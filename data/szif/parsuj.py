@@ -10,6 +10,7 @@ from zipfile import ZipFile
 from lxml.etree import iterparse
 
 urls = {
+    2019: 'https://www.szif.cz/cs/CmDocument?rid=%2Fapa_anon%2Fcs%2Fdokumenty_ke_stazeni%2Fpkp%2Fspd%2Fopendata%2F1590753721920.zip',
     2018: 'https://www.szif.cz/cs/CmDocument?rid=%2Fapa_anon%2Fcs%2Fdokumenty_ke_stazeni%2Fpkp%2Fspd%2Fopendata%2F1563197121858.zip',
     2017: 'https://www.szif.cz/cs/CmDocument?rid=%2Fapa_anon%2Fcs%2Fdokumenty_ke_stazeni%2Fpkp%2Fspd%2Fopendata%2F1563197147275.zip',
 }
@@ -20,10 +21,10 @@ os.makedirs('data', exist_ok=True)
 with open('data/zadatele.csv', 'w', encoding='utf8') as fz, open('data/platby.csv', 'w', encoding='utf8') as fp:
     cz = csv.DictWriter(fz, ['id_prijemce', 'rok', 'jmeno_nazev', 'obec', 'okres', 'castka_bez_pvp'])
     cp = csv.DictWriter(fp, ['id_prijemce', 'rok', 'fond_typ_podpory', 'opatreni', 'zdroje_cr', 'zdroje_eu', 'celkem_czk'])
-    
+
     cz.writeheader()
     cp.writeheader()
-    
+
     for rok_ds, url in urls.items():
         tmpf = NamedTemporaryFile()
 
