@@ -742,6 +742,11 @@
                 "https://volby.cz/opendata/se2019duben/SE2019reg20190413.zip",
                 "https://volby.cz/opendata/se2019duben/SE2019ciselnik20190403.zip",
                 "https://www.volby.cz/opendata/se2019duben/SENAT2019_data_20190413_k1_xml.zip"
+            ],
+            "2020-06-06": [
+                "https://volby.cz/opendata/se2020cerven/SE2020reg20200613.zip",
+                "https://volby.cz/opendata/se2020cerven/SE2020ciselnik20200603.zip",
+                "https://volby.cz/opendata/se2020cerven/SENAT2020_data_20200613_k2_xml.zip"
             ]
         },
         "ds": {
