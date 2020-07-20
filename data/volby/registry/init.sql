@@ -345,6 +345,20 @@ create table volby.kraje_strany_kraje (
     slozneplat varchar
 );
 
+DROP TABLE IF EXISTS volby.kraje_obce;
+
+CREATE TABLE volby.kraje_obce (
+    datum date NOT NULL,
+    KRAJ int NOT NULL,
+    OKRES int NOT NULL,
+    CPOU int NOT NULL,
+    ORP int,
+    OBEC int NOT NULL,
+    NAZEVOBCE varchar NOT NULL,
+    KRZAST smallint NOT NULL,
+    OBEC_PREZ int
+);
+
 DROP TABLE IF EXISTS volby.kraje_okrsky_prehled;
 
 CREATE TABLE volby.kraje_okrsky_prehled (

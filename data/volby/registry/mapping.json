@@ -499,6 +499,27 @@
                     "SLOZNEPLAT"
                 ]
             },
+            "obce": {
+                "fn": [
+                    "kzcoco.xml",
+                    "KZCOCO.DBF"
+                ],
+                "klic": "KZ_COCO_ROW",
+                "schema": [
+                    "KRAJ",
+                    "OKRES",
+                    "CPOU",
+                    "ORP",
+                    "OBEC",
+                    "NAZEVOBCE",
+                    "KRZAST",
+                    "OBEC_PREZ"
+                ],
+                "vynechej": [
+                    "MINOKRSEK1",
+                    "MAXOKRSEK1"
+                ]
+            },
             "okrsky_prehled": {
                 "fn": [
                     "KZT6.dbf",
