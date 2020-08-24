@@ -419,6 +419,10 @@
                 "https://volby.cz/opendata/kz2016/KZ2016reg20161008.zip",
                 "https://volby.cz/opendata/kz2016/KZ2016ciselniky20161007.zip",
                 "https://volby.cz/opendata/kz2016/KZ2016data20161008.zip"
+            ],
+            "2020-10-02": [
+                "https://volby.cz/opendata/kz2020/KZ2020reg20200818.zip",
+                "https://volby.cz/opendata/kz2020/KZ2020ciselniky20200818.zip"
             ]
         },
         "ds": {
@@ -475,6 +479,19 @@
                     "NAZEVPLNY",
                     "PLATNOST",
                     "SLOZNEPLAT"
+                ]
+            },
+            "strany_navrhujici": {
+                "fn": [
+                    "cns.xml",
+                    "CNS.DBF"
+                ],
+                "klic": "CNS_ROW",
+                "schema": [
+                    "NSTRANA",
+                    "NAZEV_STRN",
+                    "ZKRATKAN30",
+                    "ZKRATKAN8"
                 ]
             },
             "strany_kraje": {
@@ -768,6 +785,10 @@
                 "https://volby.cz/opendata/se2020cerven/SE2020reg20200613.zip",
                 "https://volby.cz/opendata/se2020cerven/SE2020ciselnik20200603.zip",
                 "https://volby.cz/opendata/se2020cerven/SENAT2020_data_20200613_k2_xml.zip"
+            ],
+            "2020-10-02": [
+                "https://volby.cz/opendata/se2020/SE2020reg20200819.zip",
+                "https://volby.cz/opendata/se2020/SE2020ciselnik20200819.zip"
             ]
         },
         "ds": {

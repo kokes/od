@@ -57,7 +57,7 @@ with open('mapping.json') as f:
 qq = []
 sch=[]
 for volby, mp in mps.items():
-    if len(sys.argv) > 1 and volby != sys.argv[1]: continue
+    if len(sys.argv) > 1 and volby not in sys.argv[1:]: continue
     print(volby)
     csv_dir = f'data/csv/{volby}'
     os.makedirs(csv_dir, exist_ok=True)

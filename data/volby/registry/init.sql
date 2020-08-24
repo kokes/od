@@ -326,6 +326,15 @@ create table volby.kraje_strany_cr (
     slozneplat varchar
 );
 
+DROP TABLE IF EXISTS volby.kraje_strany_navrhujici;
+CREATE TABLE volby.kraje_strany_navrhujici (
+	datum date,
+	NSTRANA smallint NOT NULL,
+	NAZEV_STRN varchar NOT NULL,
+	ZKRATKAN30 varchar NOT NULL,
+	ZKRATKAN8 varchar NOT NULL
+);
+
 drop table if exists volby.kraje_strany_kraje;
 
 create table volby.kraje_strany_kraje (
