@@ -421,8 +421,9 @@
                 "https://volby.cz/opendata/kz2016/KZ2016data20161008.zip"
             ],
             "2020-10-02": [
-                "https://volby.cz/opendata/kz2020/KZ2020reg20200818.zip",
-                "https://volby.cz/opendata/kz2020/KZ2020ciselniky20200818.zip"
+                "https://volby.cz/opendata/kz2020/KZ2020reg20201004a.zip",
+                "https://volby.cz/opendata/kz2020/KZ2020ciselniky20201002.zip",
+                "https://volby.cz/opendata/kz2020/KZ2020_data_20201004a_xml.zip"
             ]
         },
         "ds": {
@@ -563,7 +564,8 @@
             "okrsky_hlasy": {
                 "fn": [
                     "KZT6p.dbf",
-                    "kzt6p-*.xml"
+                    "kzt6p-*.xml",
+                    "kzt6p.xml"
                 ],
                 "klic": "KZ_T6P_ROW",
                 "schema": [
@@ -787,8 +789,9 @@
                 "https://volby.cz/opendata/se2020cerven/SENAT2020_data_20200613_k2_xml.zip"
             ],
             "2020-10-02": [
-                "https://volby.cz/opendata/se2020/SE2020reg20200819.zip",
-                "https://volby.cz/opendata/se2020/SE2020ciselnik20200819.zip"
+                "https://volby.cz/opendata/se2020/SE2020reg20201010.zip",
+                "https://volby.cz/opendata/se2020/SE2020ciselnik20200918.zip",
+                "https://volby.cz/opendata/se2020/SENAT2020_data_20201010_k2_xml.zip"
             ]
         },
         "ds": {
