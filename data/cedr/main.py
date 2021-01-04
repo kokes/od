@@ -3,44 +3,37 @@ import gzip
 import logging
 import json
 import os
-from urllib.parse import urlparse, urljoin
-from urllib.request import urlretrieve
+from urllib.parse import urljoin
+from urllib.request import urlopen
 
 
-def remote_csv(url, cache_dir):
+def remote_csv(url):
     if not url.startswith('https://'):
         url = urljoin('https://cedropendata.mfcr.cz/c3lod/', url)
 
-    filename = os.path.split(urlparse(url).path)[-1]
-    local_path = os.path.join(cache_dir, filename)
-    if not os.path.isfile(local_path):
-        logging.info('Nemam %s (%s) lokalne, stahuju', filename, url)
-        urlretrieve(url, local_path)
-
-    with gzip.open(local_path, 'rt') as f:
+    with urlopen(url) as r, gzip.open(r, 'rt') as f:
         cr = csv.DictReader((line.replace('\0', '') for line in f))
         yield from cr
 
 
-if __name__ == '__main__':
+def main(outdir: str):
     logging.getLogger().setLevel(logging.INFO)
+    cdir = os.path.dirname(os.path.abspath(__file__))
 
-    rdir = 'data/raw/'
-    os.makedirs(rdir, exist_ok=True)
-    with open('ciselnik.json') as f:
+    with open(os.path.join(cdir, 'ciselnik.json')) as f:
         csmp = json.load(f)
 
     csl = dict()
 
     logging.info('Nacitam ciselniky')
     for cs in csmp:
-        for ln in remote_csv(cs['url'], rdir):
+        for ln in remote_csv(cs['url']):
             csl[ln[cs['id']]] = ln[cs['nazev']]
 
     mapping = dict()
     logging.info('Nacitam prijemce pomoci (ICO)')
 
-    for el in remote_csv('PrijemcePomoci.csv.gz', rdir):
+    for el in remote_csv('PrijemcePomoci.csv.gz'):
         mapping[el['idPrijemce']] = int(
             el['ico']) if len(el['ico']) > 0 else None
 
@@ -52,11 +45,12 @@ if __name__ == '__main__':
 
     for ds, exphd in headers.items():
         logging.info('Nacitam %s', ds)
-        with open('data/{}.csv'.format(ds), 'w') as fw:
+        tfn = os.path.join(outdir, f'{ds.lower()}.csv')
+        with open(tfn, 'w') as fw:
             cw = csv.DictWriter(fw, fieldnames=exphd)
             cw.writeheader()
 
-            for ln in remote_csv(f'{ds}.csv.gz', rdir):
+            for ln in remote_csv(f'{ds}.csv.gz'):
                 # vypln info z ciselniku
                 for k, v in ln.items():
                     if v.startswith('http://') or v.startswith('https://'):
@@ -70,3 +64,7 @@ if __name__ == '__main__':
                 # ln[3] = ln[3][:10] # z podpisDatum nas zajima datum, ne cas
 
                 cw.writerow(ln)
+
+
+if __name__ == '__main__':
+    main('.')

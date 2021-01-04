@@ -1,12 +1,15 @@
 import os
 import shutil
+import sys
 from importlib import import_module
 
 if __name__ == "__main__":
     base_outdir = "csv"
     os.makedirs(base_outdir, exist_ok=True)
 
-    module_names = ["iissp"]
+    module_names = ["iissp", "cedr"]
+    if len(sys.argv) > 1:
+        module_names = sys.argv[1:]
     modules = {}
 
     for module in module_names:
