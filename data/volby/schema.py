@@ -13,6 +13,12 @@ from sqlalchemy.sql.sqltypes import (
 array_ish = Text()
 array_ish = array_ish.with_variant(postgresql.ARRAY(Integer), "postgresql")
 
+
+def bitmap_ish(n):
+    tp = Text()
+    return tp.with_variant(postgresql.BIT(n), "postgresql")
+
+
 meta = MetaData()
 
 schema = [
@@ -149,7 +155,7 @@ schema = [
         Column("okrsek", Integer, nullable=False),
         Column("kc_1", Integer, nullable=False),
         Column("kc_2", Integer, nullable=False),
-        Column("zakrstrana", Text, nullable=False),  # TODO: bitmapa(60)
+        Column("zakrstrana", bitmap_ish(60), nullable=False),
         Column("vol_seznam", Integer, nullable=False),
         Column("vyd_obalky", Integer, nullable=False),
         Column("odevz_obal", Integer, nullable=False),
@@ -384,9 +390,7 @@ schema = [
         Column("odevz_obal", SmallInteger, nullable=False),
         Column("pl_hl_celk", SmallInteger, nullable=False),
         Column("kc_2", Integer, nullable=False),
-        Column(
-            "zakrstrana", Text, nullable=False
-        ),  # TODO: tohle je bitmapa(100), ale nevedel jsem jak ji zapsat
+        Column("zakrstrana", bitmap_ish(100), nullable=False),
     ),
     Table(
         "kraje_okrsky_hlasy",
@@ -467,7 +471,7 @@ schema = [
         Column("okrsek", Integer, nullable=True),
         Column("kc_1", Integer, nullable=True),
         Column("kc_2", Integer, nullable=True),
-        Column("zakrstrana", Text, nullable=True),  # TODO: zase bitmapa
+        Column("zakrstrana", bitmap_ish(100), nullable=True),
         Column("vol_seznam", SmallInteger, nullable=True),
         Column("vyd_obalky", SmallInteger, nullable=True),
         Column("odevz_obal", SmallInteger, nullable=True),
@@ -566,7 +570,7 @@ if __name__ == "__main__":
 
     for table in schema:
         print(f"-- {table.name} as created in Postgres")
-        
+
         print(CreateTable(table).compile(dialect=postgresql.dialect()))
 
 
