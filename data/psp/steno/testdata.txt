@@ -1,0 +1,739 @@
+original;funkce;autor
+Člen Rady Plzeňského kraje Václav Štekl;Člen Rady Plzeňského kraje;Václav Štekl
+Člen rady Plzeňského kraje Petr Smutný;Člen rady Plzeňského kraje;Petr Smutný
+Člen zastupitelstva Libereckého kraje Pavel Novák;Člen zastupitelstva Libereckého kraje;Pavel Novák
+Člen zastupitelstva hl. m. Prahy Lukáš Manhart;Člen zastupitelstva hl. m. Prahy;Lukáš Manhart
+Členka rady hl. m. Prahy Hana Kordová Marvanová;Členka rady hl. m. Prahy;Hana Kordová Marvanová
+Evropská komisařka pro spravedlnost, spotřebitele a rovnost žen a mužů Věra Jourová;Evropská komisařka pro spravedlnost, spotřebitele a rovnost žen a mužů;Věra Jourová
+Generální ředitel České pošty Martin Elkán;Generální ředitel České pošty;Martin Elkán
+Guvernér ČNB Jiří Rusnok;Guvernér ČNB;Jiří Rusnok
+Guvernér ČNB Miroslav Singer;Guvernér ČNB;Miroslav Singer
+Hejtman Libereckého kraje Martin Půta;Hejtman Libereckého kraje;Martin Půta
+Hejtman Libereckého kraje Stanislav Eichler;Hejtman Libereckého kraje;Stanislav Eichler
+Hejtman Pardubického kraje Martin Netolický;Hejtman Pardubického kraje;Martin Netolický
+Hejtman Pardubického kraje Radko Martínek;Hejtman Pardubického kraje;Radko Martínek
+Hejtman Středočeského kraje Miloš Petera;Hejtman Středočeského kraje;Miloš Petera
+Hejtmanka Ústeckého kraje Jana Vaňhová;Hejtmanka Ústeckého kraje;Jana Vaňhová
+Hlavní hygienička ČR Jarmila Rážová;Hlavní hygienička ČR;Jarmila Rážová
+Ministr školství, mládeže a tělovýchovy ČR Dalibor Štys;Ministr školství, mládeže a tělovýchovy ČR;Dalibor Štys
+Ministr školství, mládeže a tělovýchovy ČR Josef Dobeš;Ministr školství, mládeže a tělovýchovy ČR;Josef Dobeš
+Ministr školství, mládeže a tělovýchovy ČR Marcel Chládek;Ministr školství, mládeže a tělovýchovy ČR;Marcel Chládek
+Ministr školství, mládeže a tělovýchovy ČR Petr Fiala;Ministr školství, mládeže a tělovýchovy ČR;Petr Fiala
+Ministr školství, mládeže a tělovýchovy ČR Robert Plaga;Ministr školství, mládeže a tělovýchovy ČR;Robert Plaga
+Ministr bez portfeje ČR Petr Mlsna;Ministr bez portfeje ČR;Petr Mlsna
+Ministr dopravy ČR Antonín Prachař;Ministr dopravy ČR;Antonín Prachař
+Ministr dopravy ČR Dan Ťok;Ministr dopravy ČR;Dan Ťok
+Ministr dopravy ČR Pavel Dobeš;Ministr dopravy ČR;Pavel Dobeš
+Ministr dopravy ČR Radek Šmerda;Ministr dopravy ČR;Radek Šmerda
+Ministr dopravy ČR Vladimír Kremlík;Ministr dopravy ČR;Vladimír Kremlík
+Ministr dopravy ČR Vít Bárta;Ministr dopravy ČR;Vít Bárta
+Ministr dopravy ČR Zbyněk Stanjura;Ministr dopravy ČR;Zbyněk Stanjura
+Ministr dopravy ČR Zdeněk Žák;Ministr dopravy ČR;Zdeněk Žák
+Ministr financí ČR Ivan Pilný;Ministr financí ČR;Ivan Pilný
+Ministr financí ČR Miroslav Kalousek;Ministr financí ČR;Miroslav Kalousek
+Ministr kultury ČR Antonín Staněk;Ministr kultury ČR;Antonín Staněk
+Ministr kultury ČR Daniel Herman;Ministr kultury ČR;Daniel Herman
+Ministr kultury ČR Ilja Šmíd;Ministr kultury ČR;Ilja Šmíd
+Ministr kultury ČR Jiří Balvín;Ministr kultury ČR;Jiří Balvín
+Ministr kultury ČR Jiří Besser;Ministr kultury ČR;Jiří Besser
+Ministr kultury ČR Lubomír Zaorálek;Ministr kultury ČR;Lubomír Zaorálek
+Ministr obrany ČR Alexandr Vondra;Ministr obrany ČR;Alexandr Vondra
+Ministr obrany ČR Lubomír Metnar;Ministr obrany ČR;Lubomír Metnar
+Ministr obrany ČR Martin Stropnický;Ministr obrany ČR;Martin Stropnický
+Ministr obrany ČR Vlastimil Picek;Ministr obrany ČR;Vlastimil Picek
+Ministr pro místní rozvoj ČR František Lukl;Ministr pro místní rozvoj ČR;František Lukl
+Ministr pro místní rozvoj ČR Kamil Jankovský;Ministr pro místní rozvoj ČR;Kamil Jankovský
+Ministr průmyslu a obchodu ČR Jan Mládek;Ministr průmyslu a obchodu ČR;Jan Mládek
+Ministr průmyslu a obchodu ČR Jiří Cienciala;Ministr průmyslu a obchodu ČR;Jiří Cienciala
+Ministr průmyslu a obchodu ČR Jiří Cieńciała;Ministr průmyslu a obchodu ČR;Jiří Cieńciała
+Ministr průmyslu a obchodu ČR Jiří Havlíček;Ministr průmyslu a obchodu ČR;Jiří Havlíček
+Ministr průmyslu a obchodu ČR Martin Kocourek;Ministr průmyslu a obchodu ČR;Martin Kocourek
+Ministr průmyslu a obchodu ČR Martin Kuba;Ministr průmyslu a obchodu ČR;Martin Kuba
+Ministr průmyslu a obchodu ČR Tomáš Hüner;Ministr průmyslu a obchodu ČR;Tomáš Hüner
+Ministr práce a sociálních věcí ČR František Koníček;Ministr práce a sociálních věcí ČR;František Koníček
+Ministr práce a sociálních věcí ČR Jaromír Drábek;Ministr práce a sociálních věcí ČR;Jaromír Drábek
+Ministr práce a sociálních věcí ČR Petr Krčál;Ministr práce a sociálních věcí ČR;Petr Krčál
+Ministr spravedlnosti ČR Jan Kněžínek;Ministr spravedlnosti ČR;Jan Kněžínek
+Ministr spravedlnosti ČR Jiří Pospíšil;Ministr spravedlnosti ČR;Jiří Pospíšil
+Ministr spravedlnosti ČR Pavel Blažek;Ministr spravedlnosti ČR;Pavel Blažek
+Ministr spravedlnosti ČR Robert Pelikán;Ministr spravedlnosti ČR;Robert Pelikán
+Ministr vlády ČR Jan Chvojka;Ministr vlády ČR;Jan Chvojka
+Ministr vlády ČR Jiří Dienstbier;Ministr vlády ČR;Jiří Dienstbier
+Ministr vnitra ČR Jan Kubice;Ministr vnitra ČR;Jan Kubice
+Ministr vnitra ČR Lubomír Metnar;Ministr vnitra ČR;Lubomír Metnar
+Ministr vnitra ČR Martin Pecina;Ministr vnitra ČR;Martin Pecina
+Ministr vnitra ČR Milan Chovanec;Ministr vnitra ČR;Milan Chovanec
+Ministr zahraničních věcí ČR Lubomír Zaorálek;Ministr zahraničních věcí ČR;Lubomír Zaorálek
+Ministr zahraničních věcí ČR Tomáš Petříček;Ministr zahraničních věcí ČR;Tomáš Petříček
+Ministr zdravotnictví ČR Adam Vojtěch;Ministr zdravotnictví ČR;Adam Vojtěch
+Ministr zdravotnictví ČR Jan Blatný;Ministr zdravotnictví ČR;Jan Blatný
+Ministr zdravotnictví ČR Leoš Heger;Ministr zdravotnictví ČR;Leoš Heger
+Ministr zdravotnictví ČR Martin Holcát;Ministr zdravotnictví ČR;Martin Holcát
+Ministr zdravotnictví ČR Miloslav Ludvík;Ministr zdravotnictví ČR;Miloslav Ludvík
+Ministr zdravotnictví ČR Roman Prymula;Ministr zdravotnictví ČR;Roman Prymula
+Ministr zdravotnictví ČR Svatopluk Němeček;Ministr zdravotnictví ČR;Svatopluk Němeček
+Ministr zemědělství ČR Ivan Fuksa;Ministr zemědělství ČR;Ivan Fuksa
+Ministr zemědělství ČR Jiří Milek;Ministr zemědělství ČR;Jiří Milek
+Ministr zemědělství ČR Marian Jurečka;Ministr zemědělství ČR;Marian Jurečka
+Ministr zemědělství ČR Miroslav Toman;Ministr zemědělství ČR;Miroslav Toman
+Ministr zemědělství ČR Petr Bendl;Ministr zemědělství ČR;Petr Bendl
+Ministr životního prostředí Tomáš Jan Podivínský;Ministr životního prostředí;Tomáš Jan Podivínský
+Ministr životního prostředí ČR Pavel Drobil;Ministr životního prostředí ČR;Pavel Drobil
+Ministr životního prostředí ČR Richard Brabec;Ministr životního prostředí ČR;Richard Brabec
+Ministr životního prostředí ČR Tomáš Chalupa;Ministr životního prostředí ČR;Tomáš Chalupa
+Ministr životního prostředí ČR Tomáš Jan Podivínský;Ministr životního prostředí ČR;Tomáš Jan Podivínský
+Ministryně školství, mládeže a tělovýchovy ČR Kateřina Valachová;Ministryně školství, mládeže a tělovýchovy ČR;Kateřina Valachová
+Ministryně financí ČR Alena Schillerová;Ministryně financí ČR;Alena Schillerová
+Ministryně kultury ČR Alena Hanáková;Ministryně kultury ČR;Alena Hanáková
+Ministryně obrany ČR Karla Šlechtová;Ministryně obrany ČR;Karla Šlechtová
+Ministryně pro místní rozvoj ČR Karla Šlechtová;Ministryně pro místní rozvoj ČR;Karla Šlechtová
+Ministryně pro místní rozvoj ČR Klára Dostálová;Ministryně pro místní rozvoj ČR;Klára Dostálová
+Ministryně pro místní rozvoj ČR Věra Jourová;Ministryně pro místní rozvoj ČR;Věra Jourová
+Ministryně průmyslu a obchodu ČR Marta Nováková;Ministryně průmyslu a obchodu ČR;Marta Nováková
+Ministryně práce a sociálních věcí ČR Jana Maláčová;Ministryně práce a sociálních věcí ČR;Jana Maláčová
+Ministryně práce a sociálních věcí ČR Jaroslava Němcová;Ministryně práce a sociálních věcí ČR;Jaroslava Němcová
+Ministryně práce a sociálních věcí ČR Ludmila Müllerová;Ministryně práce a sociálních věcí ČR;Ludmila Müllerová
+Ministryně práce a sociálních věcí ČR Michaela Marksová;Ministryně práce a sociálních věcí ČR;Michaela Marksová
+Ministryně spravedlnosti ČR Helena Válková;Ministryně spravedlnosti ČR;Helena Válková
+Ministryně spravedlnosti ČR Marie Benešová;Ministryně spravedlnosti ČR;Marie Benešová
+Ministryně spravedlnosti ČR Taťána Malá;Ministryně spravedlnosti ČR;Taťána Malá
+Miroslava Němcová;;Miroslava Němcová
+Místopředseda ČSÚ Jaroslav Sixta;Místopředseda ČSÚ;Jaroslav Sixta
+Místopředseda Evropské komise a komisař pro meziinstitucionální vztahy a administrativu Maroš Šefčovič;Místopředseda Evropské komise a komisař pro meziinstitucionální vztahy a administrativu;Maroš Šefčovič
+Místopředseda PSP Jan Bartošek;Místopředseda PSP;Jan Bartošek
+Místopředseda PSP Jan Hamáček;Místopředseda PSP;Jan Hamáček
+Místopředseda PSP Jiří Oliva;Místopředseda PSP;Jiří Oliva
+Místopředseda PSP Jiří Pospíšil;Místopředseda PSP;Jiří Pospíšil
+Místopředseda PSP Lubomír Zaorálek;Místopředseda PSP;Lubomír Zaorálek
+Místopředseda PSP Pavel Bělobrádek;Místopředseda PSP;Pavel Bělobrádek
+Místopředseda PSP Petr Fiala;Místopředseda PSP;Petr Fiala
+Místopředseda PSP Petr Gazdík;Místopředseda PSP;Petr Gazdík
+Místopředseda PSP Radek Vondráček;Místopředseda PSP;Radek Vondráček
+Místopředseda PSP Tomio Okamura;Místopředseda PSP;Tomio Okamura
+Místopředseda PSP Tomáš Hanzel;Místopředseda PSP;Tomáš Hanzel
+Místopředseda PSP Vojtěch Filip;Místopředseda PSP;Vojtěch Filip
+Místopředseda PSP Vojtěch Pikal;Místopředseda PSP;Vojtěch Pikal
+Místopředseda vlády a ministr financí ČR Jan Fischer;Místopředseda vlády a ministr financí ČR;Jan Fischer
+Místopředseda vlády a ministr průmyslu a obchodu ČR Karel Havlíček;Místopředseda vlády a ministr průmyslu a obchodu ČR;Karel Havlíček
+Místopředseda vlády a ministr vnitra ČR Jan Hamáček;Místopředseda vlády a ministr vnitra ČR;Jan Hamáček
+Místopředseda vlády a ministr vnitra ČR Radek John;Místopředseda vlády a ministr vnitra ČR;Radek John
+Místopředseda vlády a ministr zahraničních věcí ČR Karel Schwarzenberg;Místopředseda vlády a ministr zahraničních věcí ČR;Karel Schwarzenberg
+Místopředseda vlády a ministr životního prostředí ČR Richard Brabec;Místopředseda vlády a ministr životního prostředí ČR;Richard Brabec
+Místopředseda vlády ČR Pavel Bělobrádek;Místopředseda vlády ČR;Pavel Bělobrádek
+Místopředseda vlády ČR Radek John;Místopředseda vlády ČR;Radek John
+Místopředseda vlády ČR a ministr financí Andrej Babiš;Místopředseda vlády ČR a ministr financí;Andrej Babiš
+Místopředseda vlády ČR a ministr zahraničních věcí ČR Martin Stropnický;Místopředseda vlády ČR a ministr zahraničních věcí ČR;Martin Stropnický
+Místopředseda vlády ČR a ministr životního prostředí Richard Brabec;Místopředseda vlády ČR a ministr životního prostředí;Richard Brabec
+Místopředseda vlády ČR a ministr životního prostředí ČR Richard Brabec;Místopředseda vlády ČR a ministr životního prostředí ČR;Richard Brabec
+Místopředseda vlády ČR, ministr vnitra a ministr zahraničních věcí Jan Hamáček;Místopředseda vlády ČR, ministr vnitra a ministr zahraničních věcí;Jan Hamáček
+Místopředseda vlády, ministr průmyslu a obchodu a ministr dopravy ČR Karel Havlíček;Místopředseda vlády, ministr průmyslu a obchodu a ministr dopravy ČR;Karel Havlíček
+Místopředseda vlády, ministr vnitra a ministr zahraničních věcí ČR Jan Hamáček;Místopředseda vlády, ministr vnitra a ministr zahraničních věcí ČR;Jan Hamáček
+Místopředsedkyně PSP Jaroslava Jermanová;Místopředsedkyně PSP;Jaroslava Jermanová
+Místopředsedkyně PSP Jaroslava Pokorná Jermanová;Místopředsedkyně PSP;Jaroslava Pokorná Jermanová
+Místopředsedkyně PSP Kateřina Klasnová;Místopředsedkyně PSP;Kateřina Klasnová
+Místopředsedkyně PSP Miroslava Němcová;Místopředsedkyně PSP;Miroslava Němcová
+Místopředsedkyně PSP Vlasta Parkanová;Místopředsedkyně PSP;Vlasta Parkanová
+Místopředsedkyně vlády a ministryně financí ČR Alena Schillerová;Místopředsedkyně vlády a ministryně financí ČR;Alena Schillerová
+Místopředsedkyně vlády a ministryně obrany ČR Karolína Peake;Místopředsedkyně vlády a ministryně obrany ČR;Karolína Peake
+Místopředsedkyně vlády ČR Karolína Peake;Místopředsedkyně vlády ČR;Karolína Peake
+Náměstek hejtmana Moravskoslezského kraje Daniel Havlík;Náměstek hejtmana Moravskoslezského kraje;Daniel Havlík
+Náměstek hejtmana Moravskoslezského kraje Miroslav Novák;Náměstek hejtmana Moravskoslezského kraje;Miroslav Novák
+Náměstek hejtmana Pardubického kraje Roman Línek;Náměstek hejtmana Pardubického kraje;Roman Línek
+Náměstek hejtmana Zlínského kraje Jaroslav Drozd;Náměstek hejtmana Zlínského kraje;Jaroslav Drozd
+Předseda ČSÚ Marek Rojíček;Předseda ČSÚ;Marek Rojíček
+Předseda NR SR Andrej Danko;Předseda NR SR;Andrej Danko
+Předseda PSP Jan Hamáček;Předseda PSP;Jan Hamáček
+Předseda PSP Radek Vondráček;Předseda PSP;Radek Vondráček
+Předseda Sněmovny reprezentantů USA Paul Ryan;Předseda Sněmovny reprezentantů USA;Paul Ryan
+Předseda vlády ČR Andrej Babiš;Předseda vlády ČR;Andrej Babiš
+Předseda vlády ČR Bohuslav Sobotka;Předseda vlády ČR;Bohuslav Sobotka
+Předseda vlády ČR Jiří Rusnok;Předseda vlády ČR;Jiří Rusnok
+Předseda vlády ČR Petr Nečas;Předseda vlády ČR;Petr Nečas
+Předsedající Jan Hamáček;Předsedající;Jan Hamáček
+Předsedající Miroslava Němcová;Předsedající;Miroslava Němcová
+Předsedkyně Národní rozpočtové rady Eva Zamrazilová;Předsedkyně Národní rozpočtové rady;Eva Zamrazilová
+Předsedkyně PSP Miroslava Němcová;Předsedkyně PSP;Miroslava Němcová
+Pan Drahoslav Oulehla;;Drahoslav Oulehla
+Pan František Bányai;;František Bányai
+Pan Jan Zahradník;;Jan Zahradník
+Pan John Bok;;John Bok
+Pan Pavel Varvařovský;;Pavel Varvařovský
+Pan Pavel Štern;;Pavel Štern
+Paní Anna Šabatová;Paní;Anna Šabatová
+Paní Eva Dundáčková;Paní;Eva Dundáčková
+Paní Iva Brožová;Paní;Iva Brožová
+Poslanec Adam Kalous;Poslanec;Adam Kalous
+Poslanec Adam Rykala;Poslanec;Adam Rykala
+Poslanec Adam Vojtěch;Poslanec;Adam Vojtěch
+Poslanec Adolf Beznoska;Poslanec;Adolf Beznoska
+Poslanec Aleš Juchelka;Poslanec;Aleš Juchelka
+Poslanec Aleš Roztočil;Poslanec;Aleš Roztočil
+Poslanec Aleš Rádl;Poslanec;Aleš Rádl
+Poslanec Alexander Černý;Poslanec;Alexander Černý
+Poslanec Alfréd Michalík;Poslanec;Alfréd Michalík
+Poslanec Andrej Babiš;Poslanec;Andrej Babiš
+Poslanec Antonín Seďa;Poslanec;Antonín Seďa
+Poslanec Antonín Staněk;Poslanec;Antonín Staněk
+Poslanec Augustin Karel Andrle Sylor;Poslanec;Augustin Karel Andrle Sylor
+Poslanec Břetislav Petr;Poslanec;Břetislav Petr
+Poslanec Bořivoj Šarapatka;Poslanec;Bořivoj Šarapatka
+Poslanec Bohuslav Chalupa;Poslanec;Bohuslav Chalupa
+Poslanec Bohuslav Sobotka;Poslanec;Bohuslav Sobotka
+Poslanec Bohuslav Svoboda;Poslanec;Bohuslav Svoboda
+Poslanec Boris Šťastný;Poslanec;Boris Šťastný
+Poslanec Bronislav Schwarz;Poslanec;Bronislav Schwarz
+Poslanec Cyril Zapletal;Poslanec;Cyril Zapletal
+Poslanec Daniel Herman;Poslanec;Daniel Herman
+Poslanec Daniel Korte;Poslanec;Daniel Korte
+Poslanec Daniel Pawlas;Poslanec;Daniel Pawlas
+Poslanec David Kasal;Poslanec;David Kasal
+Poslanec David Kádner;Poslanec;David Kádner
+Poslanec David Pražák;Poslanec;David Pražák
+Poslanec David Rath;Poslanec;David Rath
+Poslanec David Vodrážka;Poslanec;David Vodrážka
+Poslanec David Šeich;Poslanec;David Šeich
+Poslanec David Štolpa;Poslanec;David Štolpa
+Poslanec Dominik Feri;Poslanec;Dominik Feri
+Poslanec František Adámek;Poslanec;František Adámek
+Poslanec František Bublan;Poslanec;František Bublan
+Poslanec František Dědič;Poslanec;František Dědič
+Poslanec František Elfmark;Poslanec;František Elfmark
+Poslanec František Kopřiva;Poslanec;František Kopřiva
+Poslanec František Laudát;Poslanec;František Laudát
+Poslanec František Navrkal;Poslanec;František Navrkal
+Poslanec František Novosad;Poslanec;František Novosad
+Poslanec František Petrtýl;Poslanec;František Petrtýl
+Poslanec František Sivera;Poslanec;František Sivera
+Poslanec František Vácha;Poslanec;František Vácha
+Poslanec Herbert Pavera;Poslanec;Herbert Pavera
+Poslanec Igor Jakubčík;Poslanec;Igor Jakubčík
+Poslanec Igor Nykl;Poslanec;Igor Nykl
+Poslanec Igor Svoják;Poslanec;Igor Svoják
+Poslanec Ivan Adamec;Poslanec;Ivan Adamec
+Poslanec Ivan Bartoš;Poslanec;Ivan Bartoš
+Poslanec Ivan Fuksa;Poslanec;Ivan Fuksa
+Poslanec Ivan Gabal;Poslanec;Ivan Gabal
+Poslanec Ivan Jáč;Poslanec;Ivan Jáč
+Poslanec Ivan Ohlídal;Poslanec;Ivan Ohlídal
+Poslanec Ivan Pilný;Poslanec;Ivan Pilný
+Poslanec Ivo Pojezný;Poslanec;Ivo Pojezný
+Poslanec Ivo Vondrák;Poslanec;Ivo Vondrák
+Poslanec Jakub Janda;Poslanec;Jakub Janda
+Poslanec Jakub Michálek;Poslanec;Jakub Michálek
+Poslanec Jan Čechlovský;Poslanec;Jan Čechlovský
+Poslanec Jan Čižinský;Poslanec;Jan Čižinský
+Poslanec Jan Babor;Poslanec;Jan Babor
+Poslanec Jan Bartošek;Poslanec;Jan Bartošek
+Poslanec Jan Bauer;Poslanec;Jan Bauer
+Poslanec Jan Birke;Poslanec;Jan Birke
+Poslanec Jan Bureš;Poslanec;Jan Bureš
+Poslanec Jan Chvojka;Poslanec;Jan Chvojka
+Poslanec Jan Farský;Poslanec;Jan Farský
+Poslanec Jan Florián;Poslanec;Jan Florián
+Poslanec Jan Hamáček;Poslanec;Jan Hamáček
+Poslanec Jan Hrnčíř;Poslanec;Jan Hrnčíř
+Poslanec Jan Husák;Poslanec;Jan Husák
+Poslanec Jan Jakob;Poslanec;Jan Jakob
+Poslanec Jan Klán;Poslanec;Jan Klán
+Poslanec Jan Kubata;Poslanec;Jan Kubata
+Poslanec Jan Kubík;Poslanec;Jan Kubík
+Poslanec Jan Lipavský;Poslanec;Jan Lipavský
+Poslanec Jan Látka;Poslanec;Jan Látka
+Poslanec Jan Mládek;Poslanec;Jan Mládek
+Poslanec Jan Pajer;Poslanec;Jan Pajer
+Poslanec Jan Pošvář;Poslanec;Jan Pošvář
+Poslanec Jan Richter;Poslanec;Jan Richter
+Poslanec Jan Schiller;Poslanec;Jan Schiller
+Poslanec Jan Sedláček;Poslanec;Jan Sedláček
+Poslanec Jan Skopeček;Poslanec;Jan Skopeček
+Poslanec Jan Smutný;Poslanec;Jan Smutný
+Poslanec Jan Vidím;Poslanec;Jan Vidím
+Poslanec Jan Volný;Poslanec;Jan Volný
+Poslanec Jan Řehounek;Poslanec;Jan Řehounek
+Poslanec Jan Zahradník;Poslanec;Jan Zahradník
+Poslanec Jaromír Drábek;Poslanec;Jaromír Drábek
+Poslanec Jaroslav Borka;Poslanec;Jaroslav Borka
+Poslanec Jaroslav Bžoch;Poslanec;Jaroslav Bžoch
+Poslanec Jaroslav Dvořák;Poslanec;Jaroslav Dvořák
+Poslanec Jaroslav Eček;Poslanec;Jaroslav Eček
+Poslanec Jaroslav Faltýnek;Poslanec;Jaroslav Faltýnek
+Poslanec Jaroslav Foldyna;Poslanec;Jaroslav Foldyna
+Poslanec Jaroslav Holík;Poslanec;Jaroslav Holík
+Poslanec Jaroslav Klaška;Poslanec;Jaroslav Klaška
+Poslanec Jaroslav Krupka;Poslanec;Jaroslav Krupka
+Poslanec Jaroslav Krákora;Poslanec;Jaroslav Krákora
+Poslanec Jaroslav Kytýr;Poslanec;Jaroslav Kytýr
+Poslanec Jaroslav Lobkowicz;Poslanec;Jaroslav Lobkowicz
+Poslanec Jaroslav Martinů;Poslanec;Jaroslav Martinů
+Poslanec Jaroslav Plachý;Poslanec;Jaroslav Plachý
+Poslanec Jaroslav Vandas;Poslanec;Jaroslav Vandas
+Poslanec Jaroslav Zavadil;Poslanec;Jaroslav Zavadil
+Poslanec Jaroslav Škárka;Poslanec;Jaroslav Škárka
+Poslanec Jeroným Tejc;Poslanec;Jeroným Tejc
+Poslanec Jiří Běhounek;Poslanec;Jiří Běhounek
+Poslanec Jiří Besser;Poslanec;Jiří Besser
+Poslanec Jiří Bláha;Poslanec;Jiří Bláha
+Poslanec Jiří Dolejš;Poslanec;Jiří Dolejš
+Poslanec Jiří Hlavatý;Poslanec;Jiří Hlavatý
+Poslanec Jiří Holeček;Poslanec;Jiří Holeček
+Poslanec Jiří Junek;Poslanec;Jiří Junek
+Poslanec Jiří Kobza;Poslanec;Jiří Kobza
+Poslanec Jiří Kohoutek;Poslanec;Jiří Kohoutek
+Poslanec Jiří Koskuba;Poslanec;Jiří Koskuba
+Poslanec Jiří Koubek;Poslanec;Jiří Koubek
+Poslanec Jiří Krátký;Poslanec;Jiří Krátký
+Poslanec Jiří Mašek;Poslanec;Jiří Mašek
+Poslanec Jiří Mihola;Poslanec;Jiří Mihola
+Poslanec Jiří Oliva;Poslanec;Jiří Oliva
+Poslanec Jiří Papež;Poslanec;Jiří Papež
+Poslanec Jiří Paroubek;Poslanec;Jiří Paroubek
+Poslanec Jiří Petrů;Poslanec;Jiří Petrů
+Poslanec Jiří Pospíšil;Poslanec;Jiří Pospíšil
+Poslanec Jiří Rusnok;Poslanec;Jiří Rusnok
+Poslanec Jiří Skalický;Poslanec;Jiří Skalický
+Poslanec Jiří Strýček;Poslanec;Jiří Strýček
+Poslanec Jiří Valenta;Poslanec;Jiří Valenta
+Poslanec Jiří Ventruba;Poslanec;Jiří Ventruba
+Poslanec Jiří Zemánek;Poslanec;Jiří Zemánek
+Poslanec Jiří Zimola;Poslanec;Jiří Zimola
+Poslanec Jiří Zlatuška;Poslanec;Jiří Zlatuška
+Poslanec Jiří Šlégr;Poslanec;Jiří Šlégr
+Poslanec Jiří Štětina;Poslanec;Jiří Štětina
+Poslanec Jiří Šulc;Poslanec;Jiří Šulc
+Poslanec Josef Bělica;Poslanec;Josef Bělica
+Poslanec Josef Cogan;Poslanec;Josef Cogan
+Poslanec Josef Dobeš;Poslanec;Josef Dobeš
+Poslanec Josef Hájek;Poslanec;Josef Hájek
+Poslanec Josef Kott;Poslanec;Josef Kott
+Poslanec Josef Nekl;Poslanec;Josef Nekl
+Poslanec Josef Novotný ml.;Poslanec;Josef Novotný ml.
+Poslanec Josef Novotný st.;Poslanec;Josef Novotný st.
+Poslanec Josef Novotný;Poslanec;Josef Novotný
+Poslanec Josef Smýkal;Poslanec;Josef Smýkal
+Poslanec Josef Tancoš;Poslanec;Josef Tancoš
+Poslanec Josef Uhlík;Poslanec;Josef Uhlík
+Poslanec Josef Vondrášek;Poslanec;Josef Vondrášek
+Poslanec Josef Vozdecký;Poslanec;Josef Vozdecký
+Poslanec Josef Zahradníček;Poslanec;Josef Zahradníček
+Poslanec Josef Šenfeld;Poslanec;Josef Šenfeld
+Poslanec Julius Špičák;Poslanec;Julius Špičák
+Poslanec Kamal Farhan;Poslanec;Kamal Farhan
+Poslanec Karel Černý;Poslanec;Karel Černý
+Poslanec Karel Fiedler;Poslanec;Karel Fiedler
+Poslanec Karel Krejza;Poslanec;Karel Krejza
+Poslanec Karel Rais;Poslanec;Karel Rais
+Poslanec Karel Schwarzenberg;Poslanec;Karel Schwarzenberg
+Poslanec Karel Tureček;Poslanec;Karel Tureček
+Poslanec Karel Šidlo;Poslanec;Karel Šidlo
+Poslanec Ladislav Jirků;Poslanec;Ladislav Jirků
+Poslanec Ladislav Okleštěk;Poslanec;Ladislav Okleštěk
+Poslanec Ladislav Skopal;Poslanec;Ladislav Skopal
+Poslanec Ladislav Velebný;Poslanec;Ladislav Velebný
+Poslanec Ladislav Šincl;Poslanec;Ladislav Šincl
+Poslanec Leo Luzar;Poslanec;Leo Luzar
+Poslanec Leoš Heger;Poslanec;Leoš Heger
+Poslanec Lubomír Toufar;Poslanec;Lubomír Toufar
+Poslanec Lubomír Volný;Poslanec;Lubomír Volný
+Poslanec Lubomír Zaorálek;Poslanec;Lubomír Zaorálek
+Poslanec Lubomír Španěl;Poslanec;Lubomír Španěl
+Poslanec Luděk Jeništa;Poslanec;Luděk Jeništa
+Poslanec Ludvík Hovorka;Poslanec;Ludvík Hovorka
+Poslanec Lukáš Černohorský;Poslanec;Lukáš Černohorský
+Poslanec Lukáš Bartoň;Poslanec;Lukáš Bartoň
+Poslanec Lukáš Kolářík;Poslanec;Lukáš Kolářík
+Poslanec Lukáš Pleticha;Poslanec;Lukáš Pleticha
+Poslanec Marek Černoch;Poslanec;Marek Černoch
+Poslanec Marek Benda;Poslanec;Marek Benda
+Poslanec Marek Novák;Poslanec;Marek Novák
+Poslanec Marek Výborný;Poslanec;Marek Výborný
+Poslanec Marek Šnajdr;Poslanec;Marek Šnajdr
+Poslanec Marek Ženíšek;Poslanec;Marek Ženíšek
+Poslanec Marian Bojko;Poslanec;Marian Bojko
+Poslanec Marian Jurečka;Poslanec;Marian Jurečka
+Poslanec Martin Baxa;Poslanec;Martin Baxa
+Poslanec Martin Gregora;Poslanec;Martin Gregora
+Poslanec Martin Jiránek;Poslanec;Martin Jiránek
+Poslanec Martin Kolovratník;Poslanec;Martin Kolovratník
+Poslanec Martin Komárek;Poslanec;Martin Komárek
+Poslanec Martin Kupka;Poslanec;Martin Kupka
+Poslanec Martin Lank;Poslanec;Martin Lank
+Poslanec Martin Novotný;Poslanec;Martin Novotný
+Poslanec Martin Pecina;Poslanec;Martin Pecina
+Poslanec Martin Plíšek;Poslanec;Martin Plíšek
+Poslanec Martin Půta;Poslanec;Martin Půta
+Poslanec Martin Sedlář;Poslanec;Martin Sedlář
+Poslanec Martin Vacek;Poslanec;Martin Vacek
+Poslanec Matěj Fichtner;Poslanec;Matěj Fichtner
+Poslanec Michal Babák;Poslanec;Michal Babák
+Poslanec Michal Doktor;Poslanec;Michal Doktor
+Poslanec Michal Hašek;Poslanec;Michal Hašek
+Poslanec Michal Janek;Poslanec;Michal Janek
+Poslanec Michal Kučera;Poslanec;Michal Kučera
+Poslanec Michal Ratiborský;Poslanec;Michal Ratiborský
+Poslanec Mikuláš Ferjenčík;Poslanec;Mikuláš Ferjenčík
+Poslanec Mikuláš Peksa;Poslanec;Mikuláš Peksa
+Poslanec Milan Brázdil;Poslanec;Milan Brázdil
+Poslanec Milan Chovanec;Poslanec;Milan Chovanec
+Poslanec Milan Feranec;Poslanec;Milan Feranec
+Poslanec Milan Hnilička;Poslanec;Milan Hnilička
+Poslanec Milan Pour;Poslanec;Milan Pour
+Poslanec Milan Urban;Poslanec;Milan Urban
+Poslanec Milan Šarapatka;Poslanec;Milan Šarapatka
+Poslanec Milan Šťovíček;Poslanec;Milan Šťovíček
+Poslanec Miloš Babiš;Poslanec;Miloš Babiš
+Poslanec Miloš Petera;Poslanec;Miloš Petera
+Poslanec Miloslav Janulík;Poslanec;Miloslav Janulík
+Poslanec Miloslav Rozner;Poslanec;Miloslav Rozner
+Poslanec Miroslav Bernášek;Poslanec;Miroslav Bernášek
+Poslanec Miroslav Grebeníček;Poslanec;Miroslav Grebeníček
+Poslanec Miroslav Jeník;Poslanec;Miroslav Jeník
+Poslanec Miroslav Kalousek;Poslanec;Miroslav Kalousek
+Poslanec Miroslav Opálka;Poslanec;Miroslav Opálka
+Poslanec Miroslav Petráň;Poslanec;Miroslav Petráň
+Poslanec Miroslav Svoboda;Poslanec;Miroslav Svoboda
+Poslanec Miroslav Váňa;Poslanec;Miroslav Váňa
+Poslanec Ondřej Babka;Poslanec;Ondřej Babka
+Poslanec Ondřej Benešík;Poslanec;Ondřej Benešík
+Poslanec Ondřej Polanský;Poslanec;Ondřej Polanský
+Poslanec Ondřej Profant;Poslanec;Ondřej Profant
+Poslanec Ondřej Veselý;Poslanec;Ondřej Veselý
+Poslanec Otto Chaloupka;Poslanec;Otto Chaloupka
+Poslanec Přemysl Mališ;Poslanec;Přemysl Mališ
+Poslanec Patrik Nacher;Poslanec;Patrik Nacher
+Poslanec Pavel Čihák;Poslanec;Pavel Čihák
+Poslanec Pavel Antonín;Poslanec;Pavel Antonín
+Poslanec Pavel Blažek;Poslanec;Pavel Blažek
+Poslanec Pavel Bém;Poslanec;Pavel Bém
+Poslanec Pavel Bělobrádek;Poslanec;Pavel Bělobrádek
+Poslanec Pavel Drobil;Poslanec;Pavel Drobil
+Poslanec Pavel Havíř;Poslanec;Pavel Havíř
+Poslanec Pavel Hojda;Poslanec;Pavel Hojda
+Poslanec Pavel Holík;Poslanec;Pavel Holík
+Poslanec Pavel Jelínek;Poslanec;Pavel Jelínek
+Poslanec Pavel Juříček;Poslanec;Pavel Juříček
+Poslanec Pavel Kováčik;Poslanec;Pavel Kováčik
+Poslanec Pavel Ploc;Poslanec;Pavel Ploc
+Poslanec Pavel Plzák;Poslanec;Pavel Plzák
+Poslanec Pavel Pustějovský;Poslanec;Pavel Pustějovský
+Poslanec Pavel Růžička;Poslanec;Pavel Růžička
+Poslanec Pavel Staněk;Poslanec;Pavel Staněk
+Poslanec Pavel Suchánek;Poslanec;Pavel Suchánek
+Poslanec Pavel Svoboda;Poslanec;Pavel Svoboda
+Poslanec Pavel Volčík;Poslanec;Pavel Volčík
+Poslanec Pavel Šrámek;Poslanec;Pavel Šrámek
+Poslanec Pavel Žáček;Poslanec;Pavel Žáček
+Poslanec Pavol Lukša;Poslanec;Pavol Lukša
+Poslanec Petr Adam;Poslanec;Petr Adam
+Poslanec Petr Beitl;Poslanec;Petr Beitl
+Poslanec Petr Bendl;Poslanec;Petr Bendl
+Poslanec Petr Braný;Poslanec;Petr Braný
+Poslanec Petr Dolínek;Poslanec;Petr Dolínek
+Poslanec Petr Fiala;Poslanec;Petr Fiala
+Poslanec Petr Gandalovič;Poslanec;Petr Gandalovič
+Poslanec Petr Gazdík;Poslanec;Petr Gazdík
+Poslanec Petr Hulinský;Poslanec;Petr Hulinský
+Poslanec Petr Jalowiczor;Poslanec;Petr Jalowiczor
+Poslanec Petr Kořenek;Poslanec;Petr Kořenek
+Poslanec Petr Kudela;Poslanec;Petr Kudela
+Poslanec Petr Nečas;Poslanec;Petr Nečas
+Poslanec Petr Pávek;Poslanec;Petr Pávek
+Poslanec Petr Sadovský;Poslanec;Petr Sadovský
+Poslanec Petr Skokan;Poslanec;Petr Skokan
+Poslanec Petr Třešňák;Poslanec;Petr Třešňák
+Poslanec Petr Tluchoř;Poslanec;Petr Tluchoř
+Poslanec Petr Venhoda;Poslanec;Petr Venhoda
+Poslanec Petr Vrána;Poslanec;Petr Vrána
+Poslanec Petr Zgarba;Poslanec;Petr Zgarba
+Poslanec Radek Holomčík;Poslanec;Radek Holomčík
+Poslanec Radek John;Poslanec;Radek John
+Poslanec Radek Koten;Poslanec;Radek Koten
+Poslanec Radek Rozvoral;Poslanec;Radek Rozvoral
+Poslanec Radek Vondráček;Poslanec;Radek Vondráček
+Poslanec Radek Zlesák;Poslanec;Radek Zlesák
+Poslanec Radim Fiala;Poslanec;Radim Fiala
+Poslanec Radim Holeček;Poslanec;Radim Holeček
+Poslanec Radim Jirout;Poslanec;Radim Jirout
+Poslanec Radim Vysloužil;Poslanec;Radim Vysloužil
+Poslanec Radovan Vích;Poslanec;Radovan Vích
+Poslanec René Číp;Poslanec;René Číp
+Poslanec Richard Brabec;Poslanec;Richard Brabec
+Poslanec Richard Dolejš;Poslanec;Richard Dolejš
+Poslanec Robert Králíček;Poslanec;Robert Králíček
+Poslanec Robin Böhnisch;Poslanec;Robin Böhnisch
+Poslanec Rom Kostřica;Poslanec;Rom Kostřica
+Poslanec Roman Kubíček;Poslanec;Roman Kubíček
+Poslanec Roman Onderka;Poslanec;Roman Onderka
+Poslanec Roman Procházka;Poslanec;Roman Procházka
+Poslanec Roman Sklenák;Poslanec;Roman Sklenák
+Poslanec Roman Váňa;Poslanec;Roman Váňa
+Poslanec Rostislav Vyzula;Poslanec;Rostislav Vyzula
+Poslanec Rudolf Chlad;Poslanec;Rudolf Chlad
+Poslanec Simeon Karamazov;Poslanec;Simeon Karamazov
+Poslanec Stanislav Berkovec;Poslanec;Stanislav Berkovec
+Poslanec Stanislav Blaha;Poslanec;Stanislav Blaha
+Poslanec Stanislav Fridrich;Poslanec;Stanislav Fridrich
+Poslanec Stanislav Grospič;Poslanec;Stanislav Grospič
+Poslanec Stanislav Huml;Poslanec;Stanislav Huml
+Poslanec Stanislav Juránek;Poslanec;Stanislav Juránek
+Poslanec Stanislav Křeček;Poslanec;Stanislav Křeček
+Poslanec Stanislav Mackovík;Poslanec;Stanislav Mackovík
+Poslanec Stanislav Pfléger;Poslanec;Stanislav Pfléger
+Poslanec Stanislav Polčák;Poslanec;Stanislav Polčák
+Poslanec Tomio Okamura;Poslanec;Tomio Okamura
+Poslanec Tomáš Chalupa;Poslanec;Tomáš Chalupa
+Poslanec Tomáš Hanzel;Poslanec;Tomáš Hanzel
+Poslanec Tomáš Jan Podivínský;Poslanec;Tomáš Jan Podivínský
+Poslanec Tomáš Kohoutek;Poslanec;Tomáš Kohoutek
+Poslanec Tomáš Martínek;Poslanec;Tomáš Martínek
+Poslanec Tomáš Vymazal;Poslanec;Tomáš Vymazal
+Poslanec Tomáš Úlehla;Poslanec;Tomáš Úlehla
+Poslanec Viktor Paggio;Poslanec;Viktor Paggio
+Poslanec Vladimír Koníček;Poslanec;Vladimír Koníček
+Poslanec Vladislav Vilímec;Poslanec;Vladislav Vilímec
+Poslanec Vlastimil Gabrhel;Poslanec;Vlastimil Gabrhel
+Poslanec Vlastimil Vozka;Poslanec;Vlastimil Vozka
+Poslanec Vlastimil Válek;Poslanec;Vlastimil Válek
+Poslanec Vojtěch Adam;Poslanec;Vojtěch Adam
+Poslanec Vojtěch Filip;Poslanec;Vojtěch Filip
+Poslanec Vojtěch Munzar;Poslanec;Vojtěch Munzar
+Poslanec Vojtěch Pikal;Poslanec;Vojtěch Pikal
+Poslanec Václav Baštýř;Poslanec;Václav Baštýř
+Poslanec Václav Cempírek;Poslanec;Václav Cempírek
+Poslanec Václav Horáček;Poslanec;Václav Horáček
+Poslanec Václav Klaus;Poslanec;Václav Klaus
+Poslanec Václav Klučka;Poslanec;Václav Klučka
+Poslanec Václav Kubata;Poslanec;Václav Kubata
+Poslanec Václav Mencl;Poslanec;Václav Mencl
+Poslanec Václav Neubauer;Poslanec;Václav Neubauer
+Poslanec Václav Snopek;Poslanec;Václav Snopek
+Poslanec Václav Votava;Poslanec;Václav Votava
+Poslanec Václav Zemek;Poslanec;Václav Zemek
+Poslanec Václav Šlajs;Poslanec;Václav Šlajs
+Poslanec Vítězslav Jandák;Poslanec;Vítězslav Jandák
+Poslanec Vít Bárta;Poslanec;Vít Bárta
+Poslanec Vít Kaňkovský;Poslanec;Vít Kaňkovský
+Poslanec Vít Němeček;Poslanec;Vít Němeček
+Poslanec Vít Rakušan;Poslanec;Vít Rakušan
+Poslanec Walter Bartoš;Poslanec;Walter Bartoš
+Poslanec Zbyněk Stanjura;Poslanec;Zbyněk Stanjura
+Poslanec Zdeněk Bezecný;Poslanec;Zdeněk Bezecný
+Poslanec Zdeněk Boháč;Poslanec;Zdeněk Boháč
+Poslanec Zdeněk Ondráček;Poslanec;Zdeněk Ondráček
+Poslanec Zdeněk Podal;Poslanec;Zdeněk Podal
+Poslanec Zdeněk Soukup;Poslanec;Zdeněk Soukup
+Poslanec Zdeněk Syblík;Poslanec;Zdeněk Syblík
+Poslanec Zdeněk Škromach;Poslanec;Zdeněk Škromach
+Poslanec Štěpán Stupčuk;Poslanec;Štěpán Stupčuk
+Poslankyně Alena Gajdůšková;Poslankyně;Alena Gajdůšková
+Poslankyně Alena Hanáková;Poslankyně;Alena Hanáková
+Poslankyně Alena Nohavová;Poslankyně;Alena Nohavová
+Poslankyně Andrea Babišová;Poslankyně;Andrea Babišová
+Poslankyně Andrea Brzobohatá;Poslankyně;Andrea Brzobohatá
+Poslankyně Anna Putnová;Poslankyně;Anna Putnová
+Poslankyně Barbora Kořanová;Poslankyně;Barbora Kořanová
+Poslankyně Dagmar Navrátilová;Poslankyně;Dagmar Navrátilová
+Poslankyně Dana Balcarová;Poslankyně;Dana Balcarová
+Poslankyně Dana Filipi;Poslankyně;Dana Filipi
+Poslankyně Dana Váhalová;Poslankyně;Dana Váhalová
+Poslankyně Eva Fialová;Poslankyně;Eva Fialová
+Poslankyně Eva Matyášová;Poslankyně;Eva Matyášová
+Poslankyně Gabriela Hubáčková;Poslankyně;Gabriela Hubáčková
+Poslankyně Gabriela Pecková;Poslankyně;Gabriela Pecková
+Poslankyně Hana Aulická Jírovcová;Poslankyně;Hana Aulická Jírovcová
+Poslankyně Hana Aulická-Jírovcová;Poslankyně;Hana Aulická-Jírovcová
+Poslankyně Hana Orgoníková;Poslankyně;Hana Orgoníková
+Poslankyně Helena Langšádlová;Poslankyně;Helena Langšádlová
+Poslankyně Helena Válková;Poslankyně;Helena Válková
+Poslankyně Ilona Mauritzová;Poslankyně;Ilona Mauritzová
+Poslankyně Iva Kalátová;Poslankyně;Iva Kalátová
+Poslankyně Ivana Dobešová;Poslankyně;Ivana Dobešová
+Poslankyně Ivana Levá;Poslankyně;Ivana Levá
+Poslankyně Ivana Nevludová;Poslankyně;Ivana Nevludová
+Poslankyně Ivana Weberová;Poslankyně;Ivana Weberová
+Poslankyně Ivana Řápková;Poslankyně;Ivana Řápková
+Poslankyně Jana Drastichová;Poslankyně;Jana Drastichová
+Poslankyně Jana Fischerová;Poslankyně;Jana Fischerová
+Poslankyně Jana Hnyková;Poslankyně;Jana Hnyková
+Poslankyně Jana Kaslová;Poslankyně;Jana Kaslová
+Poslankyně Jana Krutáková;Poslankyně;Jana Krutáková
+Poslankyně Jana Levová;Poslankyně;Jana Levová
+Poslankyně Jana Lorencová;Poslankyně;Jana Lorencová
+Poslankyně Jana Mračková Vildumetzová;Poslankyně;Jana Mračková Vildumetzová
+Poslankyně Jana Pastuchová;Poslankyně;Jana Pastuchová
+Poslankyně Jana Suchá;Poslankyně;Jana Suchá
+Poslankyně Jana Vildumetzová;Poslankyně;Jana Vildumetzová
+Poslankyně Jana Černochová;Poslankyně;Jana Černochová
+Poslankyně Jaroslava Pokorná Jermanová;Poslankyně;Jaroslava Pokorná Jermanová
+Poslankyně Jaroslava Schejbalová;Poslankyně;Jaroslava Schejbalová
+Poslankyně Jaroslava Wenigerová;Poslankyně;Jaroslava Wenigerová
+Poslankyně Jitka Chalánková;Poslankyně;Jitka Chalánková
+Poslankyně Karla Maříková;Poslankyně;Karla Maříková
+Poslankyně Karla Šlechtová;Poslankyně;Karla Šlechtová
+Poslankyně Karolína Peake;Poslankyně;Karolína Peake
+Poslankyně Kateřina Klasnová;Poslankyně;Kateřina Klasnová
+Poslankyně Kateřina Konečná;Poslankyně;Kateřina Konečná
+Poslankyně Kateřina Valachová;Poslankyně;Kateřina Valachová
+Poslankyně Klára Dostálová;Poslankyně;Klára Dostálová
+Poslankyně Kristýna Kočí;Poslankyně;Kristýna Kočí
+Poslankyně Kristýna Zelienková;Poslankyně;Kristýna Zelienková
+Poslankyně Květa Končická;Poslankyně;Květa Končická
+Poslankyně Květa Matušovská;Poslankyně;Květa Matušovská
+Poslankyně Lenka Andrýsová;Poslankyně;Lenka Andrýsová
+Poslankyně Lenka Dražilová;Poslankyně;Lenka Dražilová
+Poslankyně Lenka Kohoutová;Poslankyně;Lenka Kohoutová
+Poslankyně Lenka Kozlová;Poslankyně;Lenka Kozlová
+Poslankyně Lucie Šafránková;Poslankyně;Lucie Šafránková
+Poslankyně Ludmila Bubeníková;Poslankyně;Ludmila Bubeníková
+Poslankyně Marcela Melková;Poslankyně;Marcela Melková
+Poslankyně Margita Balaštíková;Poslankyně;Margita Balaštíková
+Poslankyně Marie Benešová;Poslankyně;Marie Benešová
+Poslankyně Marie Nedvědová;Poslankyně;Marie Nedvědová
+Poslankyně Marie Pěnčíková;Poslankyně;Marie Pěnčíková
+Poslankyně Marie Rusová;Poslankyně;Marie Rusová
+Poslankyně Markéta Adamová;Poslankyně;Markéta Adamová
+Poslankyně Markéta Pekarová Adamová;Poslankyně;Markéta Pekarová Adamová
+Poslankyně Markéta Wernerová;Poslankyně;Markéta Wernerová
+Poslankyně Marta Semelová;Poslankyně;Marta Semelová
+Poslankyně Martina Berdychová;Poslankyně;Martina Berdychová
+Poslankyně Milada Emmerová;Poslankyně;Milada Emmerová
+Poslankyně Milada Halíková;Poslankyně;Milada Halíková
+Poslankyně Miloslava Rutová;Poslankyně;Miloslava Rutová
+Poslankyně Miloslava Vostrá;Poslankyně;Miloslava Vostrá
+Poslankyně Miroslava Němcová;Poslankyně;Miroslava Němcová
+Poslankyně Miroslava Strnadlová;Poslankyně;Miroslava Strnadlová
+Poslankyně Monika Jarošová;Poslankyně;Monika Jarošová
+Poslankyně Monika Oborná;Poslankyně;Monika Oborná
+Poslankyně Monika Červíčková;Poslankyně;Monika Červíčková
+Poslankyně Nina Nováková;Poslankyně;Nina Nováková
+Poslankyně Olga Havlová;Poslankyně;Olga Havlová
+Poslankyně Olga Richterová;Poslankyně;Olga Richterová
+Poslankyně Patricie Kotalíková;Poslankyně;Patricie Kotalíková
+Poslankyně Pavla Golasowská;Poslankyně;Pavla Golasowská
+Poslankyně Pavlína Nytrová;Poslankyně;Pavlína Nytrová
+Poslankyně Radka Maxová;Poslankyně;Radka Maxová
+Poslankyně Renáta Witoszová;Poslankyně;Renáta Witoszová
+Poslankyně Soňa Marková;Poslankyně;Soňa Marková
+Poslankyně Taťána Malá;Poslankyně;Taťána Malá
+Poslankyně Tereza Hyťhová;Poslankyně;Tereza Hyťhová
+Poslankyně Věra Adámková;Poslankyně;Věra Adámková
+Poslankyně Věra Jourová;Poslankyně;Věra Jourová
+Poslankyně Věra Kovářová;Poslankyně;Věra Kovářová
+Poslankyně Věra Procházková;Poslankyně;Věra Procházková
+Poslankyně Veronika Vrecionová;Poslankyně;Veronika Vrecionová
+Poslankyně Vladimíra Lesenská;Poslankyně;Vladimíra Lesenská
+Poslankyně Vlasta Bohdalová;Poslankyně;Vlasta Bohdalová
+Poslankyně Zdeňka Horníková;Poslankyně;Zdeňka Horníková
+Poslankyně Zuzana Kailová;Poslankyně;Zuzana Kailová
+Poslankyně Zuzana Majerová Zahradníková;Poslankyně;Zuzana Majerová Zahradníková
+Poslankyně Zuzana Ožanová;Poslankyně;Zuzana Ožanová
+Poslankyně Zuzana Šánová;Poslankyně;Zuzana Šánová
+Poslankyně Zuzka Bebarová Rujbrová;Poslankyně;Zuzka Bebarová Rujbrová
+Poslankyně Zuzka Bebarová-Rujbrová;Poslankyně;Zuzka Bebarová-Rujbrová
+Prezident Nejvyššího kontrolního úřadu Miloslav Kala;Prezident Nejvyššího kontrolního úřadu;Miloslav Kala
+Prezident České republiky Miloš Zeman;Prezident České republiky;Miloš Zeman
+Prezident České republiky Václav Klaus;Prezident České republiky;Václav Klaus
+Primátor hl. m. Prahy Bohuslav Svoboda;Primátor hl. m. Prahy;Bohuslav Svoboda
+Primátor hl. m. Prahy Tomáš Hudeček;Primátor hl. m. Prahy;Tomáš Hudeček
+Radek Vondráček;;Radek Vondráček
+Senátor Adolf Jílek;Senátor;Adolf Jílek
+Senátor František Bradáč;Senátor;František Bradáč
+Senátor František Bublan;Senátor;František Bublan
+Senátor Herbert Pavera;Senátor;Herbert Pavera
+Senátor Ivo Bárek;Senátor;Ivo Bárek
+Senátor Ivo Valenta;Senátor;Ivo Valenta
+Senátor Jan Hajda;Senátor;Jan Hajda
+Senátor Jan Horník;Senátor;Jan Horník
+Senátor Jan Žaloudík;Senátor;Jan Žaloudík
+Senátor Jaromír Strnad;Senátor;Jaromír Strnad
+Senátor Jaroslav Doubrava;Senátor;Jaroslav Doubrava
+Senátor Jaroslav Malý;Senátor;Jaroslav Malý
+Senátor Jaroslav Větrovský;Senátor;Jaroslav Větrovský
+Senátor Jaroslav Zeman;Senátor;Jaroslav Zeman
+Senátor Jiří Čunek;Senátor;Jiří Čunek
+Senátor Jiří Bis;Senátor;Jiří Bis
+Senátor Jiří Carbol;Senátor;Jiří Carbol
+Senátor Jiří Cienciala;Senátor;Jiří Cienciala
+Senátor Jiří Dienstbier;Senátor;Jiří Dienstbier
+Senátor Jiří Lajtoch;Senátor;Jiří Lajtoch
+Senátor Jiří Nedoma;Senátor;Jiří Nedoma
+Senátor Jiří Oberfalzer;Senátor;Jiří Oberfalzer
+Senátor Jiří Vosecký;Senátor;Jiří Vosecký
+Senátor Jiří Šesták;Senátor;Jiří Šesták
+Senátor Jiří Žák;Senátor;Jiří Žák
+Senátor Josef Táborský;Senátor;Josef Táborský
+Senátor Josef Řihák;Senátor;Josef Řihák
+Senátor Karel Korytář;Senátor;Karel Korytář
+Senátor Karel Kratochvíle;Senátor;Karel Kratochvíle
+Senátor Karel Šebek;Senátor;Karel Šebek
+Senátor Ladislav Kos;Senátor;Ladislav Kos
+Senátor Leopold Sulovský;Senátor;Leopold Sulovský
+Senátor Libor Michálek;Senátor;Libor Michálek
+Senátor Lukáš Wagenknecht;Senátor;Lukáš Wagenknecht
+Senátor Lumír Kantor;Senátor;Lumír Kantor
+Senátor Marcel Chládek;Senátor;Marcel Chládek
+Senátor Marek Hilšer;Senátor;Marek Hilšer
+Senátor Martin Tesařík;Senátor;Martin Tesařík
+Senátor Michael Canov;Senátor;Michael Canov
+Senátor Mikuláš Bek;Senátor;Mikuláš Bek
+Senátor Milan Štěch;Senátor;Milan Štěch
+Senátor Miloš Malý;Senátor;Miloš Malý
+Senátor Miloš Vystrčil;Senátor;Miloš Vystrčil
+Senátor Miroslav Antl;Senátor;Miroslav Antl
+Senátor Miroslav Nenutil;Senátor;Miroslav Nenutil
+Senátor Pavel Eybert;Senátor;Pavel Eybert
+Senátor Pavel Štohl;Senátor;Pavel Štohl
+Senátor Peter Koliba;Senátor;Peter Koliba
+Senátor Petr Bratský;Senátor;Petr Bratský
+Senátor Petr Gawlas;Senátor;Petr Gawlas
+Senátor Petr Guziana;Senátor;Petr Guziana
+Senátor Petr Holeček;Senátor;Petr Holeček
+Senátor Petr Orel;Senátor;Petr Orel
+Senátor Petr Pakosta;Senátor;Petr Pakosta
+Senátor Petr Vícha;Senátor;Petr Vícha
+Senátor Petr Šilar;Senátor;Petr Šilar
+Senátor Radek Sušil;Senátor;Radek Sušil
+Senátor Radko Martínek;Senátor;Radko Martínek
+Senátor Raduan Nwelati;Senátor;Raduan Nwelati
+Senátor Stanislav Juránek;Senátor;Stanislav Juránek
+Senátor Tomáš Czernin;Senátor;Tomáš Czernin
+Senátor Tomáš Goláň;Senátor;Tomáš Goláň
+Senátor Tomáš Grulich;Senátor;Tomáš Grulich
+Senátor Tomáš Kladívko;Senátor;Tomáš Kladívko
+Senátor Tomáš Töpfer;Senátor;Tomáš Töpfer
+Senátor Vladimír Plaček;Senátor;Vladimír Plaček
+Senátor Vladislav Vilímec;Senátor;Vladislav Vilímec
+Senátor Václav Hampl;Senátor;Václav Hampl
+Senátor Václav Homolka;Senátor;Václav Homolka
+Senátor Václav Láska;Senátor;Václav Láska
+Senátor Václav Vlček;Senátor;Václav Vlček
+Senátor Vítězslav Jonáš;Senátor;Vítězslav Jonáš
+Senátor Zdeněk Berka;Senátor;Zdeněk Berka
+Senátor Zdeněk Hraba;Senátor;Zdeněk Hraba
+Senátor Zdeněk Nytra;Senátor;Zdeněk Nytra
+Senátor Zdeněk Škromach;Senátor;Zdeněk Škromach
+Senátorka Alena Dernerová;Senátorka;Alena Dernerová
+Senátorka Alena Gajdůšková;Senátorka;Alena Gajdůšková
+Senátorka Alena Šromová;Senátorka;Alena Šromová
+Senátorka Anna Hubáčková;Senátorka;Anna Hubáčková
+Senátorka Božena Sekaninová;Senátorka;Božena Sekaninová
+Senátorka Dagmar Terelmešová;Senátorka;Dagmar Terelmešová
+Senátorka Dagmar Zvěřinová;Senátorka;Dagmar Zvěřinová
+Senátorka Eliška Wagnerová;Senátorka;Eliška Wagnerová
+Senátorka Emilie Třísková;Senátorka;Emilie Třísková
+Senátorka Ivana Cabrnochová;Senátorka;Ivana Cabrnochová
+Senátorka Jitka Chalánková;Senátorka;Jitka Chalánková
+Senátorka Jitka Seitlová;Senátorka;Jitka Seitlová
+Senátorka Jiřina Rippelová;Senátorka;Jiřina Rippelová
+Senátorka Marta Bayerová;Senátorka;Marta Bayerová
+Senátorka Milada Emmerová;Senátorka;Milada Emmerová
+Senátorka Soňa Paukrtová;Senátorka;Soňa Paukrtová
+Senátorka Veronika Vrecionová;Senátorka;Veronika Vrecionová
+Senátorka Zdeňka Hamousová;Senátorka;Zdeňka Hamousová
+Senátorka Šárka Jelínková;Senátorka;Šárka Jelínková
+Starosta Vlachovic - Vrbětic Zdeněk Hověžák;Starosta Vlachovic - Vrbětic;Zdeněk Hověžák
+Veřejná ochránkyně práv Anna Šabatová;Veřejná ochránkyně práv;Anna Šabatová
+Veřejný ochránce práv Pavel Varvařovský;Veřejný ochránce práv;Pavel Varvařovský
+Veřejný ochránce práv Stanislav Křeček;Veřejný ochránce práv;Stanislav Křeček
+Viceprezident Nejvyššího kontrolního úřadu Miloslav Kala;Viceprezident Nejvyššího kontrolního úřadu;Miloslav Kala
+Ředitelka KHS Moravskoslezského kraje Pavla Svrčinová;Ředitelka KHS Moravskoslezského kraje;Pavla Svrčinová
+Zástupce veřejného ochránce práv Stanislav Křeček;Zástupce veřejného ochránce práv;Stanislav Křeček

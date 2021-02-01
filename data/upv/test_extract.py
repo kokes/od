@@ -1,6 +1,7 @@
 import lxml.etree
 import pytest
-from procesuj import extract
+
+from main import extract
 
 def test_basic():
     inp = '<baz><foo>bar</foo></baz>'

@@ -18,7 +18,8 @@ if __name__ == "__main__":
     engine = create_engine("sqlite:///:memory:")  # TODO: testing for now
 
     # TODO: nejak pridat `czechinvest` - je to ready, jen nefunguje stahovani souboru
-    module_names = ["iissp", "cedr", "datovky", "szif", "upv", "wikidata", "dotinfo"]
+    # TODO: vyresit nejak zanoreny adresare (psp.steno) - aby se to nemlatilo u nazvu adresaru nebo schemat
+    module_names = ["iissp", "cedr", "datovky", "szif", "upv", "wikidata", "dotinfo", "psp.steno"]
     if len(sys.argv) > 1:
         module_names = sys.argv[1:]
     modules = {}
