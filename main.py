@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     engine = create_engine("sqlite:///:memory:")  # TODO: testing for now
 
-    module_names = ["iissp", "cedr", "datovky"]
+    module_names = ["iissp", "cedr", "datovky", "szif"]
     if len(sys.argv) > 1:
         module_names = sys.argv[1:]
     modules = {}
