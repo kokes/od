@@ -43,4 +43,4 @@ if __name__ == "__main__":
             shutil.rmtree(outdir)
         os.makedirs(outdir, exist_ok=True)
 
-        module(outdir)
+        module(outdir, partial=True)  # TODO: partial hardcoded for now

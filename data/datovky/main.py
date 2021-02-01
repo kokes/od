@@ -3,9 +3,7 @@ import csv
 import json
 import lxml.etree
 from urllib.request import urlopen
-from shutil import copyfileobj
 import gzip
-from multiprocessing import Pool
 
 
 mapping = {
@@ -67,13 +65,15 @@ def parse_el(el, paths):
     return ret if len(ret) > 0 else None
 
 
-def parse_xml(source, target_fn):
+def parse_xml(source, target_fn, partial):
     with open(target_fn, 'wt', encoding='utf8') as fw:
         et = lxml.etree.iterparse(source)
         cw = csv.DictWriter(fw, fieldnames=mapping.keys())
         cw.writeheader()
 
-        for _, el in et:
+        for num, (_, el) in enumerate(et):
+            if partial and num > 1e5:
+                break
             if strip_ns(el) != 'box':
                 continue
 
@@ -83,7 +83,7 @@ def parse_xml(source, target_fn):
             el.clear()
 
 
-def main(outdir: str):
+def main(outdir: str, partial: bool = False):
     urls = {
         'po': 'https://www.mojedatovaschranka.cz/sds/datafile.do?format=xml&service=seznam_ds_po',
         'pfo': 'https://www.mojedatovaschranka.cz/sds/datafile.do?format=xml&service=seznam_ds_pfo',
@@ -97,7 +97,7 @@ def main(outdir: str):
 
             with gzip.open(r) as gr:
                 target_fn = os.path.join(outdir, f"{ds}.csv")
-                parse_xml(gr, target_fn)
+                parse_xml(gr, target_fn, partial)
 
 
 if __name__ == '__main__':
