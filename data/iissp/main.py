@@ -1,7 +1,8 @@
 import csv
+import gzip
 import os
 from datetime import date
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 
 import lxml.etree
 from tqdm import tqdm
@@ -16,15 +17,22 @@ cols = 'ucjed_id, csuis_ucjed_id, ico, start_date, end_date, nazev, dic, adresa,
 dates = 'start_date, end_date, konecplat, datumakt, datumvzniku'.split(', ')
 
 
-def main(outdir: str):
+def main(outdir: str, partial: bool = False):
     target_file = os.path.join(outdir, f'{table_name}.csv')
-    with urlopen(url) as f, open(target_file, 'w', encoding='utf8') as fw:
+    request = Request(url, headers={"Accept-Encoding": "gzip"})
+    with urlopen(request) as f, open(target_file, 'w', encoding='utf8') as fw:
+        if f.info().get("Content-Encoding") == "gzip":
+            f = gzip.GzipFile(fileobj=f)
+
         cw = csv.DictWriter(fw, fieldnames=cols)
         cw.writeheader()
 
         et = lxml.etree.iterparse(f)
 
-        for action, element in tqdm(et):
+        for num, (action, element) in tqdm(enumerate(et)):
+            if partial and num > 4e5:
+                break
+
             assert action == 'end', action
 
             if element.tag != 'row':
@@ -45,13 +53,7 @@ def main(outdir: str):
                     row[datecol] = None
                     continue
 
-                if '-' in row[datecol]:
-                    # 21-11-2019
-                    day, month, year = row[datecol][:2], row[datecol][3:5], row[datecol][6:]
-                else:
-                    # 20191121
-                    day, month, year = row[datecol][6:], row[datecol][4:6], row[datecol][:4]
-                row[datecol] = date(int(year), int(month), int(day))
+                row[datecol] = date.fromisoformat(row[datecol])
 
             cw.writerow(row)
             element.clear()
