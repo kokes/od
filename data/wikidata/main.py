@@ -1,10 +1,12 @@
 import csv
 import json
+import os
 import re
 from urllib.request import urlopen
 from urllib.parse import quote
 
-if __name__ == '__main__':
+
+def main(outdir: str, partial: bool = False):
   url = 'https://query.wikidata.org/sparql?query={}&format=json'
   query = '''SELECT ?person ?personLabel ?date_of_birth WHERE {
     SERVICE wikibase:label { bd:serviceParam wikibase:language "cs". }
@@ -15,12 +17,14 @@ if __name__ == '__main__':
   }
 
   LIMIT 10000'''
+  if partial:
+    query = query.replace("LIMIT 10000", "LIMIT 100")
 
   r = urlopen(url.format(quote(query)))
   dt = json.load(r)
   rr = re.compile(r'\s+\(.+\)')
 
-  with open('politici.csv', 'w', encoding='utf8') as fw:
+  with open(os.path.join(outdir, 'politici.csv'), 'w', encoding='utf8') as fw:
       cw = csv.writer(fw)
       cw.writerow(['wikidata', 'jmeno_prijmeni', 'datum_narozeni'])
       for el in dt['results']['bindings']:
@@ -29,3 +33,7 @@ if __name__ == '__main__':
               rr.sub('', el['personLabel']['value']),
               el['date_of_birth']['value'][:10],
           ])
+
+
+if __name__ == '__main__':
+  main(".")
