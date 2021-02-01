@@ -5,3 +5,9 @@ Volební data přichází v několika formách, ta nejlépe zpracovatelná najde
 Právě z těchto důvodů se těmto datům explicitně věnujeme.
 
 **Otevřená data ČSÚ nepokrývají všechny volby porevoluční České republiky a Československa, jde pouze o posledních 15 let.** Pokud vás tedy zajímají odpovědi na otázky typu "jaké byly nejtěsnější senátní volby," otevřená data ČSÚ vám v tom bohužel neposlouží.
+
+## Volební registry
+
+U každých voleb je sada datasetů, které uchovávají vždy trochu rozdílné informace, takže je třeba je zpracovávat separátně. V tomto adresáři se věnujeme *registrům*, které obsahují kompletní informace o výsledcích daných voleb, zpravidla na obecní úrovni (tj. ne okrskové). Často je nutné je propojit s číselníky, abychom získali informace o dimenzích.
+
+Kód zde data stahuje i dál zpracovává. **Stahuje data ke všem volbám, pro které ČSÚ poskytuje otevřená data.** Po puštění skriptu tak budete moci analyzovat data k výsledkům prezidentských voleb, voleb do Senátu, Poslanecké sněmovny atd.
