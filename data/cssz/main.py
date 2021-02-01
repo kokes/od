@@ -1,7 +1,8 @@
-import csv
 import json
+import os
 from functools import lru_cache
 from urllib.parse import urljoin
+from urllib.request import urlretrieve
 
 import lxml.html
 import requests
@@ -21,13 +22,17 @@ def najdi_textem(root, element, text: str):
     return els[0]
 
 
-if __name__ == '__main__':
+def main(outdir: str, partial: bool = False):
+    # TODO: odstranit generovani mapping.json, misto toho ho zaverzovat
+    # (a zkratit nazvy tabulek, jsou moc dlouhy pro pg)
     burl = 'https://data.cssz.cz/web/otevrena-data/katalog-otevrenych-dat'
     r = req(burl)
     ht = lxml.html.fromstring(r.text)
 
     ds = []
-    for tr in tqdm(ht.cssselect('tbody.table-data')[0].findall('tr')):
+    for num, tr in tqdm(enumerate(ht.cssselect('tbody.table-data')[0].findall('tr'))):
+        if partial and num > 15:
+            break
         a = tr.find('td').find('a')
         link = a.attrib['href']
         assert link.startswith('http://') or link.startswith('https://'), link
@@ -38,11 +43,7 @@ if __name__ == '__main__':
         sch_url = urljoin(link, scha.attrib['href'])
         da = najdi_textem(dht, 'a', 'Data (CSV)')
         
-        try:
-            schema = req(sch_url).json()
-        except json.JSONDecodeError:
-            print('failnulo', a.text, link)
-            continue
+        schema = req(sch_url).json()
         
         ds.append({
             'nazev': a.text,
@@ -55,5 +56,14 @@ if __name__ == '__main__':
             'schema': schema,
         })
         
-    with open('mapping.json', 'w') as fw:
+    cdir = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(cdir, 'mapping.json'), 'w') as fw:
         json.dump(ds, fw, ensure_ascii=False, indent=2)
+
+    for dataset in ds:
+        tfn = os.path.join(outdir, dataset["nazev_ascii"] + ".csv")
+        urlretrieve(dataset["url"]["data"], tfn)
+
+
+if __name__ == '__main__':
+    main(".")
