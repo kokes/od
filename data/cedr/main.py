@@ -16,7 +16,7 @@ def remote_csv(url):
         yield from cr
 
 
-def main(outdir: str):
+def main(outdir: str, partial: bool = False):
     logging.getLogger().setLevel(logging.INFO)
     cdir = os.path.dirname(os.path.abspath(__file__))
 
@@ -33,7 +33,9 @@ def main(outdir: str):
     mapping = dict()
     logging.info('Nacitam prijemce pomoci (ICO)')
 
-    for el in remote_csv('PrijemcePomoci.csv.gz'):
+    for num, el in enumerate(remote_csv('PrijemcePomoci.csv.gz')):
+        if partial and num > 2e5:
+            break
         mapping[el['idPrijemce']] = int(
             el['ico']) if len(el['ico']) > 0 else None
 
@@ -50,7 +52,9 @@ def main(outdir: str):
             cw = csv.DictWriter(fw, fieldnames=exphd)
             cw.writeheader()
 
-            for ln in remote_csv(f'{ds}.csv.gz'):
+            for num, ln in enumerate(remote_csv(f'{ds}.csv.gz')):
+                if partial and num > 5e3:
+                    break
                 # vypln info z ciselniku
                 for k, v in ln.items():
                     if v.startswith('http://') or v.startswith('https://'):
@@ -58,6 +62,9 @@ def main(outdir: str):
                         ln[k] = csl[v]
 
                 if ds == 'Dotace':
+                    # v castecnym zpracovani nemame vsechna data, tak je holt vynechame
+                    if partial and ln['idPrijemce'] not in mapping:
+                        continue
                     ln['idPrijemce'] = mapping[ln['idPrijemce']]  # idPrijemce -> ico
                 # assert ln[3].endswith('T00:00:00.000Z') # v krajnich pripadech
                 # tam je cas, ale v jednom z milionu
