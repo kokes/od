@@ -90,4 +90,4 @@ def main(outdir: str, partial: bool = False):
             cw.writerow(drow)
 
 if __name__ == '__main__':
-    main()
+    main(".")
