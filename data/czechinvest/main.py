@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 from datetime import date, timedelta
 
 import xlrd
@@ -38,24 +39,33 @@ def mesicuj(el):
     dt = date(1899, 12, 31) + timedelta(days=int(el)-1)
     return dt.month
 
+data_url = "https://www.czechinvest.org/getattachment/Unsere-Dienstleistungen/Investitionsanreize/Udelene-investicni-pobidky.xls"
 
-if __name__ == '__main__':
-    with open('data/mapping.json') as f:
+# partial neimplementujem, protoze to je stejne malinkaty
+def main(outdir: str, partial: bool = False):
+    cdir = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(cdir, 'data', 'mapping.json')) as f:
         mapping = json.load(f)
 
     firmy = {}
-    with open('data/slovnik.csv') as f:
+    with open(os.path.join(cdir, 'data', 'slovnik.csv')) as f:
         cr = csv.DictReader(f)
         for el in cr:
             firmy[el['firma']] = int(el['ico'])
 
-    wb = xlrd.open_workbook('data/Udelene-investicni-pobidky-k-30-6-2019.xlsx')
+    wb_path = os.path.join(cdir, "Udelene-investicni-pobidky.xls")
+    if not os.path.isfile(wb_path):
+        raise IOError("bohuzel czechinvest nechce moc davat lidem data v lidsky forme, takze si je musite napred stahnout v prohlizeci z https://www.czechinvest.org/cz/Sluzby-pro-investory/Investicni-pobidky")
+
+    wb = xlrd.open_workbook(wb_path)
     sh = wb.sheet_by_name('PROJEKTY')
 
-    assert mapping['hd1'] == [j.value for j in sh.row(1)], [j.value for j in sh.row(1)]
-    assert mapping['hd2'] == [j.value for j in sh.row(2)], [j.value for j in sh.row(2)]
+    hd1 = [j.value for j in sh.row(1)]
+    hd2 = [j.value for j in sh.row(2)]
+    assert mapping['hd1'] == hd1, [(j, val, hd1[j]) for j, val in enumerate(mapping['hd1']) if val != hd1[j]]
+    assert mapping['hd2'] == hd2, [(j, val, hd2[j]) for j, val in enumerate(mapping['hd2']) if val != hd2[j]]
 
-    with open('data/pobidky.csv', 'w', encoding='utf8') as fw:
+    with open(os.path.join(outdir, 'pobidky.csv'), 'w', encoding='utf8') as fw:
         cw = csv.DictWriter(fw, fieldnames=mapping['tghd'])
         cw.writeheader()
         for rn in range(3, sh.nrows):
@@ -78,3 +88,6 @@ if __name__ == '__main__':
             drow['zruseno'] = True if drow['zruseno'] == 'x' else False
 
             cw.writerow(drow)
+
+if __name__ == '__main__':
+    main()

@@ -3,7 +3,7 @@
         "Pořadové číslo",
         "Společnost",
         "IČO",
-        "Sektor investiční akce",
+        "Sektor",
         "CZ-NACE",
         "Druh investiční akce",
         "Země původu skupiny",
@@ -27,7 +27,9 @@
         "",
         "",
         "MSP \n(Ano x Ne)",
-        "Zrušení Rozhodnutí / odstoupení"
+        "Zrušení Rozhodnutí / odstoupení",
+        "Zdůvodnění",
+        "Investor investuje bez pobídek"
     ],
     "hd2": [
         "",
@@ -56,6 +58,8 @@
         "Den",
         "Měsíc",
         "Rok",
+        "",
+        "",
         "",
         ""
     ],
