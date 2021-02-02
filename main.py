@@ -8,10 +8,22 @@ from sqlalchemy import create_engine
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--connstring", type=str, help="connection string to the database you wish to use")
-    parser.add_argument("--partial", action="store_true", help="only process a part of the source data to speed things up")
+    parser.add_argument(
+        "--connstring", type=str, help="connection string pro databazi tve volby"
+    )
+    parser.add_argument(
+        "--partial",
+        action="store_true",
+        help="procesuj jen cast vstupnich dat - vhodne pro testovani, CI apod.",
+    )
+    parser.add_argument("--all", action="store_true", help="procesuj vsechny moduly")
     parser.add_argument("modules", nargs="*", help="specify which datasets to include")
     args = parser.parse_args()
+
+    if args.all and len(args.modules) > 0:
+        raise argparse.ArgumentError(
+            "specifikuj bud --all, nebo specificke datasety, ne oboji"
+        )
 
     base_outdir = "csv"
     os.makedirs(base_outdir, exist_ok=True)
@@ -22,12 +34,23 @@ if __name__ == "__main__":
 
     # TODO: nejak pridat `czechinvest` - je to ready, jen nefunguje stahovani souboru
     # TODO: vyresit nejak zanoreny adresare (psp.steno) - aby se to nemlatilo u nazvu adresaru nebo schemat
-    module_names = ["iissp", "cedr", "datovky", "szif", "upv", "wikidata", "dotinfo", "psp.steno", "cssz"]
+    module_names = [
+        "iissp",
+        "cedr",
+        "datovky",
+        "szif",
+        "upv",
+        "wikidata",
+        "dotinfo",
+        "psp.steno",
+        "cssz",
+    ]
     if args.modules:
         module_names = args.modules
     modules = {}
     schemas = {}
     # TODO: copy commands (or perhaps after `module(outdir)`? List that dir, open csv, do an executemany)
+    # also make sure we TRUNCATE each table before we insert into it (because we may have skipped the CREATE part)
 
     for module in module_names:
         modules[module] = import_module(f"data.{module}.main").main
