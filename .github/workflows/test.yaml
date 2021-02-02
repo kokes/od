@@ -21,9 +21,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    # TODO: black, flake8 etc.
     - name: Test with pytest
       run: |
         pytest -v data/psp/steno/
         pytest -v data/upv/
         # TODO: doresit problem s importy
+    - name: Try pipelines
+      run: |
+        python3 main.py --partial
