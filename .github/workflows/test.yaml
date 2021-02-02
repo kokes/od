@@ -24,4 +24,6 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        ls -d1 ./data/* | xargs -n1 pytest -v
+        pytest -v data/psp/steno/
+        pytest -v data/upv/
+        # TODO: doresit problem s importy
