@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.8, 3.9]
+        dataset: ["ares", "cedr", "cssz", "datovky", "dotinfo", "iissp", "psp.steno", "szif", "upv", "wikidata"]
 
     steps:
     - uses: actions/checkout@v2
@@ -27,6 +28,7 @@ jobs:
         pytest -v data/psp/steno/
         pytest -v data/upv/
         # TODO: doresit problem s importy
-    - name: Try all pipelines
-      run: |
-        python3 main.py --partial
+    # TODO: vypnute, protoze vzdycky aspon jeden job spadnul kvuli random timeoutu
+    # - name: Try all pipelines
+    #   run: |
+    #     python3 main.py --partial ${{ matrix.dataset }}

@@ -100,7 +100,7 @@ def main(outdir: str, partial: bool = False):
 
         with TemporaryDirectory() as tmpdir:
             for num, ln in enumerate(tqdm(ht.cssselect('div#main-content a'), desc=f'stahovani ({rok})')):
-                if partial and num > 5:
+                if partial and num > 3:
                     break
                 tfn = os.path.join(tmpdir, os.path.basename(ln.attrib['href']))
                 try:
