@@ -35,16 +35,7 @@ if __name__ == "__main__":
     # TODO: nejak pridat `czechinvest` - je to ready, jen nefunguje stahovani souboru
     # TODO: vyresit nejak zanoreny adresare (psp.steno) - aby se to nemlatilo u nazvu adresaru nebo schemat
     module_names = [
-        "ares",
-        "cedr",
-        "cssz",
-        "datovky",
-        "dotinfo",
-        "iissp",
         "psp.steno",
-        "szif",
-        "upv",
-        "wikidata",
     ]
     if args.modules:
         module_names = args.modules

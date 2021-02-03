@@ -106,7 +106,7 @@ def main(outdir: str, partial: bool = False):
                 try:
                     furl = urljoin(url, ln.attrib['href'])
                     urlretrieve(furl, tfn)
-                except HTTPError:
+                except (HTTPError, TimeoutError):
                     print(f'nepodaril se stahnout stenoprotokol na adrese {furl} (odkazovan na {url})')
 
             csv_fn = os.path.join(outdir, f'{rok}.csv')
