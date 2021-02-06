@@ -45,7 +45,8 @@ if __name__ == "__main__":
         "szif",
         "upv",
         "wikidata",
-        # "ares",  # schvalne na konci, protoze nacita hodne dat
+        "zakazky",
+        "ares",  # schvalne na konci, protoze nacita hodne dat
     ]
     if args.modules:
         module_names = args.modules

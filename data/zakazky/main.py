@@ -4,15 +4,17 @@
 import csv
 import json
 import gzip
+import ssl
 import re
-from glob import iglob, glob
+from codecs import iterdecode
+from contextlib import contextmanager
 from datetime import datetime
+from urllib.request import urlopen, Request
 import os
 
-from tqdm import tqdm
 
-def get_fn(ds, tp):
-    return os.path.join(tdir, '{}.csv'.format(tp))
+# ISVZ nema duveryhodny certy
+ssl._create_default_https_context = ssl._create_unverified_context
 
 def najdi_typy(hd, typy):
     ind = dict() # {'date': [15, 22], 'numeric': [7, 8, 9]}
@@ -28,7 +30,7 @@ def najdi_typy(hd, typy):
 
     return ind
 
-dtpt = re.compile('^\d{1,2}\.\d{1,2}\.\d{4}$')
+dtpt = re.compile(r'^\d{1,2}\.\d{1,2}\.\d{4}$')
 def fix_date(s):
     if len(s) == 0:
         return None
@@ -65,31 +67,49 @@ def fix_ico(s):
         print('ICO overflow', rv)
         return None
 
-if __name__ == '__main__':
-    with open('mapping.json') as f:
+@contextmanager
+def read_url(url):
+    request = Request(url, headers={"Accept-Encoding": "gzip"})
+    with urlopen(request) as r:
+        assert r.headers.get('Content-Encoding') == 'gzip'
+        with gzip.open(r) as gr:
+            yield iterdecode(gr, encoding="utf-8-sig")
+
+url_sources = {
+    "zzvz": ("https://www.isvz.cz/ReportingSuite/Explorer/Download/Data/CSV/ZZVZ/{}", list(range(2016, 2021+1))),
+    "vvz": ("https://www.isvz.cz/ReportingSuite/Explorer/Download/Data/CSV/VVZ/{}", list(range(2006, 2016+1))),
+    "etrziste": ("https://www.isvz.cz/ReportingSuite/Explorer/Download/Data/CSV/etrziste/{}", list(range(2012, 2017+1))),
+}
+
+def main(outdir: str, partial: bool = False):
+    cdir = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(cdir, 'mapping.json')) as f:
         allmaps = json.load(f)
 
     assert list(allmaps.keys()) == ['etrziste', 'vvz', 'zzvz']
 
     for ds, mapping in allmaps.items():
         print(ds)
-        tblmap = {tuple(v): k for k,v in mapping['tabulky'].items()}
+        tblmap = {tuple(v): k for k, v in mapping['tabulky'].items()}
 
-        sdir = f'data/raw/{ds}'
-        tdir = f'data/processed/{ds}'
-        if not os.path.isdir(tdir):
-            os.makedirs(tdir, exist_ok=True)
-
-
+        tdir = os.path.join(outdir, ds)
+        os.makedirs(tdir, exist_ok=True)
         for k, v in tblmap.items():
-            with open(get_fn(ds, v), 'w', encoding='utf8') as fw:
+            tfn = os.path.join(tdir, v+".csv")
+            with open(tfn, 'w', encoding='utf8') as fw:
                 cw = csv.writer(fw)
                 cw.writerow(k)
 
-        # sorted, abychom sli chronologicky
-        for fn in tqdm(sorted(glob(os.path.join(sdir, '*.gz'))), desc=ds):
-            with gzip.open(fn, mode='rt', encoding='utf-8-sig') as gf:
-                cr = csv.reader(gf, delimiter=';')
+        base_url, years = url_sources[ds]
+
+        for year in years:
+            # v `partial` procesnem jen posledni rok - nemuzem procesovat casti souboru, protoze co soubor,
+            # to nekolik datasetu
+            if partial and year != years[-1]:
+                continue
+            url = base_url.format(year)
+            with read_url(url) as resp:
+                cr = csv.reader(resp, delimiter=';')
 
                 for ln in cr:
                     if len(ln) > 0 and ln[0] == mapping['hlavicka']:
@@ -97,13 +117,13 @@ if __name__ == '__main__':
                         hd = tuple(next(cr))
                         tpmap = najdi_typy(hd, mapping['typy'])
                         tp = tblmap[hd] # document type
-                        f = open(get_fn(ds, tp), 'a', encoding='utf8')
+                        f = open(os.path.join(tdir, tp+".csv"), 'a', encoding='utf8')
                         cw = csv.writer(f)
                         continue
-                        
+
                     if len(ln) == 0:
                         continue
-                        
+
                     for k, v in tpmap.items():
                         for cln in v:
                             if k == 'date':
@@ -119,3 +139,6 @@ if __name__ == '__main__':
 
         f.close()
 
+
+if __name__ == '__main__':
+    main(".")
