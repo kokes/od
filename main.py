@@ -33,7 +33,6 @@ if __name__ == "__main__":
         engine = create_engine(args.connstring)
 
     # TODO: nejak pridat `czechinvest` - je to ready, jen nefunguje stahovani souboru
-    # TODO: vyresit nejak zanoreny adresare (psp.steno) - aby se to nemlatilo u nazvu adresaru nebo schemat
     module_names = [
         "cedr",
         "cssz",
@@ -41,7 +40,7 @@ if __name__ == "__main__":
         "dotinfo",
         "iissp",
         "justice",
-        "psp.steno",
+        "steno",
         "smlouvy",
         "szif",
         "upv",

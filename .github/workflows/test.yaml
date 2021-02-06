@@ -25,7 +25,7 @@ jobs:
     # TODO: black, flake8 etc.
     - name: Test with pytest
       run: |
-        pytest -v data/psp/steno/
+        pytest -v data/steno/
         pytest -v data/upv/
         # TODO: doresit problem s importy
     # TODO: vypnute, protoze vzdycky aspon jeden job spadnul kvuli random timeoutu
