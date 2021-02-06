@@ -40,6 +40,7 @@ if __name__ == "__main__":
         "datovky",
         "dotinfo",
         "iissp",
+        "justice",
         "psp.steno",
         "szif",
         "upv",

@@ -68,21 +68,13 @@ def uprav_data(row, mapping):
 
 
 def nahraj_ds(url):
-    fn = os.path.split(urlparse(url).path)[-1]
-    tfn = os.path.join(rdir, fn)
-    if not os.path.isfile(tfn):
-        urlretrieve(url, tfn)
-
-    with gzip.open(tfn) as f:
+    with urlopen(url) as r, gzip.GzipFile(fileobj=r) as f:
         et = lxml.etree.iterparse(f)
         yield from et
 
 
-if __name__ == '__main__':
-    limit = int(sys.argv[1]) if len(sys.argv) > 1 else int(1e17)
-
+def main(outdir: str, partial: bool = False):
     # package_list a package_list_compact se asi lisi - ten nekompaktni endpoint nejde filtrovat??? Tak to asi udelame na klientovi
-    year = date.today().year
     url_pl = 'https://dataor.justice.cz/api/3/action/package_list'
 
     r = urlopen(url_pl)
@@ -93,22 +85,24 @@ if __name__ == '__main__':
     dss.sort(key=lambda x: int(x.rpartition('-')[-1]), reverse=True)
 
     urls = []
-    for ds in tqdm(dss):
-        url = 'https://dataor.justice.cz/api/3/action/package_show?id={}'.format(
-            ds)
+    for j, ds in enumerate(tqdm(dss)):
+        if partial and len(urls) > 20:
+            break
+        url = f'https://dataor.justice.cz/api/3/action/package_show?id={ds}'
         r = urlopen(url)
         dtp = json.load(r)
         assert dtp['success']
         ds_url = [j['url'] for j in dtp['result']
                   ['resources'] if j['url'].endswith('.xml.gz')]
         assert len(ds_url) == 1
-        urls.append(ds_url[0])
 
-    rdir = 'data/raw'
-    cdir = 'data/csv'
-    os.makedirs(rdir, exist_ok=True)
-    os.makedirs(cdir, exist_ok=True)
-    cp = []
+        # mohli bychom to omezit jen na mensi soubory, ale radsi prectu trosku z vicero dat
+        # if partial:
+        #     req = urlopen(ds_url[0])
+        #     if int(req.headers.get("Content-Length")) > 10_000_000:
+        #         continue
+
+        urls.append(ds_url[0])
 
     neumim = set()  #  TODO
 
@@ -116,7 +110,8 @@ if __name__ == '__main__':
     schema_autogen = dict()  # TODO
     fs = dict()
     csvs = dict()
-    with open('xml_schema.json') as f:
+    cdir = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(cdir, 'xml_schema.json')) as f:
         schemas = json.load(f)
         for el in schemas:
             udaje = [el['udaj']] if isinstance(el['udaj'], str) else el['udaj']
@@ -137,11 +132,6 @@ if __name__ == '__main__':
                 fs[udaj] = f
                 csvs[udaj] = cw
 
-            cp.append(f"COPY justice.{el['soubor']} FROM '{os.path.abspath(ffn)}' CSV HEADER;")
-
-    sfn = os.path.abspath(os.path.join(cdir, 'subjekty.csv'))
-    cp.insert(0, f"COPY justice.subjekty FROM '{sfn}' CSV HEADER;")
-
     fs['subjekty'] = open(os.path.join(cdir, 'subjekty.csv'), 'w', encoding='utf8')
     csvs['subjekty'] = csv.writer(fs['subjekty'])
     csvs['subjekty'].writerow(['ico', 'nazev', 'datum_zapis', 'datum_vymaz'])
@@ -150,7 +140,9 @@ if __name__ == '__main__':
     for url in tqdm(urls):
         et = nahraj_ds(url)
 
-        for action, el in islice(et, limit):  # sniz pro testovani
+        for num, (action, el) in enumerate(et):
+            if num > 1e5:
+                break
             assert action == 'end', action
             if el.tag != 'Subjekt':
                 continue
@@ -228,8 +220,10 @@ if __name__ == '__main__':
     for el in fs.values():
         el.close()
 
-    with open('xml_schema_chybejici.json', 'w') as fw:
-        json.dump(schema_autogen, fw, indent=2, ensure_ascii=False)
+    # TODO: resolve
+    # with open('xml_schema_chybejici.json', 'w') as fw:
+    #     json.dump(schema_autogen, fw, indent=2, ensure_ascii=False)
 
-    with open('copy.sql', 'w') as fw:
-        fw.write('\n'.join(cp))
+
+if __name__ == '__main__':
+    main(".")
