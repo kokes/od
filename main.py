@@ -42,6 +42,7 @@ if __name__ == "__main__":
         "iissp",
         "justice",
         "psp.steno",
+        "smlouvy",
         "szif",
         "upv",
         "wikidata",
