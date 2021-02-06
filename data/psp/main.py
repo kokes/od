@@ -70,22 +70,26 @@ def read_compressed_csv(zf, fn, mp):
             yield dt
 
 
-csv_dir = 'data/csv'
-os.makedirs(csv_dir, exist_ok=True)
-with open('mapping.json') as f:
-    mapping = json.load(f)
+# je to kratky, tak neimplementuju `partial`
+def main(outdir: str, partial: bool = False):
+    cdir = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(cdir, 'mapping.json')) as f:
+        mapping = json.load(f)
+
+    for mp in mapping:
+        tbl = f'{mp["tema"]}_{mp["tabulka"]}'
+        tfn = os.path.join(outdir, f'{tbl}.csv')
+        print(tbl)
+        cols = [j['sloupec'] for j in mp['sloupce']]
+        with open(tfn, 'w') as fw:
+            cw = csv.DictWriter(fw, fieldnames=cols)
+            cw.writeheader()
+            for ffn in mp['soubory']:
+                print('\t', ffn)
+                zf, fn = ffn.split('/')
+                for el in read_compressed_csv(zf, fn, mp['sloupce']):
+                    cw.writerow(el)
 
 
-for mp in mapping:
-    tbl = f'{mp["tema"]}_{mp["tabulka"]}'
-    tfn = os.path.join(csv_dir, f'{tbl}.csv')
-    print(tbl)
-    cols = [j['sloupec'] for j in mp['sloupce']]
-    with open(tfn, 'w') as fw:
-        cw = csv.DictWriter(fw, fieldnames=cols)
-        cw.writeheader()
-        for ffn in mp['soubory']:
-            print('\t', ffn)
-            zf, fn = ffn.split('/')
-            for el in read_compressed_csv(zf, fn, mp['sloupce']):
-                cw.writerow(el)
+if __name__ == "__main__":
+    main(".")

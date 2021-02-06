@@ -2026,6 +2026,18 @@
                 "typ": "int",
                 "popis": "Číslo jednacího dne v rámci schůze (používá se např. při konstrukci URL na index stenozáznamu dle dnů).",
                 "nullable": false
+            },
+            {
+                "sloupec": "od_t",
+                "typ": "int",
+                "popis": "Čas začátku stenozáznamu v minutách od začátku kalendářního dne; pokud je null či menší než nula, není známo. Tj. převod na čas typu H:M je pomocí H = div(od_t, 60), M = mod(od_t, 60).",
+                "nullable": false
+            },
+            {
+                "sloupec": "do_t",
+                "typ": "int",
+                "popis": "Čas konce stenozáznamu v minutách od začátku kalendářního dne; pokud je null či menší než nula, není známo. V některých případech může být od_t == do_t; v některých případech může být i od_t > do_t -- platné pouze v případě, že během stena dojde k změně kalendářního dne (například 23:50 - 00:00).",
+                "nullable": false
             }
         ]
     },
