@@ -81,36 +81,6 @@ schema = [
         ),
     ),
     Table(
-        "poslanci_funkce",
-        meta,
-        Column(
-            "id_funkce",
-            Integer,
-            nullable=False,
-            unique=True,
-            comment="Identifikátor funkce, používá se v zarazeni:id_fo",
-        ),
-        Column(
-            "id_organ",
-            ForeignKey("poslanci_organy.id_organ"),
-            nullable=False,
-            comment="Identifikátor orgánu, viz organy:id_organ",
-        ),
-        Column(
-            "id_typ_funkce",
-            ForeignKey("poslanci_typ_funkce.id_typ_funkce"),
-            nullable=False,
-            comment="Typ funkce, viz typ_funkce:id_typ_funkce",
-        ),
-        Column(
-            "nazev_funkce_cz",
-            Text,
-            nullable=False,
-            comment="Název funkce, pouze pro interní použití",
-        ),
-        Column("priorita", Integer, nullable=False, comment="Priorita výpisu"),
-    ),
-    Table(
         "poslanci_organy",
         meta,
         Column(
@@ -153,6 +123,36 @@ schema = [
             nullable=True,
             comment="Pokud je nastaveno na 1, pak při výpisu členů se nezobrazují záznamy v tabulkce zarazeni kde cl_funkce == 0. Toto chování odpovídá tomu, že v některých orgánech nejsou členové a teprve z nich se volí funkcionáři, ale přímo se volí do určité funkce.",
         ),
+    ),
+    Table(
+        "poslanci_funkce",
+        meta,
+        Column(
+            "id_funkce",
+            Integer,
+            nullable=False,
+            unique=True,
+            comment="Identifikátor funkce, používá se v zarazeni:id_fo",
+        ),
+        Column(
+            "id_organ",
+            ForeignKey("poslanci_organy.id_organ"),
+            nullable=False,
+            comment="Identifikátor orgánu, viz organy:id_organ",
+        ),
+        Column(
+            "id_typ_funkce",
+            ForeignKey("poslanci_typ_funkce.id_typ_funkce"),
+            nullable=False,
+            comment="Typ funkce, viz typ_funkce:id_typ_funkce",
+        ),
+        Column(
+            "nazev_funkce_cz",
+            Text,
+            nullable=False,
+            comment="Název funkce, pouze pro interní použití",
+        ),
+        Column("priorita", Integer, nullable=False, comment="Priorita výpisu"),
     ),
     Table(
         "poslanci_osoby",

@@ -98,13 +98,15 @@ schema = [
         ),
     ),
     Table(
-        "kontroly_plneni_povinnosti_zamestnavatelu_v_oblasti_socialniho_zabezpeceni",
+        # zkracen puvodni nazev (limit postgresy)
+        "kontroly_povinnosti_zamestnavatelu__socialniho_zabezpeceni",
         meta,
         Column("rok", Integer, primary_key=True),
         Column("pocet_kontrol", Integer, primary_key=False),
     ),
     Table(
-        "rozlozeni_souboru_duchodcu_podle_vyse_duchodu_v_kvantilovem_vyjadreni",
+        # zkracen puvodni nazev (limit postgresy)
+        "mesicni_vyse_duchodu",
         meta,
         Column("druh_duchodu_kod", Text, primary_key=True),
         Column("druh_duchodu", Text, primary_key=False),
@@ -374,7 +376,7 @@ schema = [
         Column("pocet_vyplat", Integer, primary_key=False),
     ),
     Table(
-        "pocet_vyplat_priplatku_a_prispevku_k_duchodum_dle_odskodnovacich_zakonu",
+        "priplatky_a_prispevky_k_duchodum_dle_odskodnovacich_zakonu",
         meta,
         Column("rok", Integer, primary_key=True),
         Column("priplatek_politickym_veznum", Integer, primary_key=False),
@@ -387,15 +389,16 @@ schema = [
         Column("rok", Integer, primary_key=True),
         Column("pocet_ioldp", Integer, primary_key=False),
     ),
-    Table(
-        "pocet_vystavenych_potvrzeni_o_prislusnosti_k_ceskym_pravnim_predpisum",
-        meta,
-        Column("rok", Integer, primary_key=True),
-        Column("vyslani", Integer, primary_key=False),
-        Column("soubehy", Integer, primary_key=False),
-        Column("vyjimky", Integer, primary_key=False),
-        Column("mezinarodni_smlouvy", Integer, primary_key=False),
-    ),
+    # TODO: pridat do mappingu
+    # Table(
+    #     "pocet_vystavenych_potvrzeni_o_prislusnosti_k_ceskym_pravnim_predpisum",
+    #     meta,
+    #     Column("rok", Integer, primary_key=True),
+    #     Column("vyslani", Integer, primary_key=False),
+    #     Column("soubehy", Integer, primary_key=False),
+    #     Column("vyjimky", Integer, primary_key=False),
+    #     Column("mezinarodni_smlouvy", Integer, primary_key=False),
+    # ),
     Table(
         "zanikle_duchody",
         meta,
@@ -462,16 +465,17 @@ schema = [
             "prumerna_vyse_duchodu_u_nove_priznanych_duchodu", Text, primary_key=False
         ),
     ),
-    Table(
-        "prum_vyse_osobniho_vymerovaciho_zakladu_u_nove_priznanych_duchodu_podle_druhu_duchodu",
-        meta,
-        Column("druh_duchodu_kod", Text, primary_key=True),
-        Column("druh_duchodu", Text, primary_key=False),
-        Column("pohlavi_kod", Text, primary_key=True),
-        Column("pohlavi", Text, primary_key=False),
-        Column("referencni_obdobi", Text, primary_key=True),
-        Column("prumerna_vyse_ovz_u_nove_priznanych_duchodu", Text, primary_key=False),
-    ),
+    # TODO: pridat do mappingu
+    # Table(
+    #     "prum_vyse_osobniho_vymerovaciho_zakladu_u_nove_priznanych_duchodu_podle_druhu_duchodu",
+    #     meta,
+    #     Column("druh_duchodu_kod", Text, primary_key=True),
+    #     Column("druh_duchodu", Text, primary_key=False),
+    #     Column("pohlavi_kod", Text, primary_key=True),
+    #     Column("pohlavi", Text, primary_key=False),
+    #     Column("referencni_obdobi", Text, primary_key=True),
+    #     Column("prumerna_vyse_ovz_u_nove_priznanych_duchodu", Text, primary_key=False),
+    # ),
     Table(
         "prumerny_plat_v_cssz",
         meta,
@@ -543,7 +547,7 @@ schema = [
         Column("prumerna_vyse_duchodu", Text, primary_key=False),
     ),
     Table(
-        "prehled_o_poctu_zamestnavatelu_pojistencu_a_pojistnych_vztahu_podle_kraju",
+        "zamestnavatele_pojistencu_a_pojistnych_vztahu_podle_kraju",
         meta,
         Column("datum", Text, primary_key=True),
         Column("kraj_kod", Text, primary_key=True),
@@ -553,7 +557,7 @@ schema = [
         Column("pocet_pojistnych_vztahu", Text, primary_key=False),
     ),
     Table(
-        "prehled_o_poctu_zamestnavatelu_pojistencu_a_pojistnych_vztahu_podle_okresu",
+        "zamestnavatele_pojistencu_a_pojistnych_vztahu_podle_okresu",
         meta,
         Column("datum", Text, primary_key=True),
         Column("okres_kod", Text, primary_key=True),
@@ -563,7 +567,7 @@ schema = [
         Column("pocet_pojistnych_vztahu", Text, primary_key=False),
     ),
     Table(
-        "prehled_o_poctu_zamestnavatelu_pojistencu_a_pojistnych_vztahu_v_cr",
+        "zamestnavatele_pojistencu_a_pojistnych_vztahu_v_cr",
         meta,
         Column("datum", Text, primary_key=True),
         Column("stat_kod", Text, primary_key=True),

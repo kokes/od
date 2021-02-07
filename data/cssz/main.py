@@ -55,10 +55,11 @@ def main(outdir: str, partial: bool = False):
             },
             'schema': schema,
         })
-        
-    cdir = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(cdir, 'mapping.json'), 'w') as fw:
-        json.dump(ds, fw, ensure_ascii=False, indent=2)
+
+    # TODO: odstranit?
+    # cdir = os.path.dirname(os.path.abspath(__file__))
+    # with open(os.path.join(cdir, 'mapping.json'), 'w') as fw:
+    #     json.dump(ds, fw, ensure_ascii=False, indent=2)
 
     for dataset in ds:
         tfn = os.path.join(outdir, dataset["nazev_ascii"] + ".csv")
