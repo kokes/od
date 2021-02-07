@@ -30,11 +30,11 @@ schema = [
         Column("platny_zaznam", Boolean),
     ),
     Table(
-        "smlouvy_ucastnici",
+        "ucastnici",
         meta,
         Column("zdroj", String(7), nullable=False),  # 2018-07
         # TODO: on delete cascade? nebo budem mazat podle zdroje?
-        Column("smlouva", ForeignKey("smlouvy.id_verze")),
+        Column("smlouva", Integer),  # TODO: ForeignKey("smlouvy.id_verze"), odstraneno kvuli --partial
         Column("subjekt", Boolean, nullable=False),
         Column("ds", Text, nullable=True),  # TODO: char? datovka
         Column("nazev", Text, nullable=True),

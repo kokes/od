@@ -551,7 +551,7 @@ schema = [
             comment='Typ druhu tisku: T - "hlavní tisk", Z - "následný tisk", X - historické druhy tisků',
         ),
         Column(
-            "nazev_druh", Text, nullable=False, unique=True, comment="Název druhu tisku"
+            "nazev_druh", Text, nullable=False, comment="Název druhu tisku"
         ),
     ),
     Table(
@@ -842,7 +842,9 @@ schema = [
         ),
         Column(
             "id_hlas",
-            ForeignKey("hlasovani_hl_hlasovani.id_hlasovani"),
+            Integer,
+            # TODO: ForeignKey("hlasovani_hl_hlasovani.id_hlasovani"), odstraneno, protoze to nekde chybelo
+            # konkretne to byl problem hlasovani 66035 (2013-2017), ke kterymu je tisk, ale samotny hlasovani neni
             nullable=True,
             comment="Identifikátor hlasování, viz hl_hlasovani:id_hlasovani",
         ),
@@ -1453,13 +1455,13 @@ schema = [
         Column(
             "od_t",
             Integer,
-            nullable=False,
+            nullable=True,
             comment="Čas začátku stenozáznamu v minutách od začátku kalendářního dne; pokud je null či menší než nula, není známo. Tj. převod na čas typu H:M je pomocí H = div(od_t, 60), M = mod(od_t, 60).",
         ),
         Column(
             "do_t",
             Integer,
-            nullable=False,
+            nullable=True,
             comment="Čas konce stenozáznamu v minutách od začátku kalendářního dne; pokud je null či menší než nula, není známo. V některých případech může být od_t == do_t; v některých případech může být i od_t > do_t -- platné pouze v případě, že během stena dojde k změně kalendářního dne (například 23:50 - 00:00).",
         ),
     ),

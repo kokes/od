@@ -109,7 +109,9 @@ def main(outdir: str, partial: bool = False):
                 except HTTPError:
                     print(f'nepodaril se stahnout stenoprotokol na adrese {furl} (odkazovan na {url})')
 
-            csv_fn = os.path.join(outdir, f'{rok}.csv')
+            tdir = os.path.join(outdir, "psp")
+            os.makedirs(tdir, exist_ok=True)
+            csv_fn = os.path.join(tdir, f'{rok}.csv')
 
             with open(csv_fn, 'w', encoding='utf8') as fw:
                 cw = csv.DictWriter(fw, fieldnames=['rok', 'datum', 'schuze', 'soubor', 'autor', 'funkce', 'tema', 'text'])

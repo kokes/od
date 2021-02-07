@@ -12,7 +12,7 @@ meta = MetaData()
 
 schema = [
     Table(
-        "vreo_firmy",
+        "firmy",
         meta,
         Column("zdroj", Text, nullable=False),
         Column("aktualizace_db", Date, nullable=False),
@@ -29,7 +29,7 @@ schema = [
         Column("sidlo", JSON, nullable=True),
     ),
     Table(
-        "vreo_fosoby",
+        "fosoby",
         meta,
         Column("ico", Integer, nullable=False),
         Column("nazev_organu", Text, nullable=True),
@@ -44,7 +44,7 @@ schema = [
         Column("bydliste", JSON, nullable=True),
     ),
     Table(
-        "vreo_posoby",
+        "posoby",
         meta,
         # TODO: nezkousel jsem tohle schema, takze to bude treba projit
         Column("ico", Integer, nullable=False),

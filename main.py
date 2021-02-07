@@ -35,7 +35,9 @@ if __name__ == "__main__":
     # TODO: nejak pridat `czechinvest` - je to ready, jen nefunguje stahovani souboru
     module_names = [
         "cedr",
-        "cssz",
+        # TODO: docasne vypnuto, protoze jsem zkracoval nazvy tabulek, ktery
+        # ted nesedej mezi schematem a mappingem
+        # "cssz",
         "datovky",
         "dotinfo",
         "iissp",
@@ -84,8 +86,32 @@ if __name__ == "__main__":
 
         if engine:
             if engine.name == "postgresql":
-                # TODO: copy_expert
-                # statement = "COPY {foo} FROM stdin WITH CSV HEADER"
+                for table in schemas[module_name]:
+                    print(f"Nahravam {table} do {module_name}")
+                    full_table_name = f"{module_name}.{table.name}"
+                    copy_statement = f"COPY {full_table_name} FROM stdin WITH CSV HEADER"
+                    truncate_statement = f"TRUNCATE {full_table_name} CASCADE"  # TODO: cascade yolo
+                    fn_cand = os.path.join(outdir, table.name+".csv")
+                    dir_cand = os.path.join(outdir, table.name)
+                    if os.path.isfile(fn_cand):
+                        conn = engine.raw_connection()
+                        with conn.cursor() as cur, open(fn_cand, "rt", encoding="utf-8") as f:
+                            cur.execute(truncate_statement)
+                            cur.copy_expert(copy_statement, f)
+                        conn.commit()  # TODO: proc nejde context manager? starej psycopg?
+                    elif os.path.isdir(dir_cand):
+                        for basename in os.listdir(dir_cand):
+                            filename = os.path.join(dir_cand, basename)
+                            # TODO: nasledujici se opakuje, abstrahovat
+                            conn = engine.raw_connection()
+                            with conn.cursor() as cur, open(filename, "rt", encoding="utf-8") as f:
+                                cur.execute(truncate_statement)
+                                cur.copy_expert(copy_statement, f)
+                            conn.commit()
+                    else:
+                        raise IOError(f"neexistujou data pro {module_name}.{table.name}")
+
+                # TODO: copy_expert nebo copy_from, truncate pred tim
                 # list dir, copy using raw conn
                 pass
             elif engine.name == "sqlite":

@@ -91,12 +91,14 @@ def main(outdir: str, partial: bool = False):
         'ovm': 'https://www.mojedatovaschranka.cz/sds/datafile.do?format=xml&service=seznam_ds_ovm',
     }
 
+    tdir = os.path.join(outdir, "datovky")
+    os.makedirs(tdir, exist_ok=True)
     for ds, url in urls.items():
         with urlopen(url) as r:
             assert r.headers.get('Content-Encoding') == 'gzip'
 
             with gzip.open(r) as gr:
-                target_fn = os.path.join(outdir, f"{ds}.csv")
+                target_fn = os.path.join(tdir, f"{ds}.csv")
                 parse_xml(gr, target_fn, partial)
 
 

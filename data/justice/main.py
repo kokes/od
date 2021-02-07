@@ -2,16 +2,12 @@ import csv
 import gzip
 import json
 import os
-import sys
 import re
 from datetime import date
-from itertools import islice
-from urllib.parse import urlparse
-from urllib.request import urlretrieve, urlopen
+from urllib.request import urlopen
 
 import lxml.etree
 from tqdm import tqdm
-
 
 NON_ISO_DATUM = re.compile(r'^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$')
 
@@ -121,7 +117,7 @@ def main(outdir: str, partial: bool = False):
                 continue
 
             fn = el['soubor'] + '.csv'
-            ffn = os.path.join(cdir, fn)
+            ffn = os.path.join(outdir, fn)
             f = open(ffn, 'w', encoding='utf8')
             cw = csv.DictWriter(
                 f, fieldnames=['ico'] + list(el['schema'].keys()))
@@ -132,7 +128,7 @@ def main(outdir: str, partial: bool = False):
                 fs[udaj] = f
                 csvs[udaj] = cw
 
-    fs['subjekty'] = open(os.path.join(cdir, 'subjekty.csv'), 'w', encoding='utf8')
+    fs['subjekty'] = open(os.path.join(outdir, 'subjekty.csv'), 'w', encoding='utf8')
     csvs['subjekty'] = csv.writer(fs['subjekty'])
     csvs['subjekty'].writerow(['ico', 'nazev', 'datum_zapis', 'datum_vymaz'])
 

@@ -85,6 +85,9 @@ def main(outdir: str, partial: bool = False):
             cw = csv.DictWriter(fw, fieldnames=cols)
             cw.writeheader()
             for ffn in mp['soubory']:
+                # TODO: nemuzem ted udelat partial, protoze failujou ForeignKeys
+                # if partial and ffn not in mp['soubory'][-2:]:
+                #     continue
                 print('\t', ffn)
                 zf, fn = ffn.split('/')
                 for el in read_compressed_csv(zf, fn, mp['sloupce']):

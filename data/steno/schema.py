@@ -5,7 +5,7 @@ meta = MetaData()
 
 schema = [
     Table(
-        "steno_psp",  # TODO: prejmenovat
+        "psp",  # TODO: prejmenovat
         meta,
         Column("rok", SmallInteger, nullable=False),
         Column("datum", Date, nullable=True),

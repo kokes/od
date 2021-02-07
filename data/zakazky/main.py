@@ -92,10 +92,8 @@ def main(outdir: str, partial: bool = False):
         print(ds)
         tblmap = {tuple(v): k for k, v in mapping['tabulky'].items()}
 
-        tdir = os.path.join(outdir, ds)
-        os.makedirs(tdir, exist_ok=True)
         for k, v in tblmap.items():
-            tfn = os.path.join(tdir, v+".csv")
+            tfn = os.path.join(outdir, f"{ds}_{v}.csv")
             with open(tfn, 'w', encoding='utf8') as fw:
                 cw = csv.writer(fw)
                 cw.writerow(k)
@@ -117,7 +115,7 @@ def main(outdir: str, partial: bool = False):
                         hd = tuple(next(cr))
                         tpmap = najdi_typy(hd, mapping['typy'])
                         tp = tblmap[hd] # document type
-                        f = open(os.path.join(tdir, tp+".csv"), 'a', encoding='utf8')
+                        f = open(os.path.join(outdir, f"{ds}_{tp}.csv"), 'a', encoding='utf8')
                         cw = csv.writer(f)
                         continue
 
