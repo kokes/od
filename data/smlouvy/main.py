@@ -34,10 +34,13 @@ def get_raw_data(partial: bool):
     with urlopen(url) as r:
         et = lxml.etree.parse(r).getroot()
 
-    keys = ['mesic', 'rok', 'hashDumpu', 'velikostDumpu', 'casGenerovani', 'dokoncenyMesic', 'odkaz']
+    keys = ['den', 'mesic', 'rok', 'hashDumpu', 'velikostDumpu', 'casGenerovani', 'dokoncenyMesic', 'odkaz']
 
     for el in et:
-        props = {k: el.find(f'{{{et.nsmap[None]}}}{k}').text for k in keys}
+        props = {k: getattr(el.find(f'{{{et.nsmap[None]}}}{k}'), 'text', None) for k in keys}
+        # chceme jen mesicni dumpy
+        if props['den']:
+            continue
         if partial and int(props['rok']) != date.today().year:
             continue
 
