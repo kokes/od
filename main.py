@@ -63,7 +63,11 @@ if __name__ == "__main__":
     if engine:
         for module_name, schema in schemas.items():
             for table in schema:
-                # TODO: if pg, set schema?
+                if engine.name == "postgresql":
+                    table.schema = module_name
+                    engine.execute(f"CREATE SCHEMA IF NOT EXISTS {module_name}")
+                else:
+                    table.name = f"{module_name}_{table.name}"
                 table.create(engine, checkfirst=True)
 
     # TODO: multiprocessing
@@ -77,3 +81,15 @@ if __name__ == "__main__":
         os.makedirs(outdir, exist_ok=True)
 
         module(outdir, partial=args.partial)
+
+        if engine:
+            if engine.name == "postgresql":
+                # TODO: copy_expert
+                # statement = "COPY {foo} FROM stdin WITH CSV HEADER"
+                # list dir, copy using raw conn
+                pass
+            elif engine.name == "sqlite":
+                # TODO: executemany
+                raise ValueError("sqlite not supported yet")
+            else:
+                raise ValueError(f"{engine.name} not supported yet")
