@@ -42,6 +42,7 @@ if __name__ == "__main__":
         # "cssz",
         "datovky",
         "dotinfo",
+        # "eufondy" # TODO: vyresit unique constraint
         "iissp",
         "justice",
         "psp",
