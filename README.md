@@ -22,6 +22,19 @@ Posledním aspektem je aktualizace dat. V tuto chvíli máme hotové jednorázov
 
 **Již v tuto chvíli ale funguje základní princip tohoto projektu - jakmile člověk dostane datasety do jednoho systému/databáze, může se dotazovat napříč - například seznam zakázek pro firmu, která splňuje nějaká kritéria na základě informací z ARES a je propojena s určitými politicky aktivními lidmi.**
 
+## Lokální spuštění
+
+Účelem projektu je, aby se dal snadno použít nejen autorem. Pro základní použití vám postačí Python (3.6+) a nic jiného. Stačí si nainstalovat pár základních závislostí a můžete data nahrát do CSV nebo i databáze - podporovaná je SQLite (vestavěná do Pythonu) nebo PostgreSQL.
+
+```
+$ python3 -m venv .venv
+$ . .venv/bin/activate
+$ pip3 install -r requirements.txt
+$ python3 main.py --all --partial
+```
+
+Tato sekvence příkazů nainstaluje potřebné závislosti do virtuálního prostředí a zpracuje všechna data do CSV. Pokud byste chtěli data nahrát do databáze, stačí přidat např. `--connstring sqlite:///soubor.db` nebo `--connstring postgres://localhost/data`.
+
 ## Doménová znalost a kvalita dat
 
 Než se dostaneme k datasetům samotným, je třeba zmínit klíčový předpoklad pro správnou interpretaci dat, tím je doménová znalost, tedy pochopení dané problematiky na věcné úrovni, ne pouhé technické zpracování dat.
@@ -59,10 +72,3 @@ Plánujeme zde zapojit dva typy datasetů - transakční a klasifikační, byť 
 
 ## Identifikace podniků
 Jedním z hlavních zásahů do dat je nahrazení identifikace podniků našimi “vlastními” daty, konkrétně daty z ARES. Problémem je, že místo odkazování do ARES se každý z poskytovatelů dat snaží tvořit si vlastní databázi podniků a v oněch datech jsou často chyby. Z důvodu konzistence a kvality dat proto používáme většinou pouze IČO podniků a dál přebíráme informace z ARES.
-
-## Technologie
-TODO
-ETL v Python 3 s hrstkou balíků pro zpracování XML a XLS
-PostgreSQL, volitelná
-HTML/JS a tenký klient ve Flasku
-
