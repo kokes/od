@@ -42,7 +42,7 @@ if __name__ == "__main__":
         # "cssz",
         "datovky",
         "dotinfo",
-        # "eufondy" # TODO: vyresit unique constraint
+        "eufondy"
         "iissp",
         "justice",
         "psp",
@@ -52,6 +52,8 @@ if __name__ == "__main__":
         "upv",
         "wikidata",
         "zakazky",
+        "volby"
+        "udhpsh"
         "ares",  # schvalne na konci, protoze nacita hodne dat
     ]
     if args.modules:

@@ -390,7 +390,7 @@ schema = [
         Column("odevz_obal", SmallInteger, nullable=False),
         Column("pl_hl_celk", SmallInteger, nullable=False),
         Column("kc_2", Integer, nullable=False),
-        Column("zakrstrana", bitmap_ish(100), nullable=False),
+        Column("zakrstrana", bitmap_ish(99), nullable=False),
     ),
     Table(
         "kraje_okrsky_hlasy",
@@ -471,7 +471,7 @@ schema = [
         Column("okrsek", Integer, nullable=True),
         Column("kc_1", Integer, nullable=True),
         Column("kc_2", Integer, nullable=True),
-        Column("zakrstrana", bitmap_ish(100), nullable=True),
+        Column("zakrstrana", bitmap_ish(60), nullable=True),
         Column("vol_seznam", SmallInteger, nullable=True),
         Column("vyd_obalky", SmallInteger, nullable=True),
         Column("odevz_obal", SmallInteger, nullable=True),

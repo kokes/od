@@ -5,7 +5,7 @@ meta = MetaData()
 
 schema = [
     Table(
-        "penize_fo",
+        "penizefo",
         meta,
         Column("rok", SmallInteger, nullable=False),
         Column("ico_prijemce", BigInteger, nullable=False),
@@ -20,7 +20,7 @@ schema = [
         Column("adresa_mesto", Text, nullable=True),
     ),
     Table(
-        "penize_po",
+        "penizepo",
         meta,
         Column("rok", SmallInteger, nullable=False),
         Column("ico_prijemce", BigInteger, nullable=False),
