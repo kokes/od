@@ -26,14 +26,28 @@ Posledním aspektem je aktualizace dat. V tuto chvíli máme hotové jednorázov
 
 Účelem projektu je, aby se dal snadno použít nejen autorem. Pro základní použití vám postačí Python (3.6+) a nic jiného. Stačí si nainstalovat pár základních závislostí a můžete data nahrát do CSV nebo i databáze - podporovaná je SQLite (vestavěná do Pythonu) nebo PostgreSQL.
 
-```
-$ python3 -m venv .venv
-$ . .venv/bin/activate
-$ pip3 install -r requirements.txt
-$ python3 main.py --all --partial
+```sh
+python3 -m venv .venv
+. .venv/bin/activate
+pip3 install -r requirements.txt
+python3 main.py --all --partial
 ```
 
-Tato sekvence příkazů nainstaluje potřebné závislosti do virtuálního prostředí a zpracuje všechna data do CSV. Pokud byste chtěli data nahrát do databáze, stačí přidat např. `--connstring sqlite:///soubor.db` nebo `--connstring postgres://localhost/data`.
+Tato sekvence příkazů nainstaluje potřebné závislosti do virtuálního prostředí a zpracuje všechna data do CSV.
+
+Selektivní zpracování jde udělat pomocí specifikace datasetu jako pozičního argumentu
+
+```sh
+python3 main.py --partial ares volby
+```
+
+A nahrání do databáze se řídí argumentem `--connstring`. Při specifikaci databáze proběhne vše - stažení dat, konverze do CSV a nahrání do databáze. Bez specifikace databáze skončíte u CSV.
+
+```sh
+
+python3 main.py --connstring sqlite:///soubor.db --partial ares volby
+python3 main.py --connstring postgres://localhost/data --partial ares volby
+```
 
 ## Doménová znalost a kvalita dat
 
