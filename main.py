@@ -42,7 +42,7 @@ if __name__ == "__main__":
         # "cssz",
         "datovky",
         "dotinfo",
-        "eufondy"
+        "eufondy",
         "iissp",
         "justice",
         "psp",
@@ -52,8 +52,8 @@ if __name__ == "__main__":
         "upv",
         "wikidata",
         "zakazky",
-        "volby"
-        "udhpsh"
+        "volby",
+        "udhpsh",
         "ares",  # schvalne na konci, protoze nacita hodne dat
     ]
     if args.modules:
