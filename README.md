@@ -53,6 +53,8 @@ python3 main.py --connstring postgres://localhost/data --partial ares volby
 
 Pokud si nechcete lokálne instalovat Python, můžete využít přiložený `Dockerfile`, vytvořit si Docker image a spustit vše v kontejneru.
 
+Všechna generovaná data včetně stažených zdrojových souborů se zapisují do složky `/data` v kontejneru. Zpracované CSV výstupy najdete v `/data/csv`.
+
 **Tvorba Docker image**
 ```sh
 docker build -t kokes-od .
@@ -60,7 +62,7 @@ docker build -t kokes-od .
 
 **Spuštění**
 ```sh
-docker run -it --rm -v $PWD:/data kokes-od --partial ares volby
+docker run -it --rm -v $PWD:/data/csv kokes-od --partial ares volby
 ```
 
 ## Doménová znalost a kvalita dat
