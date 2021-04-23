@@ -49,6 +49,20 @@ python3 main.py --connstring sqlite:///soubor.db --partial ares volby
 python3 main.py --connstring postgres://localhost/data --partial ares volby
 ```
 
+### Spuštění v Docker kontejneru
+
+Pokud si nechcete lokálne instalovat Python, můžete využít přiložený `Dockerfile`, vytvořit si Docker image a spustit vše v kontejneru.
+
+**Tvorba Docker image**
+```sh
+docker build -t kokes-od .
+```
+
+**Spuštění**
+```sh
+docker run -it --rm -v $PWD:/data kokes-od --partial ares volby
+```
+
 ## Doménová znalost a kvalita dat
 
 Než se dostaneme k datasetům samotným, je třeba zmínit klíčový předpoklad pro správnou interpretaci dat, tím je doménová znalost, tedy pochopení dané problematiky na věcné úrovni, ne pouhé technické zpracování dat.
