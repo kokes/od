@@ -62,7 +62,7 @@ docker build -t kokes-od .
 
 **Spuštění**
 ```sh
-docker run -it --rm -v $PWD:/data/csv kokes-od --partial ares volby
+docker run -it --rm -v $PWD:/data kokes-od --partial ares volby
 ```
 
 ## Doménová znalost a kvalita dat
