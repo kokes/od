@@ -9,7 +9,8 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # copy source files
-COPY . .
+COPY main.py ./
+COPY data ./data
 
 # set /data as workdir, mount this dir to get data
 WORKDIR /data
