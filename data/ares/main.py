@@ -61,7 +61,7 @@ def organi(root, ico, nsmap):
     return {'fosoby': fosoby, 'posoby': posoby}
 
 
-def main(outdir: str, partial: bool = True):
+def main(outdir: str, partial: bool = False):
     with NamedTemporaryFile() as vfn:
         urlretrieve('https://wwwinfo.mfcr.cz/ares/ares_vreo_all.tar.gz', vfn.name)
         with tarfile.open(vfn.name, 'r:gz') as tf, open(
