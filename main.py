@@ -14,7 +14,7 @@ if __name__ == "__main__":
         "--connstring", type=str, help="connection string pro databazi tve volby"
     )
     parser.add_argument(
-        "--prefix", type=str, default="", help="prefix pro nazvy schemat (postgre) ci tabulek (sqlite)"
+        "--schema_prefix", type=str, default="", help="prefix pro nazvy schemat (postgres) ci tabulek (sqlite)"
     )
     parser.add_argument(
         "--partial",
@@ -99,7 +99,7 @@ if __name__ == "__main__":
                 print(f"Nahravam {table.name} do {module_name}")
                 files = table_loads[(module_name, table.name)]
                 if engine.name == "postgresql":
-                    table.schema = f"{args.prefix}{module_name}"
+                    table.schema = f"{args.schema_prefix}{module_name}"
                     full_table_name = f"{table.schema}.{table.name}"
 
                     engine.execute(f"CREATE SCHEMA IF NOT EXISTS {table.schema}")
@@ -113,7 +113,7 @@ if __name__ == "__main__":
                             cur.copy_expert(f"COPY {full_table_name} FROM stdin WITH CSV HEADER", f)
                     conn.commit()  # TODO: proc nejde context manager? starej psycopg?
                 elif engine.name == "sqlite":
-                    table.name = f"{args.prefix}{module_name}_{table.name}"
+                    table.name = f"{args.schema_prefix}{module_name}_{table.name}"
                     table.create(engine, checkfirst=True)  # TODO: drop first?
                     conn = engine.raw_connection()
 
