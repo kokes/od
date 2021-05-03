@@ -49,6 +49,12 @@ python3 main.py --connstring sqlite:///soubor.db --partial ares volby
 python3 main.py --connstring postgres://localhost/data --partial ares volby
 ```
 
+Název schématu u Postgresu, či tabulky u SQLite lze prefixovat parametrem `--schema_prefix`.
+
+```sh
+python3 main.py --connstring postgres://localhost/data --schema_prefix opendata_ --partial ares volby
+```
+
 ### Spuštění v Docker kontejneru
 
 Pokud si nechcete lokálne instalovat Python, můžete využít přiložený `Dockerfile`, vytvořit si Docker image a spustit vše v kontejneru.
