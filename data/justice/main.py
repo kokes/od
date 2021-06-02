@@ -137,7 +137,7 @@ def main(outdir: str, partial: bool = False):
         et = nahraj_ds(url)
 
         for num, (action, el) in enumerate(et):
-            if num > 1e5:
+            if partial and num > 1e5:
                 break
             assert action == 'end', action
             if el.tag != 'Subjekt':
