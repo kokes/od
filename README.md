@@ -46,13 +46,13 @@ A nahrání do databáze se řídí argumentem `--connstring`. Při specifikaci 
 ```sh
 
 python3 main.py --connstring sqlite:///soubor.db --partial ares volby
-python3 main.py --connstring postgres://localhost/data --partial ares volby
+python3 main.py --connstring postgresql://localhost/data --partial ares volby
 ```
 
 Název schématu u Postgresu, či tabulky u SQLite lze prefixovat parametrem `--schema_prefix`.
 
 ```sh
-python3 main.py --connstring postgres://localhost/data --schema_prefix opendata_ --partial ares volby
+python3 main.py --connstring postgresql://localhost/data --schema_prefix opendata_ --partial ares volby
 ```
 
 ### Spuštění v Docker kontejneru
