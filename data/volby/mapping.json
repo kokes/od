@@ -206,6 +206,21 @@
                     "ODEVZ_OBAL",
                     "PL_HL_CELK"
                 ]
+            },
+            "nuts": {
+                "fn": [
+                    "cnumnuts.xml",
+                    "CNUMNUTS.DBF",
+                    "CNUMNUTS.dbf"
+                ],
+                "klic": "CNUMNUTS_ROW",
+                "schema": [
+                    "NUMNUTS",
+                    "NUTS",
+                    "NAZEVNUTS",
+                    "KODCIS",
+                    "CHODNOTA"
+                ]
             }
         }
     },

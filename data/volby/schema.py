@@ -162,6 +162,16 @@ schema = [
         Column("pl_hl_celk", Integer, nullable=False),
     ),
     Table(
+        "psp_nuts",
+        meta,
+        Column("datum", Date, nullable=False),
+        Column("num_nuts", Integer, nullable=False),
+        Column("nuts", Text, nullable=True),  # kvuli zahranicnimu "okresu"
+        Column("nazev", Text, nullable=False),
+        Column("ciselnik_kod", Integer, nullable=True),
+        Column("ciselnik_hodnota", Integer, nullable=True),
+    ),
+    Table(
         "komunalni_vysledky_obce",
         meta,
         Column("datum", Date, nullable=True),
