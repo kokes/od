@@ -1,5 +1,6 @@
 from sqlalchemy import Table, Column, MetaData
 from sqlalchemy.dialects import postgresql
+from sqlalchemy.sql.schema import UniqueConstraint
 from sqlalchemy.sql.sqltypes import (
     Date,
     Float,
@@ -16,7 +17,7 @@ array_ish = array_ish.with_variant(postgresql.ARRAY(Integer), "postgresql")
 
 def bitmap_ish(n):
     tp = Text()
-    return tp.with_variant(postgresql.BIT(n), "postgresql")
+    return tp.with_variant(postgresql.BIT(n, varying=True), "postgresql")
 
 
 meta = MetaData()
@@ -43,6 +44,7 @@ schema = [
         Column("zvolen_k1", SmallInteger, nullable=False),
         Column("hlasy_k2", Integer, nullable=False),
         Column("zvolen_k2", SmallInteger, nullable=False),
+        UniqueConstraint("datum", "ckand"),
     ),
     Table(
         "prezident_strany",
@@ -52,6 +54,7 @@ schema = [
         Column("nazev_strn", Text, nullable=False),
         Column("zkratkan30", Text, nullable=False),
         Column("zkratkan8", Text, nullable=False),
+        UniqueConstraint("datum", "nstrana"),
     ),
     Table(
         "prezident_okrsky",
@@ -75,6 +78,7 @@ schema = [
         Column("posl_kand", SmallInteger, nullable=False),
         Column("kc_sum", Integer, nullable=False),
         Column("hlasy", array_ish, nullable=False),
+        UniqueConstraint("datum", "okres", "obec", "okrsek", "kolo"),
     ),
     Table(
         "psp_kandidati",
@@ -100,6 +104,7 @@ schema = [
         Column("mandat", String(1), nullable=True),
         Column("poradimand", SmallInteger, nullable=True),
         Column("poradinahr", SmallInteger, nullable=True),
+        UniqueConstraint("datum", "volkraj", "kstrana", "porcislo"),
     ),
     Table(
         "psp_strany",
@@ -120,6 +125,7 @@ schema = [
         Column("pocmandcr", SmallInteger, nullable=True),
         Column("slozneplat", Text, nullable=True),
         Column("nazevplny", Text, nullable=True),
+        UniqueConstraint("datum", "kstrana"),
     ),
     Table(
         "psp_okrsky_hlasy",
@@ -141,6 +147,7 @@ schema = [
         Column("posl_kand", Integer, nullable=False),
         Column("kc_sum", Integer, nullable=False),
         Column("hlasy", array_ish, nullable=False),
+        UniqueConstraint("datum", "okres", "obec", "okrsek", "kstrana"),
     ),
     Table(
         "psp_okrsky_prehled",
@@ -160,6 +167,7 @@ schema = [
         Column("vyd_obalky", Integer, nullable=False),
         Column("odevz_obal", Integer, nullable=False),
         Column("pl_hl_celk", Integer, nullable=False),
+        UniqueConstraint("datum", "okres", "obec", "okrsek"),
     ),
     Table(
         "psp_nuts",
@@ -170,6 +178,7 @@ schema = [
         Column("nazev", Text, nullable=False),
         Column("ciselnik_kod", Integer, nullable=True),
         Column("ciselnik_hodnota", Integer, nullable=True),
+        UniqueConstraint("datum", "num_nuts"),
     ),
     Table(
         "komunalni_vysledky_obce",
@@ -190,6 +199,7 @@ schema = [
         Column("hlasy_str", Integer, nullable=True),
         Column("prochlstr", Numeric(5, 2), nullable=True),
         Column("mand_str", SmallInteger, nullable=True),
+        UniqueConstraint("datum", "okres", "kodzastup", "cobvodu", "por_str_hl"),
     ),
     Table(
         "komunalni_kandidati",
@@ -217,6 +227,9 @@ schema = [
         Column("mandat", String(1), nullable=True),
         Column("poradimand", SmallInteger, nullable=True),
         Column("poradinahr", SmallInteger, nullable=True),
+        UniqueConstraint(
+            "datum", "okres", "kodzastup", "cobvodu", "por_str_hl", "porcislo"
+        ),
     ),
     Table(
         "komunalni_strany",
@@ -231,6 +244,7 @@ schema = [
         Column("slozeni", Text, nullable=False),
         Column("zkratka_of", Text, nullable=True),
         Column("typvs", Text, nullable=False),
+        UniqueConstraint("datum", "vstrana"),
     ),
     Table(
         "komunalni_obce",
@@ -254,6 +268,8 @@ schema = [
         Column("typduvodu", SmallInteger, nullable=False),
         Column("pocet_vs", SmallInteger, nullable=False),
         Column("stav_obce", SmallInteger, nullable=False),
+        # TODO: tady je kotel sloupcu, to je na unique constraint pres vsechny snad
+        # UniqueConstraint("datum", "kraj", "okres"),
     ),
     Table(
         "komunalni_okrsky_prehled",
@@ -277,6 +293,7 @@ schema = [
         Column("poc_vs_hl", SmallInteger, nullable=True),
         Column("kc_2", Integer, nullable=True),
         Column("kodzastup", Integer, nullable=True),
+        UniqueConstraint("datum", "okres", "obec", "okrsek", "typzastup", "cobvodu"),
     ),
     Table(
         "komunalni_okrsky_hlasy",
@@ -297,6 +314,7 @@ schema = [
         Column("posl_kand", SmallInteger, nullable=True),
         Column("kc_sum", Integer, nullable=True),
         Column("hlasy", array_ish, nullable=True),
+        UniqueConstraint("datum", "okres", "obec", "okrsek", "typzastup", "por_str_hl"),
     ),
     Table(
         "kraje_kandidati",
@@ -323,6 +341,7 @@ schema = [
         Column("poradimand", SmallInteger, nullable=True),
         Column("poradinahr", SmallInteger, nullable=True),
         Column("poradihahr", SmallInteger, nullable=True),
+        UniqueConstraint("datum", "krzast", "kstrana", "porcislo"),
     ),
     Table(
         "kraje_strany_cr",
@@ -342,6 +361,7 @@ schema = [
         Column("nazevplny", Text, nullable=True),
         Column("platnost", Text, nullable=True),
         Column("slozneplat", Text, nullable=True),
+        UniqueConstraint("datum", "kstrana"),
     ),
     Table(
         "kraje_strany_navrhujici",
@@ -351,6 +371,7 @@ schema = [
         Column("nazev_strn", Text, nullable=False),
         Column("zkratkan30", Text, nullable=False),
         Column("zkratkan8", Text, nullable=False),
+        UniqueConstraint("datum", "nstrana"),
     ),
     Table(
         "kraje_strany_kraje",
@@ -369,6 +390,7 @@ schema = [
         Column("plat_str", Text, nullable=True),
         Column("platnost", Text, nullable=True),
         Column("slozneplat", Text, nullable=True),
+        UniqueConstraint("datum", "krzast", "kstrana"),
     ),
     Table(
         "kraje_obce",
@@ -382,6 +404,7 @@ schema = [
         Column("nazevobce", Text, nullable=False),
         Column("krzast", SmallInteger, nullable=False),
         Column("obec_prez", Integer, nullable=True),
+        UniqueConstraint("datum", "kraj", "okres", "obec"),
     ),
     Table(
         "kraje_okrsky_prehled",
@@ -401,6 +424,7 @@ schema = [
         Column("pl_hl_celk", SmallInteger, nullable=False),
         Column("kc_2", Integer, nullable=False),
         Column("zakrstrana", bitmap_ish(99), nullable=False),
+        UniqueConstraint("datum", "okres", "obec", "okrsek"),
     ),
     Table(
         "kraje_okrsky_hlasy",
@@ -423,6 +447,7 @@ schema = [
         Column("posl_kand", SmallInteger, nullable=False),
         Column("kc_sum", Integer, nullable=False),
         Column("hlasy", array_ish, nullable=False),
+        UniqueConstraint("datum", "okres", "obec", "okrsek", "kstrana"),
     ),
     Table(
         "ep_kandidati",
@@ -448,6 +473,7 @@ schema = [
         Column("mandat", String(1), nullable=True),
         Column("poradimand", SmallInteger, nullable=True),
         Column("poradinahr", SmallInteger, nullable=True),
+        UniqueConstraint("datum", "estrana", "porcislo"),
     ),
     Table(
         "ep_strany",
@@ -467,6 +493,7 @@ schema = [
         Column("slozneplat", String(40), nullable=True),
         Column("pocmandcr", SmallInteger, nullable=False),
         Column("nazevplny", Text, nullable=True),
+        UniqueConstraint("datum", "estrana"),
     ),
     Table(
         "ep_okrsky_prehled",
@@ -486,6 +513,7 @@ schema = [
         Column("vyd_obalky", SmallInteger, nullable=True),
         Column("odevz_obal", SmallInteger, nullable=True),
         Column("pl_hl_celk", SmallInteger, nullable=True),
+        UniqueConstraint("datum", "okres", "obec", "okrsek"),
     ),
     Table(
         "ep_okrsky_hlasy",
@@ -507,6 +535,7 @@ schema = [
         Column("posl_kand", SmallInteger, nullable=True),
         Column("kc_sum", Integer, nullable=True),
         Column("hlasy", array_ish, nullable=True),
+        UniqueConstraint("datum", "okres", "obec", "okrsek", "estrana"),
     ),
     Table(
         "senat_kandidati",
@@ -537,6 +566,7 @@ schema = [
         Column("zvolen_k2", SmallInteger, nullable=False),
         Column("los_k2", SmallInteger, nullable=False),
         Column("nazev_vs", Text, nullable=False),
+        UniqueConstraint("datum", "obvod", "ckand"),
     ),
     Table(
         "senat_obvody",
@@ -547,6 +577,7 @@ schema = [
         Column("okres", Text, nullable=False),
         Column("prvni_vo", Text, nullable=False),
         Column("platnost", Text, nullable=False),
+        UniqueConstraint("datum", "obvod"),
     ),
     Table(
         "senat_okrsky",
@@ -569,7 +600,9 @@ schema = [
         Column("kc_4", Integer, nullable=False),
         Column("posl_kand", SmallInteger, nullable=False),
         Column("kc_sum", Integer, nullable=False),
+        # TODO: k cemu ten index?
         Column("hlasy", array_ish, nullable=False, index=True),
+        UniqueConstraint("datum", "obec", "okrsek", "obvod", "kolo"),
     ),
 ]
 
