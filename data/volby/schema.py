@@ -102,6 +102,7 @@ schema = [
         Column("pocproc", Numeric(5, 2), nullable=True),
         Column("pocprocvse", Numeric(5, 2), nullable=True),
         Column("mandat", String(1), nullable=True),
+        Column("skrutinium", SmallInteger, nullable=True),
         Column("poradimand", SmallInteger, nullable=True),
         Column("poradinahr", SmallInteger, nullable=True),
         UniqueConstraint("datum", "volkraj", "kstrana", "porcislo"),

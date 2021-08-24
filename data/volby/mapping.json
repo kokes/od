@@ -99,6 +99,10 @@
                 "https://www.volby.cz/opendata/ps2017nss/PS2017reg20171122.zip",
                 "https://www.volby.cz/opendata/ps2017nss/PS2017ciselniky20170905.zip",
                 "https://volby.cz/opendata/ps2017nss/PS2017data20171122.zip"
+            ],
+            "2021-10-08": [
+                "https://www.volby.cz/opendata/ps2021/PS2021ciselniky20210824.zip",
+                "https://www.volby.cz/opendata/ps2021/PS2021reg20210824.zip"
             ]
         },
         "ds": {
@@ -127,6 +131,7 @@
                     "POCPROC",
                     "POCPROCVSE",
                     "MANDAT",
+                    "SKRUTINIUM",
                     "PORADIMAND",
                     "PORADINAHR"
                 ]
