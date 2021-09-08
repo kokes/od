@@ -3,7 +3,7 @@ import gzip
 import json
 import os
 import re
-from datetime import date
+import datetime as dt
 from urllib.request import urlopen
 
 import lxml.etree
@@ -58,7 +58,7 @@ def uprav_data(row, mapping):
         if not row[col]:
             continue
         den, mesic, rok = NON_ISO_DATUM.match(row[col]).groups()
-        row[col] = date(int(rok), int(mesic), int(den))
+        row[col] = dt.date(int(rok), int(mesic), int(den))
 
     return row
 
@@ -74,10 +74,13 @@ def main(outdir: str, partial: bool = False):
     url_pl = 'https://dataor.justice.cz/api/3/action/package_list'
 
     r = urlopen(url_pl)
-    dt = json.load(r)
-    assert dt['success']
+    data = json.load(r)
+    assert data['success']
 
-    dss = [ds for ds in dt['result'] if '-full-' in ds]
+    dss = [ds for ds in data['result'] if '-full-' in ds]
+    print(f"celkem {len(dss)} datasetu, ale filtruji jen na ty letosni")
+    dss = [j for j in dss if int(j.rpartition("-")[-1]) == dt.date.today().year]
+    print(f"po odfiltrovani {len(dss)} datasetu")
     dss.sort(key=lambda x: int(x.rpartition('-')[-1]), reverse=True)
 
     urls = []
