@@ -12,7 +12,6 @@ from itertools import zip_longest
 from tempfile import TemporaryDirectory
 from urllib.request import urlopen, urlretrieve
 
-import xlrd
 from lxml.etree import iterparse
 from openpyxl import load_workbook
 
@@ -24,13 +23,6 @@ def predatuj(s):
 
     d, m, y = map(int, s.split('.'))
     return f'{y}-{m:02d}-{d:02d}'
-
-def intify(s):
-    if isinstance(s, str) and len(s) == 0:
-        return None
-    
-    assert s == int(s)
-    return int(s)
 
 
 def find_el(el, path):
@@ -101,27 +93,27 @@ def prehled_2014_2020(outdir: str, partial: bool = False):
     with open(os.path.join(cdir, 'hlavicka1420.json'), encoding='utf8') as f:
         hd = json.load(f)
 
-    # source_url = 'https://dotaceeu.cz/getmedia/15745468-87e0-4b13-8791-08e55d90ddb7/2020_04_Seznam-operaci-_-List-of-operations2.xls.aspx?ext=.xls'
-    source_url = 'https://dotaceeu.cz/getmedia/6043cc3d-ca8c-4866-ba4a-25d0184d1269/2021_02-Seznam-operaci-_List-of-operations_1.xls.aspx?ext=.xls'
+    source_url = 'https://dotaceeu.cz/getmedia/47884143-6367-4ab3-ae32-d4a45b9d5ad5/2021_09_Seznam-operaci-_-List-of-operations.xlsx.aspx?ext=.xlsx'
     print(f'Stahuji z seznam operací z {source_url}, ale nemusí to být nejaktuálnější export - překontroluj stránku https://dotaceeu.cz/cs/statistiky-a-analyzy/seznamy-prijemcu')
     with TemporaryDirectory() as tmpdir:
-        target_filename = os.path.join(tmpdir, "workbook.xls")
+        target_filename = os.path.join(tmpdir, "workbook.xlsx")
         urlretrieve(source_url, target_filename)
 
-        wb = xlrd.open_workbook(target_filename)
-        sh = wb.sheet_by_name('Seznam operací')
+        wb = load_workbook(target_filename)
+        sh = wb.active
+        assert sh.title == 'Seznam operací'
+        rows = sh.iter_rows()
+        next(rows), next(rows) # nadpis, datum generovani
 
-        fr = [j.value.strip() for j in sh.row(2)]
+        fr = [j.value.strip() for j in next(rows) if j.value is not None]
         assert fr == hd['ocekavane'],  [(a, b) for a,b in zip_longest(fr, hd['ocekavane']) if a != b]
+        next(rows) # anglicky nazvy
 
         with open(os.path.join(outdir, 'prehled_2014_2020.csv'), 'w', encoding='utf8') as fw:
             cw = csv.writer(fw)
             cw.writerow(hd['hlavicka'])
-            for j in range(6, sh.nrows):
-                row = [l.value for l in sh.row(j)]
-
-                row[6] = intify(row[6]) # ICO
-                row[8] = intify(row[8]) # PSC
+            for rrow in rows:
+                row = [rrow[j].value for j in range(len(hd['hlavicka']))]
 
                 for cl in [9, 10, 11]:
                     row[cl] = predatuj(row[cl])
