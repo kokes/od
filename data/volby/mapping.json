@@ -101,9 +101,9 @@
                 "https://volby.cz/opendata/ps2017nss/PS2017data20171122.zip"
             ],
             "2021-10-08": [
-                "https://www.volby.cz/opendata/ps2021/PS2021ciselniky20210824.zip",
-                "https://www.volby.cz/opendata/ps2021/PS2021reg20210824.zip",
-                "https://www.volby.cz/opendata/ps2021/PS2021_data_20211009_xml.zip"
+                "https://www.volby.cz/opendata/ps2021/PS2021ciselniky20211006.zip",
+                "https://www.volby.cz/opendata/ps2021/PS2021reg20211010.zip",
+                "https://www.volby.cz/opendata/ps2021/PS2021_data_20211010_xml.zip"
             ]
         },
         "ds": {
