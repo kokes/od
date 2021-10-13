@@ -16,7 +16,7 @@ from tqdm import tqdm
 urls = {
     2010: 'https://www.psp.cz/eknih/2010ps/stenprot/zip/index.htm',
     2013: 'https://www.psp.cz/eknih/2013ps/stenprot/zip/index.htm',
-    2017: 'https://www.psp.cz/eknih/2017ps/stenprot/zip/'
+    2017: 'https://www.psp.cz/eknih/2017ps/stenprot/zip/',
 }
 
 
@@ -136,3 +136,6 @@ def main(outdir: str, partial: bool = False):
         ' jejich funkce doplnit do souboru pozice.txt\n')
     for (fn, jm), num in sorted(lnm.items(), key=lambda x: (x[0][0], x[0][1])):
         print('Funkce: {}, jméno: {} ({})'.format(fn, jm, num))
+
+if __name__ == "__main__":
+    main(".")
