@@ -47,12 +47,18 @@ def main(outdir: str, partial: bool = False):
                 with open(target, "wt", encoding="utf-8") as fw:
                     cw = csv.DictWriter(fw, fieldnames=cr.fieldnames)
                     cw.writeheader()
+                    nullable = set()
                     for line in cr:
+                        for k, v in line.items():
+                            if not v:
+                                nullable.add(k)
                         # cannot use this now because there are many many ambiguities
                         # for k, v in line.items():
                         #     if k.endswith("_date") and v:
                         #         line[k] = isofy(v)
-                        cw.writerow(line)
+                        # cw.writerow(line) # TODO(PR): uncomment
+
+                    print(member.filename, nullable)
 
 
 if __name__ == "__main__":
