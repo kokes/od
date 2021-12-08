@@ -59,6 +59,7 @@ if __name__ == "__main__":
         "udhpsh",
         "res",
         "ares",  # schvalne na konci, protoze nacita hodne dat
+        "icij",
     ]
     if args.modules:
         module_names = args.modules
