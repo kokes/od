@@ -56,10 +56,10 @@ def main(outdir: str, partial: bool = False):
                         # for k, v in line.items():
                         #     if k.endswith("_date") and v:
                         #         line[k] = isofy(v)
-                        # cw.writerow(line) # TODO(PR): uncomment
+                        cw.writerow(line)
 
                     print(member.filename, nullable)
 
 
 if __name__ == "__main__":
-    main("csv") # TODO(PR): fix
+    main(".")

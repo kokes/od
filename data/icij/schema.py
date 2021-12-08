@@ -8,8 +8,6 @@ from sqlalchemy.sql.sqltypes import BigInteger, Integer, Numeric, Text
 
 meta = MetaData()
 
-# TODO(PR): black etc.
-
 schema = [
     Table(
         "addresses",
