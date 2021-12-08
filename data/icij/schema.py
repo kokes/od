@@ -1,12 +1,10 @@
 from typing import Text
-from sqlalchemy import (
-    Table,
-    Column,
-    MetaData,
-)
-from sqlalchemy.sql.sqltypes import BigInteger, Integer, Numeric, Text
+
+from sqlalchemy import Column, MetaData, Table
+from sqlalchemy.sql.sqltypes import BigInteger, Date, Integer, Text
 
 meta = MetaData()
+
 
 schema = [
     Table(
@@ -35,10 +33,10 @@ schema = [
         Column("company_type", Text, nullable=True),
         Column("address", Text, nullable=True),
         Column("internal_id", Text, nullable=True),
-        Column("incorporation_date", Text, nullable=True),
-        Column("inactivation_date", Text, nullable=True),
-        Column("struck_off_date", Text, nullable=True),
-        Column("dorm_date", Text, nullable=True),
+        Column("incorporation_date", Date, nullable=True),
+        Column("inactivation_date", Date, nullable=True),
+        Column("struck_off_date", Date, nullable=True),
+        Column("dorm_date", Date, nullable=True),
         Column("status", Text, nullable=True),
         Column("service_provider", Text, nullable=True),
         Column("ibcRUC", Text, nullable=True),
@@ -82,9 +80,9 @@ schema = [
         Column("node_id", BigInteger, nullable=False),
         Column("name", Text, nullable=False),
         Column("type", Text, nullable=True),
-        Column("incorporation_date", Text, nullable=True),
-        Column("struck_off_date", Text, nullable=True),
-        Column("closed_date", Text, nullable=True),
+        Column("incorporation_date", Date, nullable=True),
+        Column("struck_off_date", Date, nullable=True),
+        Column("closed_date", Date, nullable=True),
         Column("jurisdiction", Text, nullable=True),
         Column("jurisdiction_description", Text, nullable=True),
         Column("countries", Text, nullable=True),
