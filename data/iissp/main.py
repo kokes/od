@@ -49,7 +49,7 @@ def main(outdir: str, partial: bool = False):
                 continue
 
             for datecol in dates:
-                if (not row[datecol] or row[datecol] == '00000000'):
+                if (not row[datecol] or row[datecol] == '00000000' or row[datecol] == '9999-12-31'):
                     row[datecol] = None
                     continue
 
