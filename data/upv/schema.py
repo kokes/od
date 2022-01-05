@@ -1,6 +1,5 @@
-from sqlalchemy import Table, MetaData, Column
-from sqlalchemy.sql.sqltypes import Date, Integer, Text, JSON
-
+from sqlalchemy import Column, MetaData, Table
+from sqlalchemy.sql.sqltypes import JSON, Date, Integer, Text
 
 meta = MetaData()
 
@@ -27,7 +26,8 @@ schema = [
     ),
 ]
 # TODO: pridat nejak
-# CREATE INDEX trgm_verbal_idx ON upv.inserts USING gist (mark_verbal_element gist_trgm_ops);
+# CREATE INDEX trgm_verbal_idx ON upv.inserts USING gist
+# (mark_verbal_element gist_trgm_ops);
 
 if __name__ == "__main__":
     from sqlalchemy import create_engine

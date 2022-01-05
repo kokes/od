@@ -1,5 +1,3 @@
-from typing import Text
-
 from sqlalchemy import Column, MetaData, Table
 from sqlalchemy.sql.sqltypes import BigInteger, Date, Integer, Text
 

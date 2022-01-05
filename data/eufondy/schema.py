@@ -40,7 +40,7 @@ schema = [
         Column("ico", Integer, nullable=True, index=True),
         Column("projekt", Text, nullable=False),
         Column("operacni_program", Text, nullable=False),
-        Column("fond_eu", Text, nullable=False),  #  -- TODO: enum
+        Column("fond_eu", Text, nullable=False),  # -- TODO: enum
         Column("datum_alokace", Date, nullable=False),
         Column("castka_alokovana", Numeric(14, 2), nullable=False),
         Column("datum_platby", Date, nullable=True),

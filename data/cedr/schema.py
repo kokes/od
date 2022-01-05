@@ -1,16 +1,14 @@
 from sqlalchemy import (
-    Table,
-    Column,
-    MetaData,
-    Text,
-    Integer,
     Boolean,
-    String,
+    Column,
     DateTime,
-    SmallInteger,
-    Numeric,
-    ForeignKey,
     Integer,
+    MetaData,
+    Numeric,
+    SmallInteger,
+    String,
+    Table,
+    Text,
 )
 
 meta = MetaData()
@@ -22,7 +20,7 @@ schema = [
         Column("idDotace", String(40), primary_key=True),
         Column(
             "idPrijemce", Integer, nullable=True, index=True
-        ),  #  -- TODO: not null nemuzem, co?
+        ),  # -- TODO: not null nemuzem, co?
         # TODO: projit vsechny, jestli fakt musej bejt nullable
         Column("projektKod", Text, nullable=True),
         Column("podpisDatum", DateTime, nullable=True),
@@ -50,7 +48,9 @@ schema = [
         "rozhodnuti",
         meta,
         Column("idRozhodnuti", String(40), primary_key=True),
-        Column("idDotace", String(40), index=True),  # TODO: ForeignKey("dotace.idDotace"), vypusteno kvuli --partial
+        Column(
+            "idDotace", String(40), index=True
+        ),  # TODO: ForeignKey("dotace.idDotace"), vypusteno kvuli --partial
         Column("castkaPozadovana", Numeric(14, 2)),
         Column("castkaRozhodnuta", Numeric(14, 2)),
         Column("iriPoskytovatelDotace", Text, nullable=True),
@@ -67,7 +67,9 @@ schema = [
         "rozpoctoveobdobi",
         meta,
         Column("idObdobi", String(40), primary_key=True),
-        Column("idRozhodnuti", String(40), index=True),  # TODO: ForeignKey("rozhodnuti.idRozhodnuti"), vypusteno kvuli --partial
+        Column(
+            "idRozhodnuti", String(40), index=True
+        ),  # TODO: ForeignKey("rozhodnuti.idRozhodnuti"), vypusteno kvuli --partial
         Column("castkaCerpana", Numeric(14, 2), nullable=True),
         Column("castkaUvolnena", Numeric(14, 2), nullable=True),
         Column("castkaVracena", Numeric(14, 2), nullable=True),

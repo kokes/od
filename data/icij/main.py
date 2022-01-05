@@ -22,6 +22,8 @@ processable_dates = {
 }
 
 # convert a date-like string into an ISO-8601-formatted string
+
+
 def isofy(v: str) -> str:
     # convert 06-JAN-2006 into ISO-8601
     if v[2] == "-":
@@ -47,7 +49,8 @@ def main(outdir: str, partial: bool = False):
                 tr = TextIOWrapper(f)
                 cr = csv.DictReader(tr)
                 target = os.path.join(outdir, member.filename.replace("nodes-", ""))
-                # this is now slightly redundant, because we could just use .extract as before,
+                # this is now slightly redundant, because we could
+                # just use .extract as before,
                 # but we have this in place in case ICIJ fixes their date issues
                 with open(target, "wt", encoding="utf-8") as fw:
                     cw = csv.DictWriter(fw, fieldnames=cr.fieldnames)

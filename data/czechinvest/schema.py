@@ -1,4 +1,4 @@
-from sqlalchemy import Table, Column, MetaData
+from sqlalchemy import Column, MetaData, Table
 from sqlalchemy.sql.sqltypes import Boolean, Integer, Numeric, SmallInteger, Text
 
 meta = MetaData()

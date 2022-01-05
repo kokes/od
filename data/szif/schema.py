@@ -1,9 +1,4 @@
-from typing import Text
-from sqlalchemy import (
-    Table,
-    Column,
-    MetaData,
-)
+from sqlalchemy import Column, MetaData, Table
 from sqlalchemy.sql.sqltypes import BigInteger, Integer, Numeric, Text
 
 meta = MetaData()

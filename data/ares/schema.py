@@ -1,12 +1,5 @@
-from sqlalchemy import Table, Column, MetaData
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.sql.sqltypes import (
-    Date,
-    Text,
-    Time,
-    Integer,
-    JSON,
-)
+from sqlalchemy import Column, MetaData, Table
+from sqlalchemy.sql.sqltypes import JSON, Date, Integer, Text, Time
 
 meta = MetaData()
 
@@ -60,8 +53,8 @@ schema = [
 
 
 if __name__ == "__main__":
-    from sqlalchemy.schema import CreateTable
     from sqlalchemy.dialects import postgresql
+    from sqlalchemy.schema import CreateTable
 
     for table in schema:
         print(f"-- {table.name} as created in Postgres")

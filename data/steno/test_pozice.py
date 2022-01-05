@@ -1,7 +1,8 @@
-import os
 import csv
+import os
 
 from main import depozicuj
+
 
 def test_depozicovani():
     cdir = os.path.dirname(os.path.abspath(__file__))

@@ -1,12 +1,12 @@
 from sqlalchemy import (
-    Table,
-    Column,
-    MetaData,
-    Text,
     BigInteger,
-    SmallInteger,
+    Column,
     Date,
     Integer,
+    MetaData,
+    SmallInteger,
+    Table,
+    Text,
 )
 
 meta = MetaData()
@@ -20,24 +20,24 @@ schema = [
         Column("ico", Integer, nullable=False),
         Column("start_date", Date, nullable=False),
         Column("end_date", Date, nullable=True),
-        Column("nazev", Text, nullable=True),  #  -- fakt to tam obcas chybi
+        Column("nazev", Text, nullable=True),  # -- fakt to tam obcas chybi
         Column("dic", Text, nullable=True),
         Column("adresa", Text, nullable=False),
         Column("nuts_id", Text, nullable=True),
         Column(
             "zrizovatel_id", BigInteger, nullable=True
-        ),  #  -- references(csuis_ucjed_id),
+        ),  # -- references(csuis_ucjed_id),
         Column("zrizovatel_ico", BigInteger, nullable=True),
-        Column("cofog_id", SmallInteger, nullable=True),  #  -- nullif == 0?
-        Column("isektor_id", SmallInteger, nullable=True),  #  -- nullif == 0?
-        Column("kapitola_id", SmallInteger, nullable=True),  #  -- nullif == 0?
+        Column("cofog_id", SmallInteger, nullable=True),  # -- nullif == 0?
+        Column("isektor_id", SmallInteger, nullable=True),  # -- nullif == 0?
+        Column("kapitola_id", SmallInteger, nullable=True),  # -- nullif == 0?
         Column("nace_id", Integer, nullable=True),
         Column("druhuj_id", SmallInteger, nullable=True),
         Column("poddruhuj_id", SmallInteger, nullable=True),
         Column("konecplat", Date, nullable=True),
         Column(
             "forma_id", Text, nullable=True
-        ),  #  -- ma byt short/int, ale občas to má jiný hodnoty
+        ),  # -- ma byt short/int, ale občas to má jiný hodnoty
         Column("katobyv_id", SmallInteger, nullable=False),
         Column("stat_id", SmallInteger, nullable=True),
         Column("zdrojfin_id", SmallInteger, nullable=True),

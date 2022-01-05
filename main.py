@@ -3,10 +3,9 @@ import csv
 import os
 import shutil
 from collections import defaultdict
-import sys
 from importlib import import_module
 
-from sqlalchemy import create_engine, Boolean
+from sqlalchemy import Boolean, create_engine
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -14,7 +13,10 @@ if __name__ == "__main__":
         "--connstring", type=str, help="connection string pro databazi tve volby"
     )
     parser.add_argument(
-        "--schema_prefix", type=str, default="", help="prefix pro nazvy schemat (postgres) ci tabulek (sqlite)"
+        "--schema_prefix",
+        type=str,
+        default="",
+        help="prefix pro nazvy schemat (postgres) ci tabulek (sqlite)",
     )
     parser.add_argument(
         "--partial",
@@ -65,8 +67,10 @@ if __name__ == "__main__":
         module_names = args.modules
     modules = {}
     schemas = {}
-    # TODO: copy commands (or perhaps after `module(outdir)`? List that dir, open csv, do an executemany)
-    # also make sure we TRUNCATE each table before we insert into it (because we may have skipped the CREATE part)
+    # TODO: copy commands (or perhaps after `module(outdir)`? List that dir,
+    # open csv, do an executemany)
+    # also make sure we TRUNCATE each table before we insert into it (because
+    # we may have skipped the CREATE part)
 
     for module in module_names:
         modules[module] = import_module(f"data.{module}.main").main
@@ -87,13 +91,15 @@ if __name__ == "__main__":
         if engine:
             table_loads = defaultdict(list)
             for table in schemas[module_name]:
-                fn_cand = os.path.join(outdir, table.name+".csv")
+                fn_cand = os.path.join(outdir, table.name + ".csv")
                 dir_cand = os.path.join(outdir, table.name)
                 if os.path.isfile(fn_cand):
                     table_loads[(module_name, table.name)].append(fn_cand)
                 elif os.path.isdir(dir_cand):
                     for basename in os.listdir(dir_cand):
-                        table_loads[(module_name, table.name)].append(os.path.join(dir_cand, basename))
+                        table_loads[(module_name, table.name)].append(
+                            os.path.join(dir_cand, basename)
+                        )
                 else:
                     raise IOError(f"neexistujou data pro {module_name}.{table.name}")
 
@@ -109,17 +115,21 @@ if __name__ == "__main__":
 
                     conn = engine.raw_connection()
                     cur = conn.cursor()
-                    cur.execute(f"TRUNCATE {full_table_name} CASCADE")  # TODO: cascade yolo
+                    cur.execute(
+                        f"TRUNCATE {full_table_name} CASCADE"
+                    )  # TODO: cascade yolo
                     for filename in files:
                         with open(filename, "rt", encoding="utf-8") as f:
-                            cur.copy_expert(f"COPY {full_table_name} FROM stdin WITH CSV HEADER", f)
+                            cur.copy_expert(
+                                f"COPY {full_table_name} FROM stdin WITH CSV HEADER", f
+                            )
                     conn.commit()  # TODO: proc nejde context manager? starej psycopg?
                 elif engine.name == "sqlite":
                     table.name = f"{args.schema_prefix}{module_name}_{table.name}"
                     table.create(engine, checkfirst=True)  # TODO: drop first?
                     conn = engine.raw_connection()
 
-                    ph = ", ".join(["?"]*len(table.columns))
+                    ph = ", ".join(["?"] * len(table.columns))
                     query = f"INSERT INTO {table.name} VALUES({ph})"
                     bools = [isinstance(j.type, Boolean) for j in table.columns]
                     for filename in files:
@@ -128,7 +138,10 @@ if __name__ == "__main__":
                             cr = csv.reader(f)
                             next(cr)  # header
                             for row in cr:
-                                row = [bool(el) if bools[j] and el != "" else el for j, el in enumerate(row)]
+                                row = [
+                                    bool(el) if bools[j] and el != "" else el
+                                    for j, el in enumerate(row)
+                                ]
                                 row = [None if j == "" else j for j in row]
                                 buffer.append(row)
                                 if len(buffer) == 100:

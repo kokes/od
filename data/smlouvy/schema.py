@@ -1,12 +1,11 @@
-from sqlalchemy import Column, MetaData, Table, ForeignKey
-from sqlalchemy.dialects import postgresql
+from sqlalchemy import Column, MetaData, Table
 from sqlalchemy.sql.sqltypes import (
     Boolean,
     Date,
     DateTime,
     Integer,
-    String,
     Numeric,
+    String,
     Text,
 )
 
@@ -34,7 +33,9 @@ schema = [
         meta,
         Column("zdroj", String(7), nullable=False),  # 2018-07
         # TODO: on delete cascade? nebo budem mazat podle zdroje?
-        Column("smlouva", Integer),  # TODO: ForeignKey("smlouvy.id_verze"), odstraneno kvuli --partial
+        Column(
+            "smlouva", Integer
+        ),  # TODO: ForeignKey("smlouvy.id_verze"), odstraneno kvuli --partial
         Column("subjekt", Boolean, nullable=False),
         Column("ds", Text, nullable=True),  # TODO: char? datovka
         Column("nazev", Text, nullable=True),

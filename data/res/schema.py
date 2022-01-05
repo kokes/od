@@ -1,10 +1,5 @@
-from sqlalchemy import Table, Column, MetaData
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.sql.sqltypes import (
-    Date,
-    Integer,
-    Text,
-)
+from sqlalchemy import Column, MetaData, Table
+from sqlalchemy.sql.sqltypes import Date, Integer, Text
 
 meta = MetaData()
 
@@ -43,7 +38,8 @@ schema = [
         ),  # Převažující činnost (statistická) dle klasifikace ČSÚ (80004)
         Column(
             "ic_zuj", Text, nullable=True
-        ),  # Identifikační číslo základní územní jednotky sídla organizace dle číselníku ČSÚ (51)
+        ),  # Identifikační číslo základní územní jednotky sídla organizace dle
+        # číselníku ČSÚ (51)
         Column("firma", Text, nullable=True),  # Firma, název (jméno)
         Column(
             "esa2010", Text, nullable=True
@@ -72,7 +68,11 @@ schema = [
         ),  # Datum platnosti dat ve formátu YYYY-MM-DD
         Column(
             "priznak", Text, nullable=True
-        ),  # Vyjadřuje změnu oproti minulému stavu: P = přírůstek záznamu oproti minulému stavu (může být i znovuobnovení IČO po více než 48 měsících, např. IČO zaniklo v 2015-07 a znovu obnovilo činnost 2021-07-18 => dostane v dávce k 31.7.2021 příznak P, neboť z výstupů vypadl již v červenci 2019), Z = změna v záznamu oproti minulému stavu
+        ),  # Vyjadřuje změnu oproti minulému stavu: P = přírůstek záznamu oproti
+        # minulému stavu (může být i znovuobnovení IČO po více než 48 měsících,
+        # např. IČO zaniklo v 2015-07 a znovu obnovilo činnost 2021-07-18 =>
+        # dostane v dávce k 31.7.2021 příznak P, neboť z výstupů vypadl již
+        # v červenci 2019), Z = změna v záznamu oproti minulému stavu
     ),
     Table(
         # https://opendata.czso.cz/data/od_org03/res_pf_nace-metadata.json
@@ -92,14 +92,19 @@ schema = [
         ),  # Datum aktualizace záznamu ve formátu YYYY-MM-DD
         Column(
             "priznak", Text, nullable=True
-        ),  # Vyjadřuje změnu oproti minulému stavu: P = přírůstek záznamu oproti minulému stavu (může být i znovuobnovení IČO po více než 48 měsících, např. IČO zaniklo v 2015-07 a znovu obnovilo činnost 2021-07-18 => dostane v dávce k 31.7.2021 příznak P, neboť z výstupů vypadl již v červenci 2019), Z = změna v záznamu oproti minulému stavu
+        ),  # Vyjadřuje změnu oproti minulému stavu: P = přírůstek záznamu
+        # oproti minulému stavu (může být i znovuobnovení IČO po více než
+        # 48 měsících, např. IČO zaniklo v 2015-07 a znovu obnovilo
+        # činnost 2021-07-18 => dostane v dávce k 31.7.2021 příznak P,
+        # neboť z výstupů vypadl již v červenci 2019), Z = změna v
+        # záznamu oproti minulému stavu
     ),
 ]
 
 
 if __name__ == "__main__":
-    from sqlalchemy.schema import CreateTable
     from sqlalchemy.dialects import postgresql
+    from sqlalchemy.schema import CreateTable
 
     for table in schema:
         print(f"-- {table.name} as created in Postgres")

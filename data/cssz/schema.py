@@ -1,5 +1,5 @@
-from sqlalchemy import Table, Column, MetaData
-from sqlalchemy.sql.sqltypes import Date, Text, Integer, Numeric
+from sqlalchemy import Column, MetaData, Table
+from sqlalchemy.sql.sqltypes import Date, Integer, Numeric, Text
 
 meta = MetaData()
 
@@ -474,7 +474,8 @@ schema = [
     #     Column("pohlavi_kod", Text, primary_key=True),
     #     Column("pohlavi", Text, primary_key=False),
     #     Column("referencni_obdobi", Text, primary_key=True),
-    #     Column("prumerna_vyse_ovz_u_nove_priznanych_duchodu", Text, primary_key=False),
+    #     Column("prumerna_vyse_ovz_u_nove_"
+    #            "priznanych_duchodu", Text, primary_key=False),
     # ),
     Table(
         "prumerny_plat_v_cssz",

@@ -1,5 +1,5 @@
-from sqlalchemy import Table, Column, MetaData
-from sqlalchemy.sql.sqltypes import DateTime, Numeric, Integer, Text
+from sqlalchemy import Column, MetaData, Table
+from sqlalchemy.sql.sqltypes import DateTime, Integer, Numeric, Text
 
 meta = MetaData()
 

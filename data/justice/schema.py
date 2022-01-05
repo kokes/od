@@ -1,12 +1,5 @@
-from sqlalchemy import Table, Column, MetaData, ForeignKey
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.sql.sqltypes import (
-    BigInteger,
-    Boolean,
-    Date,
-    Numeric,
-    Text,
-)
+from sqlalchemy import Column, ForeignKey, MetaData, Table
+from sqlalchemy.sql.sqltypes import BigInteger, Boolean, Date, Numeric, Text
 
 meta = MetaData()
 
@@ -112,7 +105,7 @@ schema = [
         Column("datum_vymaz", Date, nullable=True),
         Column("typ", Text, nullable=True),
         Column("vklad_typ", Text, nullable=True),
-        Column("vklad_hodnota", Text, nullable=True),  #  -- obcas tam je pitomost
+        Column("vklad_hodnota", Text, nullable=True),  # -- obcas tam je pitomost
         Column("text", Text, nullable=True),
     ),
     Table(
@@ -178,7 +171,7 @@ schema = [
         Column("ico", ForeignKey("subjekty.ico")),
         Column("datum_zapis", Date, nullable=True),
         Column("datum_vymaz", Date, nullable=True),
-        Column("datum_vznik_prava", Text, nullable=True),  #  -- obcas tam je pitomost
+        Column("datum_vznik_prava", Text, nullable=True),  # -- obcas tam je pitomost
         Column("text", Text, nullable=True),
     ),
     Table(
@@ -196,11 +189,11 @@ schema = [
         Column("datum_zapis", Date, nullable=True),
         Column("datum_vymaz", Date, nullable=True),
         Column("vklad_typ", Text, nullable=True),
-        Column("vklad_hodnota", Text, nullable=True),  #  -- obcas tam je pitomost
+        Column("vklad_hodnota", Text, nullable=True),  # -- obcas tam je pitomost
         Column("souhrn_typ", Text, nullable=True),
-        Column("souhrn_hodnota", Text, nullable=True),  #  -- obcas tam je pitomost
+        Column("souhrn_hodnota", Text, nullable=True),  # -- obcas tam je pitomost
         Column("splaceni_typ", Text, nullable=True),
-        Column("splaceni_hodnota", Text, nullable=True),  #  -- obcas tam je pitomost
+        Column("splaceni_hodnota", Text, nullable=True),  # -- obcas tam je pitomost
         Column("druh_podilu", Text, nullable=True),
         Column("kmenovy_list", Text, nullable=True),
     ),
@@ -354,8 +347,8 @@ schema = [
 
 
 if __name__ == "__main__":
-    from sqlalchemy.schema import CreateTable
     from sqlalchemy.dialects import postgresql
+    from sqlalchemy.schema import CreateTable
 
     for table in schema:
         print(f"-- {table.name} as created in Postgres")

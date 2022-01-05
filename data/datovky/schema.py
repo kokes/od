@@ -1,12 +1,12 @@
 from sqlalchemy import (
-    Table,
-    Column,
-    MetaData,
     JSON,
     Boolean,
-    Text,
-    SmallInteger,
+    Column,
     Integer,
+    MetaData,
+    SmallInteger,
+    Table,
+    Text,
 )
 
 meta = MetaData()

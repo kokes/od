@@ -1,5 +1,4 @@
 from sqlalchemy import Column, MetaData, Table
-from sqlalchemy.dialects import postgresql
 from sqlalchemy.sql.sqltypes import (
     Boolean,
     Date,
