@@ -36,12 +36,11 @@ def isofy(v: str) -> str:
 
 
 def main(outdir: str, partial: bool = False):
-    # tmpf = NamedTemporaryFile()
-    # with closing(urlopen(url)) as rr:
-    #     shutil.copyfileobj(rr, tmpf)
+    tmpf = NamedTemporaryFile()
+    with closing(urlopen(url, timeout=60)) as rr:
+        shutil.copyfileobj(rr, tmpf)
 
-    # with ZipFile(tmpf.name) as zf:
-    with ZipFile("full-oldb-20211202.zip") as zf:
+    with ZipFile(tmpf.name) as zf:
         for member in zf.filelist:
             with zf.open(member) as f:
                 print(f"processing {member.filename}")
