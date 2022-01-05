@@ -15,7 +15,7 @@ import requests
 
 @lru_cache(maxsize=None)
 def dl(url):
-    r = requests.get(url)
+    r = requests.get(url, timeout=60)
     assert r.ok, r.status_code
     return BytesIO(r.content)
 

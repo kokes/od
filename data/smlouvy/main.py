@@ -7,6 +7,8 @@ from urllib.request import urlopen
 import lxml.etree
 from tqdm import tqdm
 
+HTTP_TIMEOUT = 60
+
 def strip_ns(el):
     return el.tag.rpartition('}')[-1]
 
@@ -31,7 +33,7 @@ def el_dict(el):
 
 def get_raw_data(partial: bool):
     url = 'https://data.smlouvy.gov.cz/'
-    with urlopen(url) as r:
+    with urlopen(url, timeout=HTTP_TIMEOUT) as r:
         et = lxml.etree.parse(r).getroot()
 
     keys = ['den', 'mesic', 'rok', 'hashDumpu', 'velikostDumpu', 'casGenerovani', 'dokoncenyMesic', 'odkaz']
@@ -45,7 +47,7 @@ def get_raw_data(partial: bool):
             continue
 
         fn = os.path.split(props['odkaz'])[-1]
-        with urlopen(props['odkaz']) as r:
+        with urlopen(props['odkaz'], timeout=HTTP_TIMEOUT) as r:
             yield fn.replace(".xml", ".csv"), r
 
 

@@ -94,7 +94,7 @@ def main(outdir: str, partial: bool = False):
     tdir = os.path.join(outdir, "datovky")
     os.makedirs(tdir, exist_ok=True)
     for ds, url in urls.items():
-        with urlopen(url) as r:
+        with urlopen(url, timeout=30) as r:
             assert r.headers.get('Content-Encoding') == 'gzip'
 
             with gzip.open(r) as gr:

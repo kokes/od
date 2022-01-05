@@ -11,7 +11,7 @@ def remote_csv(url):
     if not url.startswith('https://'):
         url = urljoin('https://cedropendata.mfcr.cz/c3lod/', url)
 
-    with urlopen(url) as r, gzip.open(r, 'rt') as f:
+    with urlopen(url, timeout=30) as r, gzip.open(r, 'rt') as f:
         cr = csv.DictReader((line.replace('\0', '') for line in f))
         yield from cr
 

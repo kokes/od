@@ -20,7 +20,7 @@ def main(outdir: str, partial: bool = False):
   if partial:
     query = query.replace("LIMIT 10000", "LIMIT 100")
 
-  r = urlopen(url.format(quote(query)))
+  r = urlopen(url.format(quote(query)), timeout=60)
   dt = json.load(r)
   rr = re.compile(r'\s+\(.+\)')
 

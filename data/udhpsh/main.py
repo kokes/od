@@ -3,6 +3,8 @@ import json
 import csv
 from urllib.request import urlopen
 
+HTTP_TIMEOUT = 60
+
 indices = {
     '2017': 'https://zpravy.udhpsh.cz/export/vfz2017-index.json',
     '2018': 'https://zpravy.udhpsh.cz/zpravy/vfz2018.json',
@@ -44,14 +46,14 @@ def main(outdir: str, partial: bool = False):
                 if partial and year not in years[-2:]:
                     continue
                 print(f'zpracovavam rok: {year}')
-                with urlopen(index) as r:
+                with urlopen(index, timeout=HTTP_TIMEOUT) as r:
                     dt = json.load(r)
 
                     for party in dt['parties']:
                         relfiles = [j['url'] for j in party['files']
                                     if j['subject'] == dataset and j['format'] == 'json']
                         for relfile in relfiles:
-                            for item in json.load(urlopen(relfile)):
+                            for item in json.load(urlopen(relfile, timeout=HTTP_TIMEOUT)):
                                 row = {mapping[k]: v for k, v in item.items()}
                                 cw.writerow({
                                     **row,

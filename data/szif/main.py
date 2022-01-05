@@ -27,7 +27,7 @@ def main(outdir: str, partial: bool = False):
         for rok_ds, url in urls.items():
             tmpf = NamedTemporaryFile()
 
-            with closing(urlopen(url)) as rr:
+            with closing(urlopen(url, timeout=60)) as rr:
                 shutil.copyfileobj(rr, tmpf)
 
             zf = ZipFile(tmpf.name)

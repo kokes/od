@@ -11,7 +11,7 @@ from tqdm import tqdm
 
 @lru_cache(maxsize=None)
 def req(url):
-    r = requests.get(url)
+    r = requests.get(url, timeout=60)
     assert r.ok
     return r
 

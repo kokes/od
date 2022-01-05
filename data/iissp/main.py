@@ -20,7 +20,7 @@ dates = 'start_date, end_date, konecplat, datumakt, datumvzniku'.split(', ')
 def main(outdir: str, partial: bool = False):
     target_file = os.path.join(outdir, f'{table_name}.csv')
     request = Request(url, headers={"Accept-Encoding": "gzip"})
-    with urlopen(request) as f, open(target_file, 'w', encoding='utf8') as fw:
+    with urlopen(request, timeout=60) as f, open(target_file, 'w', encoding='utf8') as fw:
         if f.info().get("Content-Encoding") == "gzip":
             f = gzip.GzipFile(fileobj=f)
 

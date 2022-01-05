@@ -10,6 +10,7 @@ import lxml.etree
 from tqdm import tqdm
 
 NON_ISO_DATUM = re.compile(r'^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$')
+HTTP_TIMEOUT = 60
 
 
 def gen_schema(element, parent=None):
@@ -64,7 +65,7 @@ def uprav_data(row, mapping):
 
 
 def nahraj_ds(url):
-    with urlopen(url) as r, gzip.GzipFile(fileobj=r) as f:
+    with urlopen(url, timeout=HTTP_TIMEOUT) as r, gzip.GzipFile(fileobj=r) as f:
         et = lxml.etree.iterparse(f)
         yield from et
 
@@ -73,7 +74,7 @@ def main(outdir: str, partial: bool = False):
     # package_list a package_list_compact se asi lisi - ten nekompaktni endpoint nejde filtrovat??? Tak to asi udelame na klientovi
     url_pl = 'https://dataor.justice.cz/api/3/action/package_list'
 
-    r = urlopen(url_pl)
+    r = urlopen(url_pl, timeout=HTTP_TIMEOUT)
     data = json.load(r)
     assert data['success']
 
@@ -88,7 +89,7 @@ def main(outdir: str, partial: bool = False):
         if partial and len(urls) > 20:
             break
         url = f'https://dataor.justice.cz/api/3/action/package_show?id={ds}'
-        r = urlopen(url)
+        r = urlopen(url, timeout=HTTP_TIMEOUT)
         dtp = json.load(r)
         assert dtp['success']
         ds_url = [j['url'] for j in dtp['result']

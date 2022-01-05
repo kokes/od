@@ -21,7 +21,7 @@ def load_remote_data(url: str):
     tfn = os.path.join(raw_dir, fn)
     if not os.path.isfile(tfn):
         req = Request(url, headers={'User-Agent': 'https://github.com/kokes/od'})
-        with urlopen(req) as r, open(tfn, 'wb') as fw:
+        with urlopen(req, timeout=60) as r, open(tfn, 'wb') as fw:
             shutil.copyfileobj(r, fw)
     
     zf = zipfile.ZipFile(tfn)

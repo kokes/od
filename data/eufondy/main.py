@@ -178,7 +178,7 @@ def opendata_2014_2020(outdir: str, partial: bool = False):
     with open(os.path.join(outdir, 'opendata_2014_2020.csv'), 'w', encoding='utf8') as fw:
         cw = csv.DictWriter(fw, fieldnames=sloupce)
         cw.writeheader()
-        r = urlopen('https://ms14opendata.mssf.cz/SeznamProjektu.xml')
+        r = urlopen('https://ms14opendata.mssf.cz/SeznamProjektu.xml', timeout=300)
         et = iterparse(r)
 
         for action, element in et:

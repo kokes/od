@@ -95,7 +95,7 @@ def vyrok(zf):
 def main(outdir: str, partial: bool = False):
     lnm = Counter()
     for rok, url in urls.items():
-        with urlopen(url) as r:
+        with urlopen(url, timeout=60) as r:
             ht = lxml.html.parse(r).getroot()
 
         with TemporaryDirectory() as tmpdir:

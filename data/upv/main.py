@@ -50,7 +50,7 @@ def extract(element, mapping):
 def main(outdir: str, partial: bool = False):
     burl = 'https://isdv.upv.cz/webapp/webapp.opendata.tm'
 
-    with urlopen(burl) as u:
+    with urlopen(burl, timeout=60) as u:
         ht = lxml.html.parse(u)
 
     lnks = [urljoin(burl, j.attrib['href']) for j in ht.findall('.//a')
