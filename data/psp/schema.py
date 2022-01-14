@@ -261,7 +261,7 @@ schema = [
         Column(
             "email",
             Text,
-            nullable=False,
+            nullable=True,
             comment="E-mailová adresa poslance, případně obecná posta@psp.cz.",
         ),
         Column(
