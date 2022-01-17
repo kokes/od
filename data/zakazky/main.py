@@ -2,6 +2,7 @@
 # - http://www.isvz.cz/ISVZ/MetodickaPodpora/Napovedaopendata.pdf
 
 import csv
+import datetime as dt
 import gzip
 import json
 import os
@@ -32,11 +33,15 @@ def najdi_typy(hd, typy):
 
 
 dtpt = re.compile(r"^\d{1,2}\.\d{1,2}\.\d{4}$")
+isodate = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
 
 
 def fix_date(s):
     if len(s) == 0:
         return None
+
+    if isodate.match(s) is not None:
+        return dt.date.fromisoformat(s).isoformat()
 
     if dtpt.match(s) is not None:
         d, m, y = map(int, s.split("."))
@@ -82,17 +87,18 @@ def read_url(url):
             yield iterdecode(gr, encoding="utf-8-sig")
 
 
+root_url = "https://isvz.nipez.cz/sites/default/files/content/opendata-predchozi/"
 url_sources = {
     "zzvz": (
-        "https://www.isvz.cz/ReportingSuite/Explorer/Download/Data/CSV/ZZVZ/{}",
+        root_url + "ODZZVZ/{}.csv",
         list(range(2016, 2021 + 1)),
     ),
     "vvz": (
-        "https://www.isvz.cz/ReportingSuite/Explorer/Download/Data/CSV/VVZ/{}",
+        root_url + "ODVVZ/{}.csv",
         list(range(2006, 2016 + 1)),
     ),
     "etrziste": (
-        "https://www.isvz.cz/ReportingSuite/Explorer/Download/Data/CSV/etrziste/{}",
+        root_url + "ODET/{}.csv",
         list(range(2012, 2017 + 1)),
     ),
 }
@@ -126,10 +132,14 @@ def main(outdir: str, partial: bool = False):
             with read_url(url) as resp:
                 cr = csv.reader(resp, delimiter=";")
 
-                for ln in cr:
-                    if len(ln) > 0 and ln[0] == mapping["hlavicka"]:
-                        assert len(next(cr)) == 0  # prazdny radek po hlavicce
-                        hd = tuple(next(cr))
+                for nrow, ln in enumerate(cr):
+                    if (len(ln) > 0 and ln[0] == mapping["hlavicka"]) or nrow == 0:
+                        if ln[0] == mapping["hlavicka"]:
+                            assert len(next(cr)) == 0  # prazdny radek po hlavicce
+                            hd = tuple(next(cr))
+                        else:
+                            # od 2021 nemaj některý soubory hlavičku
+                            hd = tuple(ln)
                         tpmap = najdi_typy(hd, mapping["typy"])
                         tp = tblmap[hd]  # document type
                         f = open(
@@ -140,6 +150,15 @@ def main(outdir: str, partial: bool = False):
 
                     if len(ln) == 0:
                         continue
+
+                    # TODO: az to opravi, tak tu exituj
+                    if len(hd) != len(ln):
+                        print(f"Necekane dlouha radka ({nrow}. v {url})")
+                        continue
+                        # with open("errs.csv", "a+") as ffw:
+                        #     ccw = csv.writer(ffw)
+                        #     ccw.writerow(ln)
+                        # continue
 
                     for k, v in tpmap.items():
                         for cln in v:
