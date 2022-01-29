@@ -1,0 +1,92 @@
+[
+  {
+    "filename": "ciselnikgrantoveschema.csv.gz",
+    "id": "iriGrantoveSchema",
+    "nazev": "grantoveSchemaNazev"
+  },
+  {
+    "filename": "ciselnikopatreni.csv.gz",
+    "id": "iriOpatreni",
+    "nazev": "opatreniNazev"
+  },
+  {
+    "filename": "ciselnikoperacniprogram.csv.gz",
+    "id": "iriOperacniProgram",
+    "nazev": "operacniProgramNazev"
+  },
+  {
+    "filename": "ciselnikpodprogram.csv.gz",
+    "id": "iriPodprogram",
+    "nazev": "podprogramNazev"
+  },
+  {
+    "filename": "ciselnikpodopatreni.csv.gz",
+    "id": "iriPodopatreni",
+    "nazev": "podOpatreniNazev"
+  },
+  {
+    "filename": "ciselnikpriorita.csv.gz",
+    "id": "iriPriorita",
+    "nazev": "prioritaNazev"
+  },
+  {
+    "filename": "ciselnikdotaceposkytovatel.csv.gz",
+    "id": "iriDotacePoskytovatel",
+    "nazev": "dotacePoskytovatelNazev"
+  },
+  {
+    "filename": "ciselnikfinancniprostredekcleneni.csv.gz",
+    "id": "iriFinancniProstredekCleneni",
+    "nazev": "financniProstredekCleneniNazev"
+  },
+  {
+    "filename": "ciselnikfinancnizdroj.csv.gz",
+    "id": "iriFinancniZdroj",
+    "nazev": "financniZdrojNazev"
+  },
+  {
+    "filename": "ciselnikrozpoctovaskladbaparagraf.csv.gz",
+    "id": "iriRozpoctovaSkladbaParagraf",
+    "nazev": "rozpoctovaSkladbaParagrafNazev"
+  },
+  {
+    "filename": "ciselnikrozpoctovaskladbapolozka.csv.gz",
+    "id": "iriRozpoctovaSkladbaPolozka",
+    "nazev": "rozpoctovaSkladbaPolozkaNazev"
+  },
+  {
+    "filename": "ciselnikstatnirozpocetkapitola.csv.gz",
+    "id": "iriStatniRozpocetKapitola",
+    "nazev": "statniRozpocetKapitolaNazev"
+  },
+  {
+    "filename": "ciselnikstatnirozpocetukazatel.csv.gz",
+    "id": "iriStatniRozpocetUkazatel",
+    "nazev": "statniRozpocetUkazatelNazev"
+  },
+  {
+    "filename": "ciselnikucelznak.csv.gz",
+    "id": "iriUcelZnak",
+    "nazev": "ucelZnakNazev"
+  },
+  {
+    "filename": "ciselnikdotacnititul.csv.gz",
+    "id": "iriDotacniTitul",
+    "nazev": "dotaceTitulNazev"
+  },
+  {
+    "filename": "ciselnikpravniforma.csv.gz",
+    "id": "iriPravniForma",
+    "nazev": "pravniFormaNazev"
+  },
+  {
+    "filename": "ciselnikstat.csv.gz",
+    "id": "iriStat",
+    "nazev": "statNazev"
+  },
+  {
+    "filename": "etapa.csv.gz",
+    "id": "iriEtapa",
+    "nazev": "nazev"
+  }
+]

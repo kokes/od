@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     # TODO: nejak pridat `czechinvest` - je to ready, jen nefunguje stahovani souboru
     module_names = [
-        "cedr",
+        "red",
         # TODO: docasne vypnuto, protoze jsem zkracoval nazvy tabulek, ktery
         # ted nesedej mezi schematem a mappingem
         # "cssz",
