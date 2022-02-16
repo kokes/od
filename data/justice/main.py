@@ -76,9 +76,9 @@ def main(outdir: str, partial: bool = False):
     # nejde filtrovat??? Tak to asi udelame na klientovi
     url_pl = "https://dataor.justice.cz/api/3/action/package_list"
 
-    r = urlopen(url_pl, timeout=HTTP_TIMEOUT)
-    data = json.load(r)
-    assert data["success"]
+    with urlopen(url_pl, timeout=HTTP_TIMEOUT) as r:
+        data = json.load(r)
+        assert data["success"]
 
     dss = [ds for ds in data["result"] if "-full-" in ds]
     print(f"celkem {len(dss)} datasetu, ale filtruji jen na ty letosni")

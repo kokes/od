@@ -2,6 +2,7 @@ import csv
 import gzip
 import os
 from datetime import date
+from typing import List
 from urllib.request import Request, urlopen
 
 import lxml.etree
@@ -9,6 +10,11 @@ from tqdm import tqdm
 
 url = "https://monitor.statnipokladna.cz/data/xml/ucjed.xml"
 table_name = "ucetni_jednotky"
+
+
+def resources() -> List[str]:
+    return [url]
+
 
 # XSD nema vsechno, dafuq
 cols = [

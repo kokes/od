@@ -5,7 +5,16 @@ import ssl
 import zipfile
 from datetime import datetime
 from tempfile import TemporaryDirectory
+from typing import List
 from urllib.request import urlretrieve
+
+URL_DUMP = "https://data.mfcr.cz/sites/default/files/DotInfo_report_29_01_2020.zip"
+
+
+def resources() -> List[str]:
+    return []  # TODO(PR): skipping for now due to TLS issues
+    # return [URL_DUMP]
+
 
 header = {
     "Evidenční číslo dotace": "evidencni_cislo_dotace",
@@ -26,10 +35,7 @@ def main(outdir: str, partial: bool = False):
     ssl._create_default_https_context = ssl._create_unverified_context
     with TemporaryDirectory() as tmpdir:
         rawpath = os.path.join(tmpdir, "raw.zip")
-        urlretrieve(
-            "https://data.mfcr.cz/sites/default/files/DotInfo_report_29_01_2020.zip",
-            rawpath,
-        )
+        urlretrieve(URL_DUMP, rawpath)
 
         with zipfile.ZipFile(rawpath) as zf, zf.open(
             "DotInfo_report_29_01_2020.csv"

@@ -3,9 +3,16 @@ import json
 import os
 import tarfile
 from tempfile import NamedTemporaryFile
+from typing import List
 from urllib.request import urlretrieve
 
 import lxml.etree
+
+URL_BULK = "https://wwwinfo.mfcr.cz/ares/ares_vreo_all.tar.gz"
+
+
+def resources() -> List[str]:
+    return [URL_BULK]
 
 
 def attr(root, parts, nsmap):
@@ -65,7 +72,7 @@ def organi(root, ico, nsmap):
 
 def main(outdir: str, partial: bool = False):
     with NamedTemporaryFile() as vfn:
-        urlretrieve("https://wwwinfo.mfcr.cz/ares/ares_vreo_all.tar.gz", vfn.name)
+        urlretrieve(URL_BULK, vfn.name)
         with tarfile.open(vfn.name, "r:gz") as tf, open(
             os.path.join(outdir, "firmy.csv"), "w", encoding="utf8"
         ) as ud, open(
