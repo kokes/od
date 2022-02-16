@@ -71,7 +71,7 @@ def fix_ico(s):
             print("nevalidni ICO", s)
             return None
 
-    if rv < 100 * 10 ** 6:
+    if rv < 100 * 10**6:
         return rv
     else:
         print("ICO overflow", rv)
