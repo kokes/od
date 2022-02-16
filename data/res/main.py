@@ -1,11 +1,19 @@
 import gzip
 import os
 import shutil
+from typing import List
 from urllib.request import Request, urlopen
 
 DATA = ("https://opendata.czso.cz/data/od_org03/res_data.csv", "subjekty.csv")
 NACE = ("https://opendata.czso.cz/data/od_org03/res_pf_nace.csv", "nace.csv")
 HTTP_TIMEOUT = 30
+
+
+def resources() -> List[str]:
+    return [
+        DATA[0],
+        NACE[0],
+    ]
 
 
 def download_gzipped(url: str, filename: str):

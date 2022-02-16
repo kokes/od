@@ -1,6 +1,7 @@
 import csv
 import json
 import os
+from typing import List
 from urllib.request import urlopen
 
 HTTP_TIMEOUT = 60
@@ -10,8 +11,14 @@ indices = {
     "2018": "https://zpravy.udhpsh.cz/zpravy/vfz2018.json",
     "2019": "https://zpravy.udhpsh.cz/zpravy/vfz2019.json",
     "2020": "https://zpravy.udhpsh.cz/zpravy/vfz2020.json",
+    "2021": "https://zpravy.udhpsh.cz/zpravy/vfz2021.json",
 }
 years = sorted(indices.keys())
+
+
+def resources() -> List[str]:
+    return list(indices.values())
+
 
 mappings = {
     "penizefo": {

@@ -2,9 +2,23 @@ import csv
 import gzip
 import json
 import os
+from typing import List
 from urllib.request import urlopen
 
 import lxml.etree
+
+BASE_URL = "https://www.mojedatovaschranka.cz/sds/datafile.do?format=xml&service="
+urls = {
+    "po": BASE_URL + "seznam_ds_po",
+    "pfo": BASE_URL + "seznam_ds_pfo",
+    "fo": BASE_URL + "seznam_ds_fo",
+    "ovm": BASE_URL + "seznam_ds_ovm",
+}
+
+
+def resources() -> List[str]:
+    return list(urls.values())
+
 
 mapping = {
     "id": "id",
@@ -89,14 +103,6 @@ def parse_xml(source, target_fn, partial):
 
 
 def main(outdir: str, partial: bool = False):
-    BASE_URL = "https://www.mojedatovaschranka.cz/sds/datafile.do?format=xml&service="
-    urls = {
-        "po": BASE_URL + "seznam_ds_po",
-        "pfo": BASE_URL + "seznam_ds_pfo",
-        "fo": BASE_URL + "seznam_ds_fo",
-        "ovm": BASE_URL + "seznam_ds_ovm",
-    }
-
     tdir = os.path.join(outdir, "datovky")
     os.makedirs(tdir, exist_ok=True)
     for ds, url in urls.items():
