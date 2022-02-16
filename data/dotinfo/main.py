@@ -12,7 +12,7 @@ URL_DUMP = "https://data.mfcr.cz/sites/default/files/DotInfo_report_29_01_2020.z
 
 
 def resources() -> List[str]:
-    return [] # TODO(PR): skipping for now due to TLS issues
+    return []  # TODO(PR): skipping for now due to TLS issues
     # return [URL_DUMP]
 
 
