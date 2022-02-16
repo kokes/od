@@ -11,13 +11,15 @@ import lxml.etree
 import lxml.html
 from tqdm import tqdm
 
-TM_PATH = "/".join([
-    "TradeMarkTransactionBody",
-    "TransactionContentDetails",
-    "TransactionData",
-    "TradeMarkDetails",
-    "TradeMark",
-])
+TM_PATH = "/".join(
+    [
+        "TradeMarkTransactionBody",
+        "TransactionContentDetails",
+        "TransactionData",
+        "TradeMarkDetails",
+        "TradeMark",
+    ]
+)
 
 
 def extract(element, mapping):

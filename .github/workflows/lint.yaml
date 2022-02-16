@@ -24,7 +24,7 @@ jobs:
         flake8
     - name: Lint with black
       run: |
-        black
+        black --check .
     - name: Lint with isort
       run: |
         isort . --check --profile black
