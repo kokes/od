@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10']
-        # dataset: ["ares", "cedr", "cssz", "datovky", "dotinfo", "iissp", "psp.steno", "szif", "upv", "wikidata"]
+        # dataset: ["ares", "cedr", "cssz", "datovky", "dotinfo", "iissp", "psp.steno", "szif"]
 
     steps:
     - uses: actions/checkout@v2
@@ -25,7 +25,6 @@ jobs:
     - name: Test with pytest
       run: |
         pytest -v data/steno/
-        pytest -v data/upv/
         # TODO: doresit problem s importy
     # TODO: vypnute, protoze vzdycky aspon jeden job spadnul kvuli random timeoutu
     # - name: Try all pipelines
