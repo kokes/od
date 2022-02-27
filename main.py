@@ -54,14 +54,11 @@ if __name__ == "__main__":
         "steno",
         "smlouvy",
         "szif",
-        "upv",
-        "wikidata",
         "zakazky",
         "volby",
         "udhpsh",
         "res",
         "ares",  # schvalne na konci, protoze nacita hodne dat
-        "icij",
     ]
     if args.modules:
         module_names = args.modules
