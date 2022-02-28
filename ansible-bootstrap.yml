@@ -1,0 +1,30 @@
+# TODO: apt update?
+
+- name: setup the server
+  hosts: all
+  become: yes
+  tasks:
+    - name: update apt
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: install base Python distro
+      ansible.builtin.apt:
+        name:
+          - python3-pip
+          - python3-venv
+  
+- name: setup venv and code
+  hosts: all
+  tasks:
+    - name: create virtualenv
+      ansible.builtin.command:
+        cmd: python3 -m venv .venv
+        creates: ~/.venv/bin/activate
+    - name: clone od repo
+      ansible.builtin.git:
+        repo: 'https://github.com/kokes/od'
+        dest: '~/od/'
+        clone: yes
+        single_branch: yes
+        version: main
