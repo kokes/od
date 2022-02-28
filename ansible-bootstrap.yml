@@ -13,18 +13,47 @@
         name:
           - python3-pip
           - python3-venv
+    - name: install postgres
+      ansible.builtin.apt:
+        name:
+          - postgresql
   
 - name: setup venv and code
   hosts: all
   tasks:
-    - name: create virtualenv
-      ansible.builtin.command:
-        cmd: python3 -m venv .venv
-        creates: ~/.venv/bin/activate
     - name: clone od repo
       ansible.builtin.git:
         repo: 'https://github.com/kokes/od'
-        dest: '~/od/'
+        dest: '~/od/' # TODO: udelat z toho promennou
         clone: yes
         single_branch: yes
         version: main
+    - name: create virtualenv
+      ansible.builtin.command:
+        cmd: python3 -m venv .venv
+        chdir: ~/od/
+        creates: ~/od/.venv/bin/activate
+    - name: install dependencies
+      # TODO: tohle bezi vzdy, se mi uplne nelibi
+      ansible.builtin.command:
+        cmd: ./.venv/bin/python -m pip install -r requirements.txt
+        chdir: ~/od/
+
+# TODO: use a dedicated postgres role?
+- name: create postgres db
+  hosts: all
+  become: yes
+  become_user: postgres
+  # TODO: `creates` pro tyhle tasky
+  tasks:
+    - name: setup user
+      ansible.builtin.command:
+        cmd: createuser ubuntu # TODO: promennou?
+    - name: create db
+      ansible.builtin.command:
+        cmd: createdb
+
+# - name: setup crons and such
+#   hosts: all
+#   tasks:
+#     - name: foo
