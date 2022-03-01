@@ -20,6 +20,7 @@
   
 - name: setup venv and code
   hosts: all
+  gather_facts: false
   tasks:
     - name: clone od repo
       ansible.builtin.git:
@@ -42,6 +43,7 @@
 # TODO: use a dedicated postgres role?
 - name: create postgres db
   hosts: all
+  gather_facts: false
   become: yes
   become_user: postgres
   # TODO: `creates` pro tyhle tasky
@@ -51,7 +53,7 @@
         cmd: createuser ubuntu # TODO: promennou?
     - name: create db
       ansible.builtin.command:
-        cmd: createdb
+        cmd: createdb od
 
 # - name: setup crons and such
 #   hosts: all
