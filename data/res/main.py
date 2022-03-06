@@ -4,6 +4,7 @@ import os
 import shutil
 from io import TextIOWrapper
 import io
+import os
 from contextlib import contextmanager
 from urllib.request import Request, urlopen
 
