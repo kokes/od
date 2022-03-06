@@ -7,17 +7,18 @@ import io
 from contextlib import contextmanager
 from urllib.request import Request, urlopen
 
+CLS_BASE_URL = "https://apl.czso.cz/iSMS/cisexp.jsp"
 CLS_URLS = (
-    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=109&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=572&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=56&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=149&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=579&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=80004&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=51&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=5161&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=73&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=564&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "?kodcis=109&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "?kodcis=572&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "?kodcis=56&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "?kodcis=149&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "?kodcis=579&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "?kodcis=80004&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "?kodcis=51&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "?kodcis=5161&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "?kodcis=73&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "?kodcis=564&typdat=0&cisjaz=203&format=2&separator=%2C",
 )
 
 DATA = ("https://opendata.czso.cz/data/od_org03/res_data.csv", "subjekty.csv")
@@ -59,7 +60,7 @@ def open_remote_gzipped(url: str, partial: bool):
 def main(outdir: str, partial: bool = False):
     cls_data = dict()
     for cls_url in CLS_URLS:
-        with open_remote_gzipped(cls_url, partial) as r:
+        with open_remote_gzipped(CLS_BASE_URL + cls_url, partial) as r:
             cr = csv.DictReader(r)
             for row in cr:
                 cls_data[(int(row["KODCIS"]), row["CHODNOTA"])] = row["TEXT"]
