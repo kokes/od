@@ -62,11 +62,13 @@ Pokud si nechcete lokálne instalovat Python, můžete využít přiložený `Do
 Všechna generovaná data včetně stažených zdrojových souborů se zapisují do složky `/data` v kontejneru. Zpracované CSV výstupy najdete v `/data/csv`.
 
 **Tvorba Docker image**
+
 ```sh
 docker build -t kokes-od .
 ```
 
 **Spuštění**
+
 ```sh
 docker run -it --rm -v $PWD:/data kokes-od --partial ares volby
 ```
@@ -75,7 +77,7 @@ docker run -it --rm -v $PWD:/data kokes-od --partial ares volby
 
 Než se dostaneme k datasetům samotným, je třeba zmínit klíčový předpoklad pro správnou interpretaci dat, tím je doménová znalost, tedy pochopení dané problematiky na věcné úrovni, ne pouhé technické zpracování dat.
 
-Člověk musí pochopit, proč je něco v CEDR a ne v DotInfo a naopak. Většina dat obsahuje jisté informace o platnosti dat, datum podpisu není to samé jako datum čerpání. Když pak člověk informace páruje např. s obchodním rejstříkem, jsou tyto atribuce klíčové.
+Člověk musí pochopit, proč je něco v IS ReD a ne v DotInfo a naopak. Většina dat obsahuje jisté informace o platnosti dat, datum podpisu není to samé jako datum čerpání. Když pak člověk informace páruje např. s obchodním rejstříkem, jsou tyto atribuce klíčové.
 
 Je tu též věcný překryv, kdy dotace by měly mít sepsané smlouvy a pokud byly uzavřeny v určitou dobu, budu i v registru smluv (ale nemusí!).
 
@@ -93,9 +95,9 @@ I přes naši značnou snahu se může stát, že při našem zpracování dat n
 
 Plánujeme zde zapojit dva typy datasetů - transakční a klasifikační, byť toto rozdělení není čisté, budou zde jisté překryvy.
 
-- [**CEDR**](data/cedr) - centrální evidence dotací je jeden z větších datasetů, obsahuje dotace pro soukromé i veřejné subjekty a tento dataset sahá až do roku 1999. Hlavní nevýhodou je absence metadat u velké části záznamů. Aktualizován je kvartálně.
+- [**IS ReD**](data/red) - centrální evidence dotací (dříve známá jako CEDR) je jeden z větších datasetů, obsahuje dotace pro soukromé i veřejné subjekty a tento dataset sahá až do roku 1999. Hlavní nevýhodou je absence metadat u velké části záznamů. Aktualizován je kvartálně.
 - [**Dotace EU**](data/eufondy) - mediálně asi nejpropíranější téma, dataset je až překvapivě přímočarý, jde o jednu tabulku, resp. dvě, jednu pro každé rozpočtové období. Dataset spadá pod MMR, aktualizován je měsíčně.
-- [**DotInfo**](data/dotinfo) - třetí informační systém pro dotace, bohužel zatím není jasné, co je ve kterém. Puristicky vzato by Dotace EU měl být subset CEDRu a DotInfo by nemělo existovat. Bohužel je DotInfo do velké míry překryvem CEDR, ale ne úplným. Je též mnohem kratší, sahá jen do cca roku 2011.
+- [**DotInfo**](data/dotinfo) - třetí informační systém pro dotace, bohužel zatím není jasné, co je ve kterém. Puristicky vzato by Dotace EU měl být subset CEDR/ReD a DotInfo by nemělo existovat. Bohužel je DotInfo do velké míry překryvem CEDR/ReD, ale ne úplným. Je též mnohem kratší, sahá jen do cca roku 2011.
 - [**Veřejné zakázky**](data/zakazky) - shromáždění dat z několika systémů zadávání veřejných zakázek, pro nás doposud nejméně prostudovaný dataset, s ním budeme potřebovat nejvíce pomoci. Je asi nejvíce ošemetný co se týče rozklíčování složité struktury dat.
 - [**Registr smluv**](data/smlouvy) - od léta 2016 mají veřejné subjekty povinnost zveřejňovat smlouvy nad 50 tisíc Kč hodnoty, tento revoluční zákon dramaticky zvýšil transparentnost veřejného utrácení. Zpřístupnil informace o výdajích mimo veřejné zakázky, ke všem výdajům též přidal samotné smlouvy, byť místy začerněné. Dataset patří pod MVČR a je aktualizován denně.
 - **Monitor státní pokladny** - jeden z nejčitších datasetů státu nabízí pohled do vyúčtování jednotlivých subjektů státu, ať už jde o ministerstva nebo obce. Zatím dataset nemáme zpracovaný, plánujeme jej použít na obohacení informací o veřejných subjektech. (Např. u smlouvy na 1 miliardu člověk uvidí, kolik procent z ročního rozpočtu to je.)
@@ -105,6 +107,6 @@ Plánujeme zde zapojit dva typy datasetů - transakční a klasifikační, byť 
 - [**Justice**](data/justice) - data od Ministerstva spravedlnosti obsahují informace o jednotlivých ekonomických subjektech, jde o export z veřejných rejstříků, jak jsou mj. dostupné na webu [Justice](http://justice.cz).
 - [**SZIF**](data/szif) - data od [Státního zemědělského intervenčního fondu](https://www.szif.cz/irj/portal/szif/seznam-prijemcu-dotaci) obsahují informace o příjemcích dotací, včetně rozdělení na národní a evropské zdroje
 
-
 ## Identifikace podniků
+
 Jedním z hlavních zásahů do dat je nahrazení identifikace podniků našimi “vlastními” daty, konkrétně daty z ARES. Problémem je, že místo odkazování do ARES se každý z poskytovatelů dat snaží tvořit si vlastní databázi podniků a v oněch datech jsou často chyby. Z důvodu konzistence a kvality dat proto používáme většinou pouze IČO podniků a dál přebíráme informace z ARES.
