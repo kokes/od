@@ -1,36 +1,90 @@
+import csv
 import gzip
 import os
 import shutil
 from io import TextIOWrapper
+import io
+from contextlib import contextmanager
 from urllib.request import Request, urlopen
+
+CLS_URLS = (
+    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=109&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=572&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=56&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=149&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=579&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=80004&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=51&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=5161&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=73&typdat=0&cisjaz=203&format=2&separator=%2C",
+    "https://apl.czso.cz/iSMS/cisexp.jsp?kodcis=564&typdat=0&cisjaz=203&format=2&separator=%2C",
+)
 
 DATA = ("https://opendata.czso.cz/data/od_org03/res_data.csv", "subjekty.csv")
 NACE = ("https://opendata.czso.cz/data/od_org03/res_pf_nace.csv", "nace.csv")
 HTTP_TIMEOUT = 30
 
 
-def download_gzipped(url: str, filename: str, partial: bool):
+DS_CLS = {
+    # res sloupce:
+    "OKRESLAU": 109,
+    "ZPZAN": 572,
+    "FORMA": 56,
+    "ROSFORMA": 149,
+    "KATPO": 579,
+    "NACE": 80004,
+    "ICZUJ": 51,
+    "CISS2010": 5161,
+    # TODO: tohle bude chtit nacist RUIAN data z
+    # https://nahlizenidokn.cuzk.cz/StahniAdresniMistaRUIAN.aspx
+    # "adresni_misto":
+    "TYPCDOM": 73,
+    # nace sloupce:
+    "ZDRUD": 564,
+}
+
+
+@contextmanager
+def open_remote_gzipped(url: str, partial: bool):
     req = Request(url)
     req.add_header("Accept-Encoding", "gzip")
     with urlopen(req, timeout=HTTP_TIMEOUT) as r:
-        assert r.headers["Content-Encoding"] == "gzip"
-        gr = gzip.GzipFile(fileobj=r)
-        if partial:
-            with open(filename, "wt", encoding="utf-8") as fw:
-                for j, line in enumerate(TextIOWrapper(gr, encoding="utf-8")):
-                    if j > 100_000:
-                        break
-                    fw.write(line)
+        if r.headers["Content-Encoding"] == "gzip":
+            yield gzip.open(r, "rt", encoding="utf-8")
         else:
-            with open(filename, "wb") as fw:
-                shutil.copyfileobj(gr, fw)
+            yield io.TextIOWrapper(r, encoding="cp1250")
 
 
-# TODO: ciselniky pro ruzne sloupce
+# TODO: implement partial?
 def main(outdir: str, partial: bool = False):
+    cls_data = dict()
+    for cls_url in CLS_URLS:
+        with open_remote_gzipped(cls_url, partial) as r:
+            cr = csv.DictReader(r)
+            for row in cr:
+                cls_data[(int(row["KODCIS"]), row["CHODNOTA"])] = row["TEXT"]
+
     for url, filename in [DATA, NACE]:
         path = os.path.join(outdir, filename)
-        download_gzipped(url, path, partial)
+        with open_remote_gzipped(url, partial) as r, open(
+            path, "wt", encoding="utf-8"
+        ) as fw:
+            cr = csv.DictReader(r)
+            for n, row in enumerate(cr):
+                for k, v in row.items():
+                    if k not in DS_CLS or v == "":
+                        continue
+                    # if (DS_CLS[k], v) not in cls_data:
+                    #     if (DS_CLS[k], v) not in errs:
+                    #         print("chybi", (DS_CLS[k], v)) # TODO(PR): fix
+                    #         print(row)
+                    #     errs.add((DS_CLS[k], v))
+                    #     continue
+                    row[k] = cls_data[(DS_CLS[k], v)]
+
+                if n == 0:
+                    cw = csv.DictWriter(fw, fieldnames=row.keys(), lineterminator="\n")
+                cw.writerow(row)
 
 
 if __name__ == "__main__":
