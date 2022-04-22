@@ -106,7 +106,7 @@ url_sources = {
 
 def main(outdir: str, partial: bool = False):
     cdir = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(cdir, "mapping.json")) as f:
+    with open(os.path.join(cdir, "mapping.json"), encoding="utf-8") as f:
         allmaps = json.load(f)
 
     assert list(allmaps.keys()) == ["etrziste", "vvz", "zzvz"]

@@ -32,7 +32,7 @@ ID_COLS = ("iriDotace", "iriPrijemce", "iriRozhodnuti", "iriRozpoctoveObdobi")
 
 
 def remote_csv(url):
-    with urlopen(url, timeout=30) as r, gzip.open(r, "rt") as f:
+    with urlopen(url, timeout=30) as r, gzip.open(r, encoding="utf-8", mode="rt") as f:
         cr = csv.DictReader((line.replace("\0", "") for line in f), strict=True)
         yield from cr
 
@@ -56,7 +56,7 @@ def main(outdir: str, partial: bool = False):
 
     fn_url_mapping = {urlparse(url).path.rpartition("/")[-1]: url for url in urls}
 
-    with open(os.path.join(cdir, "ciselnik.json")) as f:
+    with open(os.path.join(cdir, "ciselnik.json"), encoding="utf-8") as f:
         csmp = json.load(f)
 
     csl = dict()
@@ -69,7 +69,7 @@ def main(outdir: str, partial: bool = False):
     for ds in DATASETS:
         logging.info("Nacitam %s", ds)
         tfn = os.path.join(outdir, f"{ds}.csv")
-        with open(tfn, "w") as fw:
+        with open(tfn, encoding="utf-8", mode="wt") as fw:
             for num, ln in enumerate(remote_csv(fn_url_mapping[f"{ds}.csv.gz"])):
                 if num == 0:
                     clean_header = [
