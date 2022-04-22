@@ -115,7 +115,7 @@ def main(outdir: str, partial: bool = False):
     fs = dict()
     csvs = dict()
     cdir = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(cdir, "xml_schema.json"), encoding="utf-8")) as f:
+    with open(os.path.join(cdir, "xml_schema.json"), encoding="utf-8") as f:
         schemas = json.load(f)
         for el in schemas:
             udaje = [el["udaj"]] if isinstance(el["udaj"], str) else el["udaj"]

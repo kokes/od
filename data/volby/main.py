@@ -56,7 +56,7 @@ def extract_elements(zf, fn, nodename):
 
 def main(outdir: str, partial: bool = False):
     cdir = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(cdir, "mapping.json"), encoding="utf-8")) as f:
+    with open(os.path.join(cdir, "mapping.json"), encoding="utf-8") as f:
         mps = json.load(f)
 
     for volby, mp in mps.items():
