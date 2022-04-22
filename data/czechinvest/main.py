@@ -50,11 +50,11 @@ data_url = (
 
 def main(outdir: str, partial: bool = False):
     cdir = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(cdir, "data", "mapping.json")) as f:
+    with open(os.path.join(cdir, "data", "mapping.json"), encoding="utf-8") as f:
         mapping = json.load(f)
 
     firmy = {}
-    with open(os.path.join(cdir, "data", "slovnik.csv")) as f:
+    with open(os.path.join(cdir, "data", "slovnik.csv"), encoding="utf-8") as f:
         cr = csv.DictReader(f)
         for el in cr:
             firmy[el["firma"]] = int(el["ico"])

@@ -84,7 +84,7 @@ def read_compressed_csv(zf, fn, mp):
 # je to kratky, tak neimplementuju `partial`
 def main(outdir: str, partial: bool = False):
     cdir = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(cdir, "mapping.json")) as f:
+    with open(os.path.join(cdir, "mapping.json"), encoding="utf-8") as f:
         mapping = json.load(f)
 
     for mp in mapping:
@@ -92,7 +92,7 @@ def main(outdir: str, partial: bool = False):
         tfn = os.path.join(outdir, f"{tbl}.csv")
         print(tbl)
         cols = [j["sloupec"] for j in mp["sloupce"]]
-        with open(tfn, "w") as fw:
+        with open(tfn, encoding="utf-8", mode="wt") as fw:
             cw = csv.DictWriter(fw, fieldnames=cols)
             cw.writeheader()
             for ffn in mp["soubory"]:

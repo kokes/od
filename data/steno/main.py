@@ -99,7 +99,7 @@ def vyrok(zf):
 
             if od is not None:
                 fun, aut = depozicuj(od.text_content().strip())
-                with open("autori.txt", "a+") as fw:
+                with open("autori.txt", encoding="utf-8", mode="a+") as fw:
                     fw.write(f"{od.text_content().strip()};{fun};{aut}\n")
                 buf = [
                     pt[len(od.text_content()) + 1 :].strip()
