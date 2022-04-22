@@ -5,7 +5,7 @@ import shutil
 import zipfile
 from contextlib import contextmanager
 from fnmatch import fnmatch
-from tempfile import NamedTemporaryFile
+from tempfile import TemporaryDirectory
 from urllib.request import Request, urlopen
 
 import lxml.etree
@@ -44,11 +44,11 @@ def extract_elements(zf, fn, nodename):
                 node.clear()
 
     elif fn.lower().endswith("dbf"):
-        with zf.open(fn) as f, NamedTemporaryFile() as temp:
-            shutil.copyfileobj(f, temp)  # dbfread neumi cist z filehandleru,
-            # https://github.com/olemb/dbfread/issues/25
-            temp.flush()
-            d = DBF(temp.name, encoding="cp852")
+        # dbfread neumi cist z filehandleru,
+        # https://github.com/olemb/dbfread/issues/25
+        with TemporaryDirectory() as tempdir:
+            tfn = zf.extract(fn, tempdir)
+            d = DBF(tfn, encoding="cp852")
             yield from d
     else:
         raise NotImplementedError(fn)

@@ -1,9 +1,7 @@
 import csv
 import os
-import shutil
-from contextlib import closing
-from tempfile import NamedTemporaryFile
-from urllib.request import urlopen
+from tempfile import TemporaryDirectory
+from urllib.request import urlretrieve
 from zipfile import ZipFile
 
 from lxml.etree import iterparse
@@ -24,7 +22,7 @@ def main(outdir: str, partial: bool = False):
 
     with open(os.path.join(outdir, "zadatele.csv"), "w", encoding="utf8") as fz, open(
         os.path.join(outdir, "platby.csv"), "w", encoding="utf8"
-    ) as fp:
+    ) as fp, TemporaryDirectory() as tmpdir:
         cz = csv.DictWriter(
             fz, ["id_prijemce", "rok", "jmeno_nazev", "obec", "okres", "castka_bez_pvp"]
         )
@@ -45,52 +43,50 @@ def main(outdir: str, partial: bool = False):
         cp.writeheader()
 
         for rok_ds, url in urls.items():
-            tmpf = NamedTemporaryFile()
+            tfn = os.path.join(tmpdir, "tmp.zip")
+            urlretrieve(url, tfn)
 
-            with closing(urlopen(url, timeout=60)) as rr:
-                shutil.copyfileobj(rr, tmpf)
+            with ZipFile(tfn) as zf:
+                assert len(zf.filelist) == 1, "Vic souboru nez ocekavano: {}".format(
+                    zf.filelist
+                )
 
-            zf = ZipFile(tmpf.name)
+                with zf.open(zf.filelist[0].filename) as member:
+                    et = iterparse(member)
 
-            assert len(zf.filelist) == 1, "Vic souboru nez ocekavano: {}".format(
-                zf.filelist
-            )
+                    rok = None
+                    for num, (action, element) in enumerate(et):
+                        if partial and num > 1e3:
+                            break
+                        assert action == "end"
+                        if element.tag == "rok":
+                            rok = int(element.text)
+                            assert rok == rok_ds, "Necekany rok v datech"
 
-            et = iterparse(zf.open(zf.filelist[0].filename))
+                        if element.tag != "zadatel":
+                            continue
 
-            rok = None
-            for num, (action, element) in enumerate(et):
-                if partial and num > 1e3:
-                    break
-                assert action == "end"
-                if element.tag == "rok":
-                    rok = int(element.text)
-                    assert rok == rok_ds, "Necekany rok v datech"
+                        zadatel = {"id_prijemce": id_prijemce, "rok": rok}
 
-                if element.tag != "zadatel":
-                    continue
+                        for key in ["jmeno_nazev", "obec", "okres", "castka_bez_pvp"]:
+                            zadatel[key] = element.find(key).text
 
-                zadatel = {"id_prijemce": id_prijemce, "rok": rok}
+                        for elplatba in element.findall(
+                            "platby/platba"
+                        ) + element.findall("platby_pvp/platba_pvp"):
+                            platba = {"id_prijemce": id_prijemce, "rok": rok}
+                            for key in [
+                                "fond_typ_podpory",
+                                "opatreni",
+                                "zdroje_cr",
+                                "zdroje_eu",
+                                "celkem_czk",
+                            ]:
+                                platba[key] = getattr(elplatba.find(key), "text", None)
 
-                for key in ["jmeno_nazev", "obec", "okres", "castka_bez_pvp"]:
-                    zadatel[key] = element.find(key).text
+                            cp.writerow(platba)
 
-                for elplatba in element.findall("platby/platba") + element.findall(
-                    "platby_pvp/platba_pvp"
-                ):
-                    platba = {"id_prijemce": id_prijemce, "rok": rok}
-                    for key in [
-                        "fond_typ_podpory",
-                        "opatreni",
-                        "zdroje_cr",
-                        "zdroje_eu",
-                        "celkem_czk",
-                    ]:
-                        platba[key] = getattr(elplatba.find(key), "text", None)
+                        cz.writerow(zadatel)
+                        id_prijemce += 1
 
-                    cp.writerow(platba)
-
-                cz.writerow(zadatel)
-                id_prijemce += 1
-
-                element.clear()
+                        element.clear()
