@@ -2,7 +2,7 @@ import csv
 import json
 import os
 import tarfile
-from tempfile import NamedTemporaryFile
+from tempfile import TemporaryDirectory
 from urllib.request import urlretrieve
 
 import lxml.etree
@@ -64,9 +64,10 @@ def organi(root, ico, nsmap):
 
 
 def main(outdir: str, partial: bool = False):
-    with NamedTemporaryFile() as vfn:
-        urlretrieve("https://wwwinfo.mfcr.cz/ares/ares_vreo_all.tar.gz", vfn.name)
-        with tarfile.open(vfn.name, "r:gz") as tf, open(
+    with TemporaryDirectory() as tdr:
+        tfn = os.path.join(tdr, "ares_vreo_all.tar.gz")
+        urlretrieve("https://wwwinfo.mfcr.cz/ares/ares_vreo_all.tar.gz", tfn)
+        with tarfile.open(tfn, "r:gz") as tf, open(
             os.path.join(outdir, "firmy.csv"), "w", encoding="utf8"
         ) as ud, open(
             os.path.join(outdir, "fosoby.csv"), "w", encoding="utf8"
