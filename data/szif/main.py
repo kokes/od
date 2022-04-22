@@ -1,9 +1,7 @@
 import csv
 import os
-import shutil
-from contextlib import closing
-from tempfile import NamedTemporaryFile
-from urllib.request import urlopen
+from tempfile import TemporaryDirectory
+from urllib.request import urlretrieve
 from zipfile import ZipFile
 
 from lxml.etree import iterparse
@@ -24,7 +22,7 @@ def main(outdir: str, partial: bool = False):
 
     with open(os.path.join(outdir, "zadatele.csv"), "w", encoding="utf8") as fz, open(
         os.path.join(outdir, "platby.csv"), "w", encoding="utf8"
-    ) as fp:
+    ) as fp, TemporaryDirectory() as tmpdir:
         cz = csv.DictWriter(
             fz, ["id_prijemce", "rok", "jmeno_nazev", "obec", "okres", "castka_bez_pvp"]
         )
@@ -45,12 +43,10 @@ def main(outdir: str, partial: bool = False):
         cp.writeheader()
 
         for rok_ds, url in urls.items():
-            tmpf = NamedTemporaryFile()
+            tfn = os.path.join(tmpdir, "tmp.zip")
+            urlretrieve(url, tfn)
 
-            with closing(urlopen(url, timeout=60)) as rr:
-                shutil.copyfileobj(rr, tmpf)
-
-            zf = ZipFile(tmpf.name)
+            zf = ZipFile(tfn)
 
             assert len(zf.filelist) == 1, "Vic souboru nez ocekavano: {}".format(
                 zf.filelist
