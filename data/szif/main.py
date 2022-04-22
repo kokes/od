@@ -71,10 +71,9 @@ def main(outdir: str, partial: bool = False):
                         for key in ["jmeno_nazev", "obec", "okres", "castka_bez_pvp"]:
                             zadatel[key] = element.find(key).text
 
-                        for elplatba in (
-                            element.findall("platby/platba") +
-                            element.findall("platby_pvp/platba_pvp")
-                        ):
+                        for elplatba in element.findall(
+                            "platby/platba"
+                        ) + element.findall("platby_pvp/platba_pvp"):
                             platba = {"id_prijemce": id_prijemce, "rok": rok}
                             for key in [
                                 "fond_typ_podpory",
