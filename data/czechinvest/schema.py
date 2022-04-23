@@ -25,7 +25,7 @@ schema = [
         Column("pob_pozem", Text, nullable=True),
         Column("pob_kap", Text, nullable=True),
         Column("mira_podpory", Text, nullable=True),
-        Column("strop", Numeric(22, 16), nullable=True),
+        Column("strop", Text, nullable=True),
         Column("okres", Text, nullable=True),
         Column("kraj", Text, nullable=True),
         Column("region_nuts", Text, nullable=True),
@@ -37,6 +37,8 @@ schema = [
         Column("zruseno", Boolean, nullable=True),
         Column("zduvodneni", Text, nullable=True),
         Column("bez_pobidek", Text, nullable=True),
+        # TODO: to by melo byt Date, ale maj tam nekonzistentni data
+        Column("prodlouzeni_lhuty", Text, nullable=True),
     )
 ]
 

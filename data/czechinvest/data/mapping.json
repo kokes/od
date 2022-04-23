@@ -29,7 +29,8 @@
         "MSP \n(Ano x Ne)",
         "Zrušení Rozhodnutí / odstoupení",
         "Zdůvodnění",
-        "Investor investuje bez pobídek"
+        "Investor investuje bez pobídek",
+        "Podloužení lhůty do"
     ],
     "hd2": [
         "",
@@ -58,6 +59,7 @@
         "Den",
         "Měsíc",
         "Rok",
+        "",
         "",
         "",
         "",
@@ -91,6 +93,9 @@
         "rozh_mesic",
         "rozh_rok",
         "msp",
-        "zruseno"
+        "zruseno",
+        "zduvodneni",
+        "bez_pobidek",
+        "prodlouzeni_lhuty"
     ]
 }
