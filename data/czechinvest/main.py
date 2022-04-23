@@ -101,7 +101,9 @@ def main(outdir: str, partial: bool = False):
 
             drow["rozh_mesic"] = mesicuj(drow["rozh_mesic"])
             drow["strop"] = None if drow["strop"] == "-" else drow["strop"]
-            drow["msp"] = {"Ano": True, "Ne": False}[drow["msp"]]
+            drow["msp"] = (
+                {"Ano": True, "Ne": False}[drow["msp"]] if drow["msp"] else None
+            )
             drow["zruseno"] = True if drow["zruseno"] == "x" else False
 
             cw.writerow(drow)
