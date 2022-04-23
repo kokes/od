@@ -143,85 +143,85 @@ def prehled_2017_2013(outdir: str, partial: bool = False):
         target_filename = os.path.join(tmpdir, "workbook.xlsx")
         urlretrieve(source_url, target_filename)
         wb = load_workbook(target_filename, read_only=True)
-    sh = wb.active
+        sh = wb.active
 
-    with open(
-        os.path.join(outdir, "prehled_2017_2013.csv"), "w", encoding="utf8"
-    ) as fw:
-        cw = csv.writer(fw)
-        hd = [
-            "prijemce",
-            "ico",
-            "projekt",
-            "operacni_program",
-            "fond_eu",
-            "datum_alokace",
-            "castka_alokovana",
-            "datum_platby",
-            "castka_proplacena",
-            "stav",
-        ]
-        cw.writerow(hd)
-        for j, row in enumerate(sh.rows):
-            dt = [j.value for j in row]
-            assert len(dt) == 10
-            if j == 0:
-                assert (
-                    dt[0]
-                    == "LIST OF BENEFICIARIES \nSEZNAM PŘÍJEMCŮ PODPORY Z FONDŮ EU"
-                )
-            elif j == 6:
-                assert dt == [
-                    " Název příjemce",
-                    "IČ",
-                    "Název projektu",
-                    "Operační \nprogram",
-                    "Fond\nEU",
-                    "Částka hrazená z fondů EU ",
-                    None,
-                    None,
-                    None,
-                    None,
-                ]
-            elif j == 7:
-                assert dt == [
-                    None,
-                    None,
-                    None,
-                    None,
-                    None,
-                    "Datum alokace",
-                    "Alokovaná částka",
-                    "Datum průběžné platby",
-                    "Celková částka proplacená od začátku projektu",
-                    "Stav",
-                ]
-            elif all([j is None for j in dt]):
-                continue  # predposledni radka
-            elif dt[0] == "Sestava vytvořena IS MSC2007":
-                break  # koncime
+        with open(
+            os.path.join(outdir, "prehled_2017_2013.csv"), "w", encoding="utf8"
+        ) as fw:
+            cw = csv.writer(fw)
+            hd = [
+                "prijemce",
+                "ico",
+                "projekt",
+                "operacni_program",
+                "fond_eu",
+                "datum_alokace",
+                "castka_alokovana",
+                "datum_platby",
+                "castka_proplacena",
+                "stav",
+            ]
+            cw.writerow(hd)
+            for j, row in enumerate(sh.rows):
+                dt = [j.value for j in row]
+                assert len(dt) == 10
+                if j == 0:
+                    assert (
+                        dt[0]
+                        == "LIST OF BENEFICIARIES \nSEZNAM PŘÍJEMCŮ PODPORY Z FONDŮ EU"
+                    )
+                elif j == 6:
+                    assert dt == [
+                        " Název příjemce",
+                        "IČ",
+                        "Název projektu",
+                        "Operační \nprogram",
+                        "Fond\nEU",
+                        "Částka hrazená z fondů EU ",
+                        None,
+                        None,
+                        None,
+                        None,
+                    ]
+                elif j == 7:
+                    assert dt == [
+                        None,
+                        None,
+                        None,
+                        None,
+                        None,
+                        "Datum alokace",
+                        "Alokovaná částka",
+                        "Datum průběžné platby",
+                        "Celková částka proplacená od začátku projektu",
+                        "Stav",
+                    ]
+                elif all([j is None for j in dt]):
+                    continue  # predposledni radka
+                elif dt[0] == "Sestava vytvořena IS MSC2007":
+                    break  # koncime
 
-            if j < 8:
-                continue
+                if j < 8:
+                    continue
 
-            dt = [
-                cws.sub(" ", j.strip()) if isinstance(j, str) else j for j in dt
-            ]  # cistime bile znaky
+                dt = [
+                    cws.sub(" ", j.strip()) if isinstance(j, str) else j for j in dt
+                ]  # cistime bile znaky
 
-            # ICO
-            if dt[1] is None:
-                pass
-            # OP ČR-Polsko má polský IČ, který potřebujem vyfiltrovat
-            # bohužel nejsou nějak jednoznačně určené
-            elif dt[3] == "OP PS ČR-Polsko" and not dt[1].isdigit():
-                dt[1] = None
-            else:
-                dt[1] = int(dt[1])
+                # ICO
+                if dt[1] is None:
+                    pass
+                # OP ČR-Polsko má polský IČ, který potřebujem vyfiltrovat
+                # bohužel nejsou nějak jednoznačně určené
+                elif dt[3] == "OP PS ČR-Polsko" and not dt[1].isdigit():
+                    dt[1] = None
+                else:
+                    dt[1] = int(dt[1])
 
-            dt[5] = predatuj(dt[5])  # datum alokace
-            dt[7] = predatuj(dt[7])  # prubezna platba
+                dt[5] = predatuj(dt[5])  # datum alokace
+                dt[7] = predatuj(dt[7])  # prubezna platba
 
-            cw.writerow(dt)
+                cw.writerow(dt)
 
 
 def opendata_2014_2020(outdir: str, partial: bool = False):
