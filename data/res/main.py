@@ -12,17 +12,18 @@ HTTP_TIMEOUT = 30
 def download_gzipped(url: str, filename: str, partial: bool):
     req = Request(url)
     req.add_header("Accept-Encoding", "gzip")
-    mode = "wt" if partial else "wb"
-    with open(filename, mode) as fw, urlopen(req, timeout=HTTP_TIMEOUT) as r:
-        assert r.headers["Content-Encoding"] == "gzip"
-        gr = gzip.GzipFile(fileobj=r)
+    with urlopen(req, timeout=HTTP_TIMEOUT) as r:
         if partial:
-            for j, line in enumerate(TextIOWrapper(gr, encoding="utf-8")):
-                if j > 100_000:
-                    break
-                fw.write(line)
+            with open(filename, "wt", encoding="utf-8") as fw:
+                for j, line in enumerate(TextIOWrapper(gr, encoding="utf-8")):
+                    if j > 100_000:
+                        break
+                    fw.write(line)
         else:
-            shutil.copyfileobj(gr, fw)
+            with open(filename, "wb") as fw:
+                assert r.headers["Content-Encoding"] == "gzip"
+                gr = gzip.GzipFile(fileobj=r)
+                shutil.copyfileobj(gr, fw)
 
 
 # TODO: ciselniky pro ruzne sloupce
