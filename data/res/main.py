@@ -1,7 +1,7 @@
 import gzip
-from io import TextIOWrapper
 import os
 import shutil
+from io import TextIOWrapper
 from urllib.request import Request, urlopen
 
 DATA = ("https://opendata.czso.cz/data/od_org03/res_data.csv", "subjekty.csv")
