@@ -17,7 +17,7 @@ def download_gzipped(url: str, filename: str, partial: bool):
         assert r.headers["Content-Encoding"] == "gzip"
         gr = gzip.GzipFile(fileobj=r)
         if partial:
-            for j, line in enumerate(TextIOWrapper(gr)):
+            for j, line in enumerate(TextIOWrapper(gr, encoding="utf-8")):
                 if j > 100_000:
                     break
                 fw.write(line)
