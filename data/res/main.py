@@ -1,4 +1,5 @@
 import gzip
+from io import TextIOWrapper
 import os
 import shutil
 from urllib.request import Request, urlopen
@@ -8,21 +9,27 @@ NACE = ("https://opendata.czso.cz/data/od_org03/res_pf_nace.csv", "nace.csv")
 HTTP_TIMEOUT = 30
 
 
-def download_gzipped(url: str, filename: str):
+def download_gzipped(url: str, filename: str, partial: bool):
     req = Request(url)
     req.add_header("Accept-Encoding", "gzip")
-    with open(filename, "wb") as fw, urlopen(req, timeout=HTTP_TIMEOUT) as r:
+    mode = "wt" if partial else "wb"
+    with open(filename, mode) as fw, urlopen(req, timeout=HTTP_TIMEOUT) as r:
         assert r.headers["Content-Encoding"] == "gzip"
         gr = gzip.GzipFile(fileobj=r)
-        shutil.copyfileobj(gr, fw)
+        if partial:
+            for j, line in enumerate(TextIOWrapper(gr)):
+                if j > 100_000:
+                    break
+                fw.write(line)
+        else:
+            shutil.copyfileobj(gr, fw)
 
 
-# TODO: implement partial?
 # TODO: ciselniky pro ruzne sloupce
 def main(outdir: str, partial: bool = False):
     for url, filename in [DATA, NACE]:
         path = os.path.join(outdir, filename)
-        download_gzipped(url, path)
+        download_gzipped(url, path, partial)
 
 
 if __name__ == "__main__":
