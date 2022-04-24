@@ -20,9 +20,7 @@ def read_compressed(zipname, filename):
         urlretrieve(burl.format(zipname), tfn)
         with zipfile.ZipFile(tfn) as zf, zf.open(filename) as zfh:
             # tisky.unl maj encoding chyby
-            yield TextIOWrapper(
-                zfh, "cp1250", errors="ignore"
-            )
+            yield TextIOWrapper(zfh, "cp1250", errors="ignore")
 
 
 def read_compressed_csv(zf, fn, mp, partial):

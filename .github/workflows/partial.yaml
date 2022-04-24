@@ -14,9 +14,10 @@ jobs:
       matrix:
         # os: ['ubuntu-latest', 'windows-latest']
         os: ['windows-latest']
-        python-version: ['3.8', '3.9', '3.10']
-        # TODO: pridat cssz, czechinvest, eufondy, steno a zakazky, az je opravime
-        module: ['ares', 'datovky', 'dotinfo', 'iissp', 'justice', 'psp', 'red', 'res', 'smlouvy', 'szif', 'udhpsh', 'volby']
+        # python-version: ['3.8', '3.9', '3.10']
+        python-version: ['3.10']
+        # TODO: pridat cssz, czechinvest, eufondy, steno, psp a zakazky, az je opravime
+        module: ['ares', 'datovky', 'dotinfo', 'iissp', 'justice', 'red', 'res', 'smlouvy', 'szif', 'udhpsh', 'volby']
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
