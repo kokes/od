@@ -126,7 +126,9 @@ def main(outdir: str, partial: bool = False):
         for year in years:
             # v `partial` procesnem jen posledni rok - nemuzem procesovat casti
             # souboru, protoze co soubor, to nekolik datasetu
-            if partial and year != years[-1]:
+            # TODO: pouzivam predposledni rok, protoze MMR nechce opravit
+            # posledni soubor v jednom z datasetu
+            if partial and year != years[-2]:
                 continue
             url = base_url.format(year)
             with read_url(url) as resp:
