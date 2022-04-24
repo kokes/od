@@ -128,7 +128,6 @@ if __name__ == "__main__":
 
                     ph = ", ".join(["?"] * len(table.columns))
                     query = f"INSERT INTO {table.name} VALUES({ph})"
-                    print(table, table.columns, query)
                     bools = [isinstance(j.type, Boolean) for j in table.columns]
                     for filename in files:
                         buffer = []
@@ -143,6 +142,7 @@ if __name__ == "__main__":
                                 row = [None if j == "" else j for j in row]
                                 buffer.append(row)
                                 if len(buffer) == 100:
+                                    print(buffer)
                                     conn.executemany(query, buffer)
                                     buffer = []
                             if len(buffer) > 0:
