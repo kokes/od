@@ -106,32 +106,32 @@ def prehled_2014_2020(outdir: str, partial: bool = False):
         target_filename = os.path.join(tmpdir, "workbook.xlsx")
         urlretrieve(source_url, target_filename)
 
-        wb = load_workbook(target_filename)
-        sh = wb.active
-        assert sh.title == "Seznam operací"
-        rows = sh.iter_rows()
-        next(rows), next(rows)  # nadpis, datum generovani
+        with closing(load_workbook(target_filename)) as wb:
+            sh = wb.active
+            assert sh.title == "Seznam operací"
+            rows = sh.iter_rows()
+            next(rows), next(rows)  # nadpis, datum generovani
 
-        fr = [j.value.strip() for j in next(rows) if j.value is not None]
-        assert fr == hd["ocekavane"], [
-            (a, b) for a, b in zip_longest(fr, hd["ocekavane"]) if a != b
-        ]
-        next(rows)  # anglicky nazvy
+            fr = [j.value.strip() for j in next(rows) if j.value is not None]
+            assert fr == hd["ocekavane"], [
+                (a, b) for a, b in zip_longest(fr, hd["ocekavane"]) if a != b
+            ]
+            next(rows)  # anglicky nazvy
 
-        with open(
-            os.path.join(outdir, "prehled_2014_2020.csv"), "w", encoding="utf8"
-        ) as fw:
-            cw = csv.writer(fw)
-            cw.writerow(hd["hlavicka"])
-            for j, rrow in enumerate(rows):
-                if partial and j > 1000:
-                    break
-                row = [rrow[j].value for j in range(len(hd["hlavicka"]))]
+            with open(
+                os.path.join(outdir, "prehled_2014_2020.csv"), "w", encoding="utf8"
+            ) as fw:
+                cw = csv.writer(fw)
+                cw.writerow(hd["hlavicka"])
+                for j, rrow in enumerate(rows):
+                    if partial and j > 1000:
+                        break
+                    row = [rrow[j].value for j in range(len(hd["hlavicka"]))]
 
-                for cl in [9, 10, 11]:
-                    row[cl] = predatuj(row[cl])
+                    for cl in [9, 10, 11]:
+                        row[cl] = predatuj(row[cl])
 
-                cw.writerow(row)
+                    cw.writerow(row)
 
 
 def prehled_2017_2013(outdir: str, partial: bool = False):
