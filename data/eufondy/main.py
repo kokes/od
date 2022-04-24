@@ -4,6 +4,7 @@
 
 # TODO: osetrit tady cesko-polsko veci
 # TODO: přehled projektů pro 2007-2013? je tam víc info
+from asyncore import read
 import csv
 import json
 import os
@@ -106,7 +107,7 @@ def prehled_2014_2020(outdir: str, partial: bool = False):
         target_filename = os.path.join(tmpdir, "workbook.xlsx")
         urlretrieve(source_url, target_filename)
 
-        with closing(load_workbook(target_filename)) as wb:
+        with closing(load_workbook(target_filename, read_only=True)) as wb:
             sh = wb.active
             assert sh.title == "Seznam operací"
             rows = sh.iter_rows()
@@ -171,9 +172,9 @@ def prehled_2017_2013(outdir: str, partial: bool = False):
                     dt = [j.value for j in row]
                     assert len(dt) == 10
                     if j == 0:
-                        assert (
-                            dt[0]
-                            == "LIST OF BENEFICIARIES \nSEZNAM PŘÍJEMCŮ PODPORY Z FONDŮ EU"
+                        assert dt[0] == (
+                            "LIST OF BENEFICIARIES \nSEZNAM "
+                            "PŘÍJEMCŮ PODPORY Z FONDŮ EU"
                         )
                     elif j == 6:
                         assert dt == [
