@@ -97,7 +97,7 @@ def prehled_2014_2020(outdir: str, partial: bool = False):
         "2021_09_Seznam-operaci-_-List-of-operations.xlsx.aspx?ext=.xlsx"
     )
     print(
-        f"Stahuji z seznam operací z {source_url}, ale nemusi to byt nejaktualnejsi "
+        f"Stahuji z seznam operaci z {source_url}, ale nemusi to byt nejaktualnejsi "
         f"export - prekontroluj stranku https://dotaceeu.cz/cs/statistiky-a-analyzy/"
         f"seznamy-prijemcu"
     )
