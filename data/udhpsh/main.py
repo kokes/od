@@ -50,7 +50,9 @@ def main(outdir: str, partial: bool = False):
                 with urlopen(index, timeout=HTTP_TIMEOUT) as r:
                     dt = json.load(r)
 
-                    for party in dt["parties"]:
+                    for jp, party in enumerate(dt["parties"]):
+                        if partial and jp > 20:
+                            break
                         relfiles = [
                             j["url"]
                             for j in party["files"]
