@@ -3,9 +3,11 @@ import json
 import os
 import tarfile
 from tempfile import TemporaryDirectory
-from urllib.request import urlretrieve
+from urllib.request import urlopen, urlretrieve
 
 import lxml.etree
+
+BASE_URL = "https://wwwinfo.mfcr.cz/ares/ares_vreo_all.tar.gz"
 
 
 def attr(root, parts, nsmap):
@@ -63,135 +65,142 @@ def organi(root, ico, nsmap):
     return {"fosoby": fosoby, "posoby": posoby}
 
 
-def main(outdir: str, partial: bool = False):
+def remote_data(partial):
     with TemporaryDirectory() as tdr:
         tfn = os.path.join(tdr, "ares_vreo_all.tar.gz")
-        urlretrieve("https://wwwinfo.mfcr.cz/ares/ares_vreo_all.tar.gz", tfn)
-        with tarfile.open(tfn, "r:gz") as tf, open(
-            os.path.join(outdir, "firmy.csv"), "w", encoding="utf8"
-        ) as ud, open(
-            os.path.join(outdir, "fosoby.csv"), "w", encoding="utf8"
-        ) as fo, open(
-            os.path.join(outdir, "posoby.csv"), "w", encoding="utf8"
-        ) as po:
-            udc = csv.writer(ud)
-            foc = csv.writer(fo)
-            poc = csv.writer(po)
+        # pri castecnym loadu stahni jen megabyte
+        if partial:
+            with urlopen(BASE_URL) as r, open(tfn, "wb") as fw:
+                fw.write(r.read(1000_000))
+        else:
+            urlretrieve(BASE_URL, tfn)
+        with tarfile.open(tfn, "r:gz") as tf:
+            try:
+                for el in tf:
+                    yield (el, tf.extractfile(el).read())
+            except EOFError:
+                if partial:
+                    return
+                raise
 
-            cols = [
-                "zdroj",
-                "aktualizace_db",
-                "datum_vypisu",
-                "cas_vypisu",
-                "typ_vypisu",
-                "rejstrik",
+
+def main(outdir: str, partial: bool = False):
+    with open(os.path.join(outdir, "firmy.csv"), "w", encoding="utf8") as ud, open(
+        os.path.join(outdir, "fosoby.csv"), "w", encoding="utf8"
+    ) as fo, open(os.path.join(outdir, "posoby.csv"), "w", encoding="utf8") as po:
+        udc = csv.writer(ud)
+        foc = csv.writer(fo)
+        poc = csv.writer(po)
+
+        cols = [
+            "zdroj",
+            "aktualizace_db",
+            "datum_vypisu",
+            "cas_vypisu",
+            "typ_vypisu",
+            "rejstrik",
+            "ico",
+            "obchodni_firma",
+            "datum_zapisu",
+            "datum_vymazu",
+            "sidlo",
+        ]
+        udc.writerow(cols)
+        foc.writerow(
+            [
                 "ico",
-                "obchodni_firma",
+                "nazev_organu",
                 "datum_zapisu",
                 "datum_vymazu",
-                "sidlo",
+                "nazev_funkce",
+                "jmeno",
+                "prijmeni",
+                "titul_pred",
+                "titul_za",
+                "adresa",
+                "bydliste",
             ]
-            udc.writerow(cols)
-            foc.writerow(
-                [
-                    "ico",
-                    "nazev_organu",
-                    "datum_zapisu",
-                    "datum_vymazu",
-                    "nazev_funkce",
-                    "jmeno",
-                    "prijmeni",
-                    "titul_pred",
-                    "titul_za",
-                    "adresa",
-                    "bydliste",
-                ]
-            )
-            poc.writerow(
-                [
-                    "ico",
-                    "nazev_organu",
-                    "datum_zapisu",
-                    "datum_vymazu",
-                    "nazev_funkce",
-                    "obchodni_firma",
-                    "ico_organ",
-                    "adresa",
-                ]
-            )
+        )
+        poc.writerow(
+            [
+                "ico",
+                "nazev_organu",
+                "datum_zapisu",
+                "datum_vymazu",
+                "nazev_funkce",
+                "obchodni_firma",
+                "ico_organ",
+                "adresa",
+            ]
+        )
 
-            for rw, el in enumerate(tf):
-                if partial and rw > 1e4:
-                    break
-                fl = tf.extractfile(el)
-                et = lxml.etree.fromstring(fl.read())
+        for rw, (el, fl) in enumerate(remote_data(partial)):
+            et = lxml.etree.fromstring(fl)
 
-                odp = et.findall("./are:Odpoved", namespaces=et.nsmap)
-                assert len(odp) == 1
+            odp = et.findall("./are:Odpoved", namespaces=et.nsmap)
+            assert len(odp) == 1
 
-                # muze jich byt vic, ale to jsou odstepne zavody, ktere neresime
-                vypis = odp[0].find(".//are:Vypis_VREO", namespaces=et.nsmap)
-                if vypis is None:
-                    print(el.name, "is not a valid record")
-                    continue
+            # muze jich byt vic, ale to jsou odstepne zavody, ktere neresime
+            vypis = odp[0].find(".//are:Vypis_VREO", namespaces=et.nsmap)
+            if vypis is None:
+                print(el.name, "is not a valid record")
+                continue
 
-                dt = [el.name]
-                ch = [j.tag for j in vypis.getchildren()]
-                ch = [j[j.rindex("}") + 1 :] for j in ch]
+            dt = [el.name]
+            ch = [j.tag for j in vypis.getchildren()]
+            ch = [j[j.rindex("}") + 1 :] for j in ch]
 
-                sekce = set(
-                    ["Uvod", "Zakladni_udaje", "Statutarni_organ", "Jiny_organ"]
-                )
-                if len(set(ch).difference(sekce)) > 0:
-                    raise ValueError(" ".join(ch))
+            sekce = set(["Uvod", "Zakladni_udaje", "Statutarni_organ", "Jiny_organ"])
+            if len(set(ch).difference(sekce)) > 0:
+                raise ValueError(" ".join(ch))
 
-                uvod = vypis.find("./are:Uvod", namespaces=et.nsmap)
-                uvod_cols = [
-                    "Aktualizace_DB",
-                    "Datum_vypisu",
-                    "Cas_vypisu",
-                    "Typ_vypisu",
-                ]
+            uvod = vypis.find("./are:Uvod", namespaces=et.nsmap)
+            uvod_cols = [
+                "Aktualizace_DB",
+                "Datum_vypisu",
+                "Cas_vypisu",
+                "Typ_vypisu",
+            ]
 
-                dt.extend(attr(uvod, uvod_cols, et.nsmap))
+            dt.extend(attr(uvod, uvod_cols, et.nsmap))
 
-                zakl = vypis.find("./are:Zakladni_udaje", namespaces=et.nsmap)
+            zakl = vypis.find("./are:Zakladni_udaje", namespaces=et.nsmap)
 
-                # pro pozdejsi pouziti u vazebnych tabulek
-                ico_el = zakl.find("./are:ICO", namespaces=et.nsmap)
+            # pro pozdejsi pouziti u vazebnych tabulek
+            ico_el = zakl.find("./are:ICO", namespaces=et.nsmap)
 
-                if ico_el is None:
-                    # odštěpné závod nemívají IČO
-                    ico = os.path.split(el.name)[1][:8]
-                else:
-                    ico = ico_el.text
+            if ico_el is None:
+                # odštěpné závod nemívají IČO
+                ico = os.path.split(el.name)[1][:8]
+            else:
+                ico = ico_el.text
 
-                zakl_cols = [
-                    "Rejstrik",
-                    "ICO",
-                    "ObchodniFirma",
-                    "DatumZapisu",
-                    "DatumVymazu",
-                ]
-                zi = attr(zakl, zakl_cols, et.nsmap)
-                # někde chybí IČO jako element (např. odštěpný závod GEAM)
-                zi[1] = ico if zi[1] is None else zi[1]
+            zakl_cols = [
+                "Rejstrik",
+                "ICO",
+                "ObchodniFirma",
+                "DatumZapisu",
+                "DatumVymazu",
+            ]
+            zi = attr(zakl, zakl_cols, et.nsmap)
+            # někde chybí IČO jako element (např. odštěpný závod GEAM)
+            zi[1] = ico if zi[1] is None else zi[1]
 
-                dt.extend(zi)
-                dt.append(obj(zakl.find("./are:Sidlo", namespaces=et.nsmap)))
+            dt.extend(zi)
+            dt.append(obj(zakl.find("./are:Sidlo", namespaces=et.nsmap)))
 
-                # zapis dat do master tabulky
-                udc.writerow(dt)
+            # zapis dat do master tabulky
+            udc.writerow(dt)
 
-                st = vypis.findall("./are:Statutarni_organ", namespaces=et.nsmap)
-                jo = vypis.findall("./are:Jiny_organ", namespaces=et.nsmap)
+            st = vypis.findall("./are:Statutarni_organ", namespaces=et.nsmap)
+            jo = vypis.findall("./are:Jiny_organ", namespaces=et.nsmap)
 
-                for rr in ([] if st is None else st) + ([] if jo is None else jo):
-                    org = organi(rr, ico, et.nsmap)
-                    for j in org["fosoby"]:
-                        foc.writerow(j)
-                    for j in org["posoby"]:
-                        poc.writerow(j)
+            for rr in ([] if st is None else st) + ([] if jo is None else jo):
+                org = organi(rr, ico, et.nsmap)
+                for j in org["fosoby"]:
+                    foc.writerow(j)
+                for j in org["posoby"]:
+                    poc.writerow(j)
 
 
 if __name__ == "__main__":
