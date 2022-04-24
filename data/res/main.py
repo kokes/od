@@ -13,6 +13,8 @@ def download_gzipped(url: str, filename: str, partial: bool):
     req = Request(url)
     req.add_header("Accept-Encoding", "gzip")
     with urlopen(req, timeout=HTTP_TIMEOUT) as r:
+        assert r.headers["Content-Encoding"] == "gzip"
+        gr = gzip.GzipFile(fileobj=r)
         if partial:
             with open(filename, "wt", encoding="utf-8") as fw:
                 for j, line in enumerate(TextIOWrapper(gr, encoding="utf-8")):
@@ -21,8 +23,6 @@ def download_gzipped(url: str, filename: str, partial: bool):
                     fw.write(line)
         else:
             with open(filename, "wb") as fw:
-                assert r.headers["Content-Encoding"] == "gzip"
-                gr = gzip.GzipFile(fileobj=r)
                 shutil.copyfileobj(gr, fw)
 
 
