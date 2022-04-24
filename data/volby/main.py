@@ -93,7 +93,9 @@ def main(outdir: str, partial: bool = False):
                             )
                             if not fnexists:
                                 cw.writeheader()
-                            for ne, el in enumerate(extract_elements(zf, ff, fmp["klic"])):
+                            for ne, el in enumerate(
+                                extract_elements(zf, ff, fmp["klic"])
+                            ):
                                 if partial and ne > 1e4:
                                     break
                                 for k in fmp.get("vynechej", []):
