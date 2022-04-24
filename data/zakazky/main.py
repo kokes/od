@@ -81,7 +81,7 @@ def fix_ico(s):
 @contextmanager
 def read_url(url):
     request = Request(url, headers={"Accept-Encoding": "gzip"})
-    with urlopen(request, timeout=60) as r:
+    with urlopen(request, timeout=300) as r:
         assert r.headers.get("Content-Encoding") == "gzip"
         with gzip.open(r) as gr:
             yield iterdecode(gr, encoding="utf-8-sig")
