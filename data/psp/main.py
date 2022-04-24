@@ -9,6 +9,7 @@ from contextlib import contextmanager
 from datetime import datetime
 from functools import lru_cache
 from io import BytesIO, TextIOWrapper
+from urllib.request import urlopen
 
 import requests
 
@@ -23,7 +24,9 @@ def dl(url):
 @contextmanager
 def read_compressed(zipname, filename):
     burl = "http://www.psp.cz/eknih/cdrom/opendata/{}"
-    with zipfile.ZipFile(dl(burl.format(zipname))) as zf:
+    with urlopen(burl.format(zipname), timeout=60) as r:
+        zd = BytesIO(r.read())
+    with zipfile.ZipFile(zd) as zf:
         yield TextIOWrapper(
             zf.open(filename), "cp1250", errors="ignore"
         )  # tisky.unl maj encoding chyby
