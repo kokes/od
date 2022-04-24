@@ -7,10 +7,11 @@ import gzip
 import json
 import os
 import re
+import shutil
 import ssl
-from codecs import iterdecode
 from contextlib import contextmanager
 from datetime import datetime
+from tempfile import TemporaryDirectory
 from urllib.request import Request, urlopen
 
 # ISVZ nema duveryhodny certy
@@ -81,10 +82,14 @@ def fix_ico(s):
 @contextmanager
 def read_url(url):
     request = Request(url, headers={"Accept-Encoding": "gzip"})
-    with urlopen(request, timeout=60) as r:
-        assert r.headers.get("Content-Encoding") == "gzip"
-        with gzip.open(r) as gr:
-            yield iterdecode(gr, encoding="utf-8-sig")
+    with TemporaryDirectory() as tdir:
+        tfn = os.path.join(tdir, "data")
+        with urlopen(request, timeout=60) as r:
+            assert r.headers.get("Content-Encoding") == "gzip"
+            with gzip.open(r) as gr, open(tfn, "wb") as fw:
+                shutil.copyfileobj(gr, fw)
+        with open(tfn, encoding="utf-8-sig") as f:
+            yield f
 
 
 root_url = "https://isvz.nipez.cz/sites/default/files/content/opendata-predchozi/"
@@ -126,7 +131,9 @@ def main(outdir: str, partial: bool = False):
         for year in years:
             # v `partial` procesnem jen posledni rok - nemuzem procesovat casti
             # souboru, protoze co soubor, to nekolik datasetu
-            if partial and year != years[-1]:
+            # TODO: pouzivam predposledni rok, protoze MMR nechce opravit
+            # posledni soubor v jednom z datasetu
+            if partial and year != years[-2]:
                 continue
             url = base_url.format(year)
             with read_url(url) as resp:

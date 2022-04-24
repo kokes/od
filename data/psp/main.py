@@ -7,29 +7,23 @@ import os
 import zipfile
 from contextlib import contextmanager
 from datetime import datetime
-from functools import lru_cache
-from io import BytesIO, TextIOWrapper
-
-import requests
-
-
-@lru_cache(maxsize=None)
-def dl(url):
-    r = requests.get(url, timeout=60)
-    assert r.ok, r.status_code
-    return BytesIO(r.content)
+from io import TextIOWrapper
+from tempfile import TemporaryDirectory
+from urllib.request import urlretrieve
 
 
 @contextmanager
 def read_compressed(zipname, filename):
     burl = "http://www.psp.cz/eknih/cdrom/opendata/{}"
-    with zipfile.ZipFile(dl(burl.format(zipname))) as zf:
-        yield TextIOWrapper(
-            zf.open(filename), "cp1250", errors="ignore"
-        )  # tisky.unl maj encoding chyby
+    with TemporaryDirectory() as tdir:
+        tfn = os.path.join(tdir, "tmp.zip")
+        urlretrieve(burl.format(zipname), tfn)
+        with zipfile.ZipFile(tfn) as zf, zf.open(filename) as zfh:
+            # tisky.unl maj encoding chyby
+            yield TextIOWrapper(zfh, "cp1250", errors="ignore")
 
 
-def read_compressed_csv(zf, fn, mp):
+def read_compressed_csv(zf, fn, mp, partial):
     datetypes = {
         "date",
         "datetime(year to hour)",
@@ -46,7 +40,9 @@ def read_compressed_csv(zf, fn, mp):
     types = {j["sloupec"]: j["typ"] for j in mp}
     with read_compressed(zf, fn) as f:
         cr = csv.reader(f, delimiter="|")
-        for el in cr:
+        for j, el in enumerate(cr):
+            if partial and j > 1000:
+                break
             # UNL soubory maj jeden extra sloupec
             # TODO: zapnout tohle, az opravi schema sbirky
             # assert len(el) == len(cols) + 1, (el, cols)
@@ -96,12 +92,12 @@ def main(outdir: str, partial: bool = False):
             cw = csv.DictWriter(fw, fieldnames=cols)
             cw.writeheader()
             for ffn in mp["soubory"]:
-                # TODO: nemuzem ted udelat partial, protoze failujou ForeignKeys
-                # if partial and ffn not in mp['soubory'][-2:]:
-                #     continue
+                # tohle nepujde s postgresou kvůli foreign keys, ale to neva
+                if partial and ffn not in mp["soubory"][-2:]:
+                    continue
                 print("\t", ffn)
                 zf, fn = ffn.split("/")
-                for el in read_compressed_csv(zf, fn, mp["sloupce"]):
+                for el in read_compressed_csv(zf, fn, mp["sloupce"], partial):
                     cw.writerow(el)
 
 

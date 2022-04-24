@@ -5,12 +5,12 @@
 # TODO: osetrit tady cesko-polsko veci
 # TODO: přehled projektů pro 2007-2013? je tam víc info
 import csv
+import io
 import json
 import os
 import re
 from itertools import zip_longest
-from tempfile import TemporaryDirectory
-from urllib.request import urlopen, urlretrieve
+from urllib.request import urlopen
 
 from lxml.etree import iterparse
 from openpyxl import load_workbook
@@ -97,38 +97,39 @@ def prehled_2014_2020(outdir: str, partial: bool = False):
         "2021_09_Seznam-operaci-_-List-of-operations.xlsx.aspx?ext=.xlsx"
     )
     print(
-        f"Stahuji z seznam operací z {source_url}, ale nemusí to být nejaktuálnější "
-        f"export - překontroluj stránku https://dotaceeu.cz/cs/statistiky-a-analyzy/"
+        f"Stahuji z seznam operaci z {source_url}, ale nemusi to byt nejaktualnejsi "
+        f"export - prekontroluj stranku https://dotaceeu.cz/cs/statistiky-a-analyzy/"
         f"seznamy-prijemcu"
     )
-    with TemporaryDirectory() as tmpdir:
-        target_filename = os.path.join(tmpdir, "workbook.xlsx")
-        urlretrieve(source_url, target_filename)
+    with urlopen(source_url, timeout=60) as r:
+        raw = io.BytesIO(r.read())
 
-        wb = load_workbook(target_filename)
-        sh = wb.active
-        assert sh.title == "Seznam operací"
-        rows = sh.iter_rows()
-        next(rows), next(rows)  # nadpis, datum generovani
+    wb = load_workbook(raw, read_only=True)
+    sh = wb.active
+    assert sh.title == "Seznam operací"
+    rows = sh.iter_rows()
+    next(rows), next(rows)  # nadpis, datum generovani
 
-        fr = [j.value.strip() for j in next(rows) if j.value is not None]
-        assert fr == hd["ocekavane"], [
-            (a, b) for a, b in zip_longest(fr, hd["ocekavane"]) if a != b
-        ]
-        next(rows)  # anglicky nazvy
+    fr = [j.value.strip() for j in next(rows) if j.value is not None]
+    assert fr == hd["ocekavane"], [
+        (a, b) for a, b in zip_longest(fr, hd["ocekavane"]) if a != b
+    ]
+    next(rows)  # anglicky nazvy
 
-        with open(
-            os.path.join(outdir, "prehled_2014_2020.csv"), "w", encoding="utf8"
-        ) as fw:
-            cw = csv.writer(fw)
-            cw.writerow(hd["hlavicka"])
-            for rrow in rows:
-                row = [rrow[j].value for j in range(len(hd["hlavicka"]))]
+    with open(
+        os.path.join(outdir, "prehled_2014_2020.csv"), "w", encoding="utf8"
+    ) as fw:
+        cw = csv.writer(fw)
+        cw.writerow(hd["hlavicka"])
+        for j, rrow in enumerate(rows):
+            if partial and j > 1000:
+                break
+            row = [rrow[j].value for j in range(len(hd["hlavicka"]))]
 
-                for cl in [9, 10, 11]:
-                    row[cl] = predatuj(row[cl])
+            for cl in [9, 10, 11]:
+                row[cl] = predatuj(row[cl])
 
-                cw.writerow(row)
+            cw.writerow(row)
 
 
 def prehled_2017_2013(outdir: str, partial: bool = False):
@@ -139,10 +140,12 @@ def prehled_2017_2013(outdir: str, partial: bool = False):
         "Seznamy%20p%c5%99%c3%adjemc%c5%af%20(List%20of%20Beneficiaries)/2016/"
         "Seznam-prijemcu-05_2017.xlsx"
     )
-    with TemporaryDirectory() as tmpdir:
-        target_filename = os.path.join(tmpdir, "workbook.xlsx")
-        urlretrieve(source_url, target_filename)
-        wb = load_workbook(target_filename, read_only=True)
+    # load_workbook zamyka vsechny soubory, tak to musime udelat pres pamet
+    # nemam z toho radost, ale...
+    with urlopen(source_url, timeout=60) as r:
+        raw = io.BytesIO(r.read())
+
+    wb = load_workbook(raw, read_only=True)
     sh = wb.active
 
     with open(
@@ -163,12 +166,13 @@ def prehled_2017_2013(outdir: str, partial: bool = False):
         ]
         cw.writerow(hd)
         for j, row in enumerate(sh.rows):
+            if partial and j > 1000:
+                break
             dt = [j.value for j in row]
             assert len(dt) == 10
             if j == 0:
-                assert (
-                    dt[0]
-                    == "LIST OF BENEFICIARIES \nSEZNAM PŘÍJEMCŮ PODPORY Z FONDŮ EU"
+                assert dt[0] == (
+                    "LIST OF BENEFICIARIES \nSEZNAM " "PŘÍJEMCŮ PODPORY Z FONDŮ EU"
                 )
             elif j == 6:
                 assert dt == [
@@ -261,7 +265,9 @@ def opendata_2014_2020(outdir: str, partial: bool = False):
         r = urlopen("https://ms14opendata.mssf.cz/SeznamProjektu.xml", timeout=300)
         et = iterparse(r)
 
-        for action, element in et:
+        for j, (action, element) in enumerate(et):
+            if partial and j > 1e4:
+                break
             assert action == "end"
             if not element.tag.endswith("}PRJ"):
                 continue

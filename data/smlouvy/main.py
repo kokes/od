@@ -117,7 +117,7 @@ def main(outdir: str, partial: bool = False):
             et = lxml.etree.iterparse(data)
 
             for num, (_, el) in enumerate(tqdm(et, desc=filename)):
-                if partial and num > 1e3:
+                if partial and num > 1e5:
                     break
                 eln = strip_ns(el)
                 if eln not in ("zaznam", "mesic", "rok"):
