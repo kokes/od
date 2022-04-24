@@ -122,7 +122,9 @@ def prehled_2014_2020(outdir: str, partial: bool = False):
         ) as fw:
             cw = csv.writer(fw)
             cw.writerow(hd["hlavicka"])
-            for rrow in rows:
+            for j, rrow in enumerate(rows):
+                if partial and j > 1000:
+                    break
                 row = [rrow[j].value for j in range(len(hd["hlavicka"]))]
 
                 for cl in [9, 10, 11]:
@@ -163,6 +165,8 @@ def prehled_2017_2013(outdir: str, partial: bool = False):
         ]
         cw.writerow(hd)
         for j, row in enumerate(sh.rows):
+            if partial and j > 1000:
+                break
             dt = [j.value for j in row]
             assert len(dt) == 10
             if j == 0:
@@ -261,7 +265,9 @@ def opendata_2014_2020(outdir: str, partial: bool = False):
         r = urlopen("https://ms14opendata.mssf.cz/SeznamProjektu.xml", timeout=300)
         et = iterparse(r)
 
-        for action, element in et:
+        for j, (action, element) in enumerate(et):
+            if partial and j > 1e4:
+                break
             assert action == "end"
             if not element.tag.endswith("}PRJ"):
                 continue
