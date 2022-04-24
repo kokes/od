@@ -142,7 +142,6 @@ if __name__ == "__main__":
                                 row = [None if j == "" else j for j in row]
                                 buffer.append(row)
                                 if len(buffer) == 100:
-                                    print(buffer)
                                     conn.executemany(query, buffer)
                                     buffer = []
                             if len(buffer) > 0:
