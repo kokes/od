@@ -9,7 +9,8 @@ from contextlib import contextmanager
 from datetime import datetime
 from functools import lru_cache
 from io import BytesIO, TextIOWrapper
-from urllib.request import urlopen
+from tempfile import TemporaryDirectory
+from urllib.request import urlretrieve
 
 import requests
 
@@ -24,12 +25,13 @@ def dl(url):
 @contextmanager
 def read_compressed(zipname, filename):
     burl = "http://www.psp.cz/eknih/cdrom/opendata/{}"
-    with urlopen(burl.format(zipname), timeout=60) as r:
-        zd = BytesIO(r.read())
-    with zipfile.ZipFile(zd) as zf:
-        yield TextIOWrapper(
-            zf.open(filename), "cp1250", errors="ignore"
-        )  # tisky.unl maj encoding chyby
+    with TemporaryDirectory() as tdir:
+        tfn = os.path.join(tdir, "tmp.zip")
+        urlretrieve(burl.format(zipname), tfn)
+        with zipfile.ZipFile(tfn) as zf:
+            yield TextIOWrapper(
+                zf.open(filename), "cp1250", errors="ignore"
+            )  # tisky.unl maj encoding chyby
 
 
 def read_compressed_csv(zf, fn, mp, partial):

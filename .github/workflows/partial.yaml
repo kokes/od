@@ -17,9 +17,6 @@ jobs:
         python-version: ['3.8', '3.9', '3.10']
         # TODO: pridat cssz, czechinvest, eufondy, steno a zakazky, az je opravime
         module: ['ares', 'datovky', 'dotinfo', 'iissp', 'justice', 'psp', 'red', 'res', 'smlouvy', 'szif', 'udhpsh', 'volby']
-        exclude:
-          - os: windows
-            module: ['cssz', 'eufondy']
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
