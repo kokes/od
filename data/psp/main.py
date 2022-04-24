@@ -7,19 +7,9 @@ import os
 import zipfile
 from contextlib import contextmanager
 from datetime import datetime
-from functools import lru_cache
-from io import BytesIO, TextIOWrapper
+from io import TextIOWrapper
 from tempfile import TemporaryDirectory
 from urllib.request import urlretrieve
-
-import requests
-
-
-@lru_cache(maxsize=None)
-def dl(url):
-    r = requests.get(url, timeout=60)
-    assert r.ok, r.status_code
-    return BytesIO(r.content)
 
 
 @contextmanager
@@ -28,10 +18,11 @@ def read_compressed(zipname, filename):
     with TemporaryDirectory() as tdir:
         tfn = os.path.join(tdir, "tmp.zip")
         urlretrieve(burl.format(zipname), tfn)
-        with zipfile.ZipFile(tfn) as zf:
+        with zipfile.ZipFile(tfn) as zf, zf.open(filename) as zfh:
+            # tisky.unl maj encoding chyby
             yield TextIOWrapper(
-                zf.open(filename), "cp1250", errors="ignore"
-            )  # tisky.unl maj encoding chyby
+                zfh, "cp1250", errors="ignore"
+            )
 
 
 def read_compressed_csv(zf, fn, mp, partial):
