@@ -9,7 +9,6 @@ import os
 import re
 import shutil
 import ssl
-from codecs import iterdecode
 from contextlib import contextmanager
 from datetime import datetime
 from tempfile import TemporaryDirectory
@@ -85,7 +84,7 @@ def read_url(url):
     request = Request(url, headers={"Accept-Encoding": "gzip"})
     with TemporaryDirectory() as tdir:
         tfn = os.path.join(tdir, "data")
-        with urlopen(request, timeout=60) as r:
+        with urlopen(request, timeout=120) as r:
             assert r.headers.get("Content-Encoding") == "gzip"
             with gzip.open(r) as gr, open(tfn, "wb") as fw:
                 shutil.copyfileobj(gr, fw)
