@@ -23,9 +23,8 @@ def load_remote_data(url: str):
         with urlopen(req, timeout=60) as r, open(tfn, "wb") as fw:
             shutil.copyfileobj(r, fw)
 
-    zf = zipfile.ZipFile(tfn)
-    yield zf
-    zf.close()
+    with zipfile.ZipFile(tfn) as zf:
+        yield zf
 
 
 def extract_elements(zf, fn, nodename):
@@ -94,7 +93,9 @@ def main(outdir: str, partial: bool = False):
                             )
                             if not fnexists:
                                 cw.writeheader()
-                            for el in extract_elements(zf, ff, fmp["klic"]):
+                            for ne, el in enumerate(extract_elements(zf, ff, fmp["klic"])):
+                                if partial and ne > 1e4:
+                                    break
                                 for k in fmp.get("vynechej", []):
                                     el.pop(k, None)
 
