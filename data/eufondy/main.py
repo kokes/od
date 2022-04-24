@@ -4,7 +4,6 @@
 
 # TODO: osetrit tady cesko-polsko veci
 # TODO: přehled projektů pro 2007-2013? je tam víc info
-from asyncore import read
 import csv
 import json
 import os
