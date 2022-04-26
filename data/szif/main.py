@@ -11,6 +11,7 @@ BASE_URL = (
     "dokumenty_ke_stazeni%2Fpkp%2Fspd%2Fopendata%2F"
 )
 urls = {
+    2020: BASE_URL + "1622192829773.zip",
     2019: BASE_URL + "1590753721920.zip",
     2018: BASE_URL + "1563197121858.zip",
     2017: BASE_URL + "1563197147275.zip",
