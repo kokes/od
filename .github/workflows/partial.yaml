@@ -12,12 +12,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       # tohle se hodi vypnout, az budem zapinat novy joby
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
         python-version: ['3.8', '3.9', '3.10']
-        # TODO: pridat cssz, czechinvest, eufondy, steno, psp a zakazky, az je opravime
-        module: ['ares', 'datovky', 'dotinfo', 'iissp', 'justice', 'red', 'res', 'smlouvy', 'szif', 'udhpsh', 'volby']
+        # TODO: pridat 'cssz', 'czechinvest', 'eufondy', 'steno', 'psp', 'zakazky', az je opravime
+        module: ['ares', 'datovky', 'dotinfo', 'iissp', 'justice', 'red', 'res', 'smlouvy', 'szif', 'udhpsh', 'volby', 'cssz', 'czechinvest', 'eufondy', 'steno', 'psp', 'zakazky']
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -29,6 +29,5 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run partial processing
-      # pridat --connstring sqlite:///data.db, az opravime sqlite na windows
       run: |
-        python3 main.py --partial ${{ matrix.module }}
+        python3 main.py --connstring sqlite:///data.db --partial ${{ matrix.module }}
