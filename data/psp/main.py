@@ -89,7 +89,7 @@ def main(outdir: str, partial: bool = False):
         print(tbl)
         cols = [j["sloupec"] for j in mp["sloupce"]]
         with open(tfn, encoding="utf-8", mode="wt") as fw:
-            cw = csv.DictWriter(fw, fieldnames=cols)
+            cw = csv.DictWriter(fw, fieldnames=cols, lineterminator="\n")
             cw.writeheader()
             for ffn in mp["soubory"]:
                 # tohle nepujde s postgresou kvůli foreign keys, ale to neva

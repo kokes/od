@@ -67,7 +67,7 @@ def main(outdir: str, partial: bool = False):
         if f.info().get("Content-Encoding") == "gzip":
             f = gzip.GzipFile(fileobj=f)
 
-        cw = csv.DictWriter(fw, fieldnames=cols)
+        cw = csv.DictWriter(fw, fieldnames=cols, lineterminator="\n")
         cw.writeheader()
 
         et = lxml.etree.iterparse(f)

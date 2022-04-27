@@ -41,7 +41,7 @@ def main(outdir: str, partial: bool = False):
         print(f"Nahravam dataset: {dataset}")
         with open(os.path.join(outdir, dataset + ".csv"), "w", encoding="utf8") as fw:
             columns = ["rok", "ico_prijemce", "nazev_prijemce"] + list(mapping.values())
-            cw = csv.DictWriter(fw, fieldnames=columns)
+            cw = csv.DictWriter(fw, fieldnames=columns, lineterminator="\n")
             cw.writeheader()
             for year, index in indices.items():
                 if partial and year not in years[-2:]:

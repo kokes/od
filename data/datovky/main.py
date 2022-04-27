@@ -70,7 +70,7 @@ def parse_el(el, paths):
 def parse_xml(source, target_fn, partial):
     with open(target_fn, "wt", encoding="utf8") as fw:
         et = lxml.etree.iterparse(source)
-        cw = csv.DictWriter(fw, fieldnames=mapping.keys())
+        cw = csv.DictWriter(fw, fieldnames=mapping.keys(), lineterminator="\n")
         cw.writeheader()
 
         for num, (_, el) in enumerate(et):

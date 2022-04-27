@@ -90,6 +90,7 @@ def main(outdir: str, partial: bool = False):
                                 fieldnames=["DATUM"]
                                 + fmp["schema"]
                                 + fmp.get("extra_schema", []),
+                                lineterminator="\n",
                             )
                             if not fnexists:
                                 cw.writeheader()

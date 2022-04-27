@@ -25,7 +25,9 @@ def main(outdir: str, partial: bool = False):
         os.path.join(outdir, "platby.csv"), "w", encoding="utf8"
     ) as fp, TemporaryDirectory() as tmpdir:
         cz = csv.DictWriter(
-            fz, ["id_prijemce", "rok", "jmeno_nazev", "obec", "okres", "castka_bez_pvp"]
+            fz,
+            ["id_prijemce", "rok", "jmeno_nazev", "obec", "okres", "castka_bez_pvp"],
+            lineterminator="\n",
         )
         cp = csv.DictWriter(
             fp,
@@ -38,6 +40,7 @@ def main(outdir: str, partial: bool = False):
                 "zdroje_eu",
                 "celkem_czk",
             ],
+            lineterminator="\n",
         )
 
         cz.writeheader()

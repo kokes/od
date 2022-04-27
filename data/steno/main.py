@@ -145,6 +145,7 @@ def main(outdir: str, partial: bool = False):
                         "tema",
                         "text",
                     ],
+                    lineterminator="\n",
                 )
                 cw.writeheader()
                 for fn in tqdm(

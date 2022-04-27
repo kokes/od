@@ -82,7 +82,9 @@ def main(outdir: str, partial: bool = False):
                         (j[3].lower() + j[4:] if j.startswith("iri") else j)
                         for j in clean_header
                     ]
-                    cw = csv.DictWriter(fw, fieldnames=clean_header)
+                    cw = csv.DictWriter(
+                        fw, fieldnames=clean_header, lineterminator="\n"
+                    )
                     cw.writeheader()
                 if partial and num > 5e3:
                     break

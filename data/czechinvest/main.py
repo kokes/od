@@ -80,7 +80,7 @@ def main(outdir: str, partial: bool = False):
     ]
 
     with open(os.path.join(outdir, "pobidky.csv"), "w", encoding="utf8") as fw:
-        cw = csv.DictWriter(fw, fieldnames=mapping["tghd"])
+        cw = csv.DictWriter(fw, fieldnames=mapping["tghd"], lineterminator="\n")
         cw.writeheader()
         for rn in range(3, sh.nrows):
             row = [

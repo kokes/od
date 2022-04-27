@@ -119,7 +119,7 @@ def prehled_2014_2020(outdir: str, partial: bool = False):
     with open(
         os.path.join(outdir, "prehled_2014_2020.csv"), "w", encoding="utf8"
     ) as fw:
-        cw = csv.writer(fw)
+        cw = csv.writer(fw, lineterminator="\n")
         cw.writerow(hd["hlavicka"])
         for j, rrow in enumerate(rows):
             if partial and j > 1000:
@@ -151,7 +151,7 @@ def prehled_2017_2013(outdir: str, partial: bool = False):
     with open(
         os.path.join(outdir, "prehled_2017_2013.csv"), "w", encoding="utf8"
     ) as fw:
-        cw = csv.writer(fw)
+        cw = csv.writer(fw, lineterminator="\n")
         hd = [
             "prijemce",
             "ico",
@@ -260,7 +260,7 @@ def opendata_2014_2020(outdir: str, partial: bool = False):
     with open(
         os.path.join(outdir, "opendata_2014_2020.csv"), "w", encoding="utf8"
     ) as fw:
-        cw = csv.DictWriter(fw, fieldnames=sloupce)
+        cw = csv.DictWriter(fw, fieldnames=sloupce, lineterminator="\n")
         cw.writeheader()
         r = urlopen("https://ms14opendata.mssf.cz/SeznamProjektu.xml", timeout=300)
         et = iterparse(r)

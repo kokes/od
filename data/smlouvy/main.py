@@ -108,8 +108,8 @@ def main(outdir: str, partial: bool = False):
         with open(tfn, "w", encoding="utf8") as fw, open(
             tfnu, "w", encoding="utf8"
         ) as fwu:
-            cw = csv.writer(fw)
-            cwu = csv.writer(fwu)
+            cw = csv.writer(fw, lineterminator="\n")
+            cwu = csv.writer(fwu, lineterminator="\n")
             cw.writerow(hds)
             cwu.writerow(hdu)
             rok, mesic = None, None
