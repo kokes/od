@@ -127,7 +127,9 @@ def main(outdir: str, partial: bool = False):
             fn = el["soubor"] + ".csv"
             ffn = os.path.join(outdir, fn)
             f = open(ffn, "w", encoding="utf8")
-            cw = csv.DictWriter(f, fieldnames=["ico"] + list(el["schema"].keys()))
+            cw = csv.DictWriter(
+                f, fieldnames=["ico"] + list(el["schema"].keys()), lineterminator="\n"
+            )
             cw.writeheader()
 
             for udaj in udaje:
@@ -136,7 +138,7 @@ def main(outdir: str, partial: bool = False):
                 csvs[udaj] = cw
 
     fs["subjekty"] = open(os.path.join(outdir, "subjekty.csv"), "w", encoding="utf8")
-    csvs["subjekty"] = csv.writer(fs["subjekty"])
+    csvs["subjekty"] = csv.writer(fs["subjekty"], lineterminator="\n")
     csvs["subjekty"].writerow(["ico", "nazev", "datum_zapis", "datum_vymaz"])
 
     icos = set()

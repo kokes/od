@@ -36,7 +36,7 @@ def main(outdir: str, partial: bool = False):
         ) as f, open(os.path.join(outdir, "dotace.csv"), "w", encoding="utf8") as fw:
             ut = codecs.iterdecode(f, encoding="cp1250")
             cr = csv.DictReader(ut, delimiter=";")
-            cw = csv.DictWriter(fw, fieldnames=header.values())
+            cw = csv.DictWriter(fw, fieldnames=header.values(), lineterminator="\n")
             cw.writeheader()
             exphd = set(header.keys())
             for j, row in enumerate(cr):

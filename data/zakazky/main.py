@@ -72,7 +72,7 @@ def fix_ico(s):
             print("nevalidni ICO", s)
             return None
 
-    if rv < 100 * 10**6:
+    if rv < 100 * 10 ** 6:
         return rv
     else:
         print("ICO overflow", rv)
@@ -123,7 +123,7 @@ def main(outdir: str, partial: bool = False):
         for k, v in tblmap.items():
             tfn = os.path.join(outdir, f"{ds}_{v}.csv")
             with open(tfn, "w", encoding="utf8") as fw:
-                cw = csv.writer(fw)
+                cw = csv.writer(fw, lineterminator="\n")
                 cw.writerow(k)
 
         base_url, years = url_sources[ds]
@@ -152,7 +152,7 @@ def main(outdir: str, partial: bool = False):
                         f = open(
                             os.path.join(outdir, f"{ds}_{tp}.csv"), "a", encoding="utf8"
                         )
-                        cw = csv.writer(f)
+                        cw = csv.writer(f, lineterminator="\n")
                         continue
 
                     if len(ln) == 0:
@@ -163,7 +163,7 @@ def main(outdir: str, partial: bool = False):
                         print(f"Necekane dlouha radka ({nrow}. v {url})")
                         continue
                         # with open("errs.csv", "a+") as ffw:
-                        #     ccw = csv.writer(ffw)
+                        #     ccw = csv.writer(ffw, lineterminator="\n")
                         #     ccw.writerow(ln)
                         # continue
 

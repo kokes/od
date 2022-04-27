@@ -88,9 +88,9 @@ def main(outdir: str, partial: bool = False):
     with open(os.path.join(outdir, "firmy.csv"), "w", encoding="utf8") as ud, open(
         os.path.join(outdir, "fosoby.csv"), "w", encoding="utf8"
     ) as fo, open(os.path.join(outdir, "posoby.csv"), "w", encoding="utf8") as po:
-        udc = csv.writer(ud)
-        foc = csv.writer(fo)
-        poc = csv.writer(po)
+        udc = csv.writer(ud, lineterminator="\n")
+        foc = csv.writer(fo, lineterminator="\n")
+        poc = csv.writer(po, lineterminator="\n")
 
         cols = [
             "zdroj",
