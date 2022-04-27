@@ -17,7 +17,7 @@ jobs:
         os: ['ubuntu-latest', 'windows-latest']
         python-version: ['3.8', '3.9', '3.10']
         # TODO: pridat 'cssz', 'czechinvest', 'eufondy', 'steno', 'psp', 'zakazky', az je opravime
-        module: ['ares', 'datovky', 'dotinfo', 'iissp', 'justice', 'red', 'res', 'smlouvy', 'szif', 'udhpsh', 'volby', 'cssz', 'czechinvest', 'eufondy', 'steno', 'psp', 'zakazky']
+        module: ['ares', 'datovky', 'dotinfo', 'iissp', 'justice', 'red', 'res', 'smlouvy', 'szif', 'udhpsh', 'volby']
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
