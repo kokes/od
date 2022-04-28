@@ -1,8 +1,5 @@
 import csv
 import gzip
-import os
-import shutil
-from io import TextIOWrapper
 import io
 import os
 from contextlib import contextmanager
@@ -57,7 +54,6 @@ def open_remote_gzipped(url: str, partial: bool):
             yield io.TextIOWrapper(r, encoding="cp1250")
 
 
-# TODO: implement partial?
 def main(outdir: str, partial: bool = False):
     cls_data = dict()
     for cls_url in CLS_URLS:
