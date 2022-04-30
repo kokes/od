@@ -10,7 +10,6 @@ import re
 import ssl
 from contextlib import contextmanager
 from datetime import datetime
-from tempfile import TemporaryDirectory
 from urllib.request import Request, urlopen
 
 from lxml.etree import iterparse
@@ -63,11 +62,9 @@ def fix_ico(s):
 @contextmanager
 def read_url(url):
     request = Request(url, headers={"Accept-Encoding": "gzip"})
-    with TemporaryDirectory() as tdir:
-        tfn = os.path.join(tdir, "data")
-        with urlopen(request, timeout=60) as r:
-            assert r.headers.get("Content-Encoding") == "gzip"
-            yield gzip.open(r)
+    with urlopen(request, timeout=60) as r:
+        assert r.headers.get("Content-Encoding") == "gzip"
+        yield gzip.open(r)
 
 
 root_url = "https://isvz.nipez.cz/sites/default/files/content/opendata-predchozi/"
