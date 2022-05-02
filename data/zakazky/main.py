@@ -98,15 +98,12 @@ def main(outdir: str, partial: bool = False):
             full_ds = f"{ds}_{v['table']}"
             tfn = os.path.join(outdir, f"{full_ds}.csv")
             filehandles[full_ds] = open(tfn, "w", encoding="utf8")
-            # TODO: museli jsme vypnout DictWriter, protoze ZZVZ jsou garbage
-            # pro roky 2021 a 2022
-            csvwriters[full_ds] = csv.writer(
+            csvwriters[full_ds] = csv.DictWriter(
                 filehandles[full_ds],
-                # fieldnames=v["header"],
+                fieldnames=v["header"],
                 lineterminator="\n",
             )
-            # csvwriters[full_ds].writeheader()
-            csvwriters[full_ds].writerow(v["header"])
+            csvwriters[full_ds].writeheader()
 
         base_url, years = url_sources[ds]
 
@@ -139,8 +136,7 @@ def main(outdir: str, partial: bool = False):
                                 print("nevalidni ico", v, f"({full_ds}, {url})")
                             row[k] = ico
 
-                    # TODO: `writerow(row)` az prejdem zpet na DictWriter
-                    csvwriters[full_ds].writerow(row.values())
+                    csvwriters[full_ds].writerow(row)
 
                     element.clear()
 
