@@ -18,16 +18,16 @@ schema = [
         Column("id", Text, unique=True, nullable=False),
         Column("type", Text, nullable=False),
         Column("subtype", SmallInteger, nullable=False),
-        Column("firstName", Text, nullable=True),
-        Column("lastName", Text, nullable=True),
-        Column("middleName", Text, nullable=True),
-        Column("tradeName", Text, nullable=True),
+        Column("first_name", Text, nullable=True),
+        Column("last_name", Text, nullable=True),
+        Column("middle_name", Text, nullable=True),
+        Column("trade_name", Text, nullable=True),
         Column("ico", Integer, nullable=True, index=True),
         Column("address", JSON, nullable=True),
         Column("pdz", Boolean, nullable=False),
         Column("ovm", Boolean, nullable=False),
         Column("hierarchy", JSON, nullable=False),
-        Column("idOVM", Integer, nullable=True),
+        Column("id_ovm", Integer, nullable=True),
     )
 ]
 

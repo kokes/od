@@ -10,10 +10,10 @@ mapping = {
     "id": "id",
     "type": "type",
     "subtype": "subtype",
-    "firstName": "name/person/firstName",
-    "lastName": "name/person/lastName",
-    "middleName": "name/person/middleName",
-    "tradeName": "name/tradeName",
+    "first_name": "name/person/firstName",
+    "last_name": "name/person/lastName",
+    "middle_name": "name/person/middleName",
+    "trade_name": "name/tradeName",
     "ico": "ico",
     "address": {
         "code": "address/code",
@@ -35,7 +35,7 @@ mapping = {
         "isMaster": "hierarchy/isMaster",
         "masterId": "masterId",
     },
-    "idOVM": "idOVM",
+    "id_ovm": "idOVM",
 }
 
 
