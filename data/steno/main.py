@@ -5,6 +5,7 @@ import zipfile
 from collections import Counter
 from contextlib import closing
 from glob import glob
+from pathlib import Path
 from tempfile import TemporaryDirectory
 from urllib.error import HTTPError
 from urllib.parse import urljoin
@@ -12,6 +13,18 @@ from urllib.request import urlopen, urlretrieve
 
 import lxml.html
 from tqdm import tqdm
+
+
+def clean_lines(rel_path):
+    return list(
+        map(
+            str.strip,
+            (Path(__file__).parent / rel_path)
+            .read_text(encoding="utf -8")
+            .splitlines(),
+        )
+    )
+
 
 urls = {
     2010: "https://www.psp.cz/eknih/2010ps/stenprot/zip/index.htm",
@@ -21,11 +34,8 @@ urls = {
 }
 
 
-poz = []
-cdir = os.path.dirname(os.path.abspath(__file__))
-with open(os.path.join(cdir, "pozice.txt"), encoding="utf8") as f:
-    for ln in f:
-        poz.append(ln.strip())
+poz = clean_lines("pozice.txt")
+dlh = set(clean_lines("dlouha_jmena.txt"))
 
 # TODO: testy
 
@@ -99,8 +109,6 @@ def vyrok(zf):
 
             if od is not None:
                 fun, aut = depozicuj(od.text_content().strip())
-                with open("autori.txt", encoding="utf-8", mode="a+") as fw:
-                    fw.write(f"{od.text_content().strip()};{fun};{aut}\n")
                 buf = [
                     pt[len(od.text_content()) + 1 :].strip()
                 ]  # pridame soucasny text (ale odseknem autora)
@@ -161,20 +169,25 @@ def main(outdir: str, partial: bool = False):
                                     }
                                 )
                                 # depozicovali jsme vse?
-                                if v["autor"] and len(v["autor"].split(" ")) > 2:
+                                if (
+                                    v["autor"]
+                                    and len(v["autor"].split(" ")) > 2
+                                    and v["autor"] not in dlh
+                                ):
                                     lnm.update([(v["funkce"], v["autor"])])
 
                     except zipfile.BadZipFile:
                         print("bad zip file:", fn)
 
     # naparsovali jsme správně politické funkce?
-    print(
-        "\nJe možné, že následující osoby jsme nenaparsovali správně, "
-        "a bude možná nutné"
-        " jejich funkce doplnit do souboru pozice.txt\n"
-    )
-    for (fn, jm), num in sorted(lnm.items(), key=lambda x: (x[0][0], x[0][1])):
-        print("Funkce: {}, jméno: {} ({})".format(fn, jm, num))
+    if lnm:
+        print(
+            "\nJe možné, že následující osoby jsme nenaparsovali správně, "
+            "a bude možná nutné"
+            " jejich funkce doplnit do souboru pozice.txt\n"
+        )
+        for (fn, jm), num in sorted(lnm.items(), key=lambda x: (x[0][0], x[0][1])):
+            print("Funkce: {}, jméno: {} ({})".format(fn, jm, num))
 
 
 if __name__ == "__main__":
