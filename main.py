@@ -49,6 +49,7 @@ if __name__ == "__main__":
         "dotinfo",
         "eufondy",
         "iissp",
+        "czechpoint",
         "justice",
         "psp",
         "steno",
