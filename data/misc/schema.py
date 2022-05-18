@@ -2,7 +2,6 @@ from sqlalchemy import Column, MetaData, Table
 from sqlalchemy.sql.sqltypes import Integer, Text
 
 meta = MetaData()
-"IČO", "Obchodní jméno", "Sídlo", "Stát", "Odsouzeni"
 
 
 schema = [
