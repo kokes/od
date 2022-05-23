@@ -518,7 +518,8 @@
             "hl-2006ps.zip/hl2006s.unl",
             "hl-2010ps.zip/hl2010s.unl",
             "hl-2013ps.zip/hl2013s.unl",
-            "hl-2017ps.zip/hl2017s.unl"
+            "hl-2017ps.zip/hl2017s.unl",
+            "hl-2021ps.zip/hl2021s.unl"
         ],
         "index": [
             [
@@ -651,7 +652,9 @@
             "hl-2013ps.zip/hl2013h1.unl",
             "hl-2013ps.zip/hl2013h2.unl",
             "hl-2017ps.zip/hl2017h1.unl",
-            "hl-2017ps.zip/hl2017h2.unl"
+            "hl-2017ps.zip/hl2017h2.unl",
+            "hl-2021ps.zip/hl2021h1.unl",
+            "hl-2021ps.zip/hl2021h2.unl"
         ],
         "index": [
             [
@@ -699,7 +702,8 @@
             "hl-2006ps.zip/omluvy.unl",
             "hl-2010ps.zip/omluvy.unl",
             "hl-2013ps.zip/omluvy.unl",
-            "hl-2017ps.zip/omluvy.unl"
+            "hl-2017ps.zip/omluvy.unl",
+            "hl-2021ps.zip/omluvy.unl"
         ],
         "sloupce": [
             {
@@ -789,7 +793,8 @@
         "soubory": [
             "hl-2010ps.zip/hl2010x.unl",
             "hl-2013ps.zip/hl2013x.unl",
-            "hl-2017ps.zip/hl2017x.unl"
+            "hl-2017ps.zip/hl2017x.unl",
+            "hl-2021ps.zip/hl2021x.unl"
         ],
         "sloupce": [
             {
@@ -822,7 +827,8 @@
         "soubory": [
             "hl-2010ps.zip/hl2010v.unl",
             "hl-2013ps.zip/hl2013v.unl",
-            "hl-2017ps.zip/hl2017v.unl"
+            "hl-2017ps.zip/hl2017v.unl",
+            "hl-2021ps.zip/hl2021v.unl"
         ],
         "sloupce": [
             {
