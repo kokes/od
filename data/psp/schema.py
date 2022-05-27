@@ -904,13 +904,7 @@ schema = [
         ),
         Column(
             "id_hlas",
-            Integer,
-            # TODO: ForeignKey("hlasovani_hl_hlasovani.id_hlasovani"),
-            # odstraneno, protoze to nekde chybelo
-            # konkretne to byl problem hlasovani 66035 (2013-2017),
-            # ke kterymu je tisk, ale samotny hlasovani neni
-            # zkusil jsem svuj starej overenej kod a i tam to hapruje - takze
-            # je holt chyba u zdroje
+            ForeignKey("hlasovani_hl_hlasovani.id_hlasovani"),
             nullable=True,
             comment="Identifikátor hlasování, viz hl_hlasovani:id_hlasovani",
         ),
