@@ -19,6 +19,11 @@ if __name__ == "__main__":
         help="prefix pro nazvy schemat (postgres) ci tabulek (sqlite)",
     )
     parser.add_argument(
+        "--drop-first",
+        action="store_true",
+        help="před importem smaz tabulky (dobre pri zmene schematu)",
+    )
+    parser.add_argument(
         "--partial",
         action="store_true",
         help="procesuj jen cast vstupnich dat - vhodne pro testovani, CI apod.",
@@ -109,7 +114,9 @@ if __name__ == "__main__":
                     full_table_name = f"{table.schema}.{table.name}"
 
                     engine.execute(f"CREATE SCHEMA IF NOT EXISTS {table.schema}")
-                    table.create(engine, checkfirst=True)  # TODO: drop first?
+                    if args.drop_first:
+                        table.drop(engine, checkfirst=True)
+                    table.create(engine, checkfirst=True)
 
                     conn = engine.raw_connection()
                     cur = conn.cursor()
@@ -124,7 +131,9 @@ if __name__ == "__main__":
                     conn.commit()  # TODO: proc nejde context manager? starej psycopg?
                 elif engine.name == "sqlite":
                     table.name = f"{args.schema_prefix}{module_name}_{table.name}"
-                    table.create(engine, checkfirst=True)  # TODO: drop first?
+                    if args.drop_first:
+                        table.drop(engine, checkfirst=True)
+                    table.create(engine, checkfirst=True)
                     conn = engine.raw_connection()
 
                     ph = ", ".join(["?"] * len(table.columns))
