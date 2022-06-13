@@ -18,7 +18,7 @@ schema = [
         "prijemce",
         meta,
         Column("id_prijemce", Text, nullable=False, primary_key=True),
-        Column("ico", BigInteger, nullable=True),
+        Column("ico", BigInteger, nullable=True, index=True),
         Column("obchodni_nazev", Text, nullable=True),
         Column("jmeno", Text, nullable=True),
         Column("prijmeni", Text, nullable=True),

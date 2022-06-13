@@ -150,6 +150,7 @@ def main(outdir: str, partial: bool = False):
             ch = [j.tag for j in vypis.getchildren()]
             ch = [j[j.rindex("}") + 1 :] for j in ch]
 
+            # TODO: chybi zastoupeni dane PO jeji FO
             sekce = set(["Uvod", "Zakladni_udaje", "Statutarni_organ", "Jiny_organ"])
             if len(set(ch).difference(sekce)) > 0:
                 raise ValueError(" ".join(ch))
