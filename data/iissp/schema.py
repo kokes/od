@@ -17,7 +17,7 @@ schema = [
         meta,
         Column("ucjed_id", Text, nullable=False),
         Column("csuis_ucjed_id", BigInteger, nullable=False),
-        Column("ico", Integer, nullable=False),
+        Column("ico", Integer, nullable=False, index=True),
         Column("start_date", Date, nullable=False),
         Column("end_date", Date, nullable=True),
         Column("nazev", Text, nullable=True),  # -- fakt to tam obcas chybi
@@ -27,7 +27,7 @@ schema = [
         Column(
             "zrizovatel_id", BigInteger, nullable=True
         ),  # -- references(csuis_ucjed_id),
-        Column("zrizovatel_ico", BigInteger, nullable=True),
+        Column("zrizovatel_ico", BigInteger, nullable=True, index=True),
         Column("cofog_id", SmallInteger, nullable=True),  # -- nullif == 0?
         Column("isektor_id", SmallInteger, nullable=True),  # -- nullif == 0?
         Column("kapitola_id", SmallInteger, nullable=True),  # -- nullif == 0?

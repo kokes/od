@@ -13,9 +13,7 @@ schema = [
         Column("cas_vypisu", Time, nullable=False),
         Column("typ_vypisu", Text, nullable=False),
         Column("rejstrik", Text, nullable=True),
-        Column(
-            "ico", Integer, nullable=False
-        ),  # TODO: pkey nebo az po deduplikaci? jsou tam duplikaty?
+        Column("ico", Integer, nullable=False, primary_key=True),
         Column("obchodni_firma", Text, nullable=True),
         Column("datum_zapisu", Date, nullable=False),
         Column("datum_vymazu", Date, nullable=True),
@@ -24,7 +22,7 @@ schema = [
     Table(
         "fosoby",
         meta,
-        Column("ico", Integer, nullable=False),
+        Column("ico", Integer, nullable=False, index=True),
         Column("nazev_organu", Text, nullable=True),
         Column("datum_zapisu", Date, nullable=False),
         Column("datum_vymazu", Date, nullable=True),
@@ -39,14 +37,13 @@ schema = [
     Table(
         "posoby",
         meta,
-        # TODO: nezkousel jsem tohle schema, takze to bude treba projit
-        Column("ico", Integer, nullable=False),
+        Column("ico", Integer, nullable=False, index=True),
         Column("nazev_organu", Text, nullable=True),
         Column("datum_zapisu", Date, nullable=False),
         Column("datum_vymazu", Date, nullable=True),
         Column("nazev_funkce", Text, nullable=True),
         Column("obchodni_firma", Text, nullable=True),
-        Column("ico_organ", Integer, nullable=True),
+        Column("ico_organ", Integer, nullable=True, index=True),
         Column("adresa", JSON, nullable=True),
     ),
 ]

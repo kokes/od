@@ -59,6 +59,9 @@ def main(outdir: str, partial: bool = False):
     with open(os.path.join(cdir, "ciselnik.json"), encoding="utf-8") as f:
         csmp = json.load(f)
 
+    if len(distribution_urls) < len(csmp):
+        raise ValueError("V NKOD nejsou data pro vsechny pozadovane datasety")
+
     csl = dict()
 
     logging.info("Nacitam ciselniky")
