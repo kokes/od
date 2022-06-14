@@ -42,6 +42,15 @@ DS_CLS = {
     "ZDRUD": 564,
 }
 
+missing = {
+    (
+        80004,
+        "00",
+    ): "Výroba, obchod a služby neuvedené v přílohách 1 až 3 živnostenského zákona",
+    (56, "805"): "Regionální rada regionu soudržnosti",
+    (149, "805"): "Regionální rada regionu soudržnosti",
+}
+
 
 @contextmanager
 def open_remote_gzipped(url: str, partial: bool):
@@ -72,12 +81,12 @@ def main(outdir: str, partial: bool = False):
                 for k, v in row.items():
                     if k not in DS_CLS or v == "":
                         continue
-                    # if (DS_CLS[k], v) not in cls_data:
-                    #     if (DS_CLS[k], v) not in errs:
-                    #         print("chybi", (DS_CLS[k], v)) # TODO(PR): fix
-                    #         print(row)
-                    #     errs.add((DS_CLS[k], v))
-                    #     continue
+
+                    # chybející hodnoty v číselnících (issue #127)
+                    if (DS_CLS[k], v) in missing:
+                        row[k] = missing[(DS_CLS[k], v)]
+                        continue
+
                     row[k] = cls_data[(DS_CLS[k], v)]
 
                 if n == 0:
