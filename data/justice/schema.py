@@ -1,5 +1,5 @@
 from sqlalchemy import Column, ForeignKey, MetaData, Table
-from sqlalchemy.sql.sqltypes import BigInteger, Boolean, Date, Numeric, Text
+from sqlalchemy.sql.sqltypes import Boolean, Date, Integer, Numeric, Text
 
 meta = MetaData()
 
@@ -7,7 +7,7 @@ schema = [
     Table(
         "subjekty",
         meta,
-        Column("ico", BigInteger, nullable=False, primary_key=True, unique=True),
+        Column("ico", Integer, nullable=False, primary_key=True, unique=True),
         Column("nazev", Text, nullable=False),
         Column("datum_zapis", Date, nullable=False),
         Column("datum_vymaz", Date, nullable=True),
@@ -317,7 +317,7 @@ schema = [
         Column("datum_narozeni", Date, nullable=True),
         Column("nazev", Text, nullable=True),
         Column("reg_cislo", Text, nullable=True),
-        Column("ico_angos", BigInteger, nullable=True),
+        Column("ico_angos", Integer, nullable=True),
         Column("euid", Text, nullable=True),
         Column("adresa_stat", Text, nullable=True),
         Column("adresa_obec", Text, nullable=True),

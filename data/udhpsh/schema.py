@@ -1,5 +1,12 @@
 from sqlalchemy import Column, MetaData, Table
-from sqlalchemy.sql.sqltypes import BigInteger, Date, Numeric, SmallInteger, Text
+from sqlalchemy.sql.sqltypes import (
+    BigInteger,
+    Date,
+    Integer,
+    Numeric,
+    SmallInteger,
+    Text,
+)
 
 meta = MetaData()
 
@@ -8,7 +15,7 @@ schema = [
         "penizefo",
         meta,
         Column("rok", SmallInteger, nullable=False),
-        Column("ico_prijemce", BigInteger, nullable=False),
+        Column("ico_prijemce", Integer, nullable=False),
         Column("nazev_prijemce", Text, nullable=False),
         Column("datum", Date, nullable=True),
         Column("castka", Numeric, nullable=True),
@@ -23,11 +30,11 @@ schema = [
         "penizepo",
         meta,
         Column("rok", SmallInteger, nullable=False),
-        Column("ico_prijemce", BigInteger, nullable=False),
+        Column("ico_prijemce", Integer, nullable=False),
         Column("nazev_prijemce", Text, nullable=False),
         Column("datum", Date, nullable=True),
         Column("castka", Numeric, nullable=False),
-        Column("ico_darce", BigInteger, nullable=False),
+        Column("ico_darce", Integer, nullable=True),
         Column("spolecnost", Text, nullable=False),
         Column("adresa_ulice", Text, nullable=True),
         Column("adresa_mesto", Text, nullable=True),
