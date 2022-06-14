@@ -27,7 +27,7 @@ schema = [
         Column(
             "zrizovatel_id", BigInteger, nullable=True
         ),  # -- references(csuis_ucjed_id),
-        Column("zrizovatel_ico", BigInteger, nullable=True, index=True),
+        Column("zrizovatel_ico", Integer, nullable=True, index=True),
         Column("cofog_id", SmallInteger, nullable=True),  # -- nullif == 0?
         Column("isektor_id", SmallInteger, nullable=True),  # -- nullif == 0?
         Column("kapitola_id", SmallInteger, nullable=True),  # -- nullif == 0?

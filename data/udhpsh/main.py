@@ -63,6 +63,12 @@ def main(outdir: str, partial: bool = False):
                                 urlopen(relfile, timeout=HTTP_TIMEOUT)
                             ):
                                 row = {mapping[k]: v for k, v in item.items()}
+                                if row.get("ico_darce") is not None and not isinstance(
+                                    row["ico_darce"], int
+                                ):
+                                    print(f"preskakuju zaznam s neplatnym ICO: {row}")
+                                    row["ico_darce"] = None
+
                                 cw.writerow(
                                     {
                                         **row,
