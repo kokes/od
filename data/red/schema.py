@@ -25,6 +25,7 @@ schema = [
         Column("pravni_forma", Text, nullable=False),
         Column("stat", Text, nullable=False),
         Column("datum_aktualizace", DateTime, nullable=False),
+        Column("datum_exportu", DateTime, nullable=False),
     ),
     Table(
         "dotace",
@@ -49,6 +50,7 @@ schema = [
         Column("grantove_schema", Text, nullable=True),
         Column("platnost_datum", DateTime, nullable=False),
         Column("datum_aktualizace", DateTime, nullable=True),
+        Column("datum_exportu", DateTime, nullable=False),
     ),
     Table(
         "rozhodnuti",
@@ -65,8 +67,9 @@ schema = [
         Column("dotace_poskytovatel", Text, nullable=False),
         Column("cleneni_financnich_prostredku", Text, nullable=False),
         Column("financni_zdroj", Text, nullable=False),
-        Column("platnost_datum", Text, nullable=True),
-        Column("datum_aktualizace", Text, nullable=False),
+        Column("platnost_datum", DateTime, nullable=True),
+        Column("datum_aktualizace", DateTime, nullable=False),
+        Column("datum_exportu", DateTime, nullable=False),
     ),
     Table(
         "rozpoctoveobdobi",
@@ -81,7 +84,8 @@ schema = [
         Column("vyporadani_kod", Text, nullable=True),
         Column("dotacni_titul", Text, nullable=True),
         Column("ucelovy_znak", Text, nullable=True),
-        Column("datum_aktualizace", Text, nullable=False),
+        Column("datum_aktualizace", DateTime, nullable=False),
+        Column("datum_exportu", DateTime, nullable=False),
     ),
 ]
 
