@@ -8,7 +8,9 @@ schema = [
         # https://opendata.czso.cz/data/od_org03/res_data-metadata.json
         "subjekty",
         meta,
-        Column("ico", Integer, nullable=False, primary_key=True),  # Identifikační číslo
+        Column(
+            "ico", Integer, nullable=False, primary_key=True, autoincrement=False
+        ),  # Identifikační číslo
         Column(
             "okres_lau", Text, nullable=True
         ),  # Kód okresu sídla (dle CZ-NUTS) dle číselníku ČSÚ (109)

@@ -13,7 +13,7 @@ schema = [
         Column("cas_vypisu", Time, nullable=False),
         Column("typ_vypisu", Text, nullable=False),
         Column("rejstrik", Text, nullable=True),
-        Column("ico", Integer, nullable=False, primary_key=True),
+        Column("ico", Integer, nullable=False, primary_key=True, autoincrement=False),
         Column("obchodni_firma", Text, nullable=True),
         Column("datum_zapisu", Date, nullable=False),
         Column("datum_vymazu", Date, nullable=True),

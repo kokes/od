@@ -16,7 +16,9 @@ schema = [
         "smlouvy",
         meta,
         Column("zdroj", String(7), nullable=False),  # 2018-07
-        Column("id_verze", Integer, nullable=False, primary_key=True),
+        Column(
+            "id_verze", Integer, nullable=False, primary_key=True, autoincrement=False
+        ),
         Column("id_smlouvy", Integer, nullable=False),
         Column("odkaz", Text, nullable=False),  # TODO: redundantni?
         Column("cas_zverejneni", DateTime, nullable=False),

@@ -16,7 +16,9 @@ schema = [
     Table(
         "prijemce",
         meta,
-        Column("id_prijemce", Text, nullable=False, primary_key=True),
+        Column(
+            "id_prijemce", Text, nullable=False, primary_key=True, autoincrement=False
+        ),
         Column("ico", Integer, nullable=True, index=True),
         Column("obchodni_nazev", Text, nullable=True),
         Column("jmeno", Text, nullable=True),
@@ -30,7 +32,9 @@ schema = [
     Table(
         "dotace",
         meta,
-        Column("id_dotace", Text, nullable=False, primary_key=True),
+        Column(
+            "id_dotace", Text, nullable=False, primary_key=True, autoincrement=False
+        ),
         Column("id_prijemce", ForeignKey("prijemce.id_prijemce"), nullable=False),
         Column("kod", Text, nullable=True),
         Column("identifikator", Text, nullable=False),
@@ -55,7 +59,9 @@ schema = [
     Table(
         "rozhodnuti",
         meta,
-        Column("id_rozhodnuti", Text, nullable=False, primary_key=True),
+        Column(
+            "id_rozhodnuti", Text, nullable=False, primary_key=True, autoincrement=False
+        ),
         Column("id_dotace", ForeignKey("dotace.id_dotace"), nullable=False),
         Column("etapa", Text, nullable=True),
         Column("castka_pozadovana", Numeric(14, 2), nullable=True),
@@ -74,7 +80,13 @@ schema = [
     Table(
         "rozpoctoveobdobi",
         meta,
-        Column("id_rozpoctove_obdobi", Text, nullable=False, primary_key=True),
+        Column(
+            "id_rozpoctove_obdobi",
+            Text,
+            nullable=False,
+            primary_key=True,
+            autoincrement=False,
+        ),
         Column("id_rozhodnuti", ForeignKey("rozhodnuti.id_rozhodnuti"), nullable=False),
         Column("castka_cerpana", Numeric(14, 2), nullable=True),
         Column("castka_uvolnena", Numeric(14, 2), nullable=True),

@@ -78,6 +78,8 @@ def main(outdir: str, partial: bool = False):
         ) as fw:
             cr = csv.DictReader(r)
             for n, row in enumerate(cr):
+                if partial and n > 1e5:
+                    break
                 for k, v in row.items():
                     if k not in DS_CLS or v == "":
                         continue

@@ -7,7 +7,7 @@ schema = [
     Table(
         "subjekty",
         meta,
-        Column("ico", Integer, nullable=False, primary_key=True, unique=True),
+        Column("ico", Integer, nullable=False, primary_key=True, autoincrement=False),
         Column("nazev", Text, nullable=False),
         Column("datum_zapis", Date, nullable=False),
         Column("datum_vymaz", Date, nullable=True),
