@@ -7,8 +7,14 @@ schema = [
     Table(
         "zadatele",
         meta,
-        Column("id_prijemce", BigInteger, nullable=False, primary_key=True),
-        Column("rok", Integer, nullable=False, primary_key=True),
+        Column(
+            "id_prijemce",
+            BigInteger,
+            nullable=False,
+            primary_key=True,
+            autoincrement=False,
+        ),
+        Column("rok", Integer, nullable=False, primary_key=True, autoincrement=False),
         Column("jmeno_nazev", Text, nullable=True),
         Column("obec", Text, nullable=True),
         Column("okres", Text, nullable=True),

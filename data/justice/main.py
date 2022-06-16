@@ -223,10 +223,13 @@ def main(outdir: str, partial: bool = False):
                             }
                             row["ico"] = ico
                             # TODO: obezlicka, kterou je treba resit
+                            # mozna ukladat ico_angos jen pro ceske firmy
                             if "ico_angos" in row:
                                 row["ico_angos"] = (
                                     int(row["ico_angos"])
-                                    if row["ico_angos"] and row["ico_angos"].isdigit()
+                                    if row["ico_angos"]
+                                    and row["ico_angos"].isdigit()
+                                    and len(row["ico_angos"]) <= 8
                                     else None
                                 )
                             csvs[podudaj_typ].writerow(row)
