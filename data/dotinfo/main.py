@@ -3,7 +3,7 @@ import csv
 import os
 import ssl
 import zipfile
-from datetime import datetime
+from datetime import date
 from tempfile import TemporaryDirectory
 from urllib.request import urlretrieve
 
@@ -13,7 +13,7 @@ header = {
     "Název dotace": "nazev_dotace",
     "Účastník": "ucastnik",
     "IČ účastníka": "ic_ucastnika",
-    " Účel dotace ": "ucel_dotace",
+    "Účel dotace": "ucel_dotace",
     "Poskytovatel dotace": "poskytovatel_dotace",
     "IČ poskytovatele": "ic_poskytovatele",
     "Částka požadovaná": "castka_pozadovana",
@@ -27,12 +27,13 @@ def main(outdir: str, partial: bool = False):
     with TemporaryDirectory() as tmpdir:
         rawpath = os.path.join(tmpdir, "raw.zip")
         urlretrieve(
-            "https://data.mfcr.cz/sites/default/files/DotInfo_report_29_01_2020.zip",
+            "https://data.mfcr.cz/katalog/sites/default/files/"
+            "DotInfo_report_31_01_2022_0.zip",
             rawpath,
         )
 
         with zipfile.ZipFile(rawpath) as zf, zf.open(
-            "DotInfo_report_29_01_2020.csv"
+            "DotInfo_report_31_01_2022_IIb.csv"
         ) as f, open(os.path.join(outdir, "dotace.csv"), "w", encoding="utf8") as fw:
             ut = codecs.iterdecode(f, encoding="cp1250")
             cr = csv.DictReader(ut, delimiter=";")
@@ -51,11 +52,10 @@ def main(outdir: str, partial: bool = False):
                 remapped = {header[k]: v for k, v in row.items() if k in header}
 
                 if remapped["datum_poskytnuti"]:
-                    try:
-                        datetime.fromisoformat(remapped["datum_poskytnuti"])
-                    except ValueError:
-                        print("nevalidni datum", remapped["datum_poskytnuti"])
-                        remapped["datum_poskytnuti"] = None
+                    day, month, year = remapped["datum_poskytnuti"].split(".")
+                    remapped["datum_poskytnuti"] = date(
+                        year=int(year), month=int(month), day=int(day)
+                    )
 
                 if remapped["ic_ucastnika"] and not remapped["ic_ucastnika"].isdigit():
                     print("nevalidni ICO", remapped["ic_ucastnika"])
