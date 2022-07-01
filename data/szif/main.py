@@ -1,21 +1,14 @@
 import csv
 import os
-from tempfile import TemporaryDirectory
-from urllib.request import urlretrieve
-from zipfile import ZipFile
+from urllib.request import urlopen
 
 from lxml.etree import iterparse
 
 BASE_URL = (
     "https://www.szif.cz/cs/CmDocument?rid=%2Fapa_anon%2Fcs%2F"
-    "dokumenty_ke_stazeni%2Fpkp%2Fspd%2Fopendata%2F"
+    "dokumenty_ke_stazeni%2Fpkp%2Fspd%2Fopendata%2Fspd{year}.xml"
 )
-urls = {
-    2020: BASE_URL + "1622192829773.zip",
-    2019: BASE_URL + "1590753721920.zip",
-    2018: BASE_URL + "1563197121858.zip",
-    2017: BASE_URL + "1563197147275.zip",
-}
+years = [2017, 2018, 2019, 2020, 2021]
 
 
 def main(outdir: str, partial: bool = False):
@@ -23,7 +16,7 @@ def main(outdir: str, partial: bool = False):
 
     with open(os.path.join(outdir, "zadatele.csv"), "w", encoding="utf8") as fz, open(
         os.path.join(outdir, "platby.csv"), "w", encoding="utf8"
-    ) as fp, TemporaryDirectory() as tmpdir:
+    ) as fp:
         cz = csv.DictWriter(
             fz,
             ["id_prijemce", "rok", "jmeno_nazev", "obec", "okres", "castka_bez_pvp"],
@@ -46,51 +39,45 @@ def main(outdir: str, partial: bool = False):
         cz.writeheader()
         cp.writeheader()
 
-        for rok_ds, url in urls.items():
-            tfn = os.path.join(tmpdir, "tmp.zip")
-            urlretrieve(url, tfn)
+        for year in years:
+            url = BASE_URL.format(year=year)
 
-            with ZipFile(tfn) as zf:
-                assert len(zf.filelist) == 1, "Vic souboru nez ocekavano: {}".format(
-                    zf.filelist
-                )
+            with urlopen(url) as r:
+                et = iterparse(r)
 
-                with zf.open(zf.filelist[0].filename) as member:
-                    et = iterparse(member)
+                elyear = None
+                for num, (action, element) in enumerate(et):
+                    if partial and num > 1e3:
+                        break
+                    assert action == "end"
+                    if element.tag == "rok":
+                        elyear = int(element.text)
+                        assert elyear == year, "Necekany rok v datech"
 
-                    rok = None
-                    for num, (action, element) in enumerate(et):
-                        if partial and num > 1e3:
-                            break
-                        assert action == "end"
-                        if element.tag == "rok":
-                            rok = int(element.text)
-                            assert rok == rok_ds, "Necekany rok v datech"
+                    if element.tag != "zadatel":
+                        continue
 
-                        if element.tag != "zadatel":
-                            continue
+                    zadatel = {"id_prijemce": id_prijemce, "rok": elyear}
 
-                        zadatel = {"id_prijemce": id_prijemce, "rok": rok}
+                    for key in ["jmeno_nazev", "obec", "okres", "castka_bez_pvp"]:
+                        zadatel[key] = element.find(key).text
 
-                        for key in ["jmeno_nazev", "obec", "okres", "castka_bez_pvp"]:
-                            zadatel[key] = element.find(key).text
+                    for elplatba in element.findall("platby/platba") + element.findall(
+                        "platby_pvp/platba_pvp"
+                    ):
+                        platba = {"id_prijemce": id_prijemce, "rok": elyear}
+                        for key in [
+                            "fond_typ_podpory",
+                            "opatreni",
+                            "zdroje_cr",
+                            "zdroje_eu",
+                            "celkem_czk",
+                        ]:
+                            platba[key] = getattr(elplatba.find(key), "text", None)
 
-                        for elplatba in element.findall(
-                            "platby/platba"
-                        ) + element.findall("platby_pvp/platba_pvp"):
-                            platba = {"id_prijemce": id_prijemce, "rok": rok}
-                            for key in [
-                                "fond_typ_podpory",
-                                "opatreni",
-                                "zdroje_cr",
-                                "zdroje_eu",
-                                "celkem_czk",
-                            ]:
-                                platba[key] = getattr(elplatba.find(key), "text", None)
+                        cp.writerow(platba)
 
-                            cp.writerow(platba)
+                    cz.writerow(zadatel)
+                    id_prijemce += 1
 
-                        cz.writerow(zadatel)
-                        id_prijemce += 1
-
-                        element.clear()
+                    element.clear()
