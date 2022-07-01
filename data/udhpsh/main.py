@@ -10,6 +10,7 @@ indices = {
     "2018": "https://zpravy.udhpsh.cz/zpravy/vfz2018.json",
     "2019": "https://zpravy.udhpsh.cz/zpravy/vfz2019.json",
     "2020": "https://zpravy.udhpsh.cz/zpravy/vfz2020.json",
+    "2021": "https://zpravy.udhpsh.cz/zpravy/vfz2021.json",
 }
 years = sorted(indices.keys())
 
@@ -63,8 +64,9 @@ def main(outdir: str, partial: bool = False):
                                 urlopen(relfile, timeout=HTTP_TIMEOUT)
                             ):
                                 row = {mapping[k]: v for k, v in item.items()}
-                                if row.get("ico_darce") is not None and not isinstance(
-                                    row["ico_darce"], int
+                                if row.get("ico_darce") is not None and (
+                                    not isinstance(row["ico_darce"], int)
+                                    or row["ico_darce"] > 99999999
                                 ):
                                     print(f"preskakuju zaznam s neplatnym ICO: {row}")
                                     row["ico_darce"] = None
