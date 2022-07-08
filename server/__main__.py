@@ -29,6 +29,9 @@ if __name__ == "__main__":
         help="enable debug mode in Flask (autoreload, exception handling)",
     )
     parser.add_argument(
+        "--port", type=int, default=3000, help="HTTP port to host this on"
+    )
+    parser.add_argument(
         "--connstring",
         required=True,
         type=str,
@@ -44,4 +47,4 @@ if __name__ == "__main__":
 
     app = API(__name__, connstring=args.connstring)
 
-    app.run(port=3000, debug=args.debug)
+    app.run(port=args.port, debug=args.debug)
