@@ -1,6 +1,6 @@
-from server import API
-
 import pytest
+
+from server import API
 
 
 @pytest.fixture
