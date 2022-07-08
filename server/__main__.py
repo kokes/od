@@ -1,14 +1,24 @@
-# TODO: docs, requirements
+# TODO: docs, requirements, test endpoints (API.test_client?)
 import argparse
 import logging
 from flask import Flask, jsonify, render_template
 from sqlalchemy import create_engine
 
-def status():
-    return jsonify({"status": "ok"})
 
-def index():
-    return render_template("index.j2")
+class API(Flask):
+    def __init__(self, import_name, connstring: str):
+        super(API, self).__init__(import_name)
+        self.engine = create_engine(connstring)
+
+        self.route("/", methods=["GET"])(self.index)
+        self.route("/status", methods=["GET"])(self.status)
+
+    def status(self):
+        return jsonify({"status": "ok"})
+
+    def index(self):
+        return render_template("index.j2")
+
 
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.INFO)
@@ -32,12 +42,6 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    engine = create_engine(args.connstring)
-    logging.info("connected to %s", engine)
-
-    app = Flask(__name__)
-
-    app.add_url_rule("/status", 'status', status)
-    app.add_url_rule("/", 'index', index)
+    app = API(__name__, connstring=args.connstring)
 
     app.run(port=3000, debug=args.debug)
