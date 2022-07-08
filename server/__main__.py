@@ -1,4 +1,5 @@
 # TODO: docs, requirements, test endpoints (API.test_client?)
+# TODO: expose bool arg
 import argparse
 import logging
 from flask import Flask, jsonify, render_template
