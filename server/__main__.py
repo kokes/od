@@ -1,4 +1,4 @@
-# TODO: docs, requirements, test endpoints (API.test_client?)
+# TODO: docs, requirements
 # TODO: expose bool arg
 import argparse
 import logging
