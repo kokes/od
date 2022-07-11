@@ -24,6 +24,11 @@ if __name__ == "__main__":
         help="před importem smaz tabulky (dobre pri zmene schematu)",
     )
     parser.add_argument(
+        "--load-only",
+        action="store_true",
+        help="nestahuj data, jen nahraj existující CSV do databáze",
+    )
+    parser.add_argument(
         "--partial",
         action="store_true",
         help="procesuj jen cast vstupnich dat - vhodne pro testovani, CI apod.",
@@ -35,6 +40,11 @@ if __name__ == "__main__":
     if args.all and len(args.modules) > 0:
         raise argparse.ArgumentError(
             "specifikuj bud --all, nebo specificke datasety, ne oboji"
+        )
+
+    if args.load_only and not args.connstring:
+        raise argparse.ArgumentError(
+            "při --load-only je třeba specifikovat --connstring"
         )
 
     base_outdir = "csv"
@@ -70,10 +80,6 @@ if __name__ == "__main__":
         module_names = args.modules
     modules = {}
     schemas = {}
-    # TODO: copy commands (or perhaps after `module(outdir)`? List that dir,
-    # open csv, do an executemany)
-    # also make sure we TRUNCATE each table before we insert into it (because
-    # we may have skipped the CREATE part)
 
     for module in module_names:
         modules[module] = import_module(f"data.{module}.main").main
@@ -85,11 +91,12 @@ if __name__ == "__main__":
         print("=" * len(module_name))
 
         outdir = os.path.join(base_outdir, module_name)
-        if os.path.isdir(outdir):
+        if os.path.isdir(outdir) and not args.load_only:
             shutil.rmtree(outdir)
         os.makedirs(outdir, exist_ok=True)
 
-        module(outdir, partial=args.partial)
+        if not args.load_only:
+            module(outdir, partial=args.partial)
 
         if engine:
             table_loads = defaultdict(list)
