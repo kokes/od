@@ -1,5 +1,6 @@
 import csv
 import datetime as dt
+import functools
 import gzip
 import json
 import multiprocessing
@@ -78,10 +79,10 @@ def zpracuj_ds(url, schemas, outdir, partial):
 
     fs, csvs, schemasd = dict(), dict(), dict()
     ds = os.path.basename(urlparse(url).path).partition(".")[0]
-    os.makedirs(os.path.join(outdir, ds), exist_ok=True)
 
+    os.makedirs(os.path.join(outdir, "subjekty"), exist_ok=True)
     fs["subjekty"] = open(
-        os.path.join(outdir, ds, "subjekty.csv"), "w", encoding="utf8"
+        os.path.join(outdir, "subjekty", f"{ds}.csv"), "w", encoding="utf8"
     )
     csvs["subjekty"] = csv.writer(fs["subjekty"], lineterminator="\n")
     csvs["subjekty"].writerow(["ico", "nazev", "datum_zapis", "datum_vymaz"])
@@ -93,8 +94,9 @@ def zpracuj_ds(url, schemas, outdir, partial):
                 schemasd[udaj] = el
             continue
 
-        fn = el["soubor"] + ".csv"
-        ffn = os.path.join(outdir, ds, fn)
+        fn = f"{ds}.csv"
+        os.makedirs(os.path.join(outdir, el["soubor"]), exist_ok=True)
+        ffn = os.path.join(outdir, el["soubor"], fn)
         f = open(ffn, "w", encoding="utf8")
         cw = csv.DictWriter(
             f, fieldnames=["ico"] + list(el["schema"].keys()), lineterminator="\n"
@@ -204,6 +206,8 @@ def zpracuj_ds(url, schemas, outdir, partial):
     for el in fs.values():
         el.close()
 
+    return url
+
 
 def main(outdir: str, partial: bool = False):
     # package_list a package_list_compact se asi lisi - ten nekompaktni endpoint
@@ -246,11 +250,13 @@ def main(outdir: str, partial: bool = False):
     with open(os.path.join(cdir, "xml_schema.json"), encoding="utf-8") as f:
         schemas = json.load(f)
 
+    zpracuj = functools.partial(
+        zpracuj_ds, schemas=schemas, outdir=outdir, partial=partial
+    )
+    # TODO(PR): parametrizuj tu sestku
     with multiprocessing.Pool(6) as pool:
-        ...
-
-    for url in tqdm(urls):
-        zpracuj_ds(url, schemas, outdir, partial)
+        for done in pool.imap_unordered(zpracuj, urls):
+            print(f"hotovo: {done}")
 
     # TODO: resolve
     # with open('xml_schema_chybejici.json', 'w') as fw:
