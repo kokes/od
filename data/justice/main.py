@@ -253,10 +253,13 @@ def main(outdir: str, partial: bool = False):
     zpracuj = functools.partial(
         zpracuj_ds, schemas=schemas, outdir=outdir, partial=partial
     )
-    # TODO(PR): parametrizuj tu sestku
-    with multiprocessing.Pool(6) as pool:
+    progress = tqdm(total=len(urls))
+    # TODO: chcem fakt jet naplno? co kdyz budem parametrizovat jednotlivy moduly?
+    ncpu = multiprocessing.cpu_count()
+    with multiprocessing.Pool(ncpu) as pool:
         for done in pool.imap_unordered(zpracuj, urls):
-            print(f"hotovo: {done}")
+            # print(f"hotovo: {done}")
+            progress.update(n=1)
 
     # TODO: resolve
     # with open('xml_schema_chybejici.json', 'w') as fw:
