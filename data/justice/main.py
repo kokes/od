@@ -108,6 +108,7 @@ def zpracuj_ds(url, schemas, outdir, partial):
             fs[udaj] = f
             csvs[udaj] = cw
 
+    icos = set() # TODO: tohle budem muset dostavat jak input (z minulych let)
     for num, (action, el) in enumerate(et):
         if partial and num > 1e5:
             break
@@ -129,13 +130,12 @@ def zpracuj_ds(url, schemas, outdir, partial):
             #     fw.write(f"{nazev}\t{el.sourceline}\t{url}\n")
             continue
 
-        # TODO(PR): reintroduce
-        # kdyz zpracovavame data starsi nez letosni, musime
+        # TODO: kdyz zpracovavame data starsi nez letosni, musime
         # zahazovat jiz zpracovana data
         # if ico in icos:
         #     el.clear()
         #     continue
-        # icos.add(ico)
+        icos.add(ico)
 
         csvs["subjekty"].writerow([ico, nazev, zapis, vymaz])
 
@@ -206,7 +206,7 @@ def zpracuj_ds(url, schemas, outdir, partial):
     for el in fs.values():
         el.close()
 
-    return url
+    return url, icos
 
 
 def main(outdir: str, partial: bool = False):
@@ -220,6 +220,8 @@ def main(outdir: str, partial: bool = False):
 
     dss = [ds for ds in data["result"] if "-full-" in ds]
     print(f"celkem {len(dss)} datasetu, ale filtruji jen na ty letosni")
+    # TODO: abychom zvladli i ty minuly roky, budem muset udelat batche po
+    # letech a udelat dycky kazdej rok zvlast a predavat si seznam zpracovanych ICO
     dss = [j for j in dss if int(j.rpartition("-")[-1]) == dt.date.today().year]
     print(f"po odfiltrovani {len(dss)} datasetu")
     dss.sort(key=lambda x: int(x.rpartition("-")[-1]), reverse=True)
@@ -256,9 +258,13 @@ def main(outdir: str, partial: bool = False):
     progress = tqdm(total=len(urls))
     # TODO: chcem fakt jet naplno? co kdyz budem parametrizovat jednotlivy moduly?
     ncpu = multiprocessing.cpu_count()
+
+    # chcem frontloadovat nejvetsi datasety, abychom optimalizovali runtime
+    # mohli bychom HEADnout ty soubory, ale najit sro/as je rychlejsi a good enough
+    urls.sort(key=lambda x: int("/sro" in x or "/as" in x), reverse=True)
     with multiprocessing.Pool(ncpu) as pool:
-        for done in pool.imap_unordered(zpracuj, urls):
-            # print(f"hotovo: {done}")
+        for _, _ in pool.imap_unordered(zpracuj, urls):
+            # logging.debug(url)?
             progress.update(n=1)
 
     # TODO: resolve
