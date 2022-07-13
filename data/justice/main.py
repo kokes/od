@@ -108,7 +108,7 @@ def zpracuj_ds(url, schemas, outdir, partial):
             fs[udaj] = f
             csvs[udaj] = cw
 
-    icos = set() # TODO: tohle budem muset dostavat jak input (z minulych let)
+    icos = set()  # TODO: tohle budem muset dostavat jak input (z minulych let)
     for num, (action, el) in enumerate(et):
         if partial and num > 1e5:
             break
