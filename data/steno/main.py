@@ -117,7 +117,8 @@ def vyrok(zf):
                 ]  # pridame soucasny text (ale odseknem autora)
 
 
-def zpracuj_schuzi(outdir, rok: int, url):
+def zpracuj_schuzi(outdir, params):
+    rok, url = params  # kvuli imap_unordered
     lnm = Counter()
     with tempfile.TemporaryDirectory() as tmpdir:
         base_name = os.path.basename(urlparse(url).path)
@@ -144,22 +145,21 @@ def zpracuj_schuzi(outdir, rok: int, url):
                 lineterminator="\n",
             )
             cw.writeheader()
-            for fn in glob(os.path.join(tmpdir, "*.zip")):
-                with closing(zipfile.ZipFile(fn)) as zf:
-                    for v in vyrok(zf):
-                        cw.writerow(
-                            {
-                                "rok": rok,
-                                **v,
-                            }
-                        )
-                        # depozicovali jsme vse?
-                        if (
-                            v["autor"]
-                            and len(v["autor"].split(" ")) > 2
-                            and v["autor"] not in dlh
-                        ):
-                            lnm.update([(v["funkce"], v["autor"])])
+            with closing(zipfile.ZipFile(tfn)) as zf:
+                for v in vyrok(zf):
+                    cw.writerow(
+                        {
+                            "rok": rok,
+                            **v,
+                        }
+                    )
+                    # depozicovali jsme vse?
+                    if (
+                        v["autor"]
+                        and len(v["autor"].split(" ")) > 2
+                        and v["autor"] not in dlh
+                    ):
+                        lnm.update([(v["funkce"], v["autor"])])
 
     return lnm
 
@@ -179,8 +179,10 @@ def main(outdir: str, partial: bool = False):
     ncpu = multiprocessing.cpu_count()
     func = functools.partial(zpracuj_schuzi, outdir)
     lnm = Counter()
+    progress = tqdm(total=len(jobs))
     with multiprocessing.Pool(ncpu) as pool:
-        for slnm in pool.starmap(func, jobs):
+        for slnm in pool.imap_unordered(func, jobs):
+            progress.update(1)
             lnm.update(slnm)
 
     # naparsovali jsme správně politické funkce?
