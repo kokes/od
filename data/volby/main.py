@@ -18,17 +18,16 @@ from dbfread import DBF
 
 @contextmanager
 def load_remote_data(url: str):
-    raw_dir = "data/raw"
-    os.makedirs(raw_dir, exist_ok=True)
-    fn = os.path.basename(url)
-    tfn = os.path.join(raw_dir, fn)
-    if not os.path.isfile(tfn):
-        req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
-        with urlopen(req, timeout=60) as r, open(tfn, "wb") as fw:
-            shutil.copyfileobj(r, fw)
+    with TemporaryDirectory() as tmpdir:
+        fn = os.path.basename(url)
+        tfn = os.path.join(tmpdir, fn)
+        if not os.path.isfile(tfn):
+            req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
+            with urlopen(req, timeout=60) as r, open(tfn, "wb") as fw:
+                shutil.copyfileobj(r, fw)
 
-    with zipfile.ZipFile(tfn) as zf:
-        yield zf
+        with zipfile.ZipFile(tfn) as zf:
+            yield zf
 
 
 def extract_elements(zf, fn, nodename):
