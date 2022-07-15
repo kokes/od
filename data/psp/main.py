@@ -2,7 +2,10 @@
 # coding: utf-8
 
 import csv
+import functools
 import json
+import logging
+import multiprocessing
 import os
 import zipfile
 from contextlib import contextmanager
@@ -77,28 +80,36 @@ def read_compressed_csv(zf, fn, mp, partial):
             yield dt
 
 
-# je to kratky, tak neimplementuju `partial`
+def process_mapping(outdir, partial, mp):
+    tbl = f'{mp["tema"]}_{mp["tabulka"]}'
+    tfn = os.path.join(outdir, f"{tbl}.csv")
+    assert not os.path.isfile(tfn), tfn
+    cols = [j["sloupec"] for j in mp["sloupce"]]
+    with open(tfn, encoding="utf-8", mode="wt") as fw:
+        cw = csv.DictWriter(fw, fieldnames=cols, lineterminator="\n")
+        cw.writeheader()
+        for ffn in mp["soubory"]:
+            # tohle nepujde s postgresou kvůli foreign keys, ale to neva
+            if partial and ffn not in mp["soubory"][-2:]:
+                continue
+            zf, fn = ffn.split("/")
+            for el in read_compressed_csv(zf, fn, mp["sloupce"], partial):
+                cw.writerow(el)
+
+    return (mp["tema"], mp["tabulka"])
+
+
 def main(outdir: str, partial: bool = False):
+    logging.getLogger().setLevel(logging.INFO)
     cdir = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(cdir, "mapping.json"), encoding="utf-8") as f:
         mapping = json.load(f)
 
-    for mp in mapping:
-        tbl = f'{mp["tema"]}_{mp["tabulka"]}'
-        tfn = os.path.join(outdir, f"{tbl}.csv")
-        print(tbl)
-        cols = [j["sloupec"] for j in mp["sloupce"]]
-        with open(tfn, encoding="utf-8", mode="wt") as fw:
-            cw = csv.DictWriter(fw, fieldnames=cols, lineterminator="\n")
-            cw.writeheader()
-            for ffn in mp["soubory"]:
-                # tohle nepujde s postgresou kvůli foreign keys, ale to neva
-                if partial and ffn not in mp["soubory"][-2:]:
-                    continue
-                print("\t", ffn)
-                zf, fn = ffn.split("/")
-                for el in read_compressed_csv(zf, fn, mp["sloupce"], partial):
-                    cw.writerow(el)
+    job = functools.partial(process_mapping, outdir, partial)
+    ncpu = multiprocessing.cpu_count()
+    with multiprocessing.Pool(ncpu) as pool:
+        for tema, tabulka in pool.imap_unordered(job, mapping):
+            logging.info("hotovo: %s, %s", tema, tabulka)
 
 
 if __name__ == "__main__":
