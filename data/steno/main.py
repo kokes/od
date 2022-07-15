@@ -1,6 +1,9 @@
 import csv
+import functools
+import multiprocessing
 import os
 import re
+import tempfile
 import zipfile
 from collections import Counter
 from contextlib import closing
@@ -8,7 +11,7 @@ from glob import glob
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from urllib.error import HTTPError
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 from urllib.request import urlopen, urlretrieve
 
 import lxml.html
@@ -114,70 +117,71 @@ def vyrok(zf):
                 ]  # pridame soucasny text (ale odseknem autora)
 
 
-def main(outdir: str, partial: bool = False):
+def zpracuj_schuzi(outdir, rok: int, url):
     lnm = Counter()
-    for rok, url in urls.items():
-        with urlopen(url, timeout=300) as r:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        base_name = os.path.basename(urlparse(url).path)
+        tfn = os.path.join(tmpdir, base_name)
+        urlretrieve(url, tfn)
+        tdir = os.path.join(outdir, "psp")
+        os.makedirs(tdir, exist_ok=True)
+        csv_fn = os.path.join(tdir, f"{rok}_{os.path.splitext(base_name)[0]}.csv")
+        assert not os.path.isfile(csv_fn)
+
+        with open(csv_fn, "w", encoding="utf8") as fw:
+            cw = csv.DictWriter(
+                fw,
+                fieldnames=[
+                    "rok",
+                    "datum",
+                    "schuze",
+                    "soubor",
+                    "autor",
+                    "funkce",
+                    "tema",
+                    "text",
+                ],
+                lineterminator="\n",
+            )
+            cw.writeheader()
+            for fn in glob(os.path.join(tmpdir, "*.zip")):
+                with closing(zipfile.ZipFile(fn)) as zf:
+                    for v in vyrok(zf):
+                        cw.writerow(
+                            {
+                                "rok": rok,
+                                **v,
+                            }
+                        )
+                        # depozicovali jsme vse?
+                        if (
+                            v["autor"]
+                            and len(v["autor"].split(" ")) > 2
+                            and v["autor"] not in dlh
+                        ):
+                            lnm.update([(v["funkce"], v["autor"])])
+
+    return lnm
+
+
+def main(outdir: str, partial: bool = False):
+    jobs = []
+    for rok, burl in urls.items():
+        with urlopen(burl, timeout=300) as r:
             ht = lxml.html.parse(r).getroot()
 
-        with TemporaryDirectory() as tmpdir:
-            for num, ln in enumerate(
-                tqdm(ht.cssselect("div#main-content a"), desc=f"stahovani ({rok})")
-            ):
-                if partial and num > 3:
-                    break
-                tfn = os.path.join(tmpdir, os.path.basename(ln.attrib["href"]))
-                try:
-                    furl = urljoin(url, ln.attrib["href"])
-                    urlretrieve(furl, tfn)
-                except HTTPError:
-                    print(
-                        f"nepodaril se stahnout stenoprotokol na adrese {furl} "
-                        f"(odkazovan na {url})"
-                    )
+        for num, ln in enumerate(ht.cssselect("div#main-content a")):
+            if partial and num > 3:
+                break
+            url = urljoin(burl, ln.attrib["href"])
+            jobs.append((rok, url))
 
-            tdir = os.path.join(outdir, "psp")
-            os.makedirs(tdir, exist_ok=True)
-            csv_fn = os.path.join(tdir, f"{rok}.csv")
-
-            with open(csv_fn, "w", encoding="utf8") as fw:
-                cw = csv.DictWriter(
-                    fw,
-                    fieldnames=[
-                        "rok",
-                        "datum",
-                        "schuze",
-                        "soubor",
-                        "autor",
-                        "funkce",
-                        "tema",
-                        "text",
-                    ],
-                    lineterminator="\n",
-                )
-                cw.writeheader()
-                for fn in tqdm(
-                    glob(os.path.join(tmpdir, "*.zip")), desc=f"parsovani ({rok})"
-                ):
-                    try:
-                        with closing(zipfile.ZipFile(fn)) as zf:
-                            for v in vyrok(zf):
-                                cw.writerow(
-                                    {
-                                        "rok": rok,
-                                        **v,
-                                    }
-                                )
-                                # depozicovali jsme vse?
-                                if (
-                                    v["autor"]
-                                    and len(v["autor"].split(" ")) > 2
-                                    and v["autor"] not in dlh
-                                ):
-                                    lnm.update([(v["funkce"], v["autor"])])
-
-                    except zipfile.BadZipFile:
-                        print("bad zip file:", fn)
+    ncpu = multiprocessing.cpu_count()
+    func = functools.partial(zpracuj_schuzi, outdir)
+    lnm = Counter()
+    with multiprocessing.Pool(ncpu) as pool:
+        for slnm in pool.starmap(func, jobs):
+            lnm.update(slnm)
 
     # naparsovali jsme správně politické funkce?
     if lnm:
