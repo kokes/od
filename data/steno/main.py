@@ -7,10 +7,7 @@ import tempfile
 import zipfile
 from collections import Counter
 from contextlib import closing
-from glob import glob
 from pathlib import Path
-from tempfile import TemporaryDirectory
-from urllib.error import HTTPError
 from urllib.parse import urljoin, urlparse
 from urllib.request import urlopen, urlretrieve
 
