@@ -6,6 +6,7 @@ import json
 import multiprocessing
 import os
 import re
+from queue import Queue
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
@@ -74,7 +75,7 @@ def nahraj_ds(url):
         yield from et
 
 
-def zpracuj_ds(url, schemas, outdir, partial):
+def zpracuj_ds(url, schemas, outdir, partial, autogen):
     et = nahraj_ds(url)
 
     fs, csvs, schemasd = dict(), dict(), dict()
@@ -147,7 +148,7 @@ def zpracuj_ds(url, schemas, outdir, partial):
             udaj_typ = udaj_raw.find("udajTyp/kod").text
 
             if udaj_typ not in schemasd:
-                # TODO(PR): queue na schema_autogen
+                autogen.put((udaj_typ, udaj_raw))
                 continue
 
             if not schemasd[udaj_typ].get("ignore", False):
@@ -171,11 +172,7 @@ def zpracuj_ds(url, schemas, outdir, partial):
                     podudaj_typ = podudaj_raw.find("udajTyp/kod").text
 
                     if podudaj_typ not in schemasd:
-                        # TODO(PR): queue na schema_autogen
-                        # schema_autogen[podudaj_typ] = merge(
-                        #     gen_schema(podudaj_raw),
-                        #     schema_autogen.get(podudaj_typ, {}),
-                        # )
+                        autogen.put((podudaj_typ, podudaj_raw))
                         continue
 
                     if not schemasd[podudaj_typ].get("ignore", False):
@@ -248,12 +245,18 @@ def main(outdir: str, partial: bool = False):
 
         urls.append(ds_url[0])
 
+    urls = [j for j in urls if "sro" not in j]  # TODO(PR): remove
     cdir = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(cdir, "xml_schema.json"), encoding="utf-8") as f:
         schemas = json.load(f)
 
+    autogen = Queue()
     zpracuj = functools.partial(
-        zpracuj_ds, schemas=schemas, outdir=outdir, partial=partial
+        zpracuj_ds,
+        schemas=schemas,
+        outdir=outdir,
+        partial=partial,
+        autogen=autogen,
     )
     progress = tqdm(total=len(urls))
     # TODO: chcem fakt jet naplno? co kdyz budem parametrizovat jednotlivy moduly?
@@ -267,9 +270,16 @@ def main(outdir: str, partial: bool = False):
             # logging.debug(url)?
             progress.update(n=1)
 
-    # TODO: resolve
-    # with open('xml_schema_chybejici.json', 'w') as fw:
-    #     json.dump(schema_autogen, fw, indent=2, ensure_ascii=False)
+    # nezpracovany objekty je treba rucne projit
+    schema_autogen = dict()
+    while not autogen.empty():
+        obj, raw = autogen.get()
+        schema_autogen[obj] = merge(
+            gen_schema(raw),
+            schema_autogen.get(obj, {}),
+        )
+    with open("xml_schema_chybejici.json", "w") as fw:
+        json.dump(schema_autogen, fw, indent=2, ensure_ascii=False)
 
 
 if __name__ == "__main__":
