@@ -93,7 +93,8 @@
       "NASTUPCE_ZRIZOVATELE_SEKCE",
       "OPATROVNIK_SEKCE",
       "ROZHODCI_KOMISE",
-      "VKLAD_CLEN_DRUZSTVA_SEKCE"
+      "VKLAD_CLEN_DRUZSTVA_SEKCE",
+      "CLEN_SDRUZENI"
     ],
     "ignore": true,
     "schema": {
@@ -121,6 +122,9 @@
       "UCEL_SUBJEKTU_SEKCE",
       "DOPLNKOVA_CINNOST_SEKCE",
       "SKUTECNY_MAJITEL_SEKCE",
+      "NESROVNALOST_SEKCE",
+      "OMEZENI_DARCEM_SEKCE",
+      "PREDMET_VEDLEJSI_CINNOSTI_SEKCE",
       "INSOLVENCE"
     ],
     "ignore": true,
@@ -511,6 +515,133 @@
       "bydliste_cislo_ev": "bydliste/cisloEv",
       "bydliste_cislo_text": "bydliste/cisloText",
       "bydliste_doplnujici_text": "bydliste/doplnujiciText"
+    }
+  },
+  {
+    "udaj": "ZAHAJENI_O_ZRUSENI",
+    "soubor": "zahajeni_zruseni",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "EUID",
+    "soubor": "euid",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "euid": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "SICAV",
+    "soubor": "sicav",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "STATUS_SPOLKU",
+    "soubor": "status_spolku",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "PREDMET_VEDLEJSI_CINNOSTI",
+    "soubor": "predmet_vedlejsi_cinnosti",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "OMEZENI_DARCEM",
+    "soubor": "omezeni_darcem",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "text": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "ZNEPRISTUPNENI_UDAJU",
+    "soubor": "znepristupneni_udaju",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "znepristupneno": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "OZ_VEDOUCI",
+    "soubor": "odstepny_zavod_vedouci",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "spravce": "hodnotaUdaje/spravce",
+      "text": "hodnotaUdaje/textZaOsobu/value",
+      "osoba_jmeno": "osoba/jmeno",
+      "osoba_prijmeni": "osoba/prijmeni",
+      "osoba_datum_narozeni": "osoba/narozDatum",
+      "osoba_titul_pred": "osoba/titulPred",
+      "osoba_titul_za": "osoba/titulZa",
+      "adresa_stat_nazev": "adresa/statNazev",
+      "adresa_ulice": "adresa/ulice",
+      "adresa_psc": "adresa/psc",
+      "adresa_obec": "adresa/obec",
+      "adresa_cast_obce": "adresa/castObce",
+      "adresa_cislo_po": "adresa/cisloPo",
+      "adresa_cislo_or": "adresa/cisloOr",
+      "adresa_okres": "adresa/okres"
+    }
+  },
+  {
+    "udaj": "NESROVNALOST",
+    "soubor": "nesrovnalost",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "zahajeni_rizeni": "hodnotaUdaje/zahajeniRizeni",
+      "ukonceni_rizeni": "hodnotaUdaje/ukonceniRizeni",
+      "zpusob_vyrizeni": "hodnotaUdaje/zpusobVyrizeni",
+      "verejna": "hodnotaUdaje/verejna",
+      "text_prvni_faze": "hodnotaUdaje/textPrvniFaze",
+      "text_druha_faze": "hodnotaUdaje/textDruhaFaze"
+    }
+  },
+  {
+    "udaj": "CLEN_SDRUZENI_OSOBA",
+    "soubor": "clen_sdruzeni_osoba",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "angazma_typ": "hodnotaText",
+      "text_osoba": "hodnotaUdaje/textZaOsobu",
+      "text_zruseni": "hodnotaUdaje/textZruseni",
+      "osoba_nazev": "osoba/nazev",
+      "osoba_reg_cislo": "osoba/regCislo",
+      "osoba_ico": "osoba/ico",
+      "osoba_euid": "osoba/euid",
+      "osoba_jmeno": "osoba/jmeno",
+      "osoba_prijmeni": "osoba/prijmeni",
+      "osoba_datum_narozeni": "osoba/narozDatum",
+      "adresa_stat_nazev": "adresa/statNazev",
+      "adresa_obec": "adresa/obec",
+      "adresa_ulice": "adresa/ulice",
+      "adresa_psc": "adresa/psc",
+      "adresa_cast_obce": "adresa/castObce",
+      "adresa_cislo_po": "adresa/cisloPo",
+      "adresa_cislo_or": "adresa/cisloOr",
+      "adresa_okres": "adresa/okres",
+      "adresa_adresa_text": "adresa/adresaText"
     }
   }
 ]
