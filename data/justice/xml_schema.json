@@ -613,8 +613,8 @@
       "ukonceni_rizeni": "hodnotaUdaje/ukonceniRizeni",
       "zpusob_vyrizeni": "hodnotaUdaje/zpusobVyrizeni",
       "verejna": "hodnotaUdaje/verejna",
-      "textPrvniFaze": "hodnotaUdaje/textPrvniFaze",
-      "textDruhaFaze": "hodnotaUdaje/textDruhaFaze"
+      "text_prvni_faze": "hodnotaUdaje/textPrvniFaze",
+      "text_druha_faze": "hodnotaUdaje/textDruhaFaze"
     }
   },
   {
