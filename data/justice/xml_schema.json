@@ -572,8 +572,8 @@
     }
   },
   {
-    "udaj": "ZNEPRISTUPNENI",
-    "soubor": "znepristupneni",
+    "udaj": "ZNEPRISTUPNENI_UDAJU",
+    "soubor": "znepristupneni_udaju",
     "schema": {
       "datum_zapis": "zapisDatum",
       "datum_vymaz": "vymazDatum",

@@ -6,7 +6,6 @@ import json
 import multiprocessing
 import os
 import re
-from queue import Queue
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
@@ -148,7 +147,8 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen):
             udaj_typ = udaj_raw.find("udajTyp/kod").text
 
             if udaj_typ not in schemasd:
-                autogen.put((udaj_typ, udaj_raw))
+                # print("nenalezeno", udaj_typ, url)
+                autogen.put((udaj_typ, gen_schema(udaj_raw)))
                 continue
 
             if not schemasd[udaj_typ].get("ignore", False):
@@ -172,7 +172,8 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen):
                     podudaj_typ = podudaj_raw.find("udajTyp/kod").text
 
                     if podudaj_typ not in schemasd:
-                        autogen.put((podudaj_typ, podudaj_raw))
+                        # print("nenalezeno", podudaj_typ, url)
+                        autogen.put((podudaj_typ, gen_schema(podudaj_raw)))
                         continue
 
                     if not schemasd[podudaj_typ].get("ignore", False):
@@ -245,12 +246,12 @@ def main(outdir: str, partial: bool = False):
 
         urls.append(ds_url[0])
 
-    urls = [j for j in urls if "sro" not in j]  # TODO(PR): remove
     cdir = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(cdir, "xml_schema.json"), encoding="utf-8") as f:
         schemas = json.load(f)
 
-    autogen = Queue()
+    # samotna multiprocessing.queue z nejakyho duvodu nefungovala
+    autogen = multiprocessing.Manager().Queue()
     zpracuj = functools.partial(
         zpracuj_ds,
         schemas=schemas,
@@ -273,13 +274,16 @@ def main(outdir: str, partial: bool = False):
     # nezpracovany objekty je treba rucne projit
     schema_autogen = dict()
     while not autogen.empty():
-        obj, raw = autogen.get()
+        obj, schema = autogen.get()
         schema_autogen[obj] = merge(
-            gen_schema(raw),
+            schema,
             schema_autogen.get(obj, {}),
         )
-    with open("xml_schema_chybejici.json", "w") as fw:
-        json.dump(schema_autogen, fw, indent=2, ensure_ascii=False)
+    if len(schema_autogen):
+        print(f"nalezeno {len(schema_autogen)} neznamych objektu ve zdrojovych datech")
+        print("exportuji xml_schema_chybejici.json")
+        with open("xml_schema_chybejici.json", "w") as fw:
+            json.dump(schema_autogen, fw, indent=2, ensure_ascii=False)
 
 
 if __name__ == "__main__":
