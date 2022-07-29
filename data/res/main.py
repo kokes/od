@@ -6,17 +6,32 @@ from contextlib import contextmanager
 from urllib.request import Request, urlopen
 
 CLS_BASE_URL = "https://apl.czso.cz/iSMS/cisexp.jsp"
-CLS_URLS = (
-    "?kodcis=109&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "?kodcis=572&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "?kodcis=56&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "?kodcis=149&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "?kodcis=579&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "?kodcis=80004&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "?kodcis=51&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "?kodcis=5161&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "?kodcis=73&typdat=0&cisjaz=203&format=2&separator=%2C",
-    "?kodcis=564&typdat=0&cisjaz=203&format=2&separator=%2C",
+CLS_URLS = [
+    CLS_BASE_URL + j
+    for j in (
+        "?kodcis=109&typdat=0&cisjaz=203&format=2&separator=%2C",
+        "?kodcis=572&typdat=0&cisjaz=203&format=2&separator=%2C",
+        "?kodcis=579&typdat=0&cisjaz=203&format=2&separator=%2C",
+        "?kodcis=51&typdat=0&cisjaz=203&format=2&separator=%2C",
+        "?kodcis=5161&typdat=0&cisjaz=203&format=2&separator=%2C",
+        "?kodcis=73&typdat=0&cisjaz=203&format=2&separator=%2C",
+        "?kodcis=564&typdat=0&cisjaz=203&format=2&separator=%2C",
+    )
+]
+
+CLS_URLS.extend(
+    [
+        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=CZ_NACE_RES",
+        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=56",
+        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=149",
+        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=109",
+        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=572",
+        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=579",
+        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=51",
+        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=5161",
+        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=73",
+        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=564",
+    ]
 )
 
 DATA = ("https://opendata.czso.cz/data/od_org03/res_data.csv", "subjekty.csv")
@@ -42,15 +57,6 @@ DS_CLS = {
     "ZDRUD": 564,
 }
 
-missing = {
-    (
-        80004,
-        "00",
-    ): "Výroba, obchod a služby neuvedené v přílohách 1 až 3 živnostenského zákona",
-    (56, "805"): "Regionální rada regionu soudržnosti",
-    (149, "805"): "Regionální rada regionu soudržnosti",
-}
-
 
 @contextmanager
 def open_remote_gzipped(url: str, partial: bool):
@@ -66,10 +72,18 @@ def open_remote_gzipped(url: str, partial: bool):
 def main(outdir: str, partial: bool = False):
     cls_data = dict()
     for cls_url in CLS_URLS:
-        with open_remote_gzipped(CLS_BASE_URL + cls_url, partial) as r:
+        with open_remote_gzipped(cls_url, partial) as r:
             cr = csv.DictReader(r)
             for row in cr:
-                cls_data[(int(row["KODCIS"]), row["CHODNOTA"])] = row["TEXT"]
+                # jsou dva typy ciselniku, tak musime nacitat hodnoty z ruznych klicu
+                kodcis = row.get("KODCIS", row.get("ciselnik"))
+                chodnota = row.get("CHODNOTA", row.get("kod_polozky"))
+                text = row.get("TEXT", row.get("text"))
+
+                if not (kodcis and chodnota and text):
+                    raise ValueError(f"nerozumim radce v {cls_url}: {row}")
+
+                cls_data[(int(kodcis), chodnota)] = text
 
     for url, filename in [DATA, NACE]:
         path = os.path.join(outdir, filename)
@@ -82,11 +96,6 @@ def main(outdir: str, partial: bool = False):
                     break
                 for k, v in row.items():
                     if k not in DS_CLS or v == "":
-                        continue
-
-                    # chybející hodnoty v číselnících (issue #127)
-                    if (DS_CLS[k], v) in missing:
-                        row[k] = missing[(DS_CLS[k], v)]
                         continue
 
                     row[k] = cls_data[(DS_CLS[k], v)]
