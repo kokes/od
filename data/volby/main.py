@@ -80,6 +80,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                     fieldnames=["DATUM"] + fmp["schema"] + fmp.get("extra_schema", []),
                     lineterminator="\n",
                 )
+                cw.writeheader()
                 for ne, el in enumerate(extract_elements(zf, ff, fmp["klic"])):
                     if partial and ne > 1e4:
                         break
