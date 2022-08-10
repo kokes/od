@@ -15,7 +15,7 @@ jobs:
       # tohle se hodi vypnout, az budem zapinat novy joby
       fail-fast: true
       matrix:
-        os: ['ubuntu-latest', 'windows-latest']
+        os: ['ubuntu-22.04', 'windows-latest']
         python-version: ['3.8', '3.9', '3.10']
         # TODO: pridat 'cssz', 'czechinvest', 'eufondy', 'steno', 'psp', 'zakazky', az je opravime
         module: ['ares', 'datovky', 'dotinfo', 'iissp', 'justice', 'red', 'res', 'smlouvy', 'szif', 'udhpsh', 'volby']
