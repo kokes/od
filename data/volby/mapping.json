@@ -249,6 +249,10 @@
                 "https://volby.cz/opendata/kv2018/KV2018reg20181008.zip",
                 "https://volby.cz/opendata/kv2018/KV2018ciselniky20181004.zip",
                 "https://volby.cz/opendata/kv2018/KV2018_data_20181008_xml.zip"
+            ],
+            "2022-09-23": [
+                "https://www.volby.cz/opendata/kv2022/KV2022reg20220810.zip",
+                "https://www.volby.cz/opendata/kv2022/KV2022ciselniky20221008.zip"
             ]
         },
         "ds": {
@@ -298,6 +302,7 @@
                     "NSTRANA",
                     "PLATNOST",
                     "POCHLASU",
+                    "PRESKOCENI",
                     "POCHL_PRES",
                     "POCPROCVSE",
                     "MANDAT",
@@ -826,6 +831,10 @@
                 "https://volby.cz/opendata/se2020/SE2020reg20201010.zip",
                 "https://volby.cz/opendata/se2020/SE2020ciselnik20200918.zip",
                 "https://volby.cz/opendata/se2020/SENAT2020_data_20201010_k2_xml.zip"
+            ],
+            "2022-09-23": [
+                "https://www.volby.cz/opendata/se2022/SE2022reg20220810.zip",
+                "https://www.volby.cz/opendata/se2022/SE2022ciselnik20220810.zip"
             ]
         },
         "ds": {
