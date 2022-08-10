@@ -421,6 +421,21 @@
                 "extra_schema": [
                     "HLASY"
                 ]
+            },
+            "nuts": {
+                "fn": [
+                    "cnumnuts.xml",
+                    "CNUMNUTS.DBF",
+                    "CNUMNUTS.dbf"
+                ],
+                "klic": "CNUMNUTS_ROW",
+                "schema": [
+                    "NUMNUTS",
+                    "NUTS",
+                    "NAZEVNUTS",
+                    "KODCIS",
+                    "CHODNOTA"
+                ]
             }
         }
     },
