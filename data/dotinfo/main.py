@@ -17,7 +17,7 @@ header = {
     "Poskytovatel dotace": "poskytovatel_dotace",
     "IČ poskytovatele": "ic_poskytovatele",
     "Částka požadovaná": "castka_pozadovana",
-    "Částka schválená": "castka_schvalne",
+    "Částka schválená": "castka_schvalena",
     "Datum poskytnutí dotace": "datum_poskytnuti",
 }
 
