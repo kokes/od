@@ -106,7 +106,7 @@ def main(outdir: str, partial: bool = False):
         mapping = json.load(f)
 
     job = functools.partial(process_mapping, outdir, partial)
-    ncpu = multiprocessing.cpu_count() - 3
+    ncpu = multiprocessing.cpu_count()
     with multiprocessing.Pool(ncpu) as pool:
         for tema, tabulka in pool.imap_unordered(job, mapping):
             logging.info("hotovo: %s, %s", tema, tabulka)
