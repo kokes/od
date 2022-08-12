@@ -65,7 +65,7 @@ def get_raw_data(partial: bool):
 
 
 hds = [
-    "dump",
+    "zdroj",
     "id_verze",
     "id_smlouvy",
     "odkaz",
@@ -74,12 +74,12 @@ hds = [
     "datum_uzavreni",
     "cislo_smlouvy",
     "schvalil",
-    "hodnotaBezDph",
-    "hodnotaVcetneDph",
+    "hodnota_bez_dph",
+    "hodnota_s_dph",
     "platny_zaznam",
 ]
 hdu = [
-    "dump",
+    "zdroj",
     "smlouva",
     "subjekt",
     "ds",
