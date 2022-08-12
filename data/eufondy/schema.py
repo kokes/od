@@ -77,7 +77,9 @@ schema = [
         Column("vyuctovano_czk", Numeric(14, 2), nullable=False),
         Column("vyuctovano_prispevek_unie_czk", Numeric(14, 2), nullable=False),
         Column("vyuctovano_narodni_verejne_zdroje_czk", Numeric(14, 2), nullable=False),
-        Column("vyuctovano_narodni_soukrome_zdroje_czk", Numeric(14, 2), nullable=False),
+        Column(
+            "vyuctovano_narodni_soukrome_zdroje_czk", Numeric(14, 2), nullable=False
+        ),
     ),
 ]
 
