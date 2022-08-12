@@ -136,8 +136,9 @@ if __name__ == "__main__":
                         cr = csv.reader(f)
                         header = next(cr)
                         if header != db_column_names:
+                            errmap = dict((k, v) for k, v in zip(header, db_column_names) if k != v)
                             raise ValueError(
-                                f"databáze očekává sloupce {db_column_names}, CSV má {header}"
+                                f"databáze očekává jiné sloupce: {errmap}"
                             )
 
                         for j, row in enumerate(cr):
