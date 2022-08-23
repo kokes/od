@@ -175,8 +175,8 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen):
                     k: json.dumps(v) if isinstance(v, dict) else v
                     for k, v in row.items()
                 }
-                # TODO: vyresit repetici a taky to, ze to nemame na ESM (jsou tam jine sloupce
-                # a ja tu nechci resit vyhybky)
+                # TODO: vyresit repetici a taky to, ze to nemame na ESM
+                # (jsou tam jine sloupce a ja tu nechci resit vyhybky)
                 if schemasd[udaj_typ]["soubor"] == "angazovane_osoby":
                     row = fix_name(
                         row, first_name_key="jmeno", last_name_key="prijmeni"
