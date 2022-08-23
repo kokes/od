@@ -9,7 +9,6 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10']
-        # dataset: ["ares", "cedr", "cssz", "datovky", "dotinfo", "iissp", "psp.steno", "szif", "upv", "wikidata"]
 
     steps:
     - uses: actions/checkout@v2
@@ -22,12 +21,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest
-    - name: Test with pytest
+    - name: Test steno
       run: |
-        pytest -v data/steno/
-        pytest -v data/upv/
+        pytest -v data/steno
         # TODO: doresit problem s importy
-    # TODO: vypnute, protoze vzdycky aspon jeden job spadnul kvuli random timeoutu
-    # - name: Try all pipelines
-    #   run: |
-    #     python3 main.py --partial ${{ matrix.dataset }}
+    - name: Test justice
+      run: |
+        pytest -v data/justice
+        # TODO: doresit problem s importy

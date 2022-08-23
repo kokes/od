@@ -1,9 +1,12 @@
 import csv
 import datetime as dt
+import functools
 import gzip
 import json
+import multiprocessing
 import os
 import re
+from urllib.parse import urlparse
 from urllib.request import urlopen
 
 import lxml.etree
@@ -11,6 +14,22 @@ from tqdm import tqdm
 
 NON_ISO_DATUM = re.compile(r"^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$")
 HTTP_TIMEOUT = 60
+
+
+def fix_name(row, first_name_key, last_name_key):
+    first_name, last_name = row[first_name_key], row[last_name_key]
+    if first_name == "" and last_name == "":
+        return row
+
+    if last_name in ("0", "neuvedeno", '"neuvedeno"'):
+        last_name = ""
+
+    if first_name and first_name.isupper():
+        first_name = first_name.title()
+    if last_name and last_name.isupper():
+        last_name = last_name.title()
+
+    return {**row, **{first_name_key: first_name, last_name_key: last_name}}
 
 
 def gen_schema(element, parent=None):
@@ -71,6 +90,149 @@ def nahraj_ds(url):
         yield from et
 
 
+def zpracuj_ds(url, schemas, outdir, partial, autogen):
+    et = nahraj_ds(url)
+
+    fs, csvs, schemasd = dict(), dict(), dict()
+    ds = os.path.basename(urlparse(url).path).partition(".")[0]
+
+    os.makedirs(os.path.join(outdir, "subjekty"), exist_ok=True)
+    fs["subjekty"] = open(
+        os.path.join(outdir, "subjekty", f"{ds}.csv"), "w", encoding="utf8"
+    )
+    csvs["subjekty"] = csv.writer(fs["subjekty"], lineterminator="\n")
+    csvs["subjekty"].writerow(["ico", "nazev", "datum_zapis", "datum_vymaz"])
+
+    for el in schemas:
+        udaje = [el["udaj"]] if isinstance(el["udaj"], str) else el["udaj"]
+        if el.get("ignore"):
+            for udaj in udaje:
+                schemasd[udaj] = el
+            continue
+
+        fn = f"{ds}.csv"
+        os.makedirs(os.path.join(outdir, el["soubor"]), exist_ok=True)
+        ffn = os.path.join(outdir, el["soubor"], fn)
+        f = open(ffn, "w", encoding="utf8")
+        cw = csv.DictWriter(
+            f, fieldnames=["ico"] + list(el["schema"].keys()), lineterminator="\n"
+        )
+        cw.writeheader()
+
+        for udaj in udaje:
+            schemasd[udaj] = el
+            fs[udaj] = f
+            csvs[udaj] = cw
+
+    icos = set()  # TODO: tohle budem muset dostavat jak input (z minulych let)
+    for num, (action, el) in enumerate(et):
+        if partial and num > 1e5:
+            break
+        assert action == "end", action
+        if el.tag != "Subjekt":
+            continue
+        ch = {j.tag for j in el.getchildren()}
+        dch = ch - {"ico", "nazev", "udaje", "zapisDatum", "vymazDatum"}
+        assert len(dch) == 0, dch
+
+        nazev = el.find("nazev").text
+        zapis = el.find("zapisDatum").text
+        vymaz = getattr(el.find("vymazDatum"), "text", None)
+        ico = getattr(el.find("ico"), "text", None)
+
+        if not ico:
+            # TODO(PR): multiprocessing unsafe
+            # with open("chybejici_ico.log", encoding="utf-8", mode="a+") as fw:
+            #     fw.write(f"{nazev}\t{el.sourceline}\t{url}\n")
+            continue
+
+        # TODO: kdyz zpracovavame data starsi nez letosni, musime
+        # zahazovat jiz zpracovana data
+        # if ico in icos:
+        #     el.clear()
+        #     continue
+        icos.add(ico)
+
+        csvs["subjekty"].writerow([ico, nazev, zapis, vymaz])
+
+        for udaj_raw in el.find("udaje").iterchildren():
+            # tohle je asi irelevantni, asi nas zajimaj jen podudaje??
+            # beru zpet - tohle nas zajima prave tehdy, kdyz nemame podudaje
+            # beru opet zpet - třeba u zastoupení v dozorčí radě nás zajímá obojí :(
+
+            udaj_typ = udaj_raw.find("udajTyp/kod").text
+
+            if udaj_typ not in schemasd:
+                # print("nenalezeno", udaj_typ, url)
+                autogen.put((udaj_typ, gen_schema(udaj_raw)))
+                continue
+
+            if not schemasd[udaj_typ].get("ignore", False):
+                schema = schemasd[udaj_typ]["schema"]
+                row = extrahuj(udaj_raw, schema)
+                row = uprav_data(row, schemasd[udaj_typ])
+                row = {
+                    k: json.dumps(v) if isinstance(v, dict) else v
+                    for k, v in row.items()
+                }
+                # TODO: vyresit repetici a taky to, ze to nemame na ESM (jsou tam jine sloupce
+                # a ja tu nechci resit vyhybky)
+                if schemasd[udaj_typ]["soubor"] == "angazovane_osoby":
+                    row = fix_name(
+                        row, first_name_key="jmeno", last_name_key="prijmeni"
+                    )
+                row["ico"] = ico
+                csvs[udaj_typ].writerow(row)
+
+            if udaj_raw.find("podudaje") is not None:
+                podudaje = udaj_raw.find("podudaje").getchildren()
+                podpodudaje = udaj_raw.find("podudaje/Udaj/podudaje")
+                if podpodudaje is not None:
+                    podudaje += podpodudaje.getchildren()
+
+                for podudaj_raw in podudaje:
+                    podudaj_typ = podudaj_raw.find("udajTyp/kod").text
+
+                    if podudaj_typ not in schemasd:
+                        # print("nenalezeno", podudaj_typ, url)
+                        autogen.put((podudaj_typ, gen_schema(podudaj_raw)))
+                        continue
+
+                    if not schemasd[podudaj_typ].get("ignore", False):
+                        schema = schemasd[podudaj_typ]["schema"]
+                        row = extrahuj(podudaj_raw, schema)
+                        row = uprav_data(row, schemasd[podudaj_typ])
+                        row = {
+                            k: json.dumps(v) if isinstance(v, dict) else v
+                            for k, v in row.items()
+                        }
+                        if schemasd[podudaj_typ]["soubor"] == "angazovane_osoby":
+                            row = fix_name(
+                                row, first_name_key="jmeno", last_name_key="prijmeni"
+                            )
+                        row["ico"] = ico
+                        # TODO: obezlicka, kterou je treba resit
+                        # mozna ukladat ico_angos jen pro ceske firmy
+                        if "ico_angos" in row:
+                            row["ico_angos"] = (
+                                int(row["ico_angos"])
+                                if row["ico_angos"]
+                                and row["ico_angos"].isdigit()
+                                and len(row["ico_angos"]) <= 8
+                                else None
+                            )
+                        csvs[podudaj_typ].writerow(row)
+            else:
+                pass  # TODO: handluj non-podudaje
+
+        el.clear()
+
+    for el in fs.values():
+        el.close()
+
+    return url, icos
+
+
 def main(outdir: str, partial: bool = False):
     # package_list a package_list_compact se asi lisi - ten nekompaktni endpoint
     # nejde filtrovat??? Tak to asi udelame na klientovi
@@ -82,6 +244,8 @@ def main(outdir: str, partial: bool = False):
 
     dss = [ds for ds in data["result"] if "-full-" in ds]
     print(f"celkem {len(dss)} datasetu, ale filtruji jen na ty letosni")
+    # TODO: abychom zvladli i ty minuly roky, budem muset udelat batche po
+    # letech a udelat dycky kazdej rok zvlast a predavat si seznam zpracovanych ICO
     dss = [j for j in dss if int(j.rpartition("-")[-1]) == dt.date.today().year]
     print(f"po odfiltrovani {len(dss)} datasetu")
     dss.sort(key=lambda x: int(x.rpartition("-")[-1]), reverse=True)
@@ -108,137 +272,44 @@ def main(outdir: str, partial: bool = False):
 
         urls.append(ds_url[0])
 
-    neumim = set()  #  TODO
-
-    schemasd = dict()
-    schema_autogen = dict()  # TODO
-    fs = dict()
-    csvs = dict()
     cdir = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(cdir, "xml_schema.json")) as f:
+    with open(os.path.join(cdir, "xml_schema.json"), encoding="utf-8") as f:
         schemas = json.load(f)
-        for el in schemas:
-            udaje = [el["udaj"]] if isinstance(el["udaj"], str) else el["udaj"]
-            if el.get("ignore"):
-                for udaj in udaje:
-                    schemasd[udaj] = el
-                continue
 
-            fn = el["soubor"] + ".csv"
-            ffn = os.path.join(outdir, fn)
-            f = open(ffn, "w", encoding="utf8")
-            cw = csv.DictWriter(f, fieldnames=["ico"] + list(el["schema"].keys()))
-            cw.writeheader()
+    # samotna multiprocessing.queue z nejakyho duvodu nefungovala
+    autogen = multiprocessing.Manager().Queue()
+    zpracuj = functools.partial(
+        zpracuj_ds,
+        schemas=schemas,
+        outdir=outdir,
+        partial=partial,
+        autogen=autogen,
+    )
+    progress = tqdm(total=len(urls))
+    # TODO: chcem fakt jet naplno? co kdyz budem parametrizovat jednotlivy moduly?
+    ncpu = multiprocessing.cpu_count()
 
-            for udaj in udaje:
-                schemasd[udaj] = el
-                fs[udaj] = f
-                csvs[udaj] = cw
+    # chcem frontloadovat nejvetsi datasety, abychom optimalizovali runtime
+    # mohli bychom HEADnout ty soubory, ale najit sro/as je rychlejsi a good enough
+    urls.sort(key=lambda x: int("/sro" in x or "/as" in x), reverse=True)
+    with multiprocessing.Pool(ncpu) as pool:
+        for _, _ in pool.imap_unordered(zpracuj, urls):
+            # logging.debug(url)?
+            progress.update(n=1)
 
-    fs["subjekty"] = open(os.path.join(outdir, "subjekty.csv"), "w", encoding="utf8")
-    csvs["subjekty"] = csv.writer(fs["subjekty"])
-    csvs["subjekty"].writerow(["ico", "nazev", "datum_zapis", "datum_vymaz"])
-
-    icos = set()
-    for url in tqdm(urls):
-        et = nahraj_ds(url)
-
-        for num, (action, el) in enumerate(et):
-            if partial and num > 1e5:
-                break
-            assert action == "end", action
-            if el.tag != "Subjekt":
-                continue
-            ch = {j.tag for j in el.getchildren()}
-            dch = ch - {"ico", "nazev", "udaje", "zapisDatum", "vymazDatum"}
-            assert len(dch) == 0, dch
-
-            nazev = el.find("nazev").text
-            zapis = el.find("zapisDatum").text
-            vymaz = getattr(el.find("vymazDatum"), "text", None)
-            ico = getattr(el.find("ico"), "text", None)
-
-            if not ico:
-                with open("chybejici_ico.log", "a+") as fw:
-                    fw.write(f"{nazev}\t{el.sourceline}\t{url}\n")
-                continue
-
-            # kdyz zpracovavame data starsi nez letosni, musime
-            # zahazovat jiz zpracovana data
-            if ico in icos:
-                el.clear()
-                continue
-            icos.add(ico)
-
-            csvs["subjekty"].writerow([ico, nazev, zapis, vymaz])
-
-            for udaj_raw in el.find("udaje").iterchildren():
-                # tohle je asi irelevantni, asi nas zajimaj jen podudaje??
-                # beru zpet - tohle nas zajima prave tehdy, kdyz nemame podudaje
-                # beru opet zpet - třeba u zastoupení v dozorčí radě nás zajímá obojí :(
-
-                udaj_typ = udaj_raw.find("udajTyp/kod").text
-
-                if udaj_typ not in schemasd:
-                    neumim.add(udaj_typ)
-                    continue
-
-                if not schemasd[udaj_typ].get("ignore", False):
-                    schema = schemasd[udaj_typ]["schema"]
-                    row = extrahuj(udaj_raw, schema)
-                    row = uprav_data(row, schemasd[udaj_typ])
-                    row = {
-                        k: json.dumps(v) if isinstance(v, dict) else v
-                        for k, v in row.items()
-                    }
-                    row["ico"] = ico
-                    csvs[udaj_typ].writerow(row)
-
-                if udaj_raw.find("podudaje") is not None:
-                    podudaje = udaj_raw.find("podudaje").getchildren()
-                    podpodudaje = udaj_raw.find("podudaje/Udaj/podudaje")
-                    if podpodudaje is not None:
-                        podudaje += podpodudaje.getchildren()
-
-                    for podudaj_raw in podudaje:
-                        podudaj_typ = podudaj_raw.find("udajTyp/kod").text
-
-                        if podudaj_typ not in schemasd:
-                            neumim.add(podudaj_typ)
-                            schema_autogen[podudaj_typ] = merge(
-                                gen_schema(podudaj_raw),
-                                schema_autogen.get(podudaj_typ, {}),
-                            )
-                            continue
-
-                        if not schemasd[podudaj_typ].get("ignore", False):
-                            schema = schemasd[podudaj_typ]["schema"]
-                            row = extrahuj(podudaj_raw, schema)
-                            row = uprav_data(row, schemasd[podudaj_typ])
-                            row = {
-                                k: json.dumps(v) if isinstance(v, dict) else v
-                                for k, v in row.items()
-                            }
-                            row["ico"] = ico
-                            # TODO: obezlicka, kterou je treba resit
-                            if "ico_angos" in row:
-                                row["ico_angos"] = (
-                                    int(row["ico_angos"])
-                                    if row["ico_angos"] and row["ico_angos"].isdigit()
-                                    else None
-                                )
-                            csvs[podudaj_typ].writerow(row)
-                else:
-                    pass  # TODO: handluj non-podudaje
-
-            el.clear()
-
-    for el in fs.values():
-        el.close()
-
-    # TODO: resolve
-    # with open('xml_schema_chybejici.json', 'w') as fw:
-    #     json.dump(schema_autogen, fw, indent=2, ensure_ascii=False)
+    # nezpracovany objekty je treba rucne projit
+    schema_autogen = dict()
+    while not autogen.empty():
+        obj, schema = autogen.get()
+        schema_autogen[obj] = merge(
+            schema,
+            schema_autogen.get(obj, {}),
+        )
+    if len(schema_autogen):
+        print(f"nalezeno {len(schema_autogen)} neznamych objektu ve zdrojovych datech")
+        print("exportuji xml_schema_chybejici.json")
+        with open("xml_schema_chybejici.json", "w") as fw:
+            json.dump(schema_autogen, fw, indent=2, ensure_ascii=False)
 
 
 if __name__ == "__main__":
