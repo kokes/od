@@ -18,6 +18,7 @@ schema = [
         Column("datum_zapisu", Date, nullable=False),
         Column("datum_vymazu", Date, nullable=True),
         Column("sidlo", JSON, nullable=True),
+        Column("cinnosti", JSON, nullable=True),
     ),
     Table(
         "fosoby",

@@ -1,9 +1,11 @@
 import argparse
 import csv
+from functools import partial
 import os
 import shutil
 from collections import defaultdict
 from importlib import import_module
+from datetime import datetime
 
 from sqlalchemy import Boolean, create_engine
 
@@ -33,8 +35,10 @@ if __name__ == "__main__":
         action="store_true",
         help="procesuj jen cast vstupnich dat - vhodne pro testovani, CI apod.",
     )
+    parser.add_argument("--timesubf", action="store_true", help="Ve vystupnim adresari vytvori podadresar s casovy razitkem do ktereho se teprve budou ukladat zpracovana data z jednoltivych modulu.")
     parser.add_argument("--all", action="store_true", help="procesuj vsechny moduly")
     parser.add_argument("modules", nargs="*", help="specify which datasets to include")
+    
     args = parser.parse_args()
 
     if args.all and len(args.modules) > 0:
@@ -48,6 +52,11 @@ if __name__ == "__main__":
         )
 
     base_outdir = "csv"
+
+    if args.timesubf:
+        prefix_d = "full_" if not(args.partial) else "partial_"
+        base_outdir = os.path.join(base_outdir, prefix_d + datetime.now().strftime("%Y%m%d%H%M%S"))
+
     os.makedirs(base_outdir, exist_ok=True)
 
     engine = None
