@@ -63,10 +63,13 @@ def open_remote_gzipped(url: str, partial: bool):
     req = Request(url)
     req.add_header("Accept-Encoding", "gzip")
     with urlopen(req, timeout=HTTP_TIMEOUT) as r:
+        enc = "utf-8"
+        if "windows-1250" in r.headers.get("content-type", ""):
+            enc = "cp1250"
         if r.headers["Content-Encoding"] == "gzip":
-            yield gzip.open(r, "rt", encoding="utf-8")
+            yield gzip.open(r, "rt", encoding=enc)
         else:
-            yield io.TextIOWrapper(r, encoding="cp1250")
+            yield io.TextIOWrapper(r, encoding=enc)
 
 
 def main(outdir: str, partial: bool = False):
