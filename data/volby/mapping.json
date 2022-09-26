@@ -252,7 +252,8 @@
             ],
             "2022-09-23": [
                 "https://volby.cz/opendata/kv2022/KV2022reg20220925b.zip",
-                "https://volby.cz/opendata/kv2022/KV2022ciselniky20220921.zip"
+                "https://volby.cz/opendata/kv2022/KV2022ciselniky20220921.zip",
+                "https://volby.cz/opendata/kv2022/KV2022_data_20220925b_xml.zip"
             ]
         },
         "ds": {
