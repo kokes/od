@@ -2,6 +2,7 @@ from sqlalchemy import Column, MetaData, Table
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.sql.schema import UniqueConstraint
 from sqlalchemy.sql.sqltypes import (
+    Boolean,
     Date,
     Float,
     Integer,
@@ -101,7 +102,7 @@ schema = [
         Column("pochlasu", Integer, nullable=False),
         Column("pocproc", Numeric(5, 2), nullable=True),
         Column("pocprocvse", Numeric(5, 2), nullable=True),
-        Column("mandat", String(1), nullable=True),
+        Column("mandat", Boolean, nullable=True),
         Column("skrutinium", SmallInteger, nullable=True),
         Column("poradimand", SmallInteger, nullable=True),
         Column("poradinahr", SmallInteger, nullable=True),
@@ -225,7 +226,7 @@ schema = [
         Column("pochlasu", Integer, nullable=True),
         Column("pochl_pres", Integer, nullable=True),
         Column("pocprocvse", Numeric(5, 2), nullable=True),
-        Column("mandat", String(1), nullable=True),
+        Column("mandat", Boolean, nullable=True),
         Column("poradimand", SmallInteger, nullable=True),
         Column("poradinahr", SmallInteger, nullable=True),
         UniqueConstraint(
@@ -349,7 +350,7 @@ schema = [
         Column("pochlasu", Integer, nullable=False),
         Column("pocproc", Numeric(5, 2), nullable=True),
         Column("pocprocvse", Numeric(5, 2), nullable=True),
-        Column("mandat", String(1), nullable=True),
+        Column("mandat", Boolean, nullable=True),
         Column("poradimand", SmallInteger, nullable=True),
         Column("poradinahr", SmallInteger, nullable=True),
         Column("poradihahr", SmallInteger, nullable=True),
@@ -482,7 +483,7 @@ schema = [
         Column("pochlasu", Integer, nullable=True),
         Column("pocproc", Numeric(5, 2), nullable=True),
         Column("pocprocvse", Numeric(5, 2), nullable=True),
-        Column("mandat", String(1), nullable=True),
+        Column("mandat", Boolean, nullable=True),
         Column("poradimand", SmallInteger, nullable=True),
         Column("poradinahr", SmallInteger, nullable=True),
         UniqueConstraint("datum", "estrana", "porcislo"),
@@ -632,7 +633,7 @@ if __name__ == "__main__":
 # TODO: co s views?
 
 
-# create view volby.kandidati AS (
+# create view volby.v_kandidati AS (
 #     SELECT
 #         'senat' AS volby,
 #         obvod || ' - ' || nazev_obv as obvod,
@@ -656,7 +657,7 @@ if __name__ == "__main__":
 #         nazevcelk AS strana,
 #         vek,
 #         povolani,
-#         mandat IN ('1', 'A') AS zvolen
+#         mandat AS zvolen
 #     FROM
 #         volby.ep_kandidati
 #         INNER JOIN volby.ep_strany USING (datum, estrana)
@@ -671,7 +672,7 @@ if __name__ == "__main__":
 #         nazevcelk AS strana,
 #         vek,
 #         povolani,
-#         mandat IN ('1', 'A') AS zvolen
+#         mandat AS zvolen
 #     FROM
 #         volby.komunalni_kandidati kn
 #         INNER JOIN volby.komunalni_strany ks ON kn.nstrana = ks.vstrana
@@ -687,7 +688,7 @@ if __name__ == "__main__":
 #         nazevcelk AS strana,
 #         vek,
 #         povolani,
-#         mandat IN ('1', 'A') as zvolen
+#         mandat AS zvolen
 #     FROM
 #         volby.kraje_kandidati kn
 #         INNER JOIN volby.kraje_strany_cr ks ON kn.nstrana = ks.vstrana
@@ -703,7 +704,7 @@ if __name__ == "__main__":
 #         nazevcelk AS strana,
 #         vek,
 #         povolani,
-#         mandat IN ('1', 'A') AS zvolen
+#         mandat AS zvolen
 #     FROM
 #         volby.psp_kandidati kn
 #         INNER JOIN volby.psp_strany ks ON ks.datum = kn.datum

@@ -102,6 +102,13 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                         # pg array representation - '{a, b, c}'
                         el["HLASY"] = "{{{}}}".format(",".join(map(str, hlasy)))
 
+                    # mandat str -> bool
+                    if "MANDAT" in el and el["MANDAT"] not in ("", None):
+                        assert el["MANDAT"] in ("A", "1", "N", "0", 1, 0), el["MANDAT"]
+                        el["MANDAT"] = (
+                            "true" if el["MANDAT"] in ("A", "1", 1) else "false"
+                        )
+
                     cw.writerow(
                         {
                             "DATUM": datum,
