@@ -7,6 +7,7 @@ from collections import defaultdict
 from importlib import import_module
 
 from sqlalchemy import Boolean, create_engine
+from sqlalchemy.schema import AddConstraint, PrimaryKeyConstraint
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -118,6 +119,10 @@ if __name__ == "__main__":
                 t = time.time()
                 print(f"Nahravam {table.name} do {module_name}", end="")
                 files = table_loads[(module_name, table.name)]
+                constraints = list(table.constraints)
+                # radsi bych dropnul constrainty pres DropConstraint, ale neznam
+                # jejich jmena
+                table.constraints.clear()
                 if engine.name == "postgresql":
                     table.schema = f"{args.schema_prefix}{module_name}"
                     full_table_name = f"{table.schema}.{table.name}"
@@ -168,5 +173,15 @@ if __name__ == "__main__":
                     conn.commit()
                 else:
                     raise IOError(f"{engine.name} not supported yet")
+
+                # jelikoz constrainty nedropujem explicitne, jen je nevytvarime,
+                # tak je muzeme pridavat jen v pripade drop-first
+                if args.drop_first:
+                    for c in constraints:
+                        # kazdy sqlalchemy Table objekt ma PK constraint,
+                        # ale pokud nemame PK definovany, je to prazdne
+                        if isinstance(c, PrimaryKeyConstraint) and len(list(c.columns)) == 0:
+                            continue
+                        AddConstraint(c).execute(bind=engine)
 
                 print(f" ({time.time() - t:.2f}s)")
