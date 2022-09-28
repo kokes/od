@@ -141,7 +141,6 @@ if __name__ == "__main__":
                     )
                     for fk in dbtable.constraints:
                         if isinstance(fk, ForeignKeyConstraint):
-                            breakpoint()
                             DropConstraint(fk).execute(engine)
 
                 if engine.name == "postgresql":
