@@ -2,6 +2,7 @@ import argparse
 import csv
 import os
 import shutil
+import time
 from collections import defaultdict
 from importlib import import_module
 
@@ -114,7 +115,8 @@ if __name__ == "__main__":
                     raise IOError(f"neexistujou data pro {module_name}.{table.name}")
 
             for table in schemas[module_name]:
-                print(f"Nahravam {table.name} do {module_name}")
+                t = time.time()
+                print(f"Nahravam {table.name} do {module_name}", end="")
                 files = table_loads[(module_name, table.name)]
                 if engine.name == "postgresql":
                     table.schema = f"{args.schema_prefix}{module_name}"
@@ -166,3 +168,5 @@ if __name__ == "__main__":
                     conn.commit()
                 else:
                     raise IOError(f"{engine.name} not supported yet")
+
+                print(f" ({time.time() - t:.2f}s)")
