@@ -128,20 +128,21 @@ if __name__ == "__main__":
                 ]
 
                 # základní kontrola integrity (oflagovat?)
-                db_column_names = [j.name for j in table.columns]
+                # .lower() na obou stranach pro case insensitive porovnani
+                db_column_names = [j.name.lower() for j in table.columns]
                 db_column_nullable = [j.nullable for j in table.columns]
                 data_nullable = [False for _ in table.columns]
                 for file in files:
                     with open(file, "rt", encoding="utf-8") as f:
                         cr = csv.reader(f)
-                        header = next(cr)
+                        header = [j.lower() for j in next(cr)]
                         if header != db_column_names:
                             errmap = dict(
                                 (k, v)
                                 for k, v in zip(header, db_column_names)
                                 if k != v
                             )
-                            raise ValueError(f"databáze očekává jiné sloupce: {errmap}")
+                            warnings.warn(f"databáze očekává jiné sloupce: {errmap}")
 
                         for j, row in enumerate(cr):
                             if len(row) != len(db_column_names):

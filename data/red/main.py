@@ -38,6 +38,7 @@ def remote_csv(url):
 
 
 # fooBar -> foo_bar
+# TODO: testy
 def decamel(s: str) -> str:
     chars = list(s)
     for j, char in enumerate(chars):
