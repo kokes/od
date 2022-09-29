@@ -6,7 +6,8 @@ import time
 from collections import defaultdict
 from importlib import import_module
 
-from sqlalchemy import Boolean, create_engine
+from sqlalchemy import Boolean, MetaData, Table, create_engine
+from sqlalchemy.schema import AddConstraint, DropConstraint, ForeignKeyConstraint
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -118,15 +119,32 @@ if __name__ == "__main__":
                 t = time.time()
                 print(f"Nahravam {table.name} do {module_name}", end="")
                 files = table_loads[(module_name, table.name)]
+                fkeys = [
+                    j for j in table.constraints if isinstance(j, ForeignKeyConstraint)
+                ]
+
                 if engine.name == "postgresql":
                     table.schema = f"{args.schema_prefix}{module_name}"
-                    full_table_name = f"{table.schema}.{table.name}"
-
                     engine.execute(f"CREATE SCHEMA IF NOT EXISTS {table.schema}")
-                    if args.drop_first:
-                        table.drop(engine, checkfirst=True)
-                    table.create(engine, checkfirst=True)
+                elif engine.name == "sqlite":
+                    table.name = f"{args.schema_prefix}{module_name}_{table.name}"
 
+                if args.drop_first:
+                    table.drop(engine, checkfirst=True)
+                table.create(engine, checkfirst=True)
+
+                # dropni fkeys pred nahravanim dat
+                # z nejakeho duvodu jsou v sqlite nepojmenovany klice
+                if engine.name == "postgresql":
+                    dbtable = Table(
+                        table.name, MetaData(engine), schema=table.schema, autoload=True
+                    )
+                    for fk in dbtable.constraints:
+                        if isinstance(fk, ForeignKeyConstraint):
+                            DropConstraint(fk).execute(engine)
+
+                if engine.name == "postgresql":
+                    full_table_name = f"{table.schema}.{table.name}"
                     conn = engine.raw_connection()
                     cur = conn.cursor()
                     cur.execute(
@@ -139,11 +157,8 @@ if __name__ == "__main__":
                             )
                     conn.commit()  # TODO: proc nejde context manager? starej psycopg?
                 elif engine.name == "sqlite":
-                    table.name = f"{args.schema_prefix}{module_name}_{table.name}"
-                    if args.drop_first:
-                        table.drop(engine, checkfirst=True)
-                    table.create(engine, checkfirst=True)
                     conn = engine.raw_connection()
+                    conn.execute(f"DELETE FROM {table.name}")
 
                     ph = ", ".join(["?"] * len(table.columns))
                     query = f"INSERT INTO {table.name} VALUES({ph})"
@@ -168,5 +183,12 @@ if __name__ == "__main__":
                     conn.commit()
                 else:
                     raise IOError(f"{engine.name} not supported yet")
+
+                # constrainty jsme neumeli dropnout u sqlite... a nejdou ani pridat
+                if engine.name == "postgresql":
+                    for fk in fkeys:
+                        if not isinstance(fk, ForeignKeyConstraint):
+                            continue
+                        AddConstraint(fk).execute(bind=engine)
 
                 print(f" ({time.time() - t:.2f}s)")
