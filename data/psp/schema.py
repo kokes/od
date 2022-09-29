@@ -175,7 +175,7 @@ schema = [
         ),
         Column("jmeno", Text, nullable=False, comment="Jméno"),
         Column("za", Text, nullable=True, comment="Titul za jménem"),
-        Column("narozeni", Date, nullable=True, comment="Datum narození"),
+        Column("narozeni", Date, nullable=False, comment="Datum narození"),
         Column(
             "pohlavi",
             Text,
@@ -261,7 +261,7 @@ schema = [
         Column(
             "email",
             Text,
-            nullable=True,
+            nullable=False,
             comment="E-mailová adresa poslance, případně obecná posta@psp.cz.",
         ),
         Column(
@@ -1163,22 +1163,22 @@ schema = [
         Column(
             "id_tisk",
             ForeignKey("tisky_tisky.id_tisk"),
-            nullable=True,
+            nullable=False,
             comment="Identifikátor sněmovního tisku, viz tisky:id_tisk",
         ),
         Column(
             "id_osoba",
             ForeignKey("poslanci_osoby.id_osoba"),
-            nullable=True,
+            nullable=False,
             comment="Předkladatel nebo jeho zástupce, viz osoba:id_osoba.",
         ),
         Column(
             "stav",
             Integer,
-            nullable=True,
+            nullable=False,
             comment="Typ záznamu: 1 - připojil podpis, 10 - vzal podpis zpět.",
         ),
-        Column("datum", Date, nullable=True, comment="Datum záznamu."),
+        Column("datum", Date, nullable=False, comment="Datum záznamu."),
     ),
     Table(
         "interp_uitypv",

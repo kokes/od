@@ -8,23 +8,23 @@ import lxml.etree
 
 URL = "https://www.czechpoint.cz/spravadat/ovm/datafile.do?format=xml&service=seznamovm"
 
-COLS = [
-    "Zkratka",
-    "ICO",
-    "Nazev",
-    "AdresaUradu",
-    "Email",
-    "TypSubjektu",
-    "PravniForma",
-    "PrimarniOvm",
-    "IdDS",
-    "TypDS",
-    "StavDS",
-    "StavSubjektu",
-    "DetailSubjektu",
-    "IdentifikatorOvm",
-    "KategorieOvm",
-]
+COLS = {
+    "Zkratka": "zkratka",
+    "ICO": "ico",
+    "Nazev": "nazev",
+    "AdresaUradu": "adresa_uradu",
+    "Email": "email",
+    "TypSubjektu": "typ_subjektu",
+    "PravniForma": "pravni_forma",
+    "PrimarniOvm": "primarni_ovm",
+    "IdDS": "id_ds",
+    "TypDS": "typ_ds",
+    "StavDS": "stav_ds",
+    "StavSubjektu": "stav_subjektu",
+    "DetailSubjektu": "detail_subjektu",
+    "IdentifikatorOvm": "identifikator_ovm",
+    "KategorieOvm": "kategorie_ovm",
+}
 
 
 def obj(root):
@@ -47,7 +47,7 @@ def main(outdir: str, partial: bool = False):
     with urlopen(URL) as r, open(
         os.path.join(outdir, "subjekty.csv"), "wt", encoding="utf-8"
     ) as fw:
-        cw = csv.DictWriter(fw, fieldnames=COLS, lineterminator="\n")
+        cw = csv.DictWriter(fw, fieldnames=COLS.values(), lineterminator="\n")
         cw.writeheader()
 
         gr = gzip.open(r)
@@ -64,16 +64,16 @@ def main(outdir: str, partial: bool = False):
             for child in element.getchildren():
                 tag = child.tag.rpartition("}")[-1]
                 if tag == "Email":
-                    row[tag] = arr(child)
+                    row[COLS[tag]] = arr(child)
                 else:
-                    row[tag] = obj(child)
+                    row[COLS[tag]] = obj(child)
 
             row = {
                 k: json.dumps(v, ensure_ascii=False) if not isinstance(v, str) else v
                 for k, v in row.items()
             }
-            row["PrimarniOvm"] = {"Ano": True, "Ne": False, None: None}[
-                row.get("PrimarniOvm")
+            row["primarni_ovm"] = {"Ano": True, "Ne": False, None: None}[
+                row.get("primarni_ovm")
             ]
             cw.writerow(row)
             element.clear()

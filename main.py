@@ -3,11 +3,19 @@ import csv
 import os
 import shutil
 import time
+import warnings
 from collections import defaultdict
 from importlib import import_module
 
 from sqlalchemy import Boolean, MetaData, Table, create_engine
 from sqlalchemy.schema import AddConstraint, DropConstraint, ForeignKeyConstraint
+
+
+def warninger(message, category, filename, lineno, line=None):
+    return f"{filename}:{lineno}: {category.__name__}: {message}\n"
+
+
+warnings.formatwarning = warninger
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -40,14 +48,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.all and len(args.modules) > 0:
-        raise argparse.ArgumentError(
-            "specifikuj bud --all, nebo specificke datasety, ne oboji"
-        )
+        raise ValueError("specifikuj bud --all, nebo specificke datasety, ne oboji")
 
     if args.load_only and not args.connstring:
-        raise argparse.ArgumentError(
-            "při --load-only je třeba specifikovat --connstring"
-        )
+        raise ValueError("při --load-only je třeba specifikovat --connstring")
 
     base_outdir = "csv"
     os.makedirs(base_outdir, exist_ok=True)
@@ -123,6 +127,44 @@ if __name__ == "__main__":
                     j for j in table.constraints if isinstance(j, ForeignKeyConstraint)
                 ]
 
+                # základní kontrola integrity (oflagovat?)
+                # .lower() na obou stranach pro case insensitive porovnani
+                db_column_names = [j.name.lower() for j in table.columns]
+                db_column_nullable = [j.nullable for j in table.columns]
+                data_nullable = [False for _ in table.columns]
+                for file in files:
+                    with open(file, "rt", encoding="utf-8") as f:
+                        cr = csv.reader(f)
+                        header = [j.lower() for j in next(cr)]
+                        if header != db_column_names:
+                            errmap = dict(
+                                (k, v)
+                                for k, v in zip(header, db_column_names)
+                                if k != v
+                            )
+                            warnings.warn(f"databáze očekává jiné sloupce: {errmap}")
+
+                        for j, row in enumerate(cr):
+                            if len(row) != len(db_column_names):
+                                raise ValueError(
+                                    f"nečekaný počet sloupců, {len(row)} vs."
+                                    f" {len(db_column_names)} (řádka {j+2}"
+                                )
+                            for k, val in enumerate(row):
+                                if val == "":
+                                    data_nullable[k] = True
+
+                if data_nullable != db_column_nullable:
+                    for j, (dnull, dbnull) in enumerate(
+                        zip(data_nullable, db_column_nullable)
+                    ):
+                        if dnull == dbnull:
+                            continue
+                        warnings.warn(
+                            f"NULL neshoda v {table.name} ({db_column_names[j]}):"
+                            f" data ({dnull}) vs. DB ({dbnull})"
+                        )
+
                 if engine.name == "postgresql":
                     table.schema = f"{args.schema_prefix}{module_name}"
                     engine.execute(f"CREATE SCHEMA IF NOT EXISTS {table.schema}")
@@ -158,7 +200,7 @@ if __name__ == "__main__":
                     conn.commit()  # TODO: proc nejde context manager? starej psycopg?
                 elif engine.name == "sqlite":
                     conn = engine.raw_connection()
-                    conn.execute(f"DELETE FROM {table.name}")
+                    conn.execute(f"DELETE FROM {table.name}")  # truncate v sqlite neni
 
                     ph = ", ".join(["?"] * len(table.columns))
                     query = f"INSERT INTO {table.name} VALUES({ph})"

@@ -65,6 +65,7 @@ def main(outdir: str, partial: bool = False):
             "bohuzel czechinvest nechce moc davat lidem data v lidsky forme, takze "
             "si je musite napred stahnout v prohlizeci z "
             "https://www.czechinvest.org/cz/Sluzby-pro-investory/Investicni-pobidky"
+            " a ulozit do data/czechinvest/"
         )
 
     wb = xlrd.open_workbook(wb_path)

@@ -37,6 +37,18 @@ def remote_csv(url):
         yield from cr
 
 
+# fooBar -> foo_bar
+# TODO: testy
+def decamel(s: str) -> str:
+    chars = list(s)
+    for j, char in enumerate(chars):
+        if char.isupper():
+            chars.insert(j, "_")
+            chars[j + 1] = char.lower()
+
+    return "".join(chars)
+
+
 def main(outdir: str, partial: bool = False):
     logging.getLogger().setLevel(logging.INFO)
     cdir = os.path.dirname(os.path.abspath(__file__))
@@ -82,7 +94,7 @@ def main(outdir: str, partial: bool = False):
                     ]
                     # TODO: trochu duplicity, dole delam to stejny
                     clean_header = [
-                        (j[3].lower() + j[4:] if j.startswith("iri") else j)
+                        decamel(j[3].lower() + j[4:] if j.startswith("iri") else j)
                         for j in clean_header
                     ]
                     cw = csv.DictWriter(
@@ -127,7 +139,7 @@ def main(outdir: str, partial: bool = False):
 
                     del ln[key]
 
-                cw.writerow(ln)
+                cw.writerow({decamel(k): v for k, v in ln.items()})
 
 
 if __name__ == "__main__":

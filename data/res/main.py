@@ -57,6 +57,37 @@ DS_CLS = {
     "ZDRUD": 564,
 }
 
+COLMAP = {
+    "ICO": "ico",
+    "OKRESLAU": "okres_lau",
+    "DDATVZN": "datum_vznik",
+    "DDATZAN": "datum_zanik",
+    "ZPZAN": "zpusob_zanik",
+    "DDATPAKT": "datum_aktualizace",
+    "FORMA": "pravni_forma",
+    "ROSFORMA": "pravni_forma_ros",
+    "KATPO": "kategorie_zamestnanci",
+    "NACE": "nace",
+    "ICZUJ": "ic_zuj",
+    "FIRMA": "firma",
+    "CISS2010": "esa2010",
+    "KODADM": "adresni_misto",
+    "TEXTADR": "adresa",
+    "PSC": "psc",
+    "OBEC_TEXT": "obec",
+    "COBCE_TEXT": "cast_obce",
+    "ULICE_TEXT": "ulice",
+    "TYPCDOM": "typ_cislo_domovni",
+    "CDOM": "cislo_domovni",
+    "COR": "cislo_orientacni",
+    "DATPLAT": "datum_platnost",
+    "PRIZNAK": "priznak",
+    # nace
+    "ZDRUD": "zdroj_udaj",
+    "KODCIS": "kod_ciselnik",
+    "HODN": "hodnota",
+}
+
 
 @contextmanager
 def open_remote_gzipped(url: str, partial: bool):
@@ -104,8 +135,10 @@ def main(outdir: str, partial: bool = False):
                     row[k] = cls_data[(DS_CLS[k], v)]
 
                 if n == 0:
-                    cw = csv.DictWriter(fw, fieldnames=row.keys(), lineterminator="\n")
-                cw.writerow(row)
+                    header = [COLMAP[j] for j in row.keys()]
+                    cw = csv.DictWriter(fw, fieldnames=header, lineterminator="\n")
+                    cw.writeheader()
+                cw.writerow({COLMAP[k]: v for k, v in row.items()})
 
 
 if __name__ == "__main__":
