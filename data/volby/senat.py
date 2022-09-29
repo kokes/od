@@ -7,7 +7,8 @@ import lxml.html
 from tqdm import tqdm
 
 # db schema
-# cat senat_kandidati.csv | psql -c "COPY volby.senat_kandidati_vse FROM stdin CSV HEADER"
+# cat senat_kandidati.csv | psql -c \
+# "COPY volby.senat_kandidati_vse FROM stdin CSV HEADER"
 # CREATE TABLE volby.senat_kandidati_vse (
 #     rok int not null,
 #     obvod text not null,
@@ -20,7 +21,10 @@ from tqdm import tqdm
 #     procenta_k2 decimal(5, 2)
 # )
 
-ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+ua = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36"
+)
 
 
 def gurl(url):
@@ -69,7 +73,19 @@ for ln in lnk:
 
 with open("senat_kandidati.csv", "wt") as fw:
     cw = csv.writer(fw)
-    cw.writerow(["rok", "obvod", "datum", "jmeno", "navrhujici_strana", "hlasy_k1", "hlasy_k2", "procenta_k1", "procenta_k2"])
+    cw.writerow(
+        [
+            "rok",
+            "obvod",
+            "datum",
+            "jmeno",
+            "navrhujici_strana",
+            "hlasy_k1",
+            "hlasy_k2",
+            "procenta_k1",
+            "procenta_k2",
+        ]
+    )
     for ln in tqdm(fln):
         dt = lxml.html.fromstring(gurl(ln))
 
@@ -96,31 +112,51 @@ with open("senat_kandidati.csv", "wt") as fw:
             # TODO: abstrahuj tyhle vytahovacky
             k1 = [
                 int(j.text.replace("\xa0", "").replace(",", "."))
-                if j.text != "X" else None
+                if j.text != "X"
+                else None
                 for j in vld.cssselect('td[headers="s2a5 s2b3"]')
             ]
             k2 = [
                 int(j.text.replace("\xa0", "").replace(",", "."))
-                if j.text != "X" else None
+                if j.text != "X"
+                else None
                 for j in vld.cssselect('td[headers="s2a5 s2b4"]')
             ]
             p1 = [
                 float(j.text.replace("\xa0", "").replace(",", "."))
-                if j.text != "X" else None
+                if j.text != "X"
+                else None
                 for j in vld.cssselect('td[headers="s2a6 s2b5"]')
             ]
             p2 = [
                 float(j.text.replace("\xa0", "").replace(",", "."))
-                if j.text != "X" else None
+                if j.text != "X"
+                else None
                 for j in vld.cssselect('td[headers="s2a6 s2b6"]')
             ]
             navrstrana = [j.text for j in vld.cssselect('td[headers="s2a3"]')]
 
-            assert len(jmena) == len(navrstrana) == len(k1) == len(k2) == len(p1) == len(p2)
-            
+            assert (
+                len(jmena)
+                == len(navrstrana)
+                == len(k1)
+                == len(k2)
+                == len(p1)
+                == len(p2)
+            )
+
             nr = len(jmena)
             for j in range(nr):
-                cw.writerow([
-                    rok, obv, dat,
-                    jmena[j], navrstrana[j], k1[j], k2[j], p1[j], p2[j],
-                ])
+                cw.writerow(
+                    [
+                        rok,
+                        obv,
+                        dat,
+                        jmena[j],
+                        navrstrana[j],
+                        k1[j],
+                        k2[j],
+                        p1[j],
+                        p2[j],
+                    ]
+                )
