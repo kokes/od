@@ -8,6 +8,10 @@ Právě z těchto důvodů se těmto datům explicitně věnujeme.
 
 ## Volební registry
 
-U každých voleb je sada datasetů, které uchovávají vždy trochu rozdílné informace, takže je třeba je zpracovávat separátně. V tomto adresáři se věnujeme *registrům*, které obsahují kompletní informace o výsledcích daných voleb, zpravidla na obecní úrovni (tj. ne okrskové). Často je nutné je propojit s číselníky, abychom získali informace o dimenzích.
+U každých voleb je sada datasetů, které uchovávají vždy trochu rozdílné informace, takže je třeba je zpracovávat separátně. V tomto adresáři se věnujeme _registrům_, které obsahují kompletní informace o výsledcích daných voleb, zpravidla na obecní úrovni (tj. ne okrskové). Často je nutné je propojit s číselníky, abychom získali informace o dimenzích.
 
 Kód zde data stahuje i dál zpracovává. **Stahuje data ke všem volbám, pro které ČSÚ poskytuje otevřená data.** Po puštění skriptu tak budete moci analyzovat data k výsledkům prezidentských voleb, voleb do Senátu, Poslanecké sněmovny atd.
+
+## Senátní data
+
+Bohužel stále nemáme data za celou historii, takže pokud někde chceme dělat analytiku nad všema datama, musíme si je stáhnout přímo z webu ČSÚ. Nemám tu techniku moc rád, tak se ji snažim minimalizovat. Naštěstí jsem to potřeboval zatím jen pro Senát, kde těch dat není moc. Je tu tedy `senat.py`, které stáhne všechny senátní volby do ad-hoc CSV. Jeho databázové schéma je v komentáři v kódu, není to nijak napojené na jakoukoliv automatizaci v tomto repu.
