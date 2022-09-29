@@ -15,6 +15,12 @@ from urllib.request import Request, urlopen
 import lxml.etree
 from dbfread import DBF
 
+UA = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"
+    "105.0.0.0 Safari/537.36"
+)
+
 
 @contextmanager
 def load_remote_data(url: str):
@@ -22,7 +28,7 @@ def load_remote_data(url: str):
         fn = os.path.basename(url)
         tfn = os.path.join(tmpdir, fn)
         if not os.path.isfile(tfn):
-            req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
+            req = Request(url, headers={"User-Agent": UA})
             with urlopen(req, timeout=60) as r, open(tfn, "wb") as fw:
                 shutil.copyfileobj(r, fw)
 
