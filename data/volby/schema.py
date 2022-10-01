@@ -224,6 +224,7 @@ schema = [
         Column("nstrana", SmallInteger, nullable=True),
         Column("platnost", Text, nullable=False),
         Column("pochlasu", Integer, nullable=True),
+        Column("preskoceni", String(1), nullable=True),
         Column("pochl_pres", Integer, nullable=True),
         Column("pocprocvse", Numeric(5, 2), nullable=True),
         Column("mandat", Boolean, nullable=True),
