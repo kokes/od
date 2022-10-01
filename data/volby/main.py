@@ -9,11 +9,14 @@ from collections import defaultdict
 from contextlib import contextmanager
 from fnmatch import fnmatch
 from tempfile import TemporaryDirectory
+from urllib.error import URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
 import lxml.etree
 from dbfread import DBF
+
+RETRIES = 5
 
 
 @contextmanager
@@ -23,8 +26,16 @@ def load_remote_data(url: str):
         tfn = os.path.join(tmpdir, fn)
         if not os.path.isfile(tfn):
             req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
-            with urlopen(req, timeout=60) as r, open(tfn, "wb") as fw:
-                shutil.copyfileobj(r, fw)
+            for j in range(RETRIES):
+                try:
+                    with urlopen(req, timeout=60) as r, open(tfn, "wb") as fw:
+                        shutil.copyfileobj(r, fw)
+                        break
+                except URLError as e:
+                    if j == RETRIES - 1:
+                        raise e
+                    print(f"URLError ({e}), retrying")
+                    continue
 
         with zipfile.ZipFile(tfn) as zf:
             yield zf
