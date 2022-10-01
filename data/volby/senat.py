@@ -15,6 +15,8 @@ from tqdm import tqdm
 #     datum text not null,
 #     jmeno text not null,
 #     navrhujici_strana text not null,
+#     ucast_k1 decimal(5, 2) not null,
+#     ucast_k2 decimal(5, 2),
 #     hlasy_k1 int not null,
 #     hlasy_k2 int,
 #     procenta_k1 decimal(5, 2) not null,
@@ -80,6 +82,8 @@ with open("senat_kandidati.csv", "wt") as fw:
             "datum",
             "jmeno",
             "navrhujici_strana",
+            "ucast_k1",
+            "ucast_k2",
             "hlasy_k1",
             "hlasy_k2",
             "procenta_k1",
@@ -104,6 +108,17 @@ with open("senat_kandidati.csv", "wt") as fw:
 
             tt = vld.cssselect("h1")[0].text.strip()
             dat = tt[tt.index(" dne") + 5 :]  # datum prvniho kola
+
+            ucast = [
+                float(j.text.replace("\\xa0", "").replace(",", "."))
+                for j in vld.cssselect(
+                    'td[headers="s1a4"], td[headers="r11 s1a4"], td[headers="r12 s1a4"]'
+                )
+            ]
+
+            assert len(ucast) in (1, 2)
+            if len(ucast) == 1:
+                ucast.append(None)
 
             jmena = [
                 j.text.replace("\xa0", " ")
@@ -154,6 +169,8 @@ with open("senat_kandidati.csv", "wt") as fw:
                         dat,
                         jmena[j],
                         navrstrana[j],
+                        ucast[0],
+                        ucast[1],
                         k1[j],
                         k2[j],
                         p1[j],
