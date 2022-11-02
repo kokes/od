@@ -97,12 +97,14 @@ if __name__ == "__main__":
         print("=" * len(module_name))
 
         outdir = os.path.join(base_outdir, module_name)
+        outdir_tmp = os.path.join(base_outdir, "tmp", module_name)
         if os.path.isdir(outdir) and not args.load_only:
             shutil.rmtree(outdir)
-        os.makedirs(outdir, exist_ok=True)
 
         if not args.load_only:
-            module(outdir, partial=args.partial)
+            os.makedirs(outdir_tmp, exist_ok=True)
+            module(outdir_tmp, partial=args.partial)
+            os.rename(outdir_tmp, outdir)
 
         if engine:
             table_loads = defaultdict(list)
