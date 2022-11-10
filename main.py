@@ -2,6 +2,7 @@ import argparse
 import csv
 import os
 import shutil
+import tempfile
 import time
 import warnings
 from collections import defaultdict
@@ -97,14 +98,13 @@ if __name__ == "__main__":
         print("=" * len(module_name))
 
         outdir = os.path.join(base_outdir, module_name)
-        outdir_tmp = os.path.join(base_outdir, "tmp", module_name)
-        if os.path.isdir(outdir) and not args.load_only:
-            shutil.rmtree(outdir)
+        with tempfile.TemporaryDirectory(dir=base_outdir) as outdir_tmp:
+            if os.path.isdir(outdir) and not args.load_only:
+                shutil.rmtree(outdir)
 
-        if not args.load_only:
-            os.makedirs(outdir_tmp, exist_ok=True)
-            module(outdir_tmp, partial=args.partial)
-            os.rename(outdir_tmp, outdir)
+            if not args.load_only:
+                module(outdir_tmp, partial=args.partial)
+                os.rename(outdir_tmp, outdir)
 
         if not engine:
             continue
