@@ -40,7 +40,7 @@ schema = [
         ),  # TODO: ForeignKey("smlouvy.id_verze"), odstraneno kvuli --partial
         Column("subjekt", Boolean, nullable=False),
         Column("ds", Text, nullable=True),  # TODO: char? datovka
-        Column("nazev", Text, nullable=False),
+        Column("nazev", Text, nullable=True),
         Column("ico_raw", Text, nullable=True),
         Column("ico", Integer, nullable=True, index=True),
         Column("adresa", Text, nullable=True),
