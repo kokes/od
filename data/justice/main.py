@@ -49,8 +49,15 @@ def merge(a, b, path=None):
 def extrahuj(node, schema):
     ret = {}
     for k, v in schema.items():
+        # TODO: autodict v pripade, ze len(node.find(v).getchildren()) > 0?
+        # neco jako
+        # if found := node.find(v):
+        #     if len(found.getchildren()) > 0:
+        #         ret[k] = {v.tag: v.text.strip() for v in node.iterchildren()}
         if isinstance(v, dict):
-            ret[k] = extrahuj(node, v)
+            # neukladej nully do dictionary hodnot (JSON v pg)
+            mapping = {key: val for key, val in extrahuj(node, v).items() if val is not None}
+            ret[k] = mapping if len(mapping) > 0 else None
         else:
             ret[k] = getattr(node.find(v), "text", None)
 
@@ -156,7 +163,7 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen):
                 row = extrahuj(udaj_raw, schema)
                 row = uprav_data(row, schemasd[udaj_typ])
                 row = {
-                    k: json.dumps(v) if isinstance(v, dict) else v
+                    k: json.dumps(v, ensure_ascii=False) if isinstance(v, dict) else v
                     for k, v in row.items()
                 }
                 row["ico"] = ico
@@ -181,7 +188,7 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen):
                         row = extrahuj(podudaj_raw, schema)
                         row = uprav_data(row, schemasd[podudaj_typ])
                         row = {
-                            k: json.dumps(v) if isinstance(v, dict) else v
+                            k: json.dumps(v, ensure_ascii=False) if isinstance(v, dict) else v
                             for k, v in row.items()
                         }
                         row["ico"] = ico

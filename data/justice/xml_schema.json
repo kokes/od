@@ -390,23 +390,27 @@
       "osoba_datum_narozeni": "osoba/narozDatum",
       "osoba_titul_pred": "osoba/titulPred",
       "osoba_titul_za": "osoba/titulZa",
-      "adresa_stat_nazev": "adresa/statNazev",
-      "adresa_obec": "adresa/obec",
-      "adresa_cast_obce": "adresa/castObce",
-      "adresa_ulice": "adresa/ulice",
-      "adresa_cislo_po": "adresa/cisloPo",
-      "adresa_cislo_or": "adresa/cisloOr",
-      "adresa_psc": "adresa/psc",
-      "adresa_okres": "adresa/okres",
-      "adresa_cislo_ev": "adresa/cisloEv",
-      "adresa_text": "adresa/adresaText",
-      "bydliste_stat_nazev": "bydliste/statNazev",
-      "bydliste_obec": "bydliste/obec",
-      "bydliste_cast_obce": "bydliste/castObce",
-      "bydliste_cislo_po": "bydliste/cisloPo",
-      "bydliste_cislo_or": "bydliste/cisloOr",
-      "bydliste_psc": "bydliste/psc",
-      "bydliste_ulice": "bydliste/ulice"
+      "adresa": {
+        "stat_nazev": "adresa/statNazev",
+        "obec": "adresa/obec",
+        "cast_obce": "adresa/castObce",
+        "ulice": "adresa/ulice",
+        "cislo_po": "adresa/cisloPo",
+        "cislo_or": "adresa/cisloOr",
+        "psc": "adresa/psc",
+        "okres": "adresa/okres",
+        "cislo_ev": "adresa/cisloEv",
+        "text": "adresa/adresaText"
+      },
+      "bydliste": {
+        "stat_nazev": "bydliste/statNazev",
+        "obec": "bydliste/obec",
+        "cast_obce": "bydliste/castObce",
+        "cislo_po": "bydliste/cisloPo",
+        "cislo_or": "bydliste/cisloOr",
+        "psc": "bydliste/psc",
+        "ulice": "bydliste/ulice"
+      }
     }
   },
   {
@@ -492,29 +496,33 @@
       "reg_cislo": "osoba/regCislo",
       "ico_angos": "osoba/ico",
       "euid": "osoba/euid",
-      "adresa_stat": "adresa/statNazev",
-      "adresa_obec": "adresa/obec",
-      "adresa_cast_obce": "adresa/castObce",
-      "adresa_ulice": "adresa/ulice",
-      "adresa_cislo_po": "adresa/cisloPo",
-      "adresa_psc": "adresa/psc",
-      "adresa_okres": "adresa/okres",
-      "adresa_cislo_or": "adresa/cisloOr",
-      "adresa_adresa_text": "adresa/adresaText",
-      "adresa_cislo_ev": "adresa/cisloEv",
-      "adresa_doplnujici_text": "adresa/doplnujiciText",
-      "adresa_cislo_text": "adresa/cisloText",
-      "bydliste_stat": "bydliste/statNazev",
-      "bydliste_ulice": "bydliste/ulice",
-      "bydliste_obec": "bydliste/obec",
-      "bydliste_psc": "bydliste/psc",
-      "bydliste_cast_obce": "bydliste/castObce",
-      "bydliste_cislo_po": "bydliste/cisloPo",
-      "bydliste_cislo_or": "bydliste/cisloOr",
-      "bydliste_okres": "bydliste/okres",
-      "bydliste_cislo_ev": "bydliste/cisloEv",
-      "bydliste_cislo_text": "bydliste/cisloText",
-      "bydliste_doplnujici_text": "bydliste/doplnujiciText"
+      "adresa": {
+        "stat": "adresa/statNazev",
+        "obec": "adresa/obec",
+        "cast_obce": "adresa/castObce",
+        "ulice": "adresa/ulice",
+        "cislo_po": "adresa/cisloPo",
+        "psc": "adresa/psc",
+        "okres": "adresa/okres",
+        "cislo_or": "adresa/cisloOr",
+        "adresa_text": "adresa/adresaText",
+        "cislo_ev": "adresa/cisloEv",
+        "doplnujici_text": "adresa/doplnujiciText",
+        "cislo_text": "adresa/cisloText"
+      },
+      "bydliste": {
+        "stat": "bydliste/statNazev",
+        "ulice": "bydliste/ulice",
+        "obec": "bydliste/obec",
+        "psc": "bydliste/psc",
+        "cast_obce": "bydliste/castObce",
+        "cislo_po": "bydliste/cisloPo",
+        "cislo_or": "bydliste/cisloOr",
+        "okres": "bydliste/okres",
+        "cislo_ev": "bydliste/cisloEv",
+        "cislo_text": "bydliste/cisloText",
+        "doplnujici_text": "bydliste/doplnujiciText"
+      }
     }
   },
   {
@@ -593,14 +601,16 @@
       "osoba_datum_narozeni": "osoba/narozDatum",
       "osoba_titul_pred": "osoba/titulPred",
       "osoba_titul_za": "osoba/titulZa",
-      "adresa_stat_nazev": "adresa/statNazev",
-      "adresa_ulice": "adresa/ulice",
-      "adresa_psc": "adresa/psc",
-      "adresa_obec": "adresa/obec",
-      "adresa_cast_obce": "adresa/castObce",
-      "adresa_cislo_po": "adresa/cisloPo",
-      "adresa_cislo_or": "adresa/cisloOr",
-      "adresa_okres": "adresa/okres"
+      "adresa": {
+        "stat_nazev": "adresa/statNazev",
+        "ulice": "adresa/ulice",
+        "psc": "adresa/psc",
+        "obec": "adresa/obec",
+        "cast_obce": "adresa/castObce",
+        "cislo_po": "adresa/cisloPo",
+        "cislo_or": "adresa/cisloOr",
+        "okres": "adresa/okres"
+      }
     }
   },
   {
@@ -633,15 +643,17 @@
       "osoba_jmeno": "osoba/jmeno",
       "osoba_prijmeni": "osoba/prijmeni",
       "osoba_datum_narozeni": "osoba/narozDatum",
-      "adresa_stat_nazev": "adresa/statNazev",
-      "adresa_obec": "adresa/obec",
-      "adresa_ulice": "adresa/ulice",
-      "adresa_psc": "adresa/psc",
-      "adresa_cast_obce": "adresa/castObce",
-      "adresa_cislo_po": "adresa/cisloPo",
-      "adresa_cislo_or": "adresa/cisloOr",
-      "adresa_okres": "adresa/okres",
-      "adresa_adresa_text": "adresa/adresaText"
+      "adresa": {
+        "stat_nazev": "adresa/statNazev",
+        "obec": "adresa/obec",
+        "ulice": "adresa/ulice",
+        "psc": "adresa/psc",
+        "cast_obce": "adresa/castObce",
+        "cislo_po": "adresa/cisloPo",
+        "cislo_or": "adresa/cisloOr",
+        "okres": "adresa/okres",
+        "adresa_text": "adresa/adresaText"
+      }
     }
   }
 ]
