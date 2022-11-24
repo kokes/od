@@ -112,7 +112,7 @@ schema = [
         Column(
             "nazev_organu_en", Text, nullable=True, comment="Název orgánu v angličtině"
         ),
-        Column("od_organ", Date, nullable=False, comment="Ustavení orgánu"),
+        Column("od_organ", Date, nullable=True, comment="Ustavení orgánu"),
         Column("do_organ", Date, nullable=True, comment="Ukončení orgánu"),
         Column("priorita", Integer, nullable=True, comment="Priorita výpisu orgánů"),
         Column(
@@ -175,7 +175,7 @@ schema = [
         ),
         Column("jmeno", Text, nullable=False, comment="Jméno"),
         Column("za", Text, nullable=True, comment="Titul za jménem"),
-        Column("narozeni", Date, nullable=False, comment="Datum narození"),
+        Column("narozeni", Date, nullable=True, comment="Datum narození"),
         Column(
             "pohlavi",
             Text,
