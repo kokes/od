@@ -14,6 +14,8 @@ from io import TextIOWrapper
 from tempfile import TemporaryDirectory
 from urllib.request import urlretrieve
 
+NULL_DATE = datetime(1900, 1, 1, 0, 0)
+
 
 @contextmanager
 def read_compressed(zipname, filename):
@@ -74,6 +76,9 @@ def read_compressed_csv(zf, fn, mp, partial):
                         dt[k] = datetime.strptime(v, "%Y-%m-%d %H:%M:%S.%f")
                     else:
                         raise ValueError(v)
+
+                    if dt[k] == NULL_DATE:
+                        dt[k] = None
                 else:
                     dt[k] = v
 
