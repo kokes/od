@@ -186,6 +186,7 @@ if __name__ == "__main__":
                 ddl = ddl.replace(" TIME", " TEXT")
                 ddl = ddl.replace(" JSON", " TEXT")
                 ddl = ddl.replace(" BOOLEAN", " INT")
+                # TODO: NUMERIC
                 conn = engine.raw_connection()
                 conn.execute(ddl)
             else:
