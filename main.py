@@ -183,6 +183,7 @@ if __name__ == "__main__":
                 ddl = ddl.replace(" BIGINT", " INT")
                 ddl = ddl.replace(" SMALLINT", " INT")
                 ddl = ddl.replace(" DATE", " TEXT")
+                ddl = ddl.replace(" TIME", " TEXT")
                 conn = engine.raw_connection()
                 conn.execute(ddl)
             else:
