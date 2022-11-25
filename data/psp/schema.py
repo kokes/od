@@ -907,7 +907,7 @@ schema = [
         ),
         Column(
             "id_tisk",
-            Integer,  # nemuzem pouzit FK, protoze nektery tisky neexistujou v tisky.tisky
+            Integer,  # nemuzem pouzit FK, protoze nektery tisky nejsou v tisky.tisky
             nullable=False,
             comment="Identifikátor sněmovního tisku, viz tisky:id_tisk",
         ),
