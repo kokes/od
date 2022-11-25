@@ -9,7 +9,7 @@ from collections import defaultdict
 from importlib import import_module
 
 from sqlalchemy import Boolean, MetaData, Table, create_engine
-from sqlalchemy.schema import AddConstraint, DropConstraint, ForeignKeyConstraint
+from sqlalchemy.schema import AddConstraint, CreateTable, DropConstraint, ForeignKeyConstraint
 
 
 def warninger(message, category, filename, lineno, line=None):
@@ -175,7 +175,18 @@ if __name__ == "__main__":
 
             if args.drop_first:
                 table.drop(engine, checkfirst=True)
-            table.create(engine, checkfirst=True)
+
+            # SQLAlchemy neumi SQLite STRICT tables, tak to udelame trochu humpolacky
+            if engine.name == "sqlite":
+                ddl = CreateTable(table).compile(engine).string
+                ddl += " STRICT"
+                ddl = ddl.replace(" BIGINT", " INT")
+                ddl = ddl.replace(" SMALLINT", " INT")
+                ddl = ddl.replace(" DATE", " TEXT")
+                conn = engine.raw_connection()
+                conn.execute(ddl)
+            else:
+                table.create(engine, checkfirst=True)
 
             # dropni fkeys pred nahravanim dat
             # z nejakeho duvodu jsou v sqlite nepojmenovany klice
