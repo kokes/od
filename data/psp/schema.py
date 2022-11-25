@@ -1,5 +1,14 @@
 from sqlalchemy import Column, ForeignKey, MetaData, Table
-from sqlalchemy.sql.sqltypes import Date, DateTime, Integer, String, Text, Time
+from sqlalchemy.sql.sqltypes import (
+    Boolean,
+    Date,
+    DateTime,
+    Integer,
+    SmallInteger,
+    String,
+    Text,
+    Time,
+)
 
 meta = MetaData()
 
@@ -9,14 +18,14 @@ schema = [
         meta,
         Column(
             "id_typ_org",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor typu orgánu",
         ),
         Column(
             "typ_id_typ_org",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Identifikátor nadřazeného typu orgánu "
             "(typ_organu:id_typ_org), pokud je ",
@@ -35,20 +44,20 @@ schema = [
         ),
         Column(
             "typ_org_obecny",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Obecný typ orgánu, pokud je vyplněný, odpovídá záznamu v "
             "typ_organu:id_typ_org. Pomocí tohoto sloupce lze najít např. všechny "
             "výbory v různých typech zastupitelských sborů.",
         ),
-        Column("priorita", Integer, nullable=True, comment="Priorita při výpisu"),
+        Column("priorita", SmallInteger, nullable=True, comment="Priorita při výpisu"),
     ),
     Table(
         "poslanci_typ_funkce",
         meta,
         Column(
             "id_typ_funkce",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor typu funkce",
@@ -68,10 +77,10 @@ schema = [
             nullable=True,
             comment="Název typu funkce v angličtině",
         ),
-        Column("priorita", Integer, nullable=False, comment="Priorita při výpisu"),
+        Column("priorita", SmallInteger, nullable=False, comment="Priorita při výpisu"),
         Column(
             "typ_funkce_obecny",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Obecný typ funkce, 1 - předseda, 2 - místopředseda, "
             "3 - ověřovatel, jiné hodnoty se nepoužívají.",
@@ -82,20 +91,20 @@ schema = [
         meta,
         Column(
             "id_organ",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor orgánu",
         ),
         Column(
             "organ_id_organ",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Identifikátor nadřazeného orgánu, viz organy:id_organ",
         ),
         Column(
             "id_typ_organu",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ orgánu, viz typ_organu:id_typ_organu",
         ),
@@ -114,10 +123,12 @@ schema = [
         ),
         Column("od_organ", Date, nullable=True, comment="Ustavení orgánu"),
         Column("do_organ", Date, nullable=True, comment="Ukončení orgánu"),
-        Column("priorita", Integer, nullable=True, comment="Priorita výpisu orgánů"),
+        Column(
+            "priorita", SmallInteger, nullable=True, comment="Priorita výpisu orgánů"
+        ),
         Column(
             "cl_organ_base",
-            Integer,
+            Boolean,
             nullable=True,
             comment="Pokud je nastaveno na 1, pak při výpisu členů se nezobrazují "
             "záznamy v tabulkce zarazeni kde cl_funkce == 0. Toto chování odpovídá "
@@ -130,7 +141,7 @@ schema = [
         meta,
         Column(
             "id_funkce",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor funkce, používá se v zarazeni:id_fo",
@@ -153,14 +164,14 @@ schema = [
             nullable=False,
             comment="Název funkce, pouze pro interní použití",
         ),
-        Column("priorita", Integer, nullable=False, comment="Priorita výpisu"),
+        Column("priorita", SmallInteger, nullable=False, comment="Priorita výpisu"),
     ),
     Table(
         "poslanci_osoby",
         meta,
         Column(
             "id_osoba",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor osoby",
@@ -178,7 +189,7 @@ schema = [
         Column("narozeni", Date, nullable=True, comment="Datum narození"),
         Column(
             "pohlavi",
-            Text,
+            String(1),
             nullable=False,
             comment='Pohlaví, "M" jako muž, ostatní hodnoty žena',
         ),
@@ -190,13 +201,13 @@ schema = [
         meta,
         Column(
             "id_osoba",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Identifikátor osoby, viz osoba:id_osoba",
         ),
         Column(
             "id_of",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Identifikátor orgánu či funkce: pokud je zároveň nastaveno "
             "zarazeni:cl_funkce == 0, pak id_o odpovídá organy:id_organ, "
@@ -204,7 +215,7 @@ schema = [
         ),
         Column(
             "cl_funkce",
-            Integer,
+            Boolean,
             nullable=False,
             comment="Status členství nebo funce: pokud je rovno 0, pak jde o "
             "členství, pokud 1, pak jde o funkci.",
@@ -219,7 +230,7 @@ schema = [
         meta,
         Column(
             "id_poslanec",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor poslance",
@@ -232,13 +243,13 @@ schema = [
         ),
         Column(
             "id_kraj",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Volební kraj, viz organy:id_organu",
         ),
         Column(
             "id_kandidatka",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Volební strana/hnutí, viz org:id_organu, pouze odkazuje na "
             "stranu/hnutí, za kterou byl zvolen a nemusí mít souvislost s "
@@ -246,7 +257,7 @@ schema = [
         ),
         Column(
             "id_obdobi",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Volební období, viz organy:id_organu",
         ),
@@ -280,7 +291,7 @@ schema = [
         Column("facebook", Text, nullable=True, comment="URL stránky služby Facebook."),
         Column(
             "foto",
-            Integer,
+            Boolean,
             nullable=True,
             comment="Pokud je rovno 1, pak existuje fotografie poslance.",
         ),
@@ -327,14 +338,14 @@ schema = [
         ),
         Column(
             "id_org",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Identifikátor orgánu, viz org:id_org",
         ),
-        Column("typ", Integer, nullable=False, comment="Typ záznamu, viz výše."),
+        Column("typ", SmallInteger, nullable=False, comment="Typ záznamu, viz výše."),
         Column(
             "obvod",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Je-li typ = 1, pak jde o číslo senátního obvodu",
         ),
@@ -347,7 +358,7 @@ schema = [
         ),
         Column(
             "id_external",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Je-li typ = 1, pak je to identifikátor senátora na senat.cz",
         ),
@@ -368,11 +379,11 @@ schema = [
             nullable=False,
             comment="Identifikátor orgánu, viz organy:id_organ",
         ),
-        Column("schuze", Integer, nullable=False, comment="Číslo schůze"),
-        Column("cislo", Integer, nullable=False, comment="Číslo hlasování"),
+        Column("schuze", SmallInteger, nullable=False, comment="Číslo schůze"),
+        Column("cislo", SmallInteger, nullable=False, comment="Číslo hlasování"),
         Column(
             "bod",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Bod pořadu schůze; je-li menší než 1, pak jde o procedurální "
             "hlasování nebo o hlasování k bodům, které v době hlasování "
@@ -380,39 +391,44 @@ schema = [
         ),
         Column("datum", Date, nullable=False, comment="Datum hlasování"),
         Column("čas", Time, nullable=False, comment="Čas hlasování"),
-        Column("pro", Integer, nullable=False, comment="Počet hlasujících pro"),
-        Column("proti", Integer, nullable=False, comment="Počet hlasujících proti"),
+        Column("pro", SmallInteger, nullable=False, comment="Počet hlasujících pro"),
+        Column(
+            "proti", SmallInteger, nullable=False, comment="Počet hlasujících proti"
+        ),
         Column(
             "zdrzel",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Počet hlasujících zdržel se, tj. stiskl tlačítko X",
         ),
         Column(
             "nehlasoval",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Počet přihlášených, kteří nestiskli žádné tlačítko",
         ),
         Column(
-            "prihlaseno", Integer, nullable=False, comment="Počet přihlášených poslanců"
+            "prihlaseno",
+            SmallInteger,
+            nullable=False,
+            comment="Počet přihlášených poslanců",
         ),
         Column(
             "kvorum",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Kvórum, nejmenší počet hlasů k přijetí návrhu",
         ),
         Column(
             "druh_hlasovani",
-            Text,
+            String(1),
             nullable=False,
             comment="Druh hlasování: N - normální, R - ruční (nejsou známy "
             "hlasování jednotlivých poslanců)",
         ),
         Column(
             "vysledek",
-            Text,
+            String(1),
             nullable=False,
             comment="Výsledek: A - přijato, R - zamítnuto, jinak zmatečné hlasování",
         ),
@@ -440,7 +456,7 @@ schema = [
         ),
         Column(
             "vysledek",
-            Text,
+            String(1),
             nullable=False,
             comment="Hlasování jednotlivého poslance. A - ano, B nebo N - ne, "
             "C - zdržel se (stiskl tlačítko X), F - nehlasoval (byl přihlášen, "
@@ -480,14 +496,14 @@ schema = [
         ),
         Column(
             "turn",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Číslo stenozáznamu, ve kterém je první zmínka o "
             "zpochybnění hlasování.",
         ),
         Column(
             "mode",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ zpochybnění: 0 - žádost o opakování hlasování - v tomto "
             "případě se o této žádosti neprodleně hlasuje a teprve je-li tato "
@@ -530,7 +546,7 @@ schema = [
         ),
         Column(
             "mode",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ zpochybnění, viz hl_check:mode.",
         ),
@@ -544,10 +560,10 @@ schema = [
             nullable=False,
             comment="Identifikátor hlasování, viz hl_hlasovani:id_hlasovani",
         ),
-        Column("turn", Integer, nullable=False, comment="Číslo stenozáznamu"),
+        Column("turn", SmallInteger, nullable=False, comment="Číslo stenozáznamu"),
         Column(
             "typ",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ vazby: 0 - hlasování je v textu explicitně zmíněno a "
             "lze tedy vytvořit odkaz přímo na začátek hlasování, 1 - hlasování "
@@ -570,14 +586,14 @@ schema = [
         meta,
         Column(
             "id_druh",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor druhu tisku",
         ),
         Column(
             "druh_t",
-            Text,
+            String(1),
             nullable=False,
             comment='Typ druhu tisku: T - "hlavní tisk", Z - "následný tisk", '
             "X - historické druhy tisků",
@@ -589,7 +605,7 @@ schema = [
         meta,
         Column(
             "id_navrh",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor typu navrhovatele",
@@ -607,7 +623,7 @@ schema = [
         meta,
         Column(
             "id_typ",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor typu stavu projednávání tisku",
@@ -619,7 +635,7 @@ schema = [
         meta,
         Column(
             "id_stav",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor stavu",
@@ -644,14 +660,14 @@ schema = [
         ),
         Column(
             "lhuta",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Počet dní k možnému dalšímu postupu v projednávání tisku, "
             "viz stavy:lhuta_where",
         ),
         Column(
             "lhuta_where",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Identifikátor přechodu, od něhož se bude počítat lhůta k "
             "dalšímu možnému postupu v projednávání tisku (viz prechody:id_prechod "
@@ -665,7 +681,7 @@ schema = [
         meta,
         Column(
             "id_akce",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor typu přechodu",
@@ -677,7 +693,7 @@ schema = [
         meta,
         Column(
             "id_prechod",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor přechodu",
@@ -696,13 +712,13 @@ schema = [
         ),
         Column(
             "id_akce",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ akce, viz typ_prechodu:id_akce",
         ),
         Column(
             "typ_prechodu",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ přechodu; 1 - dle aktuálního jednacího řádu, 2 - staré "
             "jednací řády, 3 - vyjímky a speciální přechody",
@@ -726,7 +742,7 @@ schema = [
         ),
         Column(
             "id_stav",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Stav tisku, viz stavy:id_stav. Tisk je projednaný, pokud je u "
             "tisky:id_stav = stavy:id_stav a stavy:id_typ == 6, stav tisku odpovídá "
@@ -735,14 +751,14 @@ schema = [
         ),
         Column(
             "ct",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Číslo tisku, resp. část reference tisku. Pokud je tisk:id_druh "
             "in (41,45,46,47), pak do reference k číslu tisku patří i -E.",
         ),
         Column(
             "cislo_za",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment='Číslo "za lomítkem", resp. část reference tisku. Obvykle '
             "je rovno 0, v jiných hodnotách se zpravidla jedná o opravené/přepracované "
@@ -751,21 +767,21 @@ schema = [
         ),
         Column(
             "id_navrh",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Typ navrhovatele, viz typ_zakon:id_typ, vyplněno pouze "
             "je-li tisky:id_druh = 2 (nevládní návrhy zákonů).",
         ),
         Column(
             "id_org",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Orgán navrhovatele, viz organy:id_org. Vyplněno pouze "
             "pokud navrhovatelem je instituce či orgán.",
         ),
         Column(
             "id_org_obd",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Volební období, viz organy:id_org.",
         ),
@@ -832,13 +848,13 @@ schema = [
         ),
         Column(
             "lhuta",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Změna lhůty k projednání výbory, viz tisky:zm_lhuty.",
         ),
         Column(
             "rj",
-            Integer,
+            Boolean,
             nullable=True,
             comment="Příznak navržení k projednání dle paragrafu 90, odst. 2 "
             '("rychlé jednání"), které navrhuje předkladatel a Sněmovna to '
@@ -854,7 +870,7 @@ schema = [
         ),
         Column(
             "is_eu",
-            Integer,
+            Boolean,
             nullable=True,
             comment="Příznak vztahu sněmovního tisku k členství v EU.",
         ),
@@ -867,13 +883,13 @@ schema = [
         ),
         Column(
             "is_sdv",
-            Integer,
+            Boolean,
             nullable=True,
             comment="Příznak spojení projednávání sněmovního tisku s důvěrou vládě.",
         ),
         Column(
             "status",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Pokud je vyplněno, pak uchovává status sněmovního tisku; "
             "1 nebo 2: revokováno.",
@@ -891,7 +907,7 @@ schema = [
         ),
         Column(
             "id_tisk",
-            Integer,
+            Integer,  # nemuzem pouzit FK, protoze nektery tisky neexistujou v tisky.tisky
             nullable=False,
             comment="Identifikátor sněmovního tisku, viz tisky:id_tisk",
         ),
@@ -923,11 +939,11 @@ schema = [
         ),
         Column(
             "schuze",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Číslo schůze, na které bylo projednáváno.",
         ),
-        Column("usnes_ps", Integer, nullable=True, comment="Číslo usnesení PS."),
+        Column("usnes_ps", SmallInteger, nullable=True, comment="Číslo usnesení PS."),
         Column(
             "orgv_id_posl",
             ForeignKey("poslanci_poslanec.id_poslanec"),
@@ -944,7 +960,7 @@ schema = [
         ),
         Column(
             "orgv_p_usn",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Číslo usnesení organizačního výboru nebo číslo "
             "rozhodnutí předsedy sněmovny.",
@@ -956,7 +972,10 @@ schema = [
             comment="Datum vydání Sbírky, viz další.",
         ),
         Column(
-            "zaver_sb_castka", Integer, nullable=True, comment="Číslo částky Sbírky."
+            "zaver_sb_castka",
+            SmallInteger,
+            nullable=True,
+            comment="Číslo částky Sbírky.",
         ),
         Column(
             "zaver_sb_cislo",
@@ -984,7 +1003,7 @@ schema = [
         ),
         Column(
             "typ",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ vazby: 1 - navrženo k přikázání, 2 - přikázáno, "
             "3 - projednáno iniciativně",
@@ -998,18 +1017,18 @@ schema = [
         ),
         Column(
             "id_posl",
-            Integer,
+            Integer,  # nejde pouzit FK, protoze jsou tu nesmysly
             nullable=True,
             comment="Identifikátor zpravodaje výboru k tisku, viz poslanec:id_poslanec",
         ),
-        Column("poradi", Integer, nullable=True, comment="Pořadí orgánů"),
+        Column("poradi", SmallInteger, nullable=True, comment="Pořadí orgánů"),
     ),
     Table(
         "tisky_vysledek",
         meta,
         Column(
             "id_vysledek",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor druhu výsledku",
@@ -1033,7 +1052,7 @@ schema = [
         ),
         Column(
             "cislo_za",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment='"Číslo za lomítkem" v referenci sněmovního tisku. Pokud je '
             "menší než nula, pak se pro zápis použije: -1 = Z, -2 = Z1, -3 = Z2. "
@@ -1074,14 +1093,14 @@ schema = [
         ),
         Column(
             "id_org",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Identifikátor orgnánu původce tisku, viz organy:id_organ a "
             "případně hist_vybory:id_org",
         ),
         Column(
             "usn_vybor",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Číslo usnesení orgánu (výboru, komise), které tvoří sněmovní tisk",
         ),
@@ -1107,14 +1126,14 @@ schema = [
         ),
         Column(
             "cislo_za_post",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Část reference sněmovního tisku, pokud je vyplněno, použije se "
             'za "číslo za lomítkem": 1 = a (tj. reference pak může být 123/1a).',
         ),
         Column(
             "sort_it",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Pořadí sněmovního tisku v řadě následných tisků: následné tisky "
             "by se měly ve výpisu řadit nejdříve podle tisky_za:sort_it, pak podle "
@@ -1128,7 +1147,7 @@ schema = [
         ),
         Column(
             "status",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Stav sněmovního tisku, popis viz tisky:status.",
         ),
@@ -1138,7 +1157,7 @@ schema = [
         meta,
         Column(
             "id_tisk",
-            Integer,
+            Integer,  # opet nejde pouzit FK
             nullable=False,
             comment="Identifikátor sněmovního tisku, viz tisky:id_tisk",
         ),
@@ -1148,10 +1167,12 @@ schema = [
             nullable=False,
             comment="Předkladatel nebo jeho zástupce, viz osoba:id_osoba.",
         ),
-        Column("poradi", Integer, nullable=False, comment="Pořadí osoby v seznamu."),
+        Column(
+            "poradi", SmallInteger, nullable=False, comment="Pořadí osoby v seznamu."
+        ),
         Column(
             "typ",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ záznamu: 0 - předkladatel, 1 - jako předkladatel se "
             "připojil později.",
@@ -1174,7 +1195,7 @@ schema = [
         ),
         Column(
             "stav",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ záznamu: 1 - připojil podpis, 10 - vzal podpis zpět.",
         ),
@@ -1185,7 +1206,7 @@ schema = [
         meta,
         Column(
             "id_ui_stav",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor typu výsledku projednávání ústní interpelace",
@@ -1199,7 +1220,7 @@ schema = [
         ),
         Column(
             "priorita",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Priorita výpisu typu výsledku",
@@ -1210,7 +1231,7 @@ schema = [
         meta,
         Column(
             "id_los",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor losování interpelací.",
@@ -1240,7 +1261,7 @@ schema = [
         ),
         Column(
             "id_schuze",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Identifikátor schůze, viz i_schuze:id_schuze.",
         ),
@@ -1252,7 +1273,7 @@ schema = [
         ),
         Column(
             "schuze",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Číslo schůze, odvozeno od id_schuze.",
         ),
@@ -1268,7 +1289,7 @@ schema = [
         meta,
         Column(
             "id_poradi",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor pořadí interpelací.",
@@ -1294,14 +1315,14 @@ schema = [
         Column("vec", Text, nullable=False, comment="Téma interpelace."),
         Column(
             "poradi_l",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Pořadí interpelace, dáno losováním. V současné době se "
             "losují interpelace po skupinách dle priorit, viz poradi:priorita.",
         ),
         Column(
             "priorita",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Priorita interpelace daná interpelovaným: před losováním "
             "interpelací označí interpelovaný prioritu interpelace a interpelace "
@@ -1330,7 +1351,7 @@ schema = [
         ),
         Column(
             "steno",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Číslo stenozáznamu, ve kterém bylo zahájeno projednávání "
             "interpelace, pokud je větší než nula, viz vytváření odkazů na zdroje PS.",
@@ -1341,7 +1362,7 @@ schema = [
         meta,
         Column(
             "id_schuze",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Identifikátor schůze, není to primární klíč, je nutno "
             "používat i položku schuze:pozvanka. Záznamy schůzí stejného "
@@ -1354,7 +1375,7 @@ schema = [
             nullable=False,
             comment="Identifikátor orgánu, viz org:id_org.",
         ),
-        Column("schuze", Integer, nullable=False, comment="Číslo schůze."),
+        Column("schuze", SmallInteger, nullable=False, comment="Číslo schůze."),
         Column(
             "od_schuze",
             DateTime,
@@ -1375,7 +1396,7 @@ schema = [
         ),
         Column(
             "pozvanka",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Druh záznamu: null - schválený pořad, 1 - navržený pořad.",
         ),
@@ -1385,21 +1406,21 @@ schema = [
         meta,
         Column(
             "id_schuze",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor schůze, viz schuze:id_schuze.",
         ),
         Column(
             "stav",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Stav schůze: 1 - OK, 2 - pořad schůze nebyl schválen "
             "a schůze byla ukončena.",
         ),
         Column(
             "typ",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Typ schůze: 1 - řádná, 2 - mimořádná (navržená skupinou "
             "poslanců). Dle jednacího řádu nelze měnit navržený pořad "
@@ -1431,7 +1452,7 @@ schema = [
         meta,
         Column(
             "id_bod_stav",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Typ stavu bodu schůze: typ 3 - neprojednatelný znamená vyřazen "
@@ -1453,20 +1474,20 @@ schema = [
         ),
         Column(
             "id_schuze",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Identifikátor schůze, viz schuze:id_schuze a též schuze:pozvanka.",
         ),
         Column(
             "id_tisk",
-            Integer,
+            ForeignKey("tisky_tisky.id_tisk"),
             nullable=True,
             comment="Identifikátor tisku, pokud se bod k němu vztahuje. "
             "V tomto případě lze využít bod_schuze:uplny_kon.",
         ),
         Column(
             "id_typ",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Typ bodu, resp. typ projednávání. Kromě bod_schuze:id_typ == 6, "
             "se jedná o typ stavu, viz stavy:id_typ a tabulka níže. Je-li "
@@ -1477,7 +1498,7 @@ schema = [
         ),
         Column(
             "bod",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Číslo bodu. Pokud je menší než jedna, pak se při výpisu "
             "číslo bodu nezobrazuje.",
@@ -1500,34 +1521,34 @@ schema = [
         ),
         Column(
             "id_bod_stav",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Stav bodu pořadu, viz bod_stav:id_bod_stav. "
             "U bodů návrhu pořadu se nepoužije.",
         ),
         Column(
             "pozvanka",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Rozlišení záznamu, viz schuze:pozvanka",
         ),
         Column(
             "rj",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Režim dle par. 90, odst. 2 jednacího řádu.",
         ),
         Column("pozn2", Text, nullable=True, comment="Poznámka k bodu, zkrácený zápis"),
         Column(
             "druh_bodu",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Druh bodu: 0 nebo null: normální, 1: odpovědi na ústní "
             "interpelace, 2: odpovědi na písemné interpelace, 3: volební bod",
         ),
         Column(
             "id_sd",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Identifikátor sněmovního dokumentu, viz sd_dokument:id_dokument. "
             "Pokud není null, při výpisu se zobrazuje bod_schuze:uplny_kon.",
@@ -1548,15 +1569,15 @@ schema = [
         ),
         Column(
             "id_org",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Identifikátor orgánu stenozáznamu (v případě PS "
             "je to volební období), viz org:id_org.",
         ),
-        Column("schuze", Integer, nullable=False, comment="Číslo schůze."),
+        Column("schuze", SmallInteger, nullable=False, comment="Číslo schůze."),
         Column(
             "turn",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Číslo stenozáznamu (turn). Pokud číselná řada je neúplná, tj. "
             "obsahuje mezery, pak chybějící obsahují záznam z neveřejného jednání. "
@@ -1566,14 +1587,14 @@ schema = [
         Column("od_steno", Date, nullable=False, comment="Datum začátku stenozáznamu."),
         Column(
             "jd",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Číslo jednacího dne v rámci schůze (používá se např. při "
             "konstrukci URL na index stenozáznamu dle dnů).",
         ),
         Column(
             "od_t",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Čas začátku stenozáznamu v minutách od začátku kalendářního dne; "
             "pokud je null či menší než nula, není známo. Tj. převod na čas "
@@ -1581,7 +1602,7 @@ schema = [
         ),
         Column(
             "do_t",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Čas konce stenozáznamu v minutách od začátku kalendářního dne; "
             "pokud je null či menší než nula, není známo. V některých "
@@ -1600,7 +1621,10 @@ schema = [
             comment="Identifikátor stenozáznamu, viz steno:id_steno.",
         ),
         Column(
-            "aname", Integer, nullable=False, comment="Pozice v indexu jednacího dne."
+            "aname",
+            SmallInteger,
+            nullable=False,
+            comment="Pozice v indexu jednacího dne.",
         ),
         Column(
             "id_bod",
@@ -1626,7 +1650,7 @@ schema = [
         ),
         Column(
             "aname",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Identifikace vystoupení v rámci stenozáznamu.",
         ),
@@ -1638,7 +1662,7 @@ schema = [
         ),
         Column(
             "druh",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Druh vystoupení řečníka: 0 či null - neznámo, 1 - nezpracováno, "
             "2 - předsedající (ověřeno), 3 - řečník (ověřeno), "
@@ -1650,21 +1674,23 @@ schema = [
         meta,
         Column(
             "id_dokument",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor sněmovního dokumentu",
         ),
         Column(
             "id_obdobi",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Identifikátor volebního období, viz org:id_org",
         ),
-        Column("cislo", Integer, nullable=False, comment="Číslo sněmovního dokumentu"),
+        Column(
+            "cislo", SmallInteger, nullable=False, comment="Číslo sněmovního dokumentu"
+        ),
         Column(
             "typ",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ sněmovního dokumentu, 12 - Podklady pro jednání PS, "
             "13 - Písemné pozměňovací návrhy",
@@ -1684,7 +1710,7 @@ schema = [
         ),
         Column(
             "ct",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Číslo sněmovního tisku, ke kterému se sněmovní dokument vztahuje, "
             "ve stejném volebním období jako sněmovní dokument.",
@@ -1709,7 +1735,7 @@ schema = [
         meta,
         Column(
             "id_dp",
-            Integer,
+            SmallInteger,
             nullable=False,
             unique=True,
             comment="Identifikátor druhu předpisu.",
@@ -1717,7 +1743,7 @@ schema = [
         Column("nazev_druhu", Text, nullable=False, comment="Název druhu předpisu"),
         Column(
             "priorita",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Priorita výpisu druhu předpisu.",
         ),
@@ -1727,15 +1753,17 @@ schema = [
         meta,
         Column(
             "id_sbirka",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Identifikátor položky ve Sbírce",
         ),
-        Column("cislo", Integer, nullable=False, comment="Číslo položky ve Sbírce"),
-        Column("rok", Integer, nullable=False, comment="Rok položky ve Sbírce"),
+        Column(
+            "cislo", SmallInteger, nullable=False, comment="Číslo položky ve Sbírce"
+        ),
+        Column("rok", SmallInteger, nullable=False, comment="Rok položky ve Sbírce"),
         Column(
             "id_dp",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Druh předpisu, viz druh_predpisu:id_dp",
         ),
@@ -1746,41 +1774,41 @@ schema = [
             comment="Identifikátor tisku, viz tisky:id_tisk; vazba na sněmovní tisk (",
         ),
         Column("datum", Date, nullable=False, comment="Datum vydání ve Sbírce"),
-        Column("castka", Integer, nullable=False, comment="Částka Sbírky"),
+        Column("castka", SmallInteger, nullable=False, comment="Částka Sbírky"),
     ),
     Table(
         "sbirka_sb_pre",
         meta,
         Column(
             "id_tisk",
-            Integer,
+            Integer,  # opet nemuzem pouzit FK
             nullable=False,
             comment="Identifikátor tisku. Pokud je sb_pre:zdroj = 1, pak se jedná "
             "o sněmovní tisk, viz tisky:id_tisk, pokud zdroj = 2, pak jde o "
             "senátní tisk, viz se_tisk:id_tisk.",
         ),
-        Column("cz", Integer, nullable=False, comment=""),
+        Column("cz", SmallInteger, nullable=False, comment=""),
         Column(
             "id_sbirka",
-            Integer,
+            SmallInteger,
             nullable=True,
             comment="Identifikátor předpisu. Pokud je hodnota ",
         ),
         Column(
             "typ",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Typ změny: 31 - mění předpis, 32 - ruší předpis, 0 - žádná změna",
         ),
         Column(
             "zdroj",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Zdroj tisku: 1 - sněmovní tisk, 2 - senátní tisk",
         ),
         Column(
             "xzdroj",
-            Integer,
+            SmallInteger,
             nullable=False,
             comment="Zdroj změny: 0 - dokument tisku, 1 - jiný způsob (např. navrženo "
             "v rozpravě, změna nenalezena a další)",
