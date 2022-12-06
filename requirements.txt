@@ -7,3 +7,4 @@ tqdm
 xlrd
 cssselect
 sqlalchemy
+clickhouse-sqlalchemy

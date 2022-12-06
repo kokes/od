@@ -10,6 +10,7 @@ from importlib import import_module
 
 from sqlalchemy import Boolean, MetaData, Table, create_engine
 from sqlalchemy.schema import AddConstraint, DropConstraint, ForeignKeyConstraint
+from clickhouse_sqlalchemy import engines
 
 
 def warninger(message, category, filename, lineno, line=None):
@@ -172,6 +173,11 @@ if __name__ == "__main__":
                 engine.execute(f"CREATE SCHEMA IF NOT EXISTS {table.schema}")
             elif engine.name == "sqlite":
                 table.name = f"{args.schema_prefix}{module_name}_{table.name}"
+            elif engine.name == "clickhouse":
+                tbl_engine = engines.MergeTree(order_by=table.columns[0].name)
+                table = Table(table.name, table.metadata, *table.columns, tbl_engine, extend_existing=True)
+                table.schema = f"{args.schema_prefix}{module_name}"
+                engine.execute(f"CREATE DATABASE IF NOT EXISTS {table.schema}")
 
             if args.drop_first:
                 table.drop(engine, checkfirst=True)
@@ -223,6 +229,12 @@ if __name__ == "__main__":
                         if len(buffer) > 0:
                             conn.executemany(query, buffer)
                 conn.commit()
+            elif engine.name == "clickhouse":
+                for filename in files:
+                    with open(filename) as f:
+                        cr = csv.DictReader(f)
+                        # TODO(PR): tohle nefunguje
+                        engine.execute(table.insert(), cr)
             else:
                 raise IOError(f"{engine.name} not supported yet")
 
@@ -234,3 +246,4 @@ if __name__ == "__main__":
                     AddConstraint(fk).execute(bind=engine)
 
             print(f" ({time.time() - t:.2f}s)")
+
