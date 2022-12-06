@@ -274,4 +274,3 @@ if __name__ == "__main__":
                     AddConstraint(fk).execute(bind=engine)
 
             print(f" ({time.time() - t:.2f}s)")
-
