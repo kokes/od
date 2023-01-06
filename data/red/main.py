@@ -148,7 +148,7 @@ def main(outdir: str, partial: bool = False):
     job = functools.partial(process_ds, outdir, partial, fn_url_mapping, csl)
     with multiprocessing.Pool(ncpu) as pool:
         for done in pool.imap_unordered(job, DATASETS):
-            logging.info("hotovo: %s", done)
+            logging.info("Hotovo: %s", done)
 
 
 if __name__ == "__main__":
