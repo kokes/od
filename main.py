@@ -139,10 +139,10 @@ if __name__ == "__main__":
             for file in files:
                 with open(file, "rt", encoding="utf-8") as f:
                     cr = csv.reader(f)
-                    header = [j for j in next(cr)]
+                    header = [j.lower() for j in next(cr)]
                     if header != db_column_names:
                         errmap = dict(
-                            (k, v) for k, v in zip(header, db_column_names) #if k != v
+                            (k, v) for k, v in zip(header, db_column_names) if k != v
                         )
                         warnings.warn(f"tabulka {table.name} očekává jiné sloupce: {errmap}")
 
