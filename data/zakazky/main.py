@@ -117,7 +117,13 @@ def main(outdir: str, partial: bool = False):
                     # cw = csv.writer(fw)
                     cw.writeheader()
                     for row in cr:
-                        cw.writerow({v: row[k] for k, v in props["header"].items()})
+                        nrow = {v: row[k] for k, v in props["header"].items()}
+                        for k, v in nrow.items():
+                            if "ico" not in k:
+                                continue
+                            nrow[k] = fix_ico(v)
+
+                        cw.writerow(nrow)
 
 
 if __name__ == "__main__":
