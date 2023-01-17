@@ -100,7 +100,7 @@
                 "fn": [
                     "pecoco.xml"
                 ],
-                "klic": "KZ_COCO_ROW",
+                "klic": "PE_COCO_ROW",
                 "schema": [
                     "KRAJ",
                     "OKRES",
