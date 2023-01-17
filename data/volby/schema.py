@@ -102,7 +102,6 @@ schema = [
         Column("orp", Integer, nullable=True),
         Column("obec", Integer, nullable=False),
         Column("nazevobce", Text, nullable=False),
-        Column("krzast", SmallInteger, nullable=False),
         Column("obec_prez", Integer, nullable=True),
         UniqueConstraint("datum", "kraj", "okres", "obec"),
     ),
