@@ -85,9 +85,7 @@
             },
             "nuts": {
                 "fn": [
-                    "cnumnuts.xml",
-                    "CNUMNUTS.DBF",
-                    "CNUMNUTS.dbf"
+                    "cnumnuts.xml"
                 ],
                 "klic": "CNUMNUTS_ROW",
                 "schema": [
@@ -96,6 +94,26 @@
                     "NAZEVNUTS",
                     "KODCIS",
                     "CHODNOTA"
+                ]
+            },
+            "obce": {
+                "fn": [
+                    "pecoco.xml"
+                ],
+                "klic": "KZ_COCO_ROW",
+                "schema": [
+                    "KRAJ",
+                    "OKRES",
+                    "CPOU",
+                    "ORP",
+                    "OBEC",
+                    "NAZEVOBCE",
+                    "KRZAST",
+                    "OBEC_PREZ"
+                ],
+                "vynechej": [
+                    "MINOKRSEK1",
+                    "MAXOKRSEK1"
                 ]
             }
         }
