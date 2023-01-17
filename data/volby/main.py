@@ -28,13 +28,13 @@ def load_remote_data(url: str):
             req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
             for j in range(RETRIES):
                 try:
-                    with urlopen(req, timeout=60) as r, open(tfn, "wb") as fw:
+                    with urlopen(req, timeout=15) as r, open(tfn, "wb") as fw:
                         shutil.copyfileobj(r, fw)
                         break
                 except URLError as e:
                     if j == RETRIES - 1:
                         raise e
-                    print(f"URLError ({e}), retrying")
+                    print(f"URLError ({e}), retrying {url}")
                     continue
 
         with zipfile.ZipFile(tfn) as zf:

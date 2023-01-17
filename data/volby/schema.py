@@ -82,6 +82,17 @@ schema = [
         UniqueConstraint("datum", "okres", "obec", "okrsek", "kolo"),
     ),
     Table(
+        "prezident_nuts",
+        meta,
+        Column("datum", Date, nullable=False),
+        Column("num_nuts", Integer, nullable=False),
+        Column("nuts", Text, nullable=True),  # kvuli zahranicnimu "okresu"
+        Column("nazev", Text, nullable=False),
+        Column("ciselnik_kod", Integer, nullable=True),
+        Column("ciselnik_hodnota", Integer, nullable=True),
+        UniqueConstraint("datum", "num_nuts"),
+    ),
+    Table(
         "psp_kandidati",
         meta,
         Column("datum", Date, nullable=False),
