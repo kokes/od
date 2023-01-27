@@ -182,7 +182,10 @@ if __name__ == "__main__":
             # z nejakeho duvodu jsou v sqlite nepojmenovany klice
             if engine.name == "postgresql":
                 dbtable = Table(
-                    table.name, MetaData(engine), schema=table.schema, autoload_with=engine,
+                    table.name,
+                    MetaData(engine),
+                    schema=table.schema,
+                    autoload_with=engine,
                 )
                 for fk in dbtable.constraints:
                     if isinstance(fk, ForeignKeyConstraint):
