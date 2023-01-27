@@ -8,7 +8,7 @@ import warnings
 from collections import defaultdict
 from importlib import import_module
 
-from sqlalchemy import Boolean, MetaData, Table, create_engine
+from sqlalchemy import Boolean, MetaData, Table, create_engine, text
 from sqlalchemy.schema import AddConstraint, DropConstraint, ForeignKeyConstraint
 
 
@@ -169,7 +169,8 @@ if __name__ == "__main__":
 
             if engine.name == "postgresql":
                 table.schema = f"{args.schema_prefix}{module_name}"
-                engine.execute(f"CREATE SCHEMA IF NOT EXISTS {table.schema}")
+                with engine.begin() as conn:
+                    conn.execute(text(f"CREATE SCHEMA IF NOT EXISTS {table.schema}"))
             elif engine.name == "sqlite":
                 table.name = f"{args.schema_prefix}{module_name}_{table.name}"
 
@@ -181,11 +182,16 @@ if __name__ == "__main__":
             # z nejakeho duvodu jsou v sqlite nepojmenovany klice
             if engine.name == "postgresql":
                 dbtable = Table(
-                    table.name, MetaData(engine), schema=table.schema, autoload=True
+                    table.name,
+                    MetaData(engine),
+                    schema=table.schema,
+                    autoload_with=engine,
                 )
                 for fk in dbtable.constraints:
                     if isinstance(fk, ForeignKeyConstraint):
-                        DropConstraint(fk).execute(engine)
+                        sql = DropConstraint(fk).compile()
+                        with engine.begin() as conn:
+                            conn.execute(text(sql.string))
 
             if engine.name == "postgresql":
                 full_table_name = f"{table.schema}.{table.name}"
@@ -231,6 +237,8 @@ if __name__ == "__main__":
                 for fk in fkeys:
                     if not isinstance(fk, ForeignKeyConstraint):
                         continue
-                    AddConstraint(fk).execute(bind=engine)
+                    sql = AddConstraint(fk).compile()
+                    with engine.begin() as conn:
+                        conn.execute(text(sql.string))
 
             print(f" ({time.time() - t:.2f}s)")
