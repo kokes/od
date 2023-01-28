@@ -10,7 +10,7 @@ from contextlib import contextmanager
 from fnmatch import fnmatch
 from tempfile import TemporaryDirectory
 from urllib.error import URLError
-from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
+from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
 import lxml.etree
