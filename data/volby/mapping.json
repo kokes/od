@@ -149,15 +149,30 @@
             "2017-10-20": [
                 "https://www.volby.cz/opendata/ps2017nss/PS2017reg20171122.zip",
                 "https://www.volby.cz/opendata/ps2017nss/PS2017ciselniky20170905.zip",
-                "https://volby.cz/opendata/ps2017nss/PS2017data20171122.zip"
+                "https://volby.cz/opendata/ps2017nss/PS2017data20171122.zip",
+                "https://www.volby.cz/pls/ps2017/vysledky_okrsky"
             ],
             "2021-10-08": [
                 "https://www.volby.cz/opendata/ps2021/PS2021ciselniky20211006.zip",
                 "https://www.volby.cz/opendata/ps2021/PS2021reg20211010.zip",
-                "https://www.volby.cz/opendata/ps2021/PS2021_data_20211010_xml.zip"
+                "https://www.volby.cz/opendata/ps2021/PS2021_data_20211010_xml.zip",
+                "https://www.volby.cz/pls/ps2021/vysledky_okrsky"
             ]
         },
         "ds": {
+            "davky": {
+                "fn": [
+                    "davky.xml"
+                ],
+                "klic": "OKRSEK",
+                "schema": [
+                    "CIS_OBEC",
+                    "CIS_OKRSEK",
+                    "PORADI_ZPRAC",
+                    "DATUM_CAS_ZPRAC",
+                    "OPAKOVANE"
+                ]
+            },
             "kandidati": {
                 "fn": [
                     "psrk.xml",
@@ -299,15 +314,33 @@
             "2018-10-05": [
                 "https://volby.cz/opendata/kv2018/KV2018reg20181008.zip",
                 "https://volby.cz/opendata/kv2018/KV2018ciselniky20181004.zip",
-                "https://volby.cz/opendata/kv2018/KV2018_data_20181008_xml.zip"
+                "https://volby.cz/opendata/kv2018/KV2018_data_20181008_xml.zip",
+                "https://www.volby.cz/pls/kv2018/vysledky_okrsky?datumvoleb=20181005"
             ],
             "2022-09-23": [
                 "https://volby.cz/opendata/kv2022/KV2022reg20220925b.zip",
                 "https://volby.cz/opendata/kv2022/KV2022ciselniky20220921.zip",
-                "https://volby.cz/opendata/kv2022/KV2022_data_20220925b_xml.zip"
+                "https://volby.cz/opendata/kv2022/KV2022_data_20220925b_xml.zip",
+                "https://www.volby.cz/pls/kv2022/vysledky_okrsky?datumvoleb=20220923"
             ]
         },
         "ds": {
+            "davky": {
+                "fn": [
+                    "davky.xml"
+                ],
+                "klic": "OKRSEK",
+                "schema": [
+                    "CIS_OBEC",
+                    "CIS_OKRSEK",
+                    "KODZASTUP",
+                    "CIS_OBVODU",
+                    "OZNAC_TYPU",
+                    "PORADI_ZPRAC",
+                    "DATUM_CAS_ZPRAC",
+                    "OPAKOVANE"
+                ]
+            },
             "vysledky_obce": {
                 "fn": [
                     "kvros.xml"
@@ -514,10 +547,24 @@
             "2020-10-02": [
                 "https://volby.cz/opendata/kz2020/KZ2020reg20201004a.zip",
                 "https://volby.cz/opendata/kz2020/KZ2020ciselniky20201002.zip",
-                "https://volby.cz/opendata/kz2020/KZ2020_data_20201004a_xml.zip"
+                "https://volby.cz/opendata/kz2020/KZ2020_data_20201004a_xml.zip",
+                "https://www.volby.cz/pls/kz2020/vysledky_okrsky"
             ]
         },
         "ds": {
+            "davky": {
+                "fn": [
+                    "davky.xml"
+                ],
+                "klic": "OKRSEK",
+                "schema": [
+                    "CIS_OBEC",
+                    "CIS_OKRSEK",
+                    "PORADI_ZPRAC",
+                    "DATUM_CAS_ZPRAC",
+                    "OPAKOVANE"
+                ]
+            },
             "kandidati": {
                 "fn": [
                     "kzrk.xml",
@@ -872,25 +919,43 @@
             "2019-04-05": [
                 "https://volby.cz/opendata/se2019duben/SE2019reg20190413.zip",
                 "https://volby.cz/opendata/se2019duben/SE2019ciselnik20190403.zip",
-                "https://www.volby.cz/opendata/se2019duben/SENAT2019_data_20190413_k1_xml.zip"
+                "https://www.volby.cz/opendata/se2019duben/SENAT2019_data_20190413_k1_xml.zip",
+                "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20190405"
             ],
             "2020-06-06": [
                 "https://volby.cz/opendata/se2020cerven/SE2020reg20200613.zip",
                 "https://volby.cz/opendata/se2020cerven/SE2020ciselnik20200603.zip",
-                "https://volby.cz/opendata/se2020cerven/SENAT2020_data_20200613_k2_xml.zip"
+                "https://volby.cz/opendata/se2020cerven/SENAT2020_data_20200613_k2_xml.zip",
+                "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20200605"
             ],
             "2020-10-02": [
                 "https://volby.cz/opendata/se2020/SE2020reg20201010.zip",
                 "https://volby.cz/opendata/se2020/SE2020ciselnik20200918.zip",
-                "https://volby.cz/opendata/se2020/SENAT2020_data_20201010_k2_xml.zip"
+                "https://volby.cz/opendata/se2020/SENAT2020_data_20201010_k2_xml.zip",
+                "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20201002"
             ],
             "2022-09-23": [
                 "https://www.volby.cz/opendata/se2022/SE2022reg20221001.zip",
                 "https://www.volby.cz/opendata/se2022/SE2022ciselniky20220916.zip",
-                "https://www.volby.cz/opendata/se2022/SE2022_data_20221001_k2_xml.zip"
+                "https://www.volby.cz/opendata/se2022/SE2022_data_20221001_k2_xml.zip",
+                "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20220923"
             ]
         },
         "ds": {
+            "davky": {
+                "fn": [
+                    "davky.xml"
+                ],
+                "klic": "OKRSEK",
+                "schema": [
+                    "CIS_OBEC",
+                    "CIS_OKRSEK",
+                    "CIS_OBVOD",
+                    "PORADI_ZPRAC",
+                    "DATUM_CAS_ZPRAC",
+                    "OPAKOVANE"
+                ]
+            },
             "kandidati": {
                 "fn": [
                     "serk.xml"

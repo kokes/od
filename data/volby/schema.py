@@ -4,6 +4,7 @@ from sqlalchemy.sql.schema import UniqueConstraint
 from sqlalchemy.sql.sqltypes import (
     Boolean,
     Date,
+    DateTime,
     Float,
     Integer,
     Numeric,
@@ -24,6 +25,17 @@ def bitmap_ish(n):
 meta = MetaData()
 
 schema = [
+    Table(
+        "prezident_davky",
+        meta,
+        Column("datum", Date, nullable=False),
+        Column("kolo", SmallInteger, nullable=False),
+        Column("cis_obec", SmallInteger, nullable=False),
+        Column("cis_okrsek", SmallInteger, nullable=False),
+        Column("poradi_zprac", SmallInteger, nullable=False),
+        Column("datum_cas_zprac", DateTime, nullable=False),
+        Column("opakovane", Boolean, nullable=False),
+    ),
     Table(
         "prezident_kandidati",
         meta,
@@ -104,6 +116,16 @@ schema = [
         Column("nazevobce", Text, nullable=False),
         Column("obec_prez", Integer, nullable=True),
         UniqueConstraint("datum", "kraj", "okres", "obec"),
+    ),
+    Table(
+        "psp_davky",
+        meta,
+        Column("datum", Date, nullable=False),
+        Column("cis_obec", SmallInteger, nullable=False),
+        Column("cis_okrsek", SmallInteger, nullable=False),
+        Column("poradi_zprac", SmallInteger, nullable=False),
+        Column("datum_cas_zprac", DateTime, nullable=False),
+        Column("opakovane", Boolean, nullable=False),
     ),
     Table(
         "psp_kandidati",
@@ -205,6 +227,19 @@ schema = [
         Column("ciselnik_kod", Integer, nullable=True),
         Column("ciselnik_hodnota", Integer, nullable=True),
         UniqueConstraint("datum", "num_nuts"),
+    ),
+    Table(
+        "komunalni_davky",
+        meta,
+        Column("datum", Date, nullable=False),
+        Column("cis_obec", SmallInteger, nullable=False),
+        Column("cis_okrsek", SmallInteger, nullable=False),
+        Column("kodzastup", SmallInteger, nullable=False),
+        Column("cis_obvodu", SmallInteger, nullable=False),
+        Column("oznac_typu", SmallInteger, nullable=False),
+        Column("poradi_zprac", SmallInteger, nullable=False),
+        Column("datum_cas_zprac", DateTime, nullable=False),
+        Column("opakovane", Boolean, nullable=False),
     ),
     Table(
         "komunalni_vysledky_obce",
@@ -353,6 +388,16 @@ schema = [
         Column("ciselnik_kod", Integer, nullable=True),
         Column("ciselnik_hodnota", Integer, nullable=True),
         UniqueConstraint("datum", "num_nuts"),
+    ),
+    Table(
+        "kraje_davky",
+        meta,
+        Column("datum", Date, nullable=False),
+        Column("cis_obec", SmallInteger, nullable=False),
+        Column("cis_okrsek", SmallInteger, nullable=False),
+        Column("poradi_zprac", SmallInteger, nullable=False),
+        Column("datum_cas_zprac", DateTime, nullable=False),
+        Column("opakovane", Boolean, nullable=False),
     ),
     Table(
         "kraje_kandidati",
@@ -574,6 +619,18 @@ schema = [
         Column("kc_sum", Integer, nullable=True),
         Column("hlasy", array_ish, nullable=False),
         UniqueConstraint("datum", "okres", "obec", "okrsek", "estrana"),
+    ),
+    Table(
+        "senat_davky",
+        meta,
+        Column("datum", Date, nullable=False),
+        Column("kolo", SmallInteger, nullable=False),
+        Column("cis_obec", SmallInteger, nullable=False),
+        Column("cis_okrsek", SmallInteger, nullable=False),
+        Column("cis_obvod", SmallInteger, nullable=False),
+        Column("poradi_zprac", SmallInteger, nullable=False),
+        Column("datum_cas_zprac", DateTime, nullable=False),
+        Column("opakovane", Boolean, nullable=False),
     ),
     Table(
         "senat_kandidati",
