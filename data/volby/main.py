@@ -1,7 +1,6 @@
 import csv
 import functools
 import json
-import hashlib
 import multiprocessing
 import os
 import shutil
@@ -95,8 +94,8 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                         break
                     qs["davka"] = davka
                     parsed = parsed._replace(query=urlencode(qs))
-                    raw = batch_download(urlunparse(parsed))
-                    et = lxml.etree.fromstring(raw)
+                    with urlopen(urlunparse(parsed)) as r:
+                        et = lxml.etree.parse(r).getroot()
                     ns = et.nsmap[None]
                     if et.find(f"./{{{ns}}}CHYBA") is not None:
                         break
@@ -104,14 +103,16 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                     okrsky = et.findall(f"./{{{ns}}}OKRSEK")
                     # assert len(okrsky) > 0
                     for okrsek in okrsky:
-                        assert set(okrsek.attrib.keys()) == set(fmp["schema"]), (volby, okrsek.attrib.keys())
+                        ks = okrsek.attrib.keys()
+                        assert set(ks) == set(fmp["schema"]), (volby, ks)
                         row = dict(okrsek.attrib)
                         row["DATUM"] = datum
                         if volby in DVOUKOLAK:
                             row["KOLO"] = kolo
                         cw.writerow(row)
+        return
 
-    return
+    # bezny prubeh extrakce ze zipu
     with load_remote_data(url) as zf:
         for ff in map(lambda x: x.filename, zf.filelist):
             patterns = [j for j in fnmap[volby].keys() if fnmatch(ff, j)]
@@ -193,29 +194,9 @@ def main(outdir: str, partial: bool = False):
                 jobs.append((url, volby, datum))
 
     job_processor = functools.partial(process_url, outdir, partial, fnmap)
-    for job in jobs:
-        job_processor(*job)
-    # with multiprocessing.Pool(ncpu) as pool:
-    #     pool.starmap(job_processor, jobs)
-
-
-CACHE_DIR = "cache"
-
-
-def batch_download(url: str) -> bytes:
-    os.makedirs(CACHE_DIR, exist_ok=True)
-    digest = hashlib.sha1(url.encode()).hexdigest()
-    tfn = os.path.join(CACHE_DIR, digest + ".xml")
-    if os.path.isfile(tfn):
-        print("vracim", tfn)
-        return open(tfn, "rb").read()
-
-    with open(tfn, "wb") as fw, urlopen(url) as r:
-        shutil.copyfileobj(r, fw)
-
-    return batch_download(url)
+    with multiprocessing.Pool(ncpu) as pool:
+        pool.starmap(job_processor, jobs)
 
 
 if __name__ == "__main__":
     main(".")
-    # davky()
