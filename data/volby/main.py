@@ -18,6 +18,7 @@ import lxml.etree
 from dbfread import DBF
 
 RETRIES = 5
+DVOUKOLAK = ("senat", "prezident")
 
 
 @contextmanager
@@ -69,6 +70,48 @@ def extract_elements(zf, fn, nodename):
 
 
 def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
+    # specialni handling davkovych exportu (nejsou v zipu)
+    if not url.endswith(".zip"):
+        ds, fmp = fnmap[volby]["davky.xml"]  # 'davky.xml' je dummy hodnota
+        tfn = os.path.join(outdir, f"{volby}_davky.csv")
+        with open(tfn, "wt", encoding="utf8") as fw:
+            schema = ["DATUM"] + [j for j in fmp["schema"]]
+            if volby in DVOUKOLAK:
+                schema.insert(1, "KOLO")
+            cw = csv.DictWriter(
+                fw,
+                fieldnames=schema,
+                lineterminator="\n",
+            )
+            cw.writeheader()
+
+            parsed = urlparse(url)
+            qs = dict(parse_qsl(parsed.query))
+            for kolo in [1, 2]:
+                for davka in range(1, 1000):
+                    if volby in DVOUKOLAK:
+                        qs["kolo"] = kolo
+                    elif kolo == 2:
+                        break
+                    qs["davka"] = davka
+                    parsed = parsed._replace(query=urlencode(qs))
+                    raw = batch_download(urlunparse(parsed))
+                    et = lxml.etree.fromstring(raw)
+                    ns = et.nsmap[None]
+                    if et.find(f"./{{{ns}}}CHYBA") is not None:
+                        break
+
+                    okrsky = et.findall(f"./{{{ns}}}OKRSEK")
+                    assert len(okrsky) > 0
+                    for okrsek in okrsky:
+                        assert set(okrsek.attrib.keys()) == set(fmp["schema"]), (volby, okrsek.attrib.keys())
+                        row = dict(okrsek.attrib)
+                        row["DATUM"] = datum
+                        if volby in DVOUKOLAK:
+                            row["KOLO"] = kolo
+                        cw.writerow(row)
+
+    return
     with load_remote_data(url) as zf:
         for ff in map(lambda x: x.filename, zf.filelist):
             patterns = [j for j in fnmap[volby].keys() if fnmatch(ff, j)]
@@ -150,8 +193,10 @@ def main(outdir: str, partial: bool = False):
                 jobs.append((url, volby, datum))
 
     job_processor = functools.partial(process_url, outdir, partial, fnmap)
-    with multiprocessing.Pool(ncpu) as pool:
-        pool.starmap(job_processor, jobs)
+    for job in jobs:
+        job_processor(*job)
+    # with multiprocessing.Pool(ncpu) as pool:
+    #     pool.starmap(job_processor, jobs)
 
 
 CACHE_DIR = "cache"
@@ -216,5 +261,5 @@ def davky():
 
 
 if __name__ == "__main__":
-    # main(".")
-    davky()
+    main(".")
+    # davky()

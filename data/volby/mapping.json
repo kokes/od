@@ -4,7 +4,8 @@
             "2013-01-11": [
                 "https://www.volby.cz/opendata/prez2013/PREZ2013reg20130126.zip",
                 "https://www.volby.cz/opendata/prez2013/PREZ2013ciselniky20130126.zip",
-                "https://volby.cz/opendata/prez2013/PREZ2013data20130126.zip"
+                "https://volby.cz/opendata/prez2013/PREZ2013data20130126.zip",
+                "https://www.volby.cz/pls/prez2018/vysledky_okrsky"
             ],
             "2018-01-12": [
                 "https://www.volby.cz/opendata/prez2018/PREZ2018reg20180127.zip",
@@ -18,6 +19,19 @@
             ]
         },
         "ds": {
+            "davky": {
+                "fn": [
+                    "davky.xml"
+                ],
+                "klic": "OKRSEK",
+                "schema": [
+                    "CIS_OBEC",
+                    "CIS_OKRSEK",
+                    "PORADI_ZPRAC",
+                    "DATUM_CAS_ZPRAC",
+                    "OPAKOVANE"
+                ]
+            },
             "kandidati": {
                 "fn": [
                     "perk.xml"
