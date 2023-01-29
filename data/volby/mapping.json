@@ -10,6 +10,11 @@
                 "https://www.volby.cz/opendata/prez2018/PREZ2018reg20180127.zip",
                 "https://www.volby.cz/opendata/prez2018/PREZ2018ciselniky20171215.zip",
                 "https://volby.cz/opendata/prez2018/PREZ2018data20180127_xml_kolo2.zip"
+            ],
+            "2023-01-13": [
+                "https://www.volby.cz/opendata/prez2023/PREZ2023reg20230128.zip",
+                "https://www.volby.cz/opendata/prez2023/PREZ2023ciselniky20230109.zip",
+                "https://www.volby.cz/opendata/prez2023/PREZ2023_data_20230128_xml_kolo2.zip"
             ]
         },
         "ds": {
@@ -76,6 +81,38 @@
                 ],
                 "extra_schema": [
                     "HLASY"
+                ]
+            },
+            "nuts": {
+                "fn": [
+                    "cnumnuts.xml"
+                ],
+                "klic": "CNUMNUTS_ROW",
+                "schema": [
+                    "NUMNUTS",
+                    "NUTS",
+                    "NAZEVNUTS",
+                    "KODCIS",
+                    "CHODNOTA"
+                ]
+            },
+            "obce": {
+                "fn": [
+                    "pecoco.xml"
+                ],
+                "klic": "PE_COCO_ROW",
+                "schema": [
+                    "KRAJ",
+                    "OKRES",
+                    "CPOU",
+                    "ORP",
+                    "OBEC",
+                    "NAZEVOBCE",
+                    "OBEC_PREZ"
+                ],
+                "vynechej": [
+                    "MINOKRSEK1",
+                    "MAXOKRSEK1"
                 ]
             }
         }
