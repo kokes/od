@@ -4,18 +4,19 @@
             "2013-01-11": [
                 "https://www.volby.cz/opendata/prez2013/PREZ2013reg20130126.zip",
                 "https://www.volby.cz/opendata/prez2013/PREZ2013ciselniky20130126.zip",
-                "https://volby.cz/opendata/prez2013/PREZ2013data20130126.zip",
-                "https://www.volby.cz/pls/prez2018/vysledky_okrsky"
+                "https://volby.cz/opendata/prez2013/PREZ2013data20130126.zip"
             ],
             "2018-01-12": [
                 "https://www.volby.cz/opendata/prez2018/PREZ2018reg20180127.zip",
                 "https://www.volby.cz/opendata/prez2018/PREZ2018ciselniky20171215.zip",
-                "https://volby.cz/opendata/prez2018/PREZ2018data20180127_xml_kolo2.zip"
+                "https://volby.cz/opendata/prez2018/PREZ2018data20180127_xml_kolo2.zip",
+                "https://www.volby.cz/pls/prez2018/vysledky_okrsky"
             ],
             "2023-01-13": [
                 "https://www.volby.cz/opendata/prez2023/PREZ2023reg20230128.zip",
                 "https://www.volby.cz/opendata/prez2023/PREZ2023ciselniky20230109.zip",
-                "https://www.volby.cz/opendata/prez2023/PREZ2023_data_20230128_xml_kolo2.zip"
+                "https://www.volby.cz/opendata/prez2023/PREZ2023_data_20230128_xml_kolo2.zip",
+                "https://www.volby.cz/pls/prez2023/vysledky_okrsky"
             ]
         },
         "ds": {
