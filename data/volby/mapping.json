@@ -12,9 +12,9 @@
                 "https://volby.cz/opendata/prez2018/PREZ2018data20180127_xml_kolo2.zip"
             ],
             "2023-01-13": [
-                "https://www.volby.cz/opendata/prez2023/PREZ2023reg20230114.zip",
+                "https://www.volby.cz/opendata/prez2023/PREZ2023reg20230128.zip",
                 "https://www.volby.cz/opendata/prez2023/PREZ2023ciselniky20230109.zip",
-		"https://www.volby.cz/opendata/prez2023/PREZ2023_data_20230114_xml_kolo1.zip"
+                "https://www.volby.cz/opendata/prez2023/PREZ2023_data_20230128_xml_kolo2.zip"
             ]
         },
         "ds": {
