@@ -250,7 +250,7 @@ schema = [
         Column(
             "id_kandidatka",
             SmallInteger,
-            nullable=False,
+            nullable=True,
             comment="Volební strana/hnutí, viz org:id_organu, pouze odkazuje na "
             "stranu/hnutí, za kterou byl zvolen a nemusí mít souvislost s "
             "členstvím v poslaneckém klubu.",
