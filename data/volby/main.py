@@ -10,13 +10,14 @@ from contextlib import contextmanager
 from fnmatch import fnmatch
 from tempfile import TemporaryDirectory
 from urllib.error import URLError
-from urllib.parse import urlparse
+from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
 import lxml.etree
 from dbfread import DBF
 
 RETRIES = 5
+DVOUKOLAK = ("senat", "prezident")
 
 
 @contextmanager
@@ -68,6 +69,50 @@ def extract_elements(zf, fn, nodename):
 
 
 def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
+    # specialni handling davkovych exportu (nejsou v zipu)
+    if not url.endswith(".zip"):
+        ds, fmp = fnmap[volby]["davky.xml"]  # 'davky.xml' je dummy hodnota
+        tfn = os.path.join(outdir, f"{volby}_davky.csv")
+        with open(tfn, "wt", encoding="utf8") as fw:
+            schema = ["DATUM"] + [j for j in fmp["schema"]]
+            if volby in DVOUKOLAK:
+                schema.insert(1, "KOLO")
+            cw = csv.DictWriter(
+                fw,
+                fieldnames=schema,
+                lineterminator="\n",
+            )
+            cw.writeheader()
+
+            parsed = urlparse(url)
+            qs = dict(parse_qsl(parsed.query))
+            for kolo in [1, 2]:
+                for davka in range(1, 1000):
+                    if volby in DVOUKOLAK:
+                        qs["kolo"] = kolo
+                    elif kolo == 2:
+                        break
+                    qs["davka"] = davka
+                    parsed = parsed._replace(query=urlencode(qs))
+                    with urlopen(urlunparse(parsed)) as r:
+                        et = lxml.etree.parse(r).getroot()
+                    ns = et.nsmap[None]
+                    if et.find(f"./{{{ns}}}CHYBA") is not None:
+                        break
+
+                    okrsky = et.findall(f"./{{{ns}}}OKRSEK")
+                    # assert len(okrsky) > 0
+                    for okrsek in okrsky:
+                        ks = okrsek.attrib.keys()
+                        assert set(ks) == set(fmp["schema"]), (volby, ks)
+                        row = dict(okrsek.attrib)
+                        row["DATUM"] = datum
+                        if volby in DVOUKOLAK:
+                            row["KOLO"] = kolo
+                        cw.writerow(row)
+        return
+
+    # bezny prubeh extrakce ze zipu
     with load_remote_data(url) as zf:
         for ff in map(lambda x: x.filename, zf.filelist):
             patterns = [j for j in fnmap[volby].keys() if fnmatch(ff, j)]
