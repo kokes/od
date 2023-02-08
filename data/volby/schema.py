@@ -30,7 +30,7 @@ schema = [
         meta,
         Column("datum", Date, nullable=False),
         Column("kolo", SmallInteger, nullable=False),
-        Column("cis_obec", SmallInteger, nullable=False),
+        Column("cis_obec", Integer, nullable=False),
         Column("cis_okrsek", SmallInteger, nullable=False),
         Column("poradi_zprac", SmallInteger, nullable=False),
         Column("datum_cas_zprac", DateTime, nullable=False),
