@@ -1,5 +1,6 @@
 import csv
 import functools
+import logging
 import multiprocessing
 import os
 import re
@@ -41,19 +42,26 @@ dlh = set(clean_lines("dlouha_jmena.txt"))
 # TODO: testy
 
 
-def depozicuj(jmeno):
+# TODO(perf): kdyz materializujem to pridani "CR" do pozic a seradime
+# sestupne podle delky, tak to bude rychlejsi
+def depozicuj(jmeno, poz=poz):
     if jmeno.startswith("Pan "):
         return None, jmeno[4:]
 
-    for p in poz:
-        if jmeno.startswith(p + " ČR"):
-            return p + " ČR", jmeno[len(p) + 3 + 1 :]
-        if jmeno.startswith(p):
-            return p, jmeno[len(p) + 1 :]
+    fn, nm = None, None
+    for pr in poz:
+        for p in (pr, pr + " ČR"):
+            if jmeno.startswith(p):
+                if fn is None or (fn and len(p) > len(fn)):
+                    fn, nm = p, jmeno[len(p) + 1 :]
 
     if "ČR" in jmeno:
         ind = jmeno.rindex("ČR")
-        return jmeno[: ind + 2], jmeno[ind + 3 :]
+        if fn is None or (fn and len(p + " ČR") > len(fn)):
+            fn, nm = jmeno[: ind + 2], jmeno[ind + 3 :]
+
+    if fn:
+        return fn, nm
 
     return None, jmeno
 
@@ -66,6 +74,9 @@ def vyrok(zf):
             continue
 
         ht = lxml.html.parse(zf.open(zfn.filename)).getroot()
+        if ht is None:
+            logging.info(f"Nepodarilo se nacist soubor {zfn.filename} ({zf.filename})")
+            continue
         ps = ht.cssselect("p")
 
         for j, p in enumerate(ps):
@@ -164,6 +175,7 @@ def zpracuj_schuzi(outdir, params):
 
 
 def main(outdir: str, partial: bool = False):
+    logging.getLogger().setLevel(logging.INFO)
     jobs = []
     for rok, burl in urls.items():
         with urlopen(burl, timeout=30) as r:
