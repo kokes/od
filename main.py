@@ -81,6 +81,7 @@ if __name__ == "__main__":
         "volby",
         "udhpsh",
         "res",
+        "ruian",
         "ares",  # schvalne na konci, protoze nacita hodne dat
     ]
     if args.modules:
