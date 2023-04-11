@@ -1,5 +1,5 @@
 from sqlalchemy import Column, MetaData, Table
-from sqlalchemy.sql.sqltypes import Date,Integer, Numeric, Text
+from sqlalchemy.sql.sqltypes import Date, Integer, Numeric, Text
 
 
 meta = MetaData()
@@ -8,7 +8,8 @@ schema = [
     Table(
         "adreseni_mista",
         meta,
-        Column("kod_adm", Integer, nullable=False, primary_key=True, autoincrement=False),
+        Column("kod_adm", Integer, nullable=False,
+               primary_key=True, autoincrement=False),
         Column("kod_obce", Integer, nullable=False),
         Column("nazev_obce", Text, nullable=False),
         Column("kod_momc", Integer, nullable=True),
@@ -27,8 +28,8 @@ schema = [
         Column("souradnice_y", Numeric(18, 2), nullable=True),
         Column("souradnice_x", Numeric(18, 2), nullable=True),
         Column("plati_od", Date, nullable=False),
-        Column("gps_souradnice", Text, nullable=True),
-
+        Column("zemepisna_sirka", Numeric(18, 2), nullable=True),
+        Column("zemepisna_delka", Numeric(18, 2), nullable=True),
     ),
 
 ]
@@ -42,6 +43,3 @@ if __name__ == "__main__":
         print(f"-- {table.name} as created in Postgres")
 
         print(CreateTable(table).compile(dialect=postgresql.dialect()))
-
-
-
