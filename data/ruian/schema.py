@@ -1,15 +1,15 @@
 from sqlalchemy import Column, MetaData, Table
 from sqlalchemy.sql.sqltypes import Date, Integer, Numeric, Text
 
-
 meta = MetaData()
 
 schema = [
     Table(
-        "adreseni_mista",
+        "adresni_mista",
         meta,
-        Column("kod_adm", Integer, nullable=False,
-               primary_key=True, autoincrement=False),
+        Column(
+            "kod_adm", Integer, nullable=False, primary_key=True, autoincrement=False
+        ),
         Column("kod_obce", Integer, nullable=False),
         Column("nazev_obce", Text, nullable=False),
         Column("kod_momc", Integer, nullable=True),
@@ -31,7 +31,6 @@ schema = [
         Column("zemepisna_sirka", Numeric(18, 2), nullable=True),
         Column("zemepisna_delka", Numeric(18, 2), nullable=True),
     ),
-
 ]
 
 
