@@ -165,6 +165,13 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                             "true" if el["MANDAT"] in ("A", "1", 1) else "false"
                         )
 
+                    # 20181223 -> 2018-12-23
+                    if "DATUMVOLEB" in el:
+                        dv = el["DATUMVOLEB"]
+                        assert dv.isdigit(), dv
+                        assert len(dv) == 6, dv
+                        el["DATUMVOLEB"] = f"{dv[:4]}-{dv[4:6]}-{dv[6:8]}"
+
                     cw.writerow(
                         {
                             "DATUM": datum,

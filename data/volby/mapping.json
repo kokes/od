@@ -134,6 +134,11 @@
     },
     "psp": {
         "url": {
+            "2002-06-14": [
+                "https://www.volby.cz/opendata/ps2002/PS2002_reg_20230224_xml.zip",
+                "https://www.volby.cz/opendata/ps2002/PS2002_cisel_20230224_xml.zip",
+                "https://www.volby.cz/opendata/ps2002/PS2002_data_20230224_xml.zip"
+            ],
             "2006-06-02": [
                 "https://www.volby.cz/opendata/ps2006/PS2006_reg_20230224_xml.zip",
                 "https://www.volby.cz/opendata/ps2006/PS2006_cisel_20230224_xml.zip",
@@ -302,6 +307,11 @@
     },
     "komunalni": {
         "url": {
+            "2002-11-01": [
+                "https://www.volby.cz/opendata/kv2002/KV2002_reg_20230224_xml.zip",
+                "https://www.volby.cz/opendata/kv2002/KV2002_cisel_20230224_xml.zip",
+                "https://www.volby.cz/opendata/kv2002/KV2002_data_20230224_xml.zip"
+            ],
             "2006-10-20": [
                 "https://volby.cz/opendata/kv2006/KV2006_reg_20230224_xml.zip",
                 "https://volby.cz/opendata/kv2006/KV2006_cisel_20230224_xml.zip",
@@ -353,6 +363,7 @@
                 ],
                 "klic": "KV_ROS_ROW",
                 "schema": [
+                    "DATUMVOLEB",
                     "OKRES",
                     "KODZASTUP",
                     "NAZEVZAST",
@@ -368,9 +379,6 @@
                     "HLASY_STR",
                     "PROCHLSTR",
                     "MAND_STR"
-                ],
-                "vynechej": [
-                    "DATUMVOLEB"
                 ]
             },
             "kandidati": {
@@ -379,6 +387,7 @@
                 ],
                 "klic": "KV_REGKAND_ROW",
                 "schema": [
+                    "DATUMVOLEB",
                     "OKRES",
                     "KODZASTUP",
                     "COBVODU",
@@ -402,9 +411,6 @@
                     "MANDAT",
                     "PORADIMAND",
                     "PORADINAHR"
-                ],
-                "vynechej": [
-                    "DATUMVOLEB"
                 ]
             },
             "strany": {
@@ -430,6 +436,7 @@
                 ],
                 "klic": "KV_RZCOCO_ROW",
                 "schema": [
+                    "DATUMVOLEB",
                     "KRAJ",
                     "OKRES",
                     "TYPZASTUP",
@@ -450,7 +457,6 @@
                     "STAV_OBCE"
                 ],
                 "vynechej": [
-                    "DATUMVOLEB",
                     "MAXOKRSEK7",
                     "MINOKRSEK1",
                     "MAXOKRSEK5",
@@ -480,6 +486,7 @@
                 ],
                 "klic": "KV_T3_ROW",
                 "schema": [
+                    "DATUMVOLEB",
                     "ID_OKRSKY",
                     "TYP_FORM",
                     "OPRAVA",
@@ -499,9 +506,6 @@
                     "POC_VS_HL",
                     "KC_2",
                     "KODZASTUP"
-                ],
-                "vynechej": [
-                    "DATUMVOLEB"
                 ]
             },
             "okrsky_hlasy": {
@@ -510,6 +514,7 @@
                 ],
                 "klic": "KV_HL_ROW",
                 "schema": [
+                    "DATUMVOLEB",
                     "ID_OKRSKY",
                     "TYP_FORM",
                     "OPRAVA",
@@ -528,9 +533,6 @@
                 ],
                 "extra_schema": [
                     "HLASY"
-                ],
-                "vynechej": [
-                    "DATUMVOLEB"
                 ]
             },
             "nuts": {
@@ -552,6 +554,16 @@
     },
     "kraje": {
         "url": {
+            "2000-11-12": [
+                "https://www.volby.cz/opendata/kz2000/KZ2000_reg_20230223_xml.zip",
+                "https://www.volby.cz/opendata/kz2000/KZ2000_cisel_20230223_xml.zip",
+                "https://www.volby.cz/opendata/kz2000/KZ2000_data_20230223_xml.zip"
+            ],
+            "2004-11-05": [
+                "https://www.volby.cz/opendata/kz2004/KZ2004_reg_20230223_xml.zip",
+                "https://www.volby.cz/opendata/kz2004/KZ2004_cisel_20230223_xml.zip",
+                "https://www.volby.cz/opendata/kz2004/KZ2004_data_20230223_xml.zip"
+            ],
             "2008-10-17": [
                 "https://www.volby.cz/opendata/kz2008/KZ2008_reg_20230223_xml.zip",
                 "https://www.volby.cz/opendata/kz2008/KZ2008_cisel_20230223_xml.zip",
