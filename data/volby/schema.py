@@ -248,6 +248,7 @@ schema = [
         "komunalni_vysledky_obce",
         meta,
         Column("datum", Date, nullable=False),
+        Column("platnostk", Date, nullable=False),
         Column("okres", SmallInteger, nullable=False),
         Column("kodzastup", Integer, nullable=False),
         Column("nazevzast", Text, nullable=False),
@@ -263,12 +264,13 @@ schema = [
         Column("hlasy_str", Integer, nullable=True),
         Column("prochlstr", Numeric(5, 2), nullable=True),
         Column("mand_str", SmallInteger, nullable=True),
-        # UniqueConstraint("datum", "okres", "kodzastup", "cobvodu", "por_str_hl"),
+        UniqueConstraint("datum", "platnostk", "okres", "kodzastup", "cobvodu", "por_str_hl"),
     ),
     Table(
         "komunalni_kandidati",
         meta,
         Column("datum", Date, nullable=False),
+        Column("platnostk", Date, nullable=False),
         Column("okres", SmallInteger, nullable=False),
         Column("kodzastup", Integer, nullable=False),
         Column("cobvodu", SmallInteger, nullable=False),
@@ -292,9 +294,9 @@ schema = [
         Column("mandat", Boolean, nullable=True),
         Column("poradimand", SmallInteger, nullable=False),
         Column("poradinahr", SmallInteger, nullable=False),
-        # UniqueConstraint(
-        #     "datum", "okres", "kodzastup", "cobvodu", "por_str_hl", "porcislo"
-        # ),
+        UniqueConstraint(
+            "datum", "platnostk", "okres", "kodzastup", "cobvodu", "por_str_hl", "porcislo"
+        ),
     ),
     Table(
         "komunalni_strany",
@@ -315,6 +317,7 @@ schema = [
         "komunalni_obce",
         meta,
         Column("datum", Date, nullable=False),
+        Column("platnostk", Date, nullable=False),
         Column("kraj", Text, nullable=False),
         Column("okres", SmallInteger, nullable=False),
         Column("typzastup", SmallInteger, nullable=False),
@@ -340,6 +343,7 @@ schema = [
         "komunalni_okrsky_prehled",
         meta,
         Column("datum", Date, nullable=False),
+        Column("platnostk", Date, nullable=False),
         Column("id_okrsky", Integer, nullable=False),
         Column("typ_form", SmallInteger, nullable=True),
         Column("oprava", SmallInteger, nullable=True),
@@ -359,12 +363,13 @@ schema = [
         Column("poc_vs_hl", SmallInteger, nullable=False),
         Column("kc_2", Integer, nullable=True),
         Column("kodzastup", Integer, nullable=False),
-        # UniqueConstraint("datum", "okres", "obec", "okrsek", "typzastup", "cobvodu"),
+        UniqueConstraint("datum", "platnostk", "okres", "obec", "okrsek", "typzastup", "cobvodu"),
     ),
     Table(
         "komunalni_okrsky_hlasy",
         meta,
         Column("datum", Date, nullable=False),
+        Column("platnostk", Date, nullable=False),
         Column("id_okrsky", Integer, nullable=False),
         Column("typ_form", SmallInteger, nullable=True),
         Column("oprava", SmallInteger, nullable=True),
@@ -381,7 +386,7 @@ schema = [
         Column("posl_kand", SmallInteger, nullable=True),
         Column("kc_sum", Integer, nullable=True),
         Column("hlasy", array_ish, nullable=False),
-        # UniqueConstraint("datum", "okres", "obec", "okrsek", "typzastup", "por_str_hl"),
+        UniqueConstraint("datum", "platnostk", "okres", "obec", "okrsek", "typzastup", "por_str_hl"),
     ),
     Table(
         "komunalni_nuts",

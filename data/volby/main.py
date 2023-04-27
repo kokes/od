@@ -58,6 +58,7 @@ def extract_elements(zf, fn, nodename):
                 node.clear()
 
     elif fn.lower().endswith("dbf"):
+        raise ValueError(f"nechcem dbf: {fn}")
         # dbfread neumi cist z filehandleru,
         # https://github.com/olemb/dbfread/issues/25
         with TemporaryDirectory() as tempdir:
@@ -169,7 +170,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                     if "DATUMVOLEB" in el:
                         dv = el["DATUMVOLEB"]
                         assert dv.isdigit(), dv
-                        assert len(dv) == 6, dv
+                        assert len(dv) == 8, dv
                         el["DATUMVOLEB"] = f"{dv[:4]}-{dv[4:6]}-{dv[6:8]}"
 
                     cw.writerow(
