@@ -1,4 +1,3 @@
-dbfread
 lxml
 openpyxl
 psycopg2-binary

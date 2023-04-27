@@ -183,8 +183,7 @@
             },
             "kandidati": {
                 "fn": [
-                    "psrk.xml",
-                    "PSRK.dbf"
+                    "psrk.xml"
                 ],
                 "klic": "PS_REGKAND_ROW",
                 "schema": [
@@ -214,8 +213,7 @@
             },
             "strany": {
                 "fn": [
-                    "psrkl.xml",
-                    "PSRKL.dbf"
+                    "psrkl.xml"
                 ],
                 "klic": "PS_RKL_ROW",
                 "schema": [
@@ -238,8 +236,7 @@
             },
             "okrsky_hlasy": {
                 "fn": [
-                    "pst4p.xml",
-                    "PST4p.dbf"
+                    "pst4p.xml"
                 ],
                 "klic": "PS_T4P_ROW",
                 "schema": [
@@ -266,8 +263,7 @@
             },
             "okrsky_prehled": {
                 "fn": [
-                    "pst4.xml",
-                    "PST4.dbf"
+                    "pst4.xml"
                 ],
                 "klic": "PS_T4_ROW",
                 "schema": [
@@ -290,9 +286,7 @@
             },
             "nuts": {
                 "fn": [
-                    "cnumnuts.xml",
-                    "CNUMNUTS.DBF",
-                    "CNUMNUTS.dbf"
+                    "cnumnuts.xml"
                 ],
                 "klic": "CNUMNUTS_ROW",
                 "schema": [
@@ -537,9 +531,7 @@
             },
             "nuts": {
                 "fn": [
-                    "cnumnuts.xml",
-                    "CNUMNUTS.DBF",
-                    "CNUMNUTS.dbf"
+                    "cnumnuts.xml"
                 ],
                 "klic": "CNUMNUTS_ROW",
                 "schema": [
@@ -601,9 +593,7 @@
             },
             "kandidati": {
                 "fn": [
-                    "kzrk.xml",
-                    "KZRK.dbf",
-                    "KZRK.DBF"
+                    "kzrk.xml"
                 ],
                 "klic": "KZ_REGKAND_ROW",
                 "schema": [
@@ -632,9 +622,7 @@
             },
             "strany_cr": {
                 "fn": [
-                    "kzrkl_s.xml",
-                    "KZRKL_S.dbf",
-                    "KZRKL_S.DBF"
+                    "kzrkl_s.xml"
                 ],
                 "klic": "KZ_RKL_SOUHRN_ROW",
                 "schema": [
@@ -656,8 +644,7 @@
             },
             "strany_navrhujici": {
                 "fn": [
-                    "cns.xml",
-                    "CNS.DBF"
+                    "cns.xml"
                 ],
                 "klic": "CNS_ROW",
                 "schema": [
@@ -669,8 +656,7 @@
             },
             "strany_kraje": {
                 "fn": [
-                    "kzrkl.xml",
-                    "KZRKL.dbf"
+                    "kzrkl.xml"
                 ],
                 "klic": "KZ_RKL_ROW",
                 "schema": [
@@ -691,8 +677,7 @@
             },
             "obce": {
                 "fn": [
-                    "kzcoco.xml",
-                    "KZCOCO.DBF"
+                    "kzcoco.xml"
                 ],
                 "klic": "KZ_COCO_ROW",
                 "schema": [
@@ -712,7 +697,6 @@
             },
             "okrsky_prehled": {
                 "fn": [
-                    "KZT6.dbf",
                     "kzt6.xml"
                 ],
                 "klic": "KZ_T6_ROW",
@@ -736,7 +720,6 @@
             },
             "okrsky_hlasy": {
                 "fn": [
-                    "KZT6p.dbf",
                     "kzt6p-*.xml",
                     "kzt6p.xml"
                 ],
