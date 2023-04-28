@@ -5,7 +5,7 @@ import os
 from contextlib import contextmanager
 from urllib.request import Request, urlopen
 
-CLS_BASE_URL = "https://apl.czso.cz/iSMS/cisexp.jsp"
+CLS_BASE_URL = "https://apl.czso.cz/iSMS/do_cis_export"
 CLS_URLS = [
     CLS_BASE_URL + j
     for j in (
@@ -110,8 +110,10 @@ def main(outdir: str, partial: bool = False):
             cr = csv.DictReader(r)
             for row in cr:
                 # jsou dva typy ciselniku, tak musime nacitat hodnoty z ruznych klicu
-                kodcis = row.get("KODCIS", row.get("ciselnik"))
-                chodnota = row.get("CHODNOTA", row.get("kod_polozky"))
+                kodcis = row.get("KODCIS", row.get("kodcis", row.get("ciselnik")))
+                chodnota = row.get(
+                    "CHODNOTA", row.get("chodnota", row.get("kod_polozky"))
+                )
                 text = row.get("TEXT", row.get("text"))
 
                 if not (kodcis and chodnota and text):
