@@ -135,22 +135,22 @@
     "psp": {
         "url": {
             "2002-06-14": [
-                "https://www.volby.cz/opendata/ps2002/PS2002_reg_20230224_xml.zip",
+                "https://www.volby.cz/opendata/ps2002/PS2002_reg_20230428_xml.zip",
                 "https://www.volby.cz/opendata/ps2002/PS2002_cisel_20230224_xml.zip",
                 "https://www.volby.cz/opendata/ps2002/PS2002_data_20230224_xml.zip"
             ],
             "2006-06-02": [
-                "https://www.volby.cz/opendata/ps2006/PS2006_reg_20230224_xml.zip",
+                "https://www.volby.cz/opendata/ps2006/PS2006_reg_20230428_xml.zip",
                 "https://www.volby.cz/opendata/ps2006/PS2006_cisel_20230224_xml.zip",
                 "https://www.volby.cz/opendata/ps2006/PS2006_data_20230224_xml.zip"
             ],
             "2010-05-29": [
-                "https://www.volby.cz/opendata/ps2010/PS2010_reg_20230224_xml.zip",
+                "https://www.volby.cz/opendata/ps2010/PS2010_reg_20230428_xml.zip",
                 "https://www.volby.cz/opendata/ps2010/PS2010_cisel_20230224_xml.zip",
                 "https://www.volby.cz/opendata/ps2010/PS2010_data_20230224_xml.zip"
             ],
             "2013-10-25": [
-                "https://www.volby.cz/opendata/ps2013/PS2013_reg_20230224_xml.zip",
+                "https://www.volby.cz/opendata/ps2013/PS2013_reg_20230428_xml.zip",
                 "https://www.volby.cz/opendata/ps2013/PS2013_cisel_20230224_xml.zip",
                 "https://www.volby.cz/opendata/ps2013/PS2013_data_20230224_xml.zip"
             ],
@@ -195,7 +195,6 @@
                     "TITULPRED",
                     "TITULZA",
                     "VEK",
-                    "POHLAVI",
                     "POVOLANI",
                     "BYDLISTEN",
                     "BYDLISTEK",
