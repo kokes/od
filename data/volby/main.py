@@ -14,7 +14,6 @@ from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
 import lxml.etree
-from dbfread import DBF
 
 RETRIES = 5
 DVOUKOLAK = ("senat", "prezident")
@@ -43,29 +42,20 @@ def load_remote_data(url: str):
 
 
 def extract_elements(zf, fn, nodename):
-    if fn.lower().endswith(".xml"):
-        with zf.open(fn) as f:
-            et = lxml.etree.iterparse(f)
-
-            for _, node in et:
-                if not node.tag.endswith(f"}}{nodename}"):
-                    continue
-
-                yield dict(
-                    (j.tag[j.tag.rindex("}") + 1 :], j.text)
-                    for j in node.iterchildren()
-                )
-                node.clear()
-
-    elif fn.lower().endswith("dbf"):
-        # dbfread neumi cist z filehandleru,
-        # https://github.com/olemb/dbfread/issues/25
-        with TemporaryDirectory() as tempdir:
-            tfn = zf.extract(fn, tempdir)
-            d = DBF(tfn, encoding="cp852")
-            yield from d
-    else:
+    if not fn.lower().endswith(".xml"):
         raise NotImplementedError(fn)
+
+    with zf.open(fn) as f:
+        et = lxml.etree.iterparse(f)
+
+        for _, node in et:
+            if not node.tag.endswith(f"}}{nodename}"):
+                continue
+
+            yield dict(
+                (j.tag[j.tag.rindex("}") + 1 :], j.text) for j in node.iterchildren()
+            )
+            node.clear()
 
 
 def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
@@ -164,6 +154,16 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                         el["MANDAT"] = (
                             "true" if el["MANDAT"] in ("A", "1", 1) else "false"
                         )
+
+                    # u nekterych voleb je uvedeno, ke kteremu dni plati, protoze
+                    # treba soud rozhodl o nejake zmene - tak pak muze byt datum
+                    # uvedeno dvakrat
+                    # 20181223 -> 2018-12-23
+                    if "DATUMVOLEB" in el:
+                        dv = el["DATUMVOLEB"]
+                        assert dv.isdigit(), dv
+                        assert len(dv) == 8, dv
+                        el["DATUMVOLEB"] = f"{dv[:4]}-{dv[4:6]}-{dv[6:8]}"
 
                     cw.writerow(
                         {
