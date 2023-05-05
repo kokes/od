@@ -327,9 +327,9 @@
                 "https://www.volby.cz/pls/kv2018/vysledky_okrsky?datumvoleb=20181005"
             ],
             "2022-09-23": [
-                "https://volby.cz/opendata/kv2022/KV2022reg20230326.zip",
-                "https://volby.cz/opendata/kv2022/KV2022ciselniky20230326.zip",
-                "https://volby.cz/opendata/kv2022/KV2022_data_20230326_xml.zip",
+                "https://www.volby.cz/opendata/kv2022/KV2022reg20230326_csv.zip",
+                "https://www.volby.cz/opendata/kv2022/KV2022ciselniky20230326_csv.zip",
+                "https://www.volby.cz/opendata/kv2022/KV2022_data_20230326_csv.zip",
                 "https://www.volby.cz/pls/kv2022/vysledky_okrsky?datumvoleb=20220923"
             ]
         },
@@ -352,7 +352,7 @@
             },
             "vysledky_obce": {
                 "fn": [
-                    "kvros.xml"
+                    "kvros.csv"
                 ],
                 "klic": "KV_ROS_ROW",
                 "schema": [
@@ -376,7 +376,7 @@
             },
             "kandidati": {
                 "fn": [
-                    "kvrk.xml"
+                    "kvrk.csv"
                 ],
                 "klic": "KV_REGKAND_ROW",
                 "schema": [
@@ -408,7 +408,7 @@
             },
             "strany": {
                 "fn": [
-                    "cvs.xml"
+                    "cvs.csv"
                 ],
                 "klic": "CVS_ROW",
                 "schema": [
@@ -421,11 +421,14 @@
                     "SLOZENI",
                     "ZKRATKA_OF",
                     "TYPVS"
+                ],
+                "vynechej": [
+                    "PLNYNAZEV"
                 ]
             },
             "obce": {
                 "fn": [
-                    "kvrzcoco.xml"
+                    "kvrzcoco.csv"
                 ],
                 "klic": "KV_RZCOCO_ROW",
                 "schema": [
@@ -475,7 +478,7 @@
             },
             "okrsky_prehled": {
                 "fn": [
-                    "kvt3.xml"
+                    "kvt3.csv"
                 ],
                 "klic": "KV_T3_ROW",
                 "schema": [
@@ -503,7 +506,7 @@
             },
             "okrsky_hlasy": {
                 "fn": [
-                    "kvhl.xml"
+                    "kvhl.csv"
                 ],
                 "klic": "KV_HL_ROW",
                 "schema": [
@@ -530,7 +533,7 @@
             },
             "nuts": {
                 "fn": [
-                    "cnumnuts.xml"
+                    "cnumnuts.csv"
                 ],
                 "klic": "CNUMNUTS_ROW",
                 "schema": [

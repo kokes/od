@@ -1,5 +1,6 @@
 import csv
 import functools
+import io
 import json
 import multiprocessing
 import os
@@ -39,23 +40,6 @@ def load_remote_data(url: str):
 
         with zipfile.ZipFile(tfn) as zf:
             yield zf
-
-
-def extract_elements(zf, fn, nodename):
-    if not fn.lower().endswith(".xml"):
-        raise NotImplementedError(fn)
-
-    with zf.open(fn) as f:
-        et = lxml.etree.iterparse(f)
-
-        for _, node in et:
-            if not node.tag.endswith(f"}}{nodename}"):
-                continue
-
-            yield dict(
-                (j.tag[j.tag.rindex("}") + 1 :], j.text) for j in node.iterchildren()
-            )
-            node.clear()
 
 
 def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
@@ -105,7 +89,10 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
     # bezny prubeh extrakce ze zipu
     with load_remote_data(url) as zf:
         for ff in map(lambda x: x.filename, zf.filelist):
-            patterns = [j for j in fnmap[volby].keys() if fnmatch(ff, j)]
+            # jsou tam soubory v "csv" adresari, ktere nechceme
+            if not ff.startswith("csv_od/"):
+                continue
+            patterns = [j for j in fnmap[volby].keys() if fnmatch(os.path.basename(ff), j)]
             if len(patterns) == 0:
                 continue
             if len(patterns) > 1:
@@ -116,7 +103,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
             os.makedirs(tdir, exist_ok=True)
             url_path = os.path.splitext(os.path.basename(urlparse(url).path))[0]
             tfn = os.path.join(
-                tdir, f"{datum}_{url_path}_{os.path.splitext(ff)[0]}.csv"
+                tdir, f"{datum}_{url_path}_{os.path.basename(ff)}"
             )
             if os.path.isfile(tfn):
                 raise IOError(f"necekany prepis souboru: {tfn}")
@@ -127,50 +114,58 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                     lineterminator="\n",
                 )
                 cw.writeheader()
-                for ne, el in enumerate(extract_elements(zf, ff, fmp["klic"])):
-                    if partial and ne > 1e4:
-                        break
-                    for k in fmp.get("vynechej", []):
-                        el.pop(k, None)
+                # TODO(PR): odstranit KLIC z mappingu
+                with zf.open(ff) as f:
+                    cr = csv.DictReader(io.TextIOWrapper(f))
+                    for ne, el in enumerate(cr):
+                        if partial and ne > 1e4:
+                            break
+                        for k in fmp.get("vynechej", []):
+                            el.pop(k, None)
 
-                    # TODO: TEST: HLASY_01 vs. HLASY_K1
-                    hk = [
-                        k
-                        for k in el.keys()
-                        if k.startswith("HLASY_") and k.partition("_")[-1].isdigit()
-                    ]
-                    if hk:
-                        hlasy = []
-                        for k in hk:
-                            hlasy.append(el[k] or 0)
-                            del el[k]
+                        # TODO: TEST: HLASY_01 vs. HLASY_K1
+                        hk = [
+                            k
+                            for k in el.keys()
+                            if k.startswith("HLASY_") and k.partition("_")[-1].isdigit()
+                        ]
+                        if hk:
+                            hlasy = []
+                            for k in hk:
+                                hlasy.append(el[k] or 0)
+                                del el[k]
 
-                        # pg array representation - '{a, b, c}'
-                        el["HLASY"] = "{{{}}}".format(",".join(map(str, hlasy)))
+                            # pg array representation - '{a, b, c}'
+                            el["HLASY"] = "{{{}}}".format(",".join(map(str, hlasy)))
 
-                    # mandat str -> bool
-                    if "MANDAT" in el and el["MANDAT"] not in ("", None):
-                        assert el["MANDAT"] in ("A", "1", "N", "0", 1, 0), el["MANDAT"]
-                        el["MANDAT"] = (
-                            "true" if el["MANDAT"] in ("A", "1", 1) else "false"
-                        )
+                        # mandat str -> bool
+                        if "MANDAT" in el and el["MANDAT"] not in ("", None):
+                            assert el["MANDAT"] in ("A", "1", "N", "0", 1, 0), el["MANDAT"]
+                            el["MANDAT"] = (
+                                "true" if el["MANDAT"] in ("A", "1", 1) else "false"
+                            )
 
-                    # u nekterych voleb je uvedeno, ke kteremu dni plati, protoze
-                    # treba soud rozhodl o nejake zmene - tak pak muze byt datum
-                    # uvedeno dvakrat
-                    # 20181223 -> 2018-12-23
-                    if "DATUMVOLEB" in el:
-                        dv = el["DATUMVOLEB"]
-                        assert dv.isdigit(), dv
-                        assert len(dv) == 8, dv
-                        el["DATUMVOLEB"] = f"{dv[:4]}-{dv[4:6]}-{dv[6:8]}"
+                        # u nekterych voleb je uvedeno, ke kteremu dni plati, protoze
+                        # treba soud rozhodl o nejake zmene - tak pak muze byt datum
+                        # uvedeno dvakrat
+                        # 20181223 -> 2018-12-23
+                        if "DATUMVOLEB" in el:
+                            dv = el["DATUMVOLEB"]
+                            assert dv.isdigit(), dv
+                            assert len(dv) == 8, dv
+                            el["DATUMVOLEB"] = f"{dv[:4]}-{dv[4:6]}-{dv[6:8]}"
 
-                    cw.writerow(
-                        {
-                            "DATUM": datum,
-                            **el,
-                        }
-                    )
+                        try:
+                            cw.writerow(
+                                {
+                                    "DATUM": datum,
+                                    **el,
+                                }
+                            )
+                        except:
+                            # TODO(PR): odstranit, az vse oddebugujeme
+                            print("failnuto u", url, ff)
+                            raise
 
 
 def main(outdir: str, partial: bool = False):
@@ -182,18 +177,27 @@ def main(outdir: str, partial: bool = False):
     jobs = []
     fnmap = defaultdict(dict)
     for volby, mp in mps.items():
+        if volby != "komunalni":
+            continue
         for ds, spec in mp["ds"].items():
             for fn in spec["fn"]:
                 assert fn not in fnmap, fn
                 fnmap[volby][fn] = (ds, spec)
 
         for datum, urls in mp["url"].items():
+            if not datum.startswith("2022"):
+                continue
             if partial and datum != sorted(mp["url"].keys())[-1]:
                 continue
             for url in urls:
+                if "datumvoleb" in url:
+                    continue
                 jobs.append((url, volby, datum))
 
+    print(f"{len(jobs)} jobs")
     job_processor = functools.partial(process_url, outdir, partial, fnmap)
+    # for job in jobs:
+    #     job_processor(*job)
     with multiprocessing.Pool(ncpu) as pool:
         pool.starmap(job_processor, jobs)
 
