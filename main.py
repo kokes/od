@@ -145,7 +145,7 @@ if __name__ == "__main__":
                         errmap = dict(
                             (k, v) for k, v in zip(header, db_column_names) if k != v
                         )
-                        warnings.warn(f"databáze očekává jiné sloupce: {errmap}")
+                        warnings.warn(f"tabulka {table.name} očekává jiné sloupce: {errmap}")
 
                     for j, row in enumerate(cr):
                         if len(row) != len(db_column_names):
