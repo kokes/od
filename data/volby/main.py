@@ -177,16 +177,12 @@ def main(outdir: str, partial: bool = False):
     jobs = []
     fnmap = defaultdict(dict)
     for volby, mp in mps.items():
-        if volby != "komunalni":
-            continue
         for ds, spec in mp["ds"].items():
             for fn in spec["fn"]:
                 assert fn not in fnmap, fn
                 fnmap[volby][fn] = (ds, spec)
 
         for datum, urls in mp["url"].items():
-            if not datum.startswith("2022"):
-                continue
             if partial and datum != sorted(mp["url"].keys())[-1]:
                 continue
             for url in urls:

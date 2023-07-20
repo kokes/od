@@ -2,20 +2,20 @@
     "prezident": {
         "url": {
             "2013-01-11": [
-                "https://www.volby.cz/opendata/prez2013/PREZ2013reg20130126.zip",
-                "https://www.volby.cz/opendata/prez2013/PREZ2013ciselniky20130126.zip",
-                "https://volby.cz/opendata/prez2013/PREZ2013data20130126.zip"
+                "https://www.volby.cz/opendata/prez2013/PREZ2013reg20130126_csv.zip",
+                "https://www.volby.cz/opendata/prez2013/PREZ2013data20130126_csv.zip",
+                "https://www.volby.cz/opendata/prez2013/PREZ2013ciselniky20130126_csv.zip"
             ],
             "2018-01-12": [
-                "https://www.volby.cz/opendata/prez2018/PREZ2018reg20180127.zip",
-                "https://www.volby.cz/opendata/prez2018/PREZ2018ciselniky20171215.zip",
-                "https://volby.cz/opendata/prez2018/PREZ2018data20180127_xml_kolo2.zip",
+                "https://www.volby.cz/opendata/prez2018/PREZ2018reg20180127_csv.zip",
+                "https://www.volby.cz/opendata/prez2018/PREZ2018data20180127_csv_kolo2.zip",
+                "https://www.volby.cz/opendata/prez2018/PREZ2018ciselniky20171215_csv.zip",
                 "https://www.volby.cz/pls/prez2018/vysledky_okrsky"
             ],
             "2023-01-13": [
-                "https://www.volby.cz/opendata/prez2023nss/PREZ2023reg20230222_NSS.zip",
-                "https://www.volby.cz/opendata/prez2023nss/PREZ2023ciselniky20230109.zip",
-                "https://www.volby.cz/opendata/prez2023nss/PREZ2023_data_20230222_xml_NSS.zip",
+                "https://www.volby.cz/opendata/prez2023nss/PREZ2023reg20230222_csv_NSS.zip",
+                "https://www.volby.cz/opendata/prez2023nss/PREZ2023ciselniky20230109_csv.zip",
+                "https://www.volby.cz/opendata/prez2023nss/PREZ2023_data_20230222_csv_NSS.zip",
                 "https://www.volby.cz/pls/prez2023/vysledky_okrsky"
             ]
         },
@@ -35,7 +35,7 @@
             },
             "kandidati": {
                 "fn": [
-                    "perk.xml"
+                    "perk.csv"
                 ],
                 "klic": "PE_REGKAND_ROW",
                 "schema": [
@@ -60,7 +60,7 @@
             },
             "strany": {
                 "fn": [
-                    "cns.xml"
+                    "cns.csv"
                 ],
                 "klic": "CNS_ROW",
                 "schema": [
@@ -72,7 +72,7 @@
             },
             "okrsky": {
                 "fn": [
-                    "pet1.xml"
+                    "pet1.csv"
                 ],
                 "klic": "PE_T1_ROW",
                 "schema": [
@@ -100,7 +100,7 @@
             },
             "nuts": {
                 "fn": [
-                    "cnumnuts.xml"
+                    "cnumnuts.csv"
                 ],
                 "klic": "CNUMNUTS_ROW",
                 "schema": [
@@ -113,7 +113,7 @@
             },
             "obce": {
                 "fn": [
-                    "pecoco.xml"
+                    "pecoco.csv"
                 ],
                 "klic": "PE_COCO_ROW",
                 "schema": [
@@ -135,35 +135,35 @@
     "psp": {
         "url": {
             "2002-06-14": [
-                "https://www.volby.cz/opendata/ps2002/PS2002_reg_20230428_xml.zip",
-                "https://www.volby.cz/opendata/ps2002/PS2002_cisel_20230224_xml.zip",
-                "https://www.volby.cz/opendata/ps2002/PS2002_data_20230224_xml.zip"
+                "https://www.volby.cz/opendata/ps2002/PS2002_reg_20230428_csv.zip",
+                "https://www.volby.cz/opendata/ps2002/PS2002_cisel_20230224_csv.zip",
+                "https://www.volby.cz/opendata/ps2002/PS2002_data_20230224_csv.zip"
             ],
             "2006-06-02": [
-                "https://www.volby.cz/opendata/ps2006/PS2006_reg_20230428_xml.zip",
-                "https://www.volby.cz/opendata/ps2006/PS2006_cisel_20230224_xml.zip",
-                "https://www.volby.cz/opendata/ps2006/PS2006_data_20230224_xml.zip"
+                "https://www.volby.cz/opendata/ps2006/PS2006_reg_20230428_csv.zip",
+                "https://www.volby.cz/opendata/ps2006/PS2006_cisel_20230224_csv.zip",
+                "https://www.volby.cz/opendata/ps2006/PS2006_data_20230224_csv.zip"
             ],
             "2010-05-29": [
-                "https://www.volby.cz/opendata/ps2010/PS2010_reg_20230428_xml.zip",
-                "https://www.volby.cz/opendata/ps2010/PS2010_cisel_20230224_xml.zip",
-                "https://www.volby.cz/opendata/ps2010/PS2010_data_20230224_xml.zip"
+                "https://www.volby.cz/opendata/ps2010/PS2010_reg_20230428_csv.zip",
+                "https://www.volby.cz/opendata/ps2010/PS2010_cisel_20230224_csv.zip",
+                "https://www.volby.cz/opendata/ps2010/PS2010_data_20230224_csv.zip"
             ],
             "2013-10-25": [
-                "https://www.volby.cz/opendata/ps2013/PS2013_reg_20230428_xml.zip",
-                "https://www.volby.cz/opendata/ps2013/PS2013_cisel_20230224_xml.zip",
-                "https://www.volby.cz/opendata/ps2013/PS2013_data_20230224_xml.zip"
+                "https://www.volby.cz/opendata/ps2013/PS2013_reg_20230428_csv.zip",
+                "https://www.volby.cz/opendata/ps2013/PS2013_cisel_20230224_csv.zip",
+                "https://www.volby.cz/opendata/ps2013/PS2013_data_20230224_csv.zip"
             ],
             "2017-10-20": [
-                "https://www.volby.cz/opendata/ps2017nss/PS2017reg20171122.zip",
-                "https://www.volby.cz/opendata/ps2017nss/PS2017ciselniky20170905.zip",
-                "https://volby.cz/opendata/ps2017nss/PS2017data20171122.zip",
+                "https://www.volby.cz/opendata/ps2017nss/PS2017reg20171122_csv.zip",
+                "https://www.volby.cz/opendata/ps2017nss/PS2017data20171122_csv.zip",
+                "https://www.volby.cz/opendata/ps2017nss/PS2017ciselniky20170905_csv.zip",
                 "https://www.volby.cz/pls/ps2017/vysledky_okrsky"
             ],
             "2021-10-08": [
-                "https://www.volby.cz/opendata/ps2021/PS2021ciselniky20211006.zip",
-                "https://www.volby.cz/opendata/ps2021/PS2021reg20211010.zip",
-                "https://www.volby.cz/opendata/ps2021/PS2021_data_20211010_xml.zip",
+                "https://www.volby.cz/opendata/ps2021/PS2021reg20211111_csv.zip",
+                "https://www.volby.cz/opendata/ps2021/PS2021_data_20211010_csv.zip",
+                "https://www.volby.cz/opendata/ps2021/PS2021ciselniky20211006_csv.zip",
                 "https://www.volby.cz/pls/ps2021/vysledky_okrsky"
             ]
         },
@@ -183,7 +183,7 @@
             },
             "kandidati": {
                 "fn": [
-                    "psrk.xml"
+                    "psrk.csv"
                 ],
                 "klic": "PS_REGKAND_ROW",
                 "schema": [
@@ -212,7 +212,7 @@
             },
             "strany": {
                 "fn": [
-                    "psrkl.xml"
+                    "psrkl.csv"
                 ],
                 "klic": "PS_RKL_ROW",
                 "schema": [
@@ -235,7 +235,7 @@
             },
             "okrsky_hlasy": {
                 "fn": [
-                    "pst4p.xml"
+                    "pst4p.csv"
                 ],
                 "klic": "PS_T4P_ROW",
                 "schema": [
@@ -262,7 +262,7 @@
             },
             "okrsky_prehled": {
                 "fn": [
-                    "pst4.xml"
+                    "pst4.csv"
                 ],
                 "klic": "PS_T4_ROW",
                 "schema": [
@@ -285,7 +285,7 @@
             },
             "nuts": {
                 "fn": [
-                    "cnumnuts.xml"
+                    "cnumnuts.csv"
                 ],
                 "klic": "CNUMNUTS_ROW",
                 "schema": [
@@ -301,29 +301,29 @@
     "komunalni": {
         "url": {
             "2002-11-01": [
-                "https://www.volby.cz/opendata/kv2002/KV2002_reg_20230224_xml.zip",
-                "https://www.volby.cz/opendata/kv2002/KV2002_cisel_20230224_xml.zip",
-                "https://www.volby.cz/opendata/kv2002/KV2002_data_20230224_xml.zip"
+                "https://www.volby.cz/opendata/kv2002/KV2002_reg_20230224_csv.zip",
+                "https://www.volby.cz/opendata/kv2002/KV2002_cisel_20230224_csv.zip",
+                "https://www.volby.cz/opendata/kv2002/KV2002_data_20230224_csv.zip"
             ],
             "2006-10-20": [
-                "https://volby.cz/opendata/kv2006/KV2006_reg_20230224_xml.zip",
-                "https://volby.cz/opendata/kv2006/KV2006_cisel_20230224_xml.zip",
-                "https://volby.cz/opendata/kv2006/KV2006_data_20230224_xml.zip"
+                "https://www.volby.cz/opendata/kv2006/KV2006_reg_20230224_csv.zip",
+                "https://www.volby.cz/opendata/kv2006/KV2006_cisel_20230224_csv.zip",
+                "https://www.volby.cz/opendata/kv2006/KV2006_data_20230224_csv.zip"
             ],
             "2010-10-15": [
-                "https://www.volby.cz/opendata/kv2010/KV2010_reg_20230224_xml.zip",
-                "https://www.volby.cz/opendata/kv2010/KV2010_cisel_20230224_xml.zip",
-                "https://www.volby.cz/opendata/kv2010/KV2010_data_20230224_xml.zip"
+                "https://www.volby.cz/opendata/kv2010/KV2010_reg_20230224_csv.zip",
+                "https://www.volby.cz/opendata/kv2010/KV2010_cisel_20230224_csv.zip",
+                "https://www.volby.cz/opendata/kv2010/KV2010_data_20230224_csv.zip"
             ],
             "2014-10-10": [
-                "https://www.volby.cz/opendata/kv2014/KV2014_reg_20230224_xml.zip",
-                "https://www.volby.cz/opendata/kv2014/KV2014_cisel_20230224_xml.zip",
-                "https://www.volby.cz/opendata/kv2014/KV2014_data_20230224_xml.zip"
+                "https://www.volby.cz/opendata/kv2014/KV2014_reg_20230224_csv.zip",
+                "https://www.volby.cz/opendata/kv2014/KV2014_cisel_20230224_csv.zip",
+                "https://www.volby.cz/opendata/kv2014/KV2014_data_20230224_csv.zip"
             ],
             "2018-10-05": [
-                "https://www.volby.cz/opendata/kv2018/KV2018_reg_20230224_xml.zip",
-                "https://www.volby.cz/opendata/kv2018/KV2018_cisel_20230224_xml.zip",
-                "https://www.volby.cz/opendata/kv2018/KV2018_data_20230224_xml.zip",
+                "https://www.volby.cz/opendata/kv2018/KV2018_reg_20230224_csv.zip",
+                "https://www.volby.cz/opendata/kv2018/KV2018_cisel_20230224_csv.zip",
+                "https://www.volby.cz/opendata/kv2018/KV2018_data_20230224_csv.zip",
                 "https://www.volby.cz/pls/kv2018/vysledky_okrsky?datumvoleb=20181005"
             ],
             "2022-09-23": [
@@ -549,33 +549,34 @@
     "kraje": {
         "url": {
             "2000-11-12": [
-                "https://www.volby.cz/opendata/kz2000/KZ2000_reg_20230223_xml.zip",
-                "https://www.volby.cz/opendata/kz2000/KZ2000_cisel_20230223_xml.zip",
-                "https://www.volby.cz/opendata/kz2000/KZ2000_data_20230223_xml.zip"
+                "https://www.volby.cz/opendata/kz2000/KZ2000_reg_20230223_csv.zip",
+                "https://www.volby.cz/opendata/kz2000/KZ2000_cisel_20230223_csv.zip",
+                "https://www.volby.cz/opendata/kz2000/KZ2000_data_20230223_csv.zip"
             ],
             "2004-11-05": [
-                "https://www.volby.cz/opendata/kz2004/KZ2004_reg_20230223_xml.zip",
-                "https://www.volby.cz/opendata/kz2004/KZ2004_cisel_20230223_xml.zip",
-                "https://www.volby.cz/opendata/kz2004/KZ2004_data_20230223_xml.zip"
+                "https://www.volby.cz/opendata/kz2004/KZ2004_cisel_20230223_csv.zip",
+                "https://www.volby.cz/opendata/kz2004/KZ2004_reg_20230223_csv.zip",
+                "https://www.volby.cz/opendata/kz2004/KZ2004_data_20230223_csv.zip"
             ],
             "2008-10-17": [
-                "https://www.volby.cz/opendata/kz2008/KZ2008_reg_20230223_xml.zip",
-                "https://www.volby.cz/opendata/kz2008/KZ2008_cisel_20230223_xml.zip",
-                "https://www.volby.cz/opendata/kz2008/KZ2008_data_20230223_xml.zip"
+                "https://www.volby.cz/opendata/kz2008/KZ2008_reg_20230223_csv.zip",
+                "https://www.volby.cz/opendata/kz2008/KZ2008_cisel_20230223_csv.zip",
+                "https://www.volby.cz/opendata/kz2008/KZ2008_data_20230223_csv.zip"
             ],
             "2012-10-12": [
-                "https://volby.cz/opendata/kz2012/KZ2012_data_20230223_xml.zip",
-                "https://volby.cz/opendata/kz2012/KZ2012_cisel_20230223_xml.zip"
+                "https://www.volby.cz/opendata/kz2012/KZ2012_reg_20230223_csv.zip",
+                "https://www.volby.cz/opendata/kz2012/KZ2012_cisel_20230223_csv.zip",
+                "https://www.volby.cz/opendata/kz2012/KZ2012_data_20230223_csv.zip"
             ],
             "2016-10-07": [
-                "https://volby.cz/opendata/kz2016/KZ2016_reg_20230223_xml.zip",
-                "https://volby.cz/opendata/kz2016/KZ2016_cisel_20230223_xml.zip",
-                "https://volby.cz/opendata/kz2016/KZ2016_data_20230223_xml.zip"
+                "https://www.volby.cz/opendata/kz2016/KZ2016_reg_20230223_csv.zip",
+                "https://www.volby.cz/opendata/kz2016/KZ2016_cisel_20230223_csv.zip",
+                "https://www.volby.cz/opendata/kz2016/KZ2016_data_20230223_csv.zip"
             ],
             "2020-10-02": [
-                "https://volby.cz/opendata/kz2020/KZ2020reg20201004a.zip",
-                "https://volby.cz/opendata/kz2020/KZ2020ciselniky20201002.zip",
-                "https://volby.cz/opendata/kz2020/KZ2020_data_20201004a_xml.zip",
+                "https://www.volby.cz/opendata/kz2020/KZ2020reg20201004a_csv.zip",
+                "https://www.volby.cz/opendata/kz2020/KZ2020_data_20201004a_csv.zip",
+                "https://www.volby.cz/opendata/kz2020/KZ2020ciselniky20200918_csv.zip",
                 "https://www.volby.cz/pls/kz2020/vysledky_okrsky"
             ]
         },
@@ -595,7 +596,7 @@
             },
             "kandidati": {
                 "fn": [
-                    "kzrk.xml"
+                    "kzrk.csv"
                 ],
                 "klic": "KZ_REGKAND_ROW",
                 "schema": [
@@ -624,7 +625,7 @@
             },
             "strany_cr": {
                 "fn": [
-                    "kzrkl_s.xml"
+                    "kzrkl_s.csv"
                 ],
                 "klic": "KZ_RKL_SOUHRN_ROW",
                 "schema": [
@@ -646,7 +647,7 @@
             },
             "strany_navrhujici": {
                 "fn": [
-                    "cns.xml"
+                    "cns.csv"
                 ],
                 "klic": "CNS_ROW",
                 "schema": [
@@ -658,7 +659,7 @@
             },
             "strany_kraje": {
                 "fn": [
-                    "kzrkl.xml"
+                    "kzrkl.csv"
                 ],
                 "klic": "KZ_RKL_ROW",
                 "schema": [
@@ -679,7 +680,7 @@
             },
             "obce": {
                 "fn": [
-                    "kzcoco.xml"
+                    "kzcoco.csv"
                 ],
                 "klic": "KZ_COCO_ROW",
                 "schema": [
@@ -699,7 +700,7 @@
             },
             "okrsky_prehled": {
                 "fn": [
-                    "kzt6.xml"
+                    "kzt6.csv"
                 ],
                 "klic": "KZ_T6_ROW",
                 "schema": [
@@ -722,8 +723,8 @@
             },
             "okrsky_hlasy": {
                 "fn": [
-                    "kzt6p-*.xml",
-                    "kzt6p.xml"
+                    "kzt6p-*.csv",
+                    "kzt6p.csv"
                 ],
                 "klic": "KZ_T6P_ROW",
                 "schema": [
@@ -754,30 +755,30 @@
     "ep": {
         "url": {
             "2004-06-11": [
-                "https://www.volby.cz/opendata/ep2004/EP2004_reg_20230223_xml.zip",
-                "https://www.volby.cz/opendata/ep2004/EP2004_cisel_20230223_xml.zip",
-                "https://www.volby.cz/opendata/ep2004/EP2004_data_20230223_xml.zip"
+                "https://www.volby.cz/opendata/ep2004/EP2004_reg_20230223_csv.zip",
+                "https://www.volby.cz/opendata/ep2004/EP2004_cisel_20230223_csv.zip",
+                "https://www.volby.cz/opendata/ep2004/EP2004_data_20230223_csv.zip"
             ],
             "2009-06-05": [
-                "https://www.volby.cz/opendata/ep2009/EP2009_reg_20230223_xml.zip",
-                "https://www.volby.cz/opendata/ep2009/EP2009_cisel_20230223_xml.zip",
-                "https://www.volby.cz/opendata/ep2009/EP2009_data_20230223_xml.zip"
+                "https://www.volby.cz/opendata/ep2009/EP2009_reg_20230223_csv.zip",
+                "https://www.volby.cz/opendata/ep2009/EP2009_cisel_20230223_csv.zip",
+                "https://www.volby.cz/opendata/ep2009/EP2009_data_20230223_csv.zip"
             ],
             "2014-05-23": [
-                "https://volby.cz/opendata/ep2014/EP2014_reg_20230223_xml.zip",
-                "https://volby.cz/opendata/ep2014/EP2014_cisel_20230223_xml.zip",
-                "https://volby.cz/opendata/ep2014/EP2014_data_20230223_xml.zip"
+                "https://www.volby.cz/opendata/ep2014/EP2014_reg_20230223_csv.zip",
+                "https://www.volby.cz/opendata/ep2014/EP2014_cisel_20230223_csv.zip",
+                "https://www.volby.cz/opendata/ep2014/EP2014_data_20230223_csv.zip"
             ],
             "2019-05-24": [
-                "https://www.volby.cz/opendata/ep2019/EP2019reg20190526.zip",
-                "https://www.volby.cz/opendata/ep2019/EP2019ciselniky20190513.zip",
-                "https://volby.cz/opendata/ep2019/EP2019data20190526_xml.zip"
+                "https://www.volby.cz/opendata/ep2019/EP2019reg20190526_csv.zip",
+                "https://www.volby.cz/opendata/ep2019/EP2019data20190526_csv.zip",
+                "https://www.volby.cz/opendata/ep2019/EP2019ciselniky20190513_csv.zip"
             ]
         },
         "ds": {
             "kandidati": {
                 "fn": [
-                    "eprk.xml"
+                    "eprk.csv"
                 ],
                 "klic": "EP_REGKAND_ROW",
                 "schema": [
@@ -805,7 +806,7 @@
             },
             "strany": {
                 "fn": [
-                    "eprkl.xml"
+                    "eprkl.csv"
                 ],
                 "klic": "EP_RKL_ROW",
                 "schema": [
@@ -827,7 +828,7 @@
             },
             "okrsky_prehled": {
                 "fn": [
-                    "ept2.xml"
+                    "ept2.csv"
                 ],
                 "klic": "EP_T2_ROW",
                 "schema": [
@@ -850,7 +851,7 @@
             },
             "okrsky_hlasy": {
                 "fn": [
-                    "ept2p.xml"
+                    "ept2p.csv"
                 ],
                 "klic": "EP_T2P_ROW",
                 "schema": [
