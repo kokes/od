@@ -2,6 +2,7 @@ import csv
 import functools
 import io
 import json
+import logging
 import multiprocessing
 import os
 import shutil
@@ -168,7 +169,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
 
                         miss = set(cw.fieldnames) - set(el)
                         if miss:
-                            raise ValueError(f"chybejici sloupce v datech: {miss}")
+                            logging.info("chybejici sloupce v datech: %s", miss)
 
                         try:
                             cw.writerow(el)
