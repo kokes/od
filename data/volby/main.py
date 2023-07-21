@@ -19,12 +19,15 @@ import lxml.etree
 RETRIES = 5
 DVOUKOLAK = ("senat", "prezident")
 
+CACHE_DIR = "cache" # TODO(PR): zrusit
+
 
 @contextmanager
 def load_remote_data(url: str):
+    os.makedirs(CACHE_DIR, exist_ok=True)
     with TemporaryDirectory() as tmpdir:
         fn = os.path.basename(url)
-        tfn = os.path.join(tmpdir, fn)
+        tfn = os.path.join(CACHE_DIR, fn)
         if not os.path.isfile(tfn):
             req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
             for j in range(RETRIES):
@@ -43,6 +46,7 @@ def load_remote_data(url: str):
 
 
 def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
+    print("procesuju", url)
     # specialni handling davkovych exportu (nejsou v zipu)
     if not url.endswith(".zip"):
         ds, fmp = fnmap[volby]["davky.xml"]  # 'davky.xml' je dummy hodnota
@@ -177,6 +181,9 @@ def main(outdir: str, partial: bool = False):
     jobs = []
     fnmap = defaultdict(dict)
     for volby, mp in mps.items():
+        print(volby)
+        if volby != "senat":
+            continue
         for ds, spec in mp["ds"].items():
             for fn in spec["fn"]:
                 assert fn not in fnmap, fn
@@ -192,10 +199,10 @@ def main(outdir: str, partial: bool = False):
 
     print(f"{len(jobs)} jobs")
     job_processor = functools.partial(process_url, outdir, partial, fnmap)
-    # for job in jobs:
-    #     job_processor(*job)
-    with multiprocessing.Pool(ncpu) as pool:
-        pool.starmap(job_processor, jobs)
+    for job in jobs:
+        job_processor(*job)
+    # with multiprocessing.Pool(ncpu) as pool:
+    #     pool.starmap(job_processor, jobs)
 
 
 if __name__ == "__main__":
