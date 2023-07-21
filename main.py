@@ -122,6 +122,7 @@ if __name__ == "__main__":
                         os.path.join(dir_cand, basename)
                     )
             else:
+                continue
                 raise IOError(f"neexistujou data pro {module_name}.{table.name}")
 
         for table in schemas[module_name]:
@@ -184,7 +185,7 @@ if __name__ == "__main__":
             if engine.name == "postgresql":
                 dbtable = Table(
                     table.name,
-                    MetaData(engine),
+                    table.metadata,
                     schema=table.schema,
                     autoload_with=engine,
                 )

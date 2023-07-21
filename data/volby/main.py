@@ -159,13 +159,20 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                             assert len(dv) == 8, dv
                             el["DATUMVOLEB"] = f"{dv[:4]}-{dv[4:6]}-{dv[6:8]}"
 
+                        if datum != "*":
+                            el["DATUM"] = datum
+                        # v pripade senatu mame bulk data za vsechno, takze musime
+                        # inferovat datum voleb jen z dat, ne z mappingu
+                        if volby == "senat" and datum == "*" and "DATUMVOLEB" in el:
+                            el["DATUM"] = el["DATUMVOLEB"]
+                            del el["DATUMVOLEB"]
+
+                        miss = set(cw.fieldnames) - set(el)
+                        if miss:
+                            raise ValueError("chybejici sloupce v datech: {miss}")
+
                         try:
-                            cw.writerow(
-                                {
-                                    "DATUM": datum,
-                                    **el,
-                                }
-                            )
+                            cw.writerow(el)
                         except:
                             # TODO(PR): odstranit, az vse oddebugujeme
                             print("failnuto u", url, ff)

@@ -880,88 +880,21 @@
     },
     "senat": {
         "url": {
-            "2008-10-17": [
-                "https://volby.cz/opendata/se2008/SE2008reg.zip",
-                "https://volby.cz/opendata/se2008/SE2008ciselniky.zip",
-                "https://www.volby.cz/opendata/se2008/SE2008data.zip"
-            ],
-            "2010-10-15": [
-                "https://volby.cz/opendata/se2010/SE2010reg.zip",
-                "https://volby.cz/opendata/se2010/SE2010ciselniky.zip",
-                "https://www.volby.cz/opendata/se2010/SE2010data.zip"
-            ],
-            "2011-03-18": [
-                "https://volby.cz/opendata/se2011/SE2011reg.zip",
-                "https://volby.cz/opendata/se2011/SE2011ciselniky.zip",
-                "https://www.volby.cz/opendata/se2011/SE2011data.zip"
-            ],
-            "2012-10-12": [
-                "https://volby.cz/opendata/se2012/SE2012reg.zip",
-                "https://volby.cz/opendata/se2012/SE2012ciselniky.zip",
-                "https://www.volby.cz/opendata/se2012/SE2012data.zip"
-            ],
-            "2014-01-10": [
-                "https://volby.cz/opendata/se2014leden/SE2014LEDENreg.zip",
-                "https://volby.cz/opendata/se2014leden/SE2014LEDENciselniky.zip",
-                "https://www.volby.cz/opendata/se2014leden/SE2014LEDENdata.zip"
-            ],
-            "2014-09-19": [
-                "https://volby.cz/opendata/se2014zari/SE2014ZARIreg20140927.zip",
-                "https://volby.cz/opendata/se2014zari/SE2014ZARIciselniky20140901.zip",
-                "https://www.volby.cz/opendata/se2014zari/SE2014ZARIdata20140927.zip"
-            ],
-            "2014-10-10": [
-                "https://volby.cz/opendata/se2014/SE2014reg20141018.zip",
-                "https://volby.cz/opendata/se2014/SE2014ciselniky20141008.zip",
-                "https://www.volby.cz/opendata/se2014/SE2014data20141018.zip"
-            ],
-            "2016-10-07": [
-                "https://volby.cz/opendata/se2016/SE2016reg20161015.zip",
-                "https://volby.cz/opendata/se2016/SE2016ciselniky20161005.zip",
-                "https://www.volby.cz/opendata/se2016/SE2016data20161015.zip"
-            ],
-            "2017-01-27": [
-                "https://volby.cz/opendata/se2017/SE2017reg20170128.zip",
-                "https://volby.cz/opendata/se2017/SE2017ciselniky20170125.zip",
-                "https://www.volby.cz/opendata/se2017/SE2017data20170128.zip"
-            ],
-            "2018-01-05": [
-                "https://volby.cz/opendata/se2018leden/SE2018reg20180113.zip",
-                "https://volby.cz/opendata/se2018leden/SE2017ciselniky20171222.zip",
-                "https://www.volby.cz/opendata/se2018leden/SE2018data20180113.zip"
-            ],
-            "2018-05-18": [
-                "https://volby.cz/opendata/se2018kveten/SE2018reg20180526.zip",
-                "https://volby.cz/opendata/se2018kveten/SE2018ciselniky20180519.zip",
-                "https://www.volby.cz/opendata/se2018kveten/SE2018data20180526.zip"
-            ],
-            "2018-10-05": [
-                "https://volby.cz/opendata/se2018/SE2018reg20181013.zip",
-                "https://volby.cz/opendata/se2018/SE2018ciselnik20181004.zip",
-                "https://www.volby.cz/opendata/se2018/SENAT2018_data_20181013_k2_xml.zip"
+            "*": [
+                "https://www.volby.cz/opendata/senat_vse/SENAT_reg_20230227_csv.zip",
+                "https://www.volby.cz/opendata/senat_vse/SENAT_cisel_20230227_csv.zip",
+                "https://www.volby.cz/opendata/senat_vse/SENAT_data_20230227_csv.zip"
             ],
             "2019-04-05": [
-                "https://volby.cz/opendata/se2019duben/SE2019reg20190413.zip",
-                "https://volby.cz/opendata/se2019duben/SE2019ciselnik20190403.zip",
-                "https://www.volby.cz/opendata/se2019duben/SENAT2019_data_20190413_k1_xml.zip",
                 "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20190405"
             ],
             "2020-06-06": [
-                "https://volby.cz/opendata/se2020cerven/SE2020reg20200613.zip",
-                "https://volby.cz/opendata/se2020cerven/SE2020ciselnik20200603.zip",
-                "https://volby.cz/opendata/se2020cerven/SENAT2020_data_20200613_k2_xml.zip",
                 "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20200605"
             ],
             "2020-10-02": [
-                "https://volby.cz/opendata/se2020/SE2020reg20201010.zip",
-                "https://volby.cz/opendata/se2020/SE2020ciselnik20200918.zip",
-                "https://volby.cz/opendata/se2020/SENAT2020_data_20201010_k2_xml.zip",
                 "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20201002"
             ],
             "2022-09-23": [
-                "https://www.volby.cz/opendata/se2022/SE2022reg20221001.zip",
-                "https://www.volby.cz/opendata/se2022/SE2022ciselniky20220916.zip",
-                "https://www.volby.cz/opendata/se2022/SE2022_data_20221001_k2_xml.zip",
                 "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20220923"
             ]
         },
@@ -982,7 +915,7 @@
             },
             "kandidati": {
                 "fn": [
-                    "serk.xml"
+                    "serk.csv"
                 ],
                 "klic": "SE_REGKAND_ROW",
                 "schema": [
@@ -1015,7 +948,7 @@
             },
             "obvody": {
                 "fn": [
-                    "secobv.xml"
+                    "secobv.csv"
                 ],
                 "klic": "SE_COBV_ROW",
                 "schema": [
@@ -1028,29 +961,20 @@
             },
             "okrsky": {
                 "fn": [
-                    "set5-1.xml",
-                    "set5-2.xml",
-                    "set5.xml"
+                    "set5-1.csv",
+                    "set5-2.csv",
+                    "set5.csv"
                 ],
                 "klic": "SE_T5_ROW",
                 "schema": [
-                    "TYP_FORM",
-                    "OPRAVA",
-                    "CHYBA",
                     "OBEC",
                     "OKRSEK",
-                    "KC_1",
                     "OBVOD",
                     "KOLO",
                     "VOL_SEZNAM",
                     "VYD_OBALKY",
                     "ODEVZ_OBAL",
-                    "PL_HL_CELK",
-                    "KC_2",
-                    "KC_3",
-                    "KC_4",
-                    "POSL_KAND",
-                    "KC_SUM"
+                    "PL_HL_CELK"
                 ],
                 "extra_schema": [
                     "HLASY"
