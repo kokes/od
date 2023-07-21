@@ -159,8 +159,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                             assert len(dv) == 8, dv
                             el["DATUMVOLEB"] = f"{dv[:4]}-{dv[4:6]}-{dv[6:8]}"
 
-                        if datum != "*":
-                            el["DATUM"] = datum
+                        el["DATUM"] = datum if datum != "*" else None
                         # v pripade senatu mame bulk data za vsechno, takze musime
                         # inferovat datum voleb jen z dat, ne z mappingu
                         if volby == "senat" and datum == "*" and "DATUMVOLEB" in el:
@@ -169,7 +168,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
 
                         miss = set(cw.fieldnames) - set(el)
                         if miss:
-                            raise ValueError("chybejici sloupce v datech: {miss}")
+                            raise ValueError(f"chybejici sloupce v datech: {miss}")
 
                         try:
                             cw.writerow(el)
@@ -189,8 +188,6 @@ def main(outdir: str, partial: bool = False):
     fnmap = defaultdict(dict)
     for volby, mp in mps.items():
         print(volby)
-        if volby != "senat":
-            continue
         for ds, spec in mp["ds"].items():
             for fn in spec["fn"]:
                 assert fn not in fnmap, fn
