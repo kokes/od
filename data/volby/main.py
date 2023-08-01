@@ -93,8 +93,9 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
             # jsou tam soubory v "csv" adresari, ktere nechceme
             if not ff.startswith("csv_od/"):
                 continue
-            patterns = [j for j in fnmap[volby].keys()
-                        if fnmatch(os.path.basename(ff), j)]
+            patterns = [
+                j for j in fnmap[volby].keys() if fnmatch(os.path.basename(ff), j)
+            ]
             if len(patterns) == 0:
                 continue
             if len(patterns) > 1:
@@ -104,9 +105,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
             tdir = os.path.join(outdir, f"{volby}_{ds}")
             os.makedirs(tdir, exist_ok=True)
             url_path = os.path.splitext(os.path.basename(urlparse(url).path))[0]
-            tfn = os.path.join(
-                tdir, f"{datum}_{url_path}_{os.path.basename(ff)}"
-            )
+            tfn = os.path.join(tdir, f"{datum}_{url_path}_{os.path.basename(ff)}")
             if os.path.isfile(tfn):
                 raise IOError(f"necekany prepis souboru: {tfn}")
             with open(tfn, "wt", encoding="utf8") as fw:
