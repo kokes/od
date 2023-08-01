@@ -93,7 +93,8 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
             # jsou tam soubory v "csv" adresari, ktere nechceme
             if not ff.startswith("csv_od/"):
                 continue
-            patterns = [j for j in fnmap[volby].keys() if fnmatch(os.path.basename(ff), j)]
+            patterns = [j for j in fnmap[volby].keys()
+                        if fnmatch(os.path.basename(ff), j)]
             if len(patterns) == 0:
                 continue
             if len(patterns) > 1:
@@ -141,7 +142,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
 
                         # mandat str -> bool
                         if "MANDAT" in el and el["MANDAT"] not in ("", None):
-                            assert el["MANDAT"] in ("A", "1", "N", "0", 1, 0), el["MANDAT"]
+                            assert el["MANDAT"] in ("A", "1", "N", "0", 1, 0)
                             el["MANDAT"] = (
                                 "true" if el["MANDAT"] in ("A", "1", 1) else "false"
                             )

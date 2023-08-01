@@ -8,7 +8,7 @@ import warnings
 from collections import defaultdict
 from importlib import import_module
 
-from sqlalchemy import Boolean, MetaData, Table, create_engine, text
+from sqlalchemy import Boolean, Table, create_engine, text
 from sqlalchemy.schema import AddConstraint, DropConstraint, ForeignKeyConstraint
 
 
