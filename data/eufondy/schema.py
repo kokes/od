@@ -81,6 +81,109 @@ schema = [
             "vyuctovano_narodni_soukrome_zdroje_czk", Numeric(14, 2), nullable=False
         ),
     ),
+    Table(
+        "prehled_2021_2027",
+        meta,
+        Column("cislo_programu", Text, nullable=False),
+        Column("nazev_programu", Text, nullable=False),
+        Column("cislo_priority", Text, nullable=False),
+        Column("nazev_priority", Text, nullable=False),
+        Column("cislo_specifickeho_cile", Text, nullable=False),
+        Column("nazev_specifickeho_cile", Text, nullable=True),
+        Column("fond", Text, nullable=False),
+        Column("registracni_cislo_projektu", Text, nullable=False),
+        Column("nazev_projektu", Text, nullable=False),
+        Column("popis_projektu", Text, nullable=False),
+        Column("cil_projektu", Text, nullable=False),
+        Column("kod_stavu_projektu", Text, nullable=False),
+        Column("stav_projektu", Text, nullable=False),
+        Column("prijemce_nazev", Text, nullable=False),
+        Column("ic_prijemce", Integer, nullable=False),
+        Column("pravni_forma_prijemce", Text, nullable=False),
+        Column("psc_prijemce", Integer, nullable=False),
+        Column("datum_podepsani_pravniho_aktu", Date, nullable=True),
+        Column(
+            "skutecne_datum_zahajeni_fyzicke_realizace_projektu", Date, nullable=True
+        ),
+        Column(
+            "predpokladane_datum_ukonceni_fyzicke_realizace_projektu",
+            Date,
+            nullable=False,
+        ),
+        Column(
+            "skutecne_datum_ukonceni_fyzicke_realizace_projektu", Date, nullable=True
+        ),
+        Column("misto_realizace_kod_nuts_3", Text, nullable=False),
+        Column("misto_realizace_nazev_nuts_3", Text, nullable=False),
+        Column("oblast_intervence_kod", Text, nullable=True),
+        Column("oblast_intervence_nazev", Text, nullable=True),
+        Column("mira_spolufinancovani_ze_strany_unie", Numeric(3, 2), nullable=False),
+        Column("celkove_naklady_na_operaci_czk_", Numeric(16, 2), nullable=False),
+        Column(
+            "financni_prostredky_v_pravnich_aktech_celkove_zpusobile_vydaje_czk",
+            Numeric(16, 2),
+            nullable=False,
+        ),
+        Column(
+            "financni_prostredky_v_pravnich_aktech_prispevek_unie_czk",
+            Numeric(16, 2),
+            nullable=False,
+        ),
+        Column(
+            "financni_prostredky_v_pravnich_aktech_narodni_verejne_zdroje_czk",
+            Numeric(16, 2),
+            nullable=False,
+        ),
+        Column(
+            "financni_prostredky_v_pravnich_aktech_narodni_soukrome_zdroje_soukrome_zdroje_czk",
+            Numeric(16, 2),
+            nullable=True,
+        ),
+        Column(
+            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_celkove_zpusobile_vydaje_czk",
+            Numeric(16, 2),
+            nullable=True,
+        ),
+        Column(
+            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_prispevek_unie_czk",
+            Numeric(16, 2),
+            nullable=True,
+        ),
+        Column(
+            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_narodni_verejne_zdroje_czk",
+            Numeric(16, 2),
+            nullable=True,
+        ),
+        Column(
+            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_narodni_soukrome_zdroje_soukrome_zdroje_czk",
+            Numeric(16, 2),
+            nullable=True,
+        ),
+        Column("poradi_verejne_zakazky", Integer, nullable=False),
+        Column("nazev_verejne_zakazky", Text, nullable=True),
+        Column("stav_verejne_zakazky", Text, nullable=True),
+        Column("typ_verejne_zakazky", Text, nullable=True),
+        Column("nazev_dodavatele_verejne_zakazky", Text, nullable=True),
+        Column("ic_dodavatele_verejne_zakazky", Integer, nullable=True),
+        Column("poddodavatel", Text, nullable=True),
+        Column("datum_zahajeni_zadavaciho_vyberoveho_rizeni", Date, nullable=True),
+        Column("datum_podpisu_smlouvy_dodatku", Date, nullable=True),
+        Column(
+            "predpokladana_hodnota_verejne_zakazky_bez_dph",
+            Numeric(16, 2),
+            nullable=True,
+        ),
+        Column(
+            "cena_verejne_zakazky_podle_smlouvy_dodatlu_bez_dph",
+            Numeric(16, 2),
+            nullable=True,
+        ),
+        Column(
+            "skutecne_uhrazena_cena_vazici_se_k_projektu_bez_dph",
+            Numeric(16, 2),
+            nullable=True,
+        ),
+    ),
 ]
 
 if __name__ == "__main__":
