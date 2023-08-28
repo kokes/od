@@ -71,7 +71,7 @@ root_url = "https://isvz.nipez.cz/sites/default/files/content/opendata-predchozi
 url_sources = {
     "zzvz": (
         root_url + "ODZZVZ/{}.xml",
-        list(range(2016, 2022 + 1)),
+        list(range(2016, 2023 + 1)),
     ),
     "vvz": (
         root_url + "ODVVZ/{}.xml",
