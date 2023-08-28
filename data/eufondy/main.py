@@ -87,6 +87,51 @@ schema_od = {
 }
 
 
+# TODO: refaktorovat vsechny `prehled_` funkce, aby cetly jednu JSON specku
+# pouzit DictWriter vsude, jako tady
+def prehled_2021_2027(outdir: str, partial: bool = False):
+    cdir = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(cdir, "hlavicka2127.json"), encoding="utf8") as f:
+        hd = json.load(f)
+
+    source_url = (
+        "https://dotaceeu.cz/getmedia/7d8be343-ef3c-4e62-b02a-a22ecffe45b6/"
+        "2023_08_Seznam-operaci_List-of-Operations_21.xlsx.aspx?ext=.xlsx"
+    )
+    print(
+        f"Stahuji z seznam operaci z {source_url}, ale nemusi to byt nejaktualnejsi "
+        f"export - prekontroluj stranku https://dotaceeu.cz/cs/statistiky-a-analyzy/"
+        f"seznamy-prijemcu"
+    )
+    with urlopen(source_url, timeout=60) as r:
+        raw = io.BytesIO(r.read())
+
+    wb = load_workbook(raw, read_only=True)
+    sh = wb.active
+    assert sh.title == "Sheet1"
+    rows = sh.iter_rows()
+    next(rows), next(rows)  # nadpis, datum generovani
+
+    fr = [j.value.strip() for j in next(rows) if j.value is not None]
+    assert fr == hd["ocekavane"], [
+        (a, b) for a, b in zip_longest(fr, hd["ocekavane"]) if a != b
+    ]
+    next(rows)  # anglicky nazvy
+
+    with open(
+        os.path.join(outdir, "prehled_2021_2027.csv"), "w", encoding="utf8"
+    ) as fw:
+        cw = csv.DictWriter(fw, lineterminator="\n", fieldnames=hd["hlavicka"])
+        cw.writeheader()
+        for j, rrow in enumerate(rows):
+            if partial and j > 1000:
+                break
+            rowv = [rrow[j].value for j in range(len(hd["hlavicka"]))]
+            row = dict(zip(hd["hlavicka"], rowv))
+
+            cw.writerow(row)
+
+
 def prehled_2014_2020(outdir: str, partial: bool = False):
     cdir = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(cdir, "hlavicka1420.json"), encoding="utf8") as f:
@@ -281,6 +326,7 @@ def opendata_2014_2020(outdir: str, partial: bool = False):
 def main(outdir: str, partial: bool = False):
     prehled_2017_2013(outdir, partial)
     prehled_2014_2020(outdir, partial)
+    prehled_2021_2027(outdir, partial)
     opendata_2014_2020(outdir, partial)
 
 
