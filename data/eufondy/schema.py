@@ -118,7 +118,7 @@ schema = [
         Column("oblast_intervence_kod", Text, nullable=True),
         Column("oblast_intervence_nazev", Text, nullable=True),
         Column("mira_spolufinancovani_ze_strany_unie", Numeric(3, 2), nullable=False),
-        Column("celkove_naklady_na_operaci_czk_", Numeric(16, 2), nullable=False),
+        Column("celkove_naklady_na_operaci_czk", Numeric(16, 2), nullable=False),
         Column(
             "financni_prostredky_v_pravnich_aktech_celkove_zpusobile_vydaje_czk",
             Numeric(16, 2),
@@ -135,27 +135,32 @@ schema = [
             nullable=False,
         ),
         Column(
-            "financni_prostredky_v_pravnich_aktech_narodni_soukrome_zdroje_soukrome_zdroje_czk",
+            "financni_prostredky_v_pravnich_aktech_narodni_"
+            "soukrome_zdroje_soukrome_zdroje_czk",
             Numeric(16, 2),
             nullable=True,
         ),
         Column(
-            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_celkove_zpusobile_vydaje_czk",
+            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_"
+            "celkove_zpusobile_vydaje_czk",
             Numeric(16, 2),
             nullable=True,
         ),
         Column(
-            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_prispevek_unie_czk",
+            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_"
+            "prispevek_unie_czk",
             Numeric(16, 2),
             nullable=True,
         ),
         Column(
-            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_narodni_verejne_zdroje_czk",
+            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_"
+            "narodni_verejne_zdroje_czk",
             Numeric(16, 2),
             nullable=True,
         ),
         Column(
-            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_narodni_soukrome_zdroje_soukrome_zdroje_czk",
+            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_"
+            "narodni_soukrome_zdroje_soukrome_zdroje_czk",
             Numeric(16, 2),
             nullable=True,
         ),

@@ -86,6 +86,7 @@ schema_od = {
     "cilove_skupiny": "CILSKUP/CSKOD",
 }
 
+
 # TODO: refaktorovat vsechny `prehled_` funkce, aby cetly jednu JSON specku
 # pouzit DictWriter vsude, jako tady
 def prehled_2021_2027(outdir: str, partial: bool = False):
