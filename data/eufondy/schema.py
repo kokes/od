@@ -147,8 +147,7 @@ schema = [
             nullable=True,
         ),
         Column(
-            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_"
-            "prispevek_unie_czk",
+            "financni_prostredky_vyuctovane_v_zadostech_o_platbu_prispevek_unie_czk",
             Numeric(16, 2),
             nullable=True,
         ),
