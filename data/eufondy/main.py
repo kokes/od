@@ -177,7 +177,7 @@ def prehled_2014_2020(outdir: str, partial: bool = False):
             cw.writerow(row)
 
 
-def prehled_2017_2013(outdir: str, partial: bool = False):
+def prehled_2007_2013(outdir: str, partial: bool = False):
     cws = re.compile(r"\s+")
 
     source_url = (
@@ -194,7 +194,7 @@ def prehled_2017_2013(outdir: str, partial: bool = False):
     sh = wb.active
 
     with open(
-        os.path.join(outdir, "prehled_2017_2013.csv"), "w", encoding="utf8"
+        os.path.join(outdir, "prehled_2007_2013.csv"), "w", encoding="utf8"
     ) as fw:
         cw = csv.writer(fw, lineterminator="\n")
         hd = [
@@ -324,7 +324,7 @@ def opendata_2014_2020(outdir: str, partial: bool = False):
 
 # neimplementujem `partial`, protoze tech dat stejne neni moc
 def main(outdir: str, partial: bool = False):
-    prehled_2017_2013(outdir, partial)
+    prehled_2007_2013(outdir, partial)
     prehled_2014_2020(outdir, partial)
     prehled_2021_2027(outdir, partial)
     opendata_2014_2020(outdir, partial)

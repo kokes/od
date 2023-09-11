@@ -34,7 +34,7 @@ schema = [
         Column("cilove_skupiny", Text),
     ),
     Table(
-        "prehled_2017_2013",
+        "prehled_2007_2013",
         meta,
         Column("prijemce", Text, nullable=False),
         Column("ico", Integer, nullable=True, index=True),
