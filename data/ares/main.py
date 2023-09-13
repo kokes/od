@@ -6,6 +6,7 @@ from tempfile import TemporaryDirectory
 from urllib.request import urlopen, urlretrieve
 
 import lxml.etree
+import re
 
 BASE_URL = "https://wwwinfo.mfcr.cz/ares/ares_vreo_all.tar.gz"
 
@@ -21,15 +22,40 @@ def attr(root, parts, nsmap):
 
     return ret
 
+def attri(root, parts, nsmap, fnc):
+    ret = []
+    dat_d = {}
+    for j in parts:
+        el = root.findall("./are:%s" % j, namespaces=nsmap)
+        if len(el) > 0:
+            for x in fnc(el): 
+                f_dict=json.loads(x)
+                for k in f_dict.keys():
+                    dat_d[k] = dat_d.get(k,"") + f_dict[k] + ";" 
 
-def obj(root):
+    ret.append(json.dumps(dat_d,ensure_ascii=False))
+    return ret
+
+def obj(root, multiple_same_tag = False):
     if root is None:
         return None
-    els = {j.tag: j.text for j in root.getchildren()}
-    els = {j[j.rindex("}") + 1 :]: k for j, k in els.items()}
 
+    els = {}
+    if multiple_same_tag:
+        {els.setdefault(root.tag + j.tag, [] ).append(j.text.strip().replace('\n'," ").replace('\t'," ").replace('"','').replace(u'\xa0',' ')) for i,j in enumerate(root.getchildren())}
+        pp = re.compile("\{.*\}(.+)\{.*\}(.+)")
+        els = { pp.match(j).group(1) + pp.match(j).group(2) : ";".join(k) for j,k in els.items()}
+    else:
+        els = {j.tag : j.text.strip().replace('\n'," ").replace('\t'," ").replace('"','').replace(u'\xa0',' ') for j in root.getchildren()}
+        els = {j[j.rindex("}") + 1 :]: k for j, k in els.items()}
+    
     return json.dumps(els, ensure_ascii=False)
 
+def list_obj(el):
+    ret = []
+    for eli in el:
+        ret.append(obj(eli, True))
+    return ret
 
 def organi(root, ico, nsmap):
     nazev = root.find("./are:Nazev", namespaces=nsmap).text
@@ -104,6 +130,7 @@ def main(outdir: str, partial: bool = False):
             "datum_zapisu",
             "datum_vymazu",
             "sidlo",
+            "cinnosti",
         ]
         udc.writerow(cols)
         foc.writerow(
@@ -189,6 +216,18 @@ def main(outdir: str, partial: bool = False):
 
             dt.extend(zi)
             dt.append(obj(zakl.find("./are:Sidlo", namespaces=et.nsmap)))
+
+            # zaznamy o predmetu cinnosti
+            cinn = zakl.find("./are:Cinnosti", namespaces=et.nsmap)
+            cinn_cols = [
+                "PredmetPodnikani",
+                "Ucel",
+                "DoplnkovaCinnost",
+                "PredmetCinnosti",
+            ]
+
+            pr = attri(cinn, cinn_cols, et.nsmap, list_obj) if cinn is not None else ['{}']
+            dt.extend(pr)
 
             # zapis dat do master tabulky
             udc.writerow(dt)
