@@ -5,6 +5,7 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -13,12 +14,11 @@ jobs:
     timeout-minutes: 15
     strategy:
       # tohle se hodi vypnout, az budem zapinat novy joby
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
-        python-version: ['3.8', '3.9', '3.10', '3.11']
-        # TODO: pridat 'cssz', 'czechinvest', 'eufondy', 'steno', 'psp', 'zakazky', az je opravime
-        module: ['ares', 'datovky', 'dotinfo', 'iissp', 'justice', 'red', 'res', 'smlouvy', 'szif', 'udhpsh', 'volby']
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        module: ['datovky', 'dotinfo', 'eufondy', 'iissp', 'czechpoint', 'justice', 'psp', 'steno', 'smlouvy', 'szif', 'zakazky', 'volby', 'udhpsh', 'res', 'ruian', 'ares']
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
