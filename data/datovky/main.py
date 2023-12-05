@@ -93,7 +93,6 @@ def main(outdir: str, partial: bool = False):
     urls = {
         "po": BASE_URL + "seznam_ds_po",
         "pfo": BASE_URL + "seznam_ds_pfo",
-        "fo": BASE_URL + "seznam_ds_fo",
         "ovm": BASE_URL + "seznam_ds_ovm",
     }
 
