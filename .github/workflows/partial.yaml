@@ -14,8 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
-      # tohle se hodi vypnout, az budem zapinat novy joby
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
         python-version: ['3.12', '3.8'] # na partial nam staci nejnovejsi a nejstarsi verze
