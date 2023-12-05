@@ -6,10 +6,11 @@ on:
       - main
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
-    if: ${{ false }}  # asi to vypnem, je to zbytecne pomaly a nepomaha to
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
