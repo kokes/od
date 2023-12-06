@@ -35,7 +35,9 @@ jobs:
       run: |
         python3 main.py --connstring sqlite:///data.db --partial ${{ matrix.module }}
     - name: Run partial processing (broken jobs)
-      if: steps.main.conclusion == 'skipped'
+      # par jobu jsme preskocili, ted je pustime znovu, ale ocekavame, ze spadnou
+      # exity nejsou na windows, takze poustime jen na ubuntu
+      if: steps.main.conclusion == 'skipped' && matrix.os != 'windows-latest'
       run: |
         python3 main.py --connstring sqlite:///data.db --partial ${{ matrix.module }} || exit 0
         exit 1
