@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
-      fail-fast: false # dokud debugujem joby
+      fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
         python-version: ['3.12', '3.8'] # na partial nam staci nejnovejsi a nejstarsi verze
@@ -30,6 +30,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run partial processing
-      continue-on-error: ${{ matrix.module == "red" || matrix.module == "zakazky" || matrix.module == "eufondy" }}
+      if: matrix.module != 'red' && matrix.module != 'zakazky' && matrix.module != 'eufondy'
+      run: |
+        python3 main.py --connstring sqlite:///data.db --partial ${{ matrix.module }}
+    - name: Run partial processing (broken jobs)
+      if: matrix.module == 'red' || matrix.module == 'zakazky' || matrix.module == 'eufondy'
+      continue-on-error: true # TODO: mozna xfail nejak?
       run: |
         python3 main.py --connstring sqlite:///data.db --partial ${{ matrix.module }}
