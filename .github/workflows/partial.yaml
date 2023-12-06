@@ -37,9 +37,11 @@ jobs:
     - name: Run partial processing (broken jobs)
       if: steps.main.conclusion == 'skipped'
       run: |
-        python3 main.py --connstring sqlite:///data.db --partial ${{ matrix.module }}
-        exit_status=$?
-        if [ $exit_status -eq 0 ]; then
-          echo "Partial processing of ${{ matrix.module }} succeeded, but it should fail"
-          exit 1
-        fi
+        python3 main.py --connstring sqlite:///data.db --partial ${{ matrix.module }} || exit 0
+        exit 1
+
+# exit_status=$?
+# if [ $exit_status -eq 0 ]; then
+#   echo "Partial processing of ${{ matrix.module }} succeeded, but it should fail"
+#   exit 1
+# fi
