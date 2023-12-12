@@ -607,7 +607,10 @@
     }
   },
   {
-    "udaj": "NESROVNALOST",
+    "udaj": [
+      "NESROVNALOST",
+      "HISTORICKA_NESROVNALOST"
+    ],
     "soubor": "nesrovnalost",
     "schema": {
       "datum_zapis": "zapisDatum",
