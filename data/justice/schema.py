@@ -526,6 +526,38 @@ schema = [
         Column("ucel", Text, nullable=False),
         # TODO: maj tam bordel, proto text
         Column("datum_zverejneni", Text, nullable=False),
+    ),
+    Table(
+        "obmysleny_zpusob",
+        meta,
+        Column("ico", Integer, nullable=False),
+        Column("datum_zapis", Date, nullable=False),
+        Column("datum_vymaz", Date, nullable=False),
+        Column("zpusob", Text, nullable=False),
+    ),
+    Table(
+        "protektor",
+        meta,
+        Column("ico", Integer, nullable=False),
+        Column("datum_zapis", Date, nullable=False),
+        Column("datum_vymaz", Date, nullable=False),
+        Column("udelen_souhlas", Boolean, nullable=False),
+        Column("osoba_ico", Integer, nullable=True),
+        Column("osoba_jmeno", Text, nullable=True),
+        Column("osoba_prijmeni", Text, nullable=True),
+        Column("osoba_datum_narozeni", Date, nullable=True),
+        Column("osoba_titul_pred", Text, nullable=True),
+        Column("osoba_titul_za", Text, nullable=True),
+        Column("adresa_stat_nazev", Text, nullable=True),
+        Column("adresa_obec", Text, nullable=True),
+        Column("adresa_cast_obce", Text, nullable=True),
+        Column("adresa_ulice", Text, nullable=True),
+        Column("adresa_cislo_po", Text, nullable=True),
+        Column("adresa_cislo_or", Text, nullable=True),
+        Column("adresa_psc", Text, nullable=True),
+        Column("adresa_okres", Text, nullable=True),
+        Column("adresa_cislo_ev", Text, nullable=True),
+        Column("adresa_text", Text, nullable=True),
     )
 ]
 

@@ -802,5 +802,39 @@
       "adresa_cislo_ev": "adresa/cisloEv",
       "adresa_text": "adresa/adresaText"
     }
+  },
+  {
+    "udaj": "OBMYSLENY_ZPUSOB",
+    "soubor": "obmysleny_zpusob",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "zpusob": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "PROTEKTOR",
+    "soubor": "protektor",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "udelen_souhlas": "hodnotaUdaje/udelenSouhlas",
+      "osoba_ico": "osoba/ico",
+      "osoba_jmeno": "osoba/jmeno",
+      "osoba_prijmeni": "osoba/prijmeni",
+      "osoba_datum_narozeni": "osoba/narozDatum",
+      "osoba_titul_pred": "osoba/titulPred",
+      "osoba_titul_za": "osoba/titulZa",
+      "adresa_stat_nazev": "adresa/statNazev",
+      "adresa_obec": "adresa/obec",
+      "adresa_cast_obce": "adresa/castObce",
+      "adresa_ulice": "adresa/ulice",
+      "adresa_cislo_po": "adresa/cisloPo",
+      "adresa_cislo_or": "adresa/cisloOr",
+      "adresa_psc": "adresa/psc",
+      "adresa_okres": "adresa/okres",
+      "adresa_cislo_ev": "adresa/cisloEv",
+      "adresa_text": "adresa/adresaText"
+    }
   }
 ]
