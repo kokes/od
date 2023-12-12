@@ -85,6 +85,7 @@
       "UCEL_FONDU_SEKCE",
       "SVERENSKY_SPRAVCE_SEKCE",
       "OBMYSLENY_SEKCE",
+      "PROTEKTOR_SEKCE",
       "KONTROLNI_KOMISE",
       "MAJETEK_SEKCE",
       "AKCIONAR_SEKCE",
@@ -725,7 +726,7 @@
     }
   },
   {
-    "udaj": "vyzva_pro_veritele",
+    "udaj": "VYZVA_PRO_VERITELE",
     "soubor": "vyzva_pro_veritele",
     "schema": {
       "datum_zapis": "zapisDatum",
@@ -733,6 +734,73 @@
       "ucel": "hodnotaText",
       "datum_zverejneni": "hodnotaUdaje/datumZverejneni",
       "zverejneni": "hodnotaUdaje/text"
+    }
+  },
+  {
+    "udaj": "SVERENSKY_SPRAVCE",
+    "soubor": "sverensky_spravce",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "spravce": "hodnotaUdaje/spravce",
+      "osoba_ico": "osoba/ico",
+      "osoba_regcislo": "osoba/regCislo",
+      "osoba_jmeno": "osoba/jmeno",
+      "osoba_prijmeni": "osoba/prijmeni",
+      "osoba_datum_narozeni": "osoba/narozDatum",
+      "osoba_titul_pred": "osoba/titulPred",
+      "osoba_titul_za": "osoba/titulZa",
+      "adresa_stat_nazev": "adresa/statNazev",
+      "adresa_obec": "adresa/obec",
+      "adresa_cast_obce": "adresa/castObce",
+      "adresa_ulice": "adresa/ulice",
+      "adresa_cislo_po": "adresa/cisloPo",
+      "adresa_cislo_or": "adresa/cisloOr",
+      "adresa_psc": "adresa/psc",
+      "adresa_okres": "adresa/okres",
+      "adresa_cislo_ev": "adresa/cisloEv",
+      "adresa_text": "adresa/adresaText",
+      "bydliste_stat_nazev": "bydliste/statNazev",
+      "bydliste_obec": "bydliste/obec",
+      "bydliste_cast_obce": "bydliste/castObce",
+      "bydliste_cislo_po": "bydliste/cisloPo",
+      "bydliste_cislo_or": "bydliste/cisloOr",
+      "bydliste_psc": "bydliste/psc",
+      "bydliste_ulice": "bydliste/ulice",
+      "dorucovaci_stat_nazev": "dorucovaci/statNazev",
+      "dorucovaci_obec": "dorucovaci/obec",
+      "dorucovaci_cast_obce": "dorucovaci/castObce",
+      "dorucovaci_ulice": "dorucovaci/ulice",
+      "dorucovaci_cislo_po": "dorucovaci/cisloPo",
+      "dorucovaci_cislo_or": "dorucovaci/cisloOr",
+      "dorucovaci_psc": "dorucovaci/psc",
+      "dorucovaci_okres": "dorucovaci/okres",
+      "dorucovaci_cisloText": "dorucovaci/cisloText"
+    }
+  },
+  {
+    "udaj": "OBMYSLENY",
+    "soubor": "obmysleny",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "udelen_souhlas": "hodnotaUdaje/udelenSouhlas",
+      "osoba_ico": "osoba/ico",
+      "osoba_jmeno": "osoba/jmeno",
+      "osoba_prijmeni": "osoba/prijmeni",
+      "osoba_datum_narozeni": "osoba/narozDatum",
+      "osoba_titul_pred": "osoba/titulPred",
+      "osoba_titul_za": "osoba/titulZa",
+      "adresa_stat_nazev": "adresa/statNazev",
+      "adresa_obec": "adresa/obec",
+      "adresa_cast_obce": "adresa/castObce",
+      "adresa_ulice": "adresa/ulice",
+      "adresa_cislo_po": "adresa/cisloPo",
+      "adresa_cislo_or": "adresa/cisloOr",
+      "adresa_psc": "adresa/psc",
+      "adresa_okres": "adresa/okres",
+      "adresa_cislo_ev": "adresa/cisloEv",
+      "adresa_text": "adresa/adresaText"
     }
   }
 ]
