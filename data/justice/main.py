@@ -75,6 +75,8 @@ def uprav_data(row, mapping):
 @contextlib.contextmanager
 def cached_urlopen(url, timeout=HTTP_TIMEOUT):
     shasum = hashlib.sha256(url.encode("utf-8")).hexdigest()
+    if url.endswith(".gz"):
+        shasum += ".gz"
     fn_path = os.path.join(CACHE_DIR, shasum)
     if os.path.isfile(fn_path):
         with open(fn_path, "rb") as f:
