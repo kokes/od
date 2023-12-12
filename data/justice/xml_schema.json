@@ -463,6 +463,7 @@
       "PREDBEZNY_INSOLVENCNI_SPRAVCE",
       "DOZORCI_RADA_ZASTOUPENI",
        "INSOLVENCNI_SPRAVCE",
+       "VYROVNACI_INSOLVENCNI_SPRAVCE",
        "KONTROLNI_KOMISE_ZASTOUPENI",
        "LIKVIDATOR_ZASTOUPENI",
        "ODDELENY_INSOLVENCNI_SPRAVCE",
@@ -699,6 +700,16 @@
       "bydliste_cislo_or": "bydliste/cisloOr",
       "bydliste_psc": "bydliste/psc",
       "bydliste_ulice": "bydliste/ulice"
+    }
+  },
+  {
+    "udaj": "PRAVO_STATU",
+    "soubor": "pravo_statu",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "popis": "hlavicka",
+      "stat": "hodnotaText"
     }
   }
 ]

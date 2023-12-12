@@ -19,6 +19,7 @@ from tqdm import tqdm
 NON_ISO_DATUM = re.compile(r"^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$")
 HTTP_TIMEOUT = 60
 CACHE_DIR = "cache"
+CACHE_ENABLED = True # TODO(PR): parametrizovat; redefinovat urlopen
 
 
 def gen_schema(element, parent=None):
