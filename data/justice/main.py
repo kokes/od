@@ -1,5 +1,5 @@
-import csv
 import contextlib
+import csv
 import datetime as dt
 import functools
 import glob
@@ -7,9 +7,9 @@ import gzip
 import hashlib
 import json
 import multiprocessing
-import shutil
 import os
 import re
+import shutil
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
@@ -19,7 +19,7 @@ from tqdm import tqdm
 NON_ISO_DATUM = re.compile(r"^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$")
 HTTP_TIMEOUT = 60
 CACHE_DIR = "cache"
-CACHE_ENABLED = True # TODO(PR): parametrizovat; redefinovat urlopen
+CACHE_ENABLED = True  # TODO(PR): parametrizovat; redefinovat urlopen
 
 
 def gen_schema(element, parent=None):
@@ -72,6 +72,7 @@ def uprav_data(row, mapping):
         row[col] = dt.date(int(rok), int(mesic), int(den))
 
     return row
+
 
 @contextlib.contextmanager
 def cached_urlopen(url, timeout=HTTP_TIMEOUT):

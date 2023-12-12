@@ -559,7 +559,7 @@ schema = [
         Column("adresa_okres", Text, nullable=True),
         Column("adresa_cislo_ev", Text, nullable=True),
         Column("adresa_text", Text, nullable=True),
-    )
+    ),
 ]
 
 
