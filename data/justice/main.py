@@ -1,9 +1,13 @@
 import csv
+import contextlib
 import datetime as dt
 import functools
+import glob
 import gzip
+import hashlib
 import json
 import multiprocessing
+import shutil
 import os
 import re
 from urllib.parse import urlparse
@@ -14,6 +18,7 @@ from tqdm import tqdm
 
 NON_ISO_DATUM = re.compile(r"^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$")
 HTTP_TIMEOUT = 60
+CACHE_DIR = "cache"
 
 
 def gen_schema(element, parent=None):
@@ -67,11 +72,29 @@ def uprav_data(row, mapping):
 
     return row
 
+@contextlib.contextmanager
+def cached_urlopen(url, timeout=HTTP_TIMEOUT):
+    shasum = hashlib.sha256(url.encode("utf-8")).hexdigest()
+    fn_path = os.path.join(CACHE_DIR, shasum)
+    if os.path.isfile(fn_path):
+        with open(fn_path, "rb") as f:
+            yield f
+        return
+
+    with urlopen(url, timeout=timeout) as r:
+        fn_tmp = fn_path + ".tmp"
+        with open(fn_tmp, "wb") as f:
+            shutil.copyfileobj(r, f)
+        os.rename(fn_tmp, fn_path)
+        with cached_urlopen(url, timeout) as r:
+            yield r
+
 
 def nahraj_ds(url):
-    with urlopen(url, timeout=HTTP_TIMEOUT) as r, gzip.GzipFile(fileobj=r) as f:
-        et = lxml.etree.iterparse(f)
-        yield from et
+    with cached_urlopen(url, timeout=HTTP_TIMEOUT) as r:
+        with gzip.open(r, "rb") as f:
+            et = lxml.etree.iterparse(f)
+            yield from et
 
 
 def zpracuj_ds(url, schemas, outdir, partial, autogen):
@@ -208,13 +231,17 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen):
 
 
 def main(outdir: str, partial: bool = False):
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    for file in glob.glob(os.path.join(CACHE_DIR, "*.tmp")):
+        os.remove(file)
+
     # package_list a package_list_compact se asi lisi - ten nekompaktni endpoint
     # nejde filtrovat??? Tak to asi udelame na klientovi
     url_pl = "https://dataor.justice.cz/api/3/action/package_list"
 
-    r = urlopen(url_pl, timeout=HTTP_TIMEOUT)
-    data = json.load(r)
-    assert data["success"]
+    with cached_urlopen(url_pl, timeout=HTTP_TIMEOUT) as r:
+        data = json.load(r)
+        assert data["success"]
 
     dss = [ds for ds in data["result"] if "-full-" in ds]
     print(f"celkem {len(dss)} datasetu, ale filtruji jen na ty letosni")
@@ -229,9 +256,9 @@ def main(outdir: str, partial: bool = False):
         if partial and len(urls) > 20:
             break
         url = f"https://dataor.justice.cz/api/3/action/package_show?id={ds}"
-        r = urlopen(url, timeout=HTTP_TIMEOUT)
-        dtp = json.load(r)
-        assert dtp["success"]
+        with cached_urlopen(url, timeout=HTTP_TIMEOUT) as r:
+            dtp = json.load(r)
+            assert dtp["success"]
         ds_url = [
             j["url"] for j in dtp["result"]["resources"] if j["url"].endswith(".xml.gz")
         ]

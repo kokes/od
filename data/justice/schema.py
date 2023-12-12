@@ -461,6 +461,15 @@ schema = [
         Column("text_prvni_faze", Text, nullable=True),
         Column("text_druha_faze", Text, nullable=True),
     ),
+    Table(
+        "min_kmenove_jmeni",
+        meta,
+        Column("ico", ForeignKey("subjekty.ico"), nullable=False),
+        Column("datum_zapis", Date, nullable=False),
+        Column("datum_vymaz", Date, nullable=True),
+        Column("vklad_typ", Text, nullable=False),
+        Column("vklad", Numeric, nullable=True),
+    ),
 ]
 
 

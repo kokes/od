@@ -125,6 +125,8 @@
       "NESROVNALOST_SEKCE",
       "OMEZENI_DARCEM_SEKCE",
       "PREDMET_VEDLEJSI_CINNOSTI_SEKCE",
+      "STRUKTURA_VZTAHU_SEKCE",
+      "HISTORICKA_NESROVNALOST_SEKCE",
       "INSOLVENCE"
     ],
     "ignore": true,
@@ -642,6 +644,16 @@
       "adresa_cislo_or": "adresa/cisloOr",
       "adresa_okres": "adresa/okres",
       "adresa_adresa_text": "adresa/adresaText"
+    }
+  },
+  {
+    "udaj": "MIN_KMENOVE_JMENI",
+    "soubor": "min_kmenove_jmeni",
+    "schema": {
+      "zapisDatum": "zapisDatum",
+      "vymazDatum": "vymazDatum",
+      "vklad_typ": "hodnotaUdaje/vklad/typ",
+      "vklad": "hodnotaUdaje/vklad/textValue"
     }
   }
 ]
