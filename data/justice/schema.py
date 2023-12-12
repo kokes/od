@@ -517,6 +517,16 @@ schema = [
         Column("datum_vymaz", Date, nullable=True),
         Column("ucel", Text, nullable=False),
     ),
+    Table(
+        "vyzva_pro_veritele",
+        meta,
+        Column("ico", Integer, nullable=False),
+        Column("datum_zapis", Date, nullable=False),
+        Column("datum_vymaz", Date, nullable=True),
+        Column("ucel", Text, nullable=False),
+        # TODO: maj tam bordel, proto text
+        Column("datum_zverejneni", Text, nullable=False),
+    )
 ]
 
 

@@ -84,6 +84,7 @@
       "KATEGORIE_ZAHR_OSOBY",
       "UCEL_FONDU_SEKCE",
       "SVERENSKY_SPRAVCE_SEKCE",
+      "OBMYSLENY_SEKCE",
       "KONTROLNI_KOMISE",
       "MAJETEK_SEKCE",
       "AKCIONAR_SEKCE",
@@ -721,6 +722,17 @@
       "datum_zapis": "zapisDatum",
       "datum_vymaz": "vymazDatum",
       "ucel": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "vyzva_pro_veritele",
+    "soubor": "vyzva_pro_veritele",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "ucel": "hodnotaText",
+      "datum_zverejneni": "hodnotaUdaje/datumZverejneni",
+      "zverejneni": "hodnotaUdaje/text"
     }
   }
 ]
