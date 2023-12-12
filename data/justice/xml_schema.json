@@ -82,6 +82,8 @@
       "SPRAVNI_RADA",
       "POBOCNY_SPOLEK_SEKCE",
       "KATEGORIE_ZAHR_OSOBY",
+      "UCEL_FONDU_SEKCE",
+      "SVERENSKY_SPRAVCE_SEKCE",
       "KONTROLNI_KOMISE",
       "MAJETEK_SEKCE",
       "AKCIONAR_SEKCE",
@@ -710,6 +712,15 @@
       "datum_vymaz": "vymazDatum",
       "popis": "hlavicka",
       "stat": "hodnotaText"
+    }
+  },
+  {
+    "udaj": "UCEL_FONDU",
+    "soubor": "ucel_fondu",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "ucel": "hodnotaText"
     }
   }
 ]

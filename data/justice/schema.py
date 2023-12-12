@@ -508,7 +508,15 @@ schema = [
         Column("bydliste_cislo_or", Text, nullable=True),
         Column("bydliste_psc", Text, nullable=True),
         Column("bydliste_ulice", Text, nullable=True),
-    )
+    ),
+    Table(
+        "ucel_fondu",
+        meta,
+        Column("ico", Integer, nullable=False),
+        Column("datum_zapis", Date, nullable=False),
+        Column("datum_vymaz", Date, nullable=True),
+        Column("ucel", Text, nullable=False),
+    ),
 ]
 
 
