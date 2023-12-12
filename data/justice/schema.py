@@ -470,6 +470,14 @@ schema = [
         Column("vklad_typ", Text, nullable=False),
         Column("vklad", Numeric, nullable=True),
     ),
+    Table(
+        "evidence",
+        meta,
+        Column("ico", ForeignKey("subjekty.ico"), nullable=False),
+        Column("datum_zapis", Date, nullable=False),
+        Column("datum_vymaz", Date, nullable=True),
+        Column("evidence", Text, nullable=False),
+    ),
 ]
 
 

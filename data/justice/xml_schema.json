@@ -650,10 +650,19 @@
     "udaj": "MIN_KMENOVE_JMENI",
     "soubor": "min_kmenove_jmeni",
     "schema": {
-      "zapisDatum": "zapisDatum",
-      "vymazDatum": "vymazDatum",
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
       "vklad_typ": "hodnotaUdaje/vklad/typ",
       "vklad": "hodnotaUdaje/vklad/textValue"
+    }
+  },
+  {
+    "udaj": "EVIDENCE",
+    "soubor": "evidence",
+    "schema": {
+      "datum_zapis": "zapisDatum",
+      "datum_vymaz": "vymazDatum",
+      "evidence": "hodnotaText"
     }
   }
 ]
