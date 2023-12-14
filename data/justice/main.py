@@ -19,7 +19,7 @@ from tqdm import tqdm
 NON_ISO_DATUM = re.compile(r"^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$")
 HTTP_TIMEOUT = 60
 CACHE_DIR = "cache"
-CACHE_ENABLED = True  # TODO(PR): parametrizovat; redefinovat urlopen
+CACHE_ENABLED = False
 
 
 def gen_schema(element, parent=None):
@@ -86,6 +86,9 @@ def cached_urlopen(url, timeout=HTTP_TIMEOUT):
         return
 
     with urlopen(url, timeout=timeout) as r:
+        if not CACHE_ENABLED:
+            yield r
+            return
         fn_tmp = fn_path + ".tmp"
         with open(fn_tmp, "wb") as f:
             shutil.copyfileobj(r, f)
