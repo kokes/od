@@ -1,5 +1,4 @@
 import csv
-import functools
 import io
 import json
 import logging
@@ -94,8 +93,8 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
     with load_remote_data(url) as zf:
         # zpravidla (ale ne vzdy!) mame zdvojena data:
         # 'csv/eprk.csv', 'csv/eprkl.csv', 'csv/eprkl_slozeni.csv', 'csv_od/eprk.csv',
-        # 'csv_od/eprk.json', 'csv_od/eprkl.csv', 'csv_od/eprkl.json', 'csv_od/eprkl_slozeni.csv',
-        # 'csv_od/eprkl_slozeni.json'
+        # 'csv_od/eprk.json', 'csv_od/eprkl.csv', 'csv_od/eprkl.json',
+        # 'csv_od/eprkl_slozeni.csv', 'csv_od/eprkl_slozeni.json'
         # tak musime tuto situaci detekovat a deduplikovat
         # bacha - csv_od jsou utf-8 s ',' delimitery, csv jsou cp1250 s ';' delimitery
         filenames = [j.filename for j in zf.filelist]
