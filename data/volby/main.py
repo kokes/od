@@ -10,12 +10,12 @@ from collections import defaultdict
 from contextlib import contextmanager
 from fnmatch import fnmatch
 from tempfile import TemporaryDirectory
-from tqdm import tqdm
 from urllib.error import URLError
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
 import lxml.etree
+from tqdm import tqdm
 
 RETRIES = 5
 DVOUKOLAK = ("senat", "prezident")
