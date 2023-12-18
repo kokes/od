@@ -24,7 +24,6 @@
                 "fn": [
                     "davky.xml"
                 ],
-                "klic": "OKRSEK",
                 "schema": [
                     "CIS_OBEC",
                     "CIS_OKRSEK",
@@ -37,7 +36,6 @@
                 "fn": [
                     "perk.csv"
                 ],
-                "klic": "PE_REGKAND_ROW",
                 "schema": [
                     "CKAND",
                     "JMENO",
@@ -62,7 +60,6 @@
                 "fn": [
                     "cns.csv"
                 ],
-                "klic": "CNS_ROW",
                 "schema": [
                     "NSTRANA",
                     "NAZEV_STRN",
@@ -74,7 +71,6 @@
                 "fn": [
                     "pet1.csv"
                 ],
-                "klic": "PE_T1_ROW",
                 "schema": [
                     "TYP_FORM",
                     "OPRAVA",
@@ -102,7 +98,6 @@
                 "fn": [
                     "cnumnuts.csv"
                 ],
-                "klic": "CNUMNUTS_ROW",
                 "schema": [
                     "NUMNUTS",
                     "NUTS",
@@ -115,7 +110,6 @@
                 "fn": [
                     "pecoco.csv"
                 ],
-                "klic": "PE_COCO_ROW",
                 "schema": [
                     "KRAJ",
                     "OKRES",
@@ -172,7 +166,6 @@
                 "fn": [
                     "davky.xml"
                 ],
-                "klic": "OKRSEK",
                 "schema": [
                     "CIS_OBEC",
                     "CIS_OKRSEK",
@@ -185,7 +178,6 @@
                 "fn": [
                     "psrk.csv"
                 ],
-                "klic": "PS_REGKAND_ROW",
                 "schema": [
                     "VOLKRAJ",
                     "KSTRANA",
@@ -214,7 +206,6 @@
                 "fn": [
                     "psrkl.csv"
                 ],
-                "klic": "PS_RKL_ROW",
                 "schema": [
                     "KSTRANA",
                     "VSTRANA",
@@ -237,7 +228,6 @@
                 "fn": [
                     "pst4p.csv"
                 ],
-                "klic": "PS_T4P_ROW",
                 "schema": [
                     "ID_OKRSKY",
                     "TYP_FORM",
@@ -264,7 +254,6 @@
                 "fn": [
                     "pst4.csv"
                 ],
-                "klic": "PS_T4_ROW",
                 "schema": [
                     "ID_OKRSKY",
                     "TYP_FORM",
@@ -287,7 +276,6 @@
                 "fn": [
                     "cnumnuts.csv"
                 ],
-                "klic": "CNUMNUTS_ROW",
                 "schema": [
                     "NUMNUTS",
                     "NUTS",
@@ -338,7 +326,6 @@
                 "fn": [
                     "davky.xml"
                 ],
-                "klic": "OKRSEK",
                 "schema": [
                     "CIS_OBEC",
                     "CIS_OKRSEK",
@@ -354,7 +341,6 @@
                 "fn": [
                     "kvros.csv"
                 ],
-                "klic": "KV_ROS_ROW",
                 "schema": [
                     "DATUMVOLEB",
                     "OKRES",
@@ -378,7 +364,6 @@
                 "fn": [
                     "kvrk.csv"
                 ],
-                "klic": "KV_REGKAND_ROW",
                 "schema": [
                     "DATUMVOLEB",
                     "OKRES",
@@ -410,7 +395,6 @@
                 "fn": [
                     "cvs.csv"
                 ],
-                "klic": "CVS_ROW",
                 "schema": [
                     "VSTRANA",
                     "NAZEVCELK",
@@ -430,7 +414,6 @@
                 "fn": [
                     "kvrzcoco.csv"
                 ],
-                "klic": "KV_RZCOCO_ROW",
                 "schema": [
                     "DATUMVOLEB",
                     "KRAJ",
@@ -480,7 +463,6 @@
                 "fn": [
                     "kvt3.csv"
                 ],
-                "klic": "KV_T3_ROW",
                 "schema": [
                     "DATUMVOLEB",
                     "ID_OKRSKY",
@@ -508,7 +490,6 @@
                 "fn": [
                     "kvhl.csv"
                 ],
-                "klic": "KV_HL_ROW",
                 "schema": [
                     "DATUMVOLEB",
                     "ID_OKRSKY",
@@ -535,7 +516,6 @@
                 "fn": [
                     "cnumnuts.csv"
                 ],
-                "klic": "CNUMNUTS_ROW",
                 "schema": [
                     "NUMNUTS",
                     "NUTS",
@@ -585,7 +565,6 @@
                 "fn": [
                     "davky.xml"
                 ],
-                "klic": "OKRSEK",
                 "schema": [
                     "CIS_OBEC",
                     "CIS_OKRSEK",
@@ -598,7 +577,6 @@
                 "fn": [
                     "kzrk.csv"
                 ],
-                "klic": "KZ_REGKAND_ROW",
                 "schema": [
                     "KRZAST",
                     "KSTRANA",
@@ -627,7 +605,6 @@
                 "fn": [
                     "kzrkl_s.csv"
                 ],
-                "klic": "KZ_RKL_SOUHRN_ROW",
                 "schema": [
                     "KSTRANA",
                     "VSTRANA",
@@ -649,7 +626,6 @@
                 "fn": [
                     "cns.csv"
                 ],
-                "klic": "CNS_ROW",
                 "schema": [
                     "NSTRANA",
                     "NAZEV_STRN",
@@ -661,7 +637,6 @@
                 "fn": [
                     "kzrkl.csv"
                 ],
-                "klic": "KZ_RKL_ROW",
                 "schema": [
                     "KRZAST",
                     "KSTRANA",
@@ -682,7 +657,6 @@
                 "fn": [
                     "kzcoco.csv"
                 ],
-                "klic": "KZ_COCO_ROW",
                 "schema": [
                     "KRAJ",
                     "OKRES",
@@ -702,7 +676,6 @@
                 "fn": [
                     "kzt6.csv"
                 ],
-                "klic": "KZ_T6_ROW",
                 "schema": [
                     "ID_OKRSKY",
                     "TYP_FORM",
@@ -726,7 +699,6 @@
                     "kzt6p-*.csv",
                     "kzt6p.csv"
                 ],
-                "klic": "KZ_T6P_ROW",
                 "schema": [
                     "ID_OKRSKY",
                     "TYP_FORM",
@@ -780,7 +752,6 @@
                 "fn": [
                     "eprk.csv"
                 ],
-                "klic": "EP_REGKAND_ROW",
                 "schema": [
                     "ESTRANA",
                     "PORCISLO",
@@ -808,7 +779,6 @@
                 "fn": [
                     "eprkl.csv"
                 ],
-                "klic": "EP_RKL_ROW",
                 "schema": [
                     "ESTRANA",
                     "VSTRANA",
@@ -830,7 +800,6 @@
                 "fn": [
                     "ept2.csv"
                 ],
-                "klic": "EP_T2_ROW",
                 "schema": [
                     "ID_OKRSKY",
                     "TYP_FORM",
@@ -853,7 +822,6 @@
                 "fn": [
                     "ept2p.csv"
                 ],
-                "klic": "EP_T2P_ROW",
                 "schema": [
                     "ID_OKRSKY",
                     "TYP_FORM",
@@ -903,7 +871,6 @@
                 "fn": [
                     "davky.xml"
                 ],
-                "klic": "OKRSEK",
                 "schema": [
                     "CIS_OBEC",
                     "CIS_OKRSEK",
@@ -917,7 +884,6 @@
                 "fn": [
                     "serk.csv"
                 ],
-                "klic": "SE_REGKAND_ROW",
                 "schema": [
                     "OBVOD",
                     "CKAND",
@@ -950,7 +916,6 @@
                 "fn": [
                     "secobv.csv"
                 ],
-                "klic": "SE_COBV_ROW",
                 "schema": [
                     "OBVOD",
                     "NAZEV_OBV",
@@ -965,7 +930,6 @@
                     "set5-2.csv",
                     "set5.csv"
                 ],
-                "klic": "SE_T5_ROW",
                 "schema": [
                     "OBEC",
                     "OKRSEK",

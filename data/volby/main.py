@@ -115,7 +115,6 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                     lineterminator="\n",
                 )
                 cw.writeheader()
-                # TODO(PR): odstranit KLIC z mappingu
                 with zf.open(ff) as f:
                     cr = csv.DictReader(io.TextIOWrapper(f))
                     for ne, el in enumerate(cr):
