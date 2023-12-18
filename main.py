@@ -8,7 +8,7 @@ import warnings
 from collections import defaultdict
 from importlib import import_module
 
-from sqlalchemy import Boolean, MetaData, Table, create_engine, text
+from sqlalchemy import Boolean, Table, create_engine, text
 from sqlalchemy.schema import AddConstraint, DropConstraint, ForeignKeyConstraint
 
 
@@ -122,6 +122,7 @@ if __name__ == "__main__":
                         os.path.join(dir_cand, basename)
                     )
             else:
+                continue
                 raise IOError(f"neexistujou data pro {module_name}.{table.name}")
 
         for table in schemas[module_name]:
@@ -184,7 +185,7 @@ if __name__ == "__main__":
             if engine.name == "postgresql":
                 dbtable = Table(
                     table.name,
-                    MetaData(engine),
+                    table.metadata,
                     schema=table.schema,
                     autoload_with=engine,
                 )

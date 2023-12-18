@@ -1,6 +1,7 @@
 import csv
-import functools
+import io
 import json
+import logging
 import multiprocessing
 import os
 import shutil
@@ -14,6 +15,7 @@ from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
 import lxml.etree
+from tqdm import tqdm
 
 RETRIES = 5
 DVOUKOLAK = ("senat", "prezident")
@@ -41,28 +43,13 @@ def load_remote_data(url: str):
             yield zf
 
 
-def extract_elements(zf, fn, nodename):
-    if not fn.lower().endswith(".xml"):
-        raise NotImplementedError(fn)
-
-    with zf.open(fn) as f:
-        et = lxml.etree.iterparse(f)
-
-        for _, node in et:
-            if not node.tag.endswith(f"}}{nodename}"):
-                continue
-
-            yield dict(
-                (j.tag[j.tag.rindex("}") + 1 :], j.text) for j in node.iterchildren()
-            )
-            node.clear()
-
-
 def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
     # specialni handling davkovych exportu (nejsou v zipu)
     if not url.endswith(".zip"):
         ds, fmp = fnmap[volby]["davky.xml"]  # 'davky.xml' je dummy hodnota
-        tfn = os.path.join(outdir, f"{volby}_davky.csv")
+        ddir = os.path.join(outdir, f"{volby}_davky")
+        os.makedirs(ddir, exist_ok=True)
+        tfn = os.path.join(ddir, f"{datum}.csv")
         with open(tfn, "wt", encoding="utf8") as fw:
             schema = ["DATUM"] + [j for j in fmp["schema"]]
             if volby in DVOUKOLAK:
@@ -104,8 +91,19 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
 
     # bezny prubeh extrakce ze zipu
     with load_remote_data(url) as zf:
-        for ff in map(lambda x: x.filename, zf.filelist):
-            patterns = [j for j in fnmap[volby].keys() if fnmatch(ff, j)]
+        # zpravidla (ale ne vzdy!) mame zdvojena data:
+        # 'csv/eprk.csv', 'csv/eprkl.csv', 'csv/eprkl_slozeni.csv', 'csv_od/eprk.csv',
+        # 'csv_od/eprk.json', 'csv_od/eprkl.csv', 'csv_od/eprkl.json',
+        # 'csv_od/eprkl_slozeni.csv', 'csv_od/eprkl_slozeni.json'
+        # tak musime tuto situaci detekovat a deduplikovat
+        # bacha - csv_od jsou utf-8 s ',' delimitery, csv jsou cp1250 s ';' delimitery
+        filenames = [j.filename for j in zf.filelist]
+        if any(j.startswith("csv_od/") for j in filenames):
+            filenames = [j for j in filenames if not j.startswith("csv_od/")]
+        for ff in filenames:
+            patterns = [
+                j for j in fnmap[volby].keys() if fnmatch(os.path.basename(ff), j)
+            ]
             if len(patterns) == 0:
                 continue
             if len(patterns) > 1:
@@ -115,9 +113,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
             tdir = os.path.join(outdir, f"{volby}_{ds}")
             os.makedirs(tdir, exist_ok=True)
             url_path = os.path.splitext(os.path.basename(urlparse(url).path))[0]
-            tfn = os.path.join(
-                tdir, f"{datum}_{url_path}_{os.path.splitext(ff)[0]}.csv"
-            )
+            tfn = os.path.join(tdir, f"{datum}_{url_path}_{os.path.basename(ff)}")
             if os.path.isfile(tfn):
                 raise IOError(f"necekany prepis souboru: {tfn}")
             with open(tfn, "wt", encoding="utf8") as fw:
@@ -127,50 +123,65 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                     lineterminator="\n",
                 )
                 cw.writeheader()
-                for ne, el in enumerate(extract_elements(zf, ff, fmp["klic"])):
-                    if partial and ne > 1e4:
-                        break
-                    for k in fmp.get("vynechej", []):
-                        el.pop(k, None)
-
-                    # TODO: TEST: HLASY_01 vs. HLASY_K1
-                    hk = [
-                        k
-                        for k in el.keys()
-                        if k.startswith("HLASY_") and k.partition("_")[-1].isdigit()
-                    ]
-                    if hk:
-                        hlasy = []
-                        for k in hk:
-                            hlasy.append(el[k] or 0)
-                            del el[k]
-
-                        # pg array representation - '{a, b, c}'
-                        el["HLASY"] = "{{{}}}".format(",".join(map(str, hlasy)))
-
-                    # mandat str -> bool
-                    if "MANDAT" in el and el["MANDAT"] not in ("", None):
-                        assert el["MANDAT"] in ("A", "1", "N", "0", 1, 0), el["MANDAT"]
-                        el["MANDAT"] = (
-                            "true" if el["MANDAT"] in ("A", "1", 1) else "false"
-                        )
-
-                    # u nekterych voleb je uvedeno, ke kteremu dni plati, protoze
-                    # treba soud rozhodl o nejake zmene - tak pak muze byt datum
-                    # uvedeno dvakrat
-                    # 20181223 -> 2018-12-23
-                    if "DATUMVOLEB" in el:
-                        dv = el["DATUMVOLEB"]
-                        assert dv.isdigit(), dv
-                        assert len(dv) == 8, dv
-                        el["DATUMVOLEB"] = f"{dv[:4]}-{dv[4:6]}-{dv[6:8]}"
-
-                    cw.writerow(
-                        {
-                            "DATUM": datum,
-                            **el,
-                        }
+                with zf.open(ff) as f:
+                    cr = csv.DictReader(
+                        io.TextIOWrapper(f, encoding="cp1250"),
+                        delimiter=";",
                     )
+                    for ne, el in enumerate(cr):
+                        if partial and ne > 1e4:
+                            break
+                        for k in fmp.get("vynechej", []):
+                            el.pop(k, None)
+
+                        # TODO: TEST: HLASY_01 vs. HLASY_K1
+                        hk = [
+                            k
+                            for k in el.keys()
+                            if k.startswith("HLASY_") and k.partition("_")[-1].isdigit()
+                        ]
+                        if hk:
+                            hlasy = []
+                            for k in hk:
+                                hlasy.append(el[k] or 0)
+                                del el[k]
+
+                            # pg array representation - '{a, b, c}'
+                            el["HLASY"] = "{{{}}}".format(",".join(map(str, hlasy)))
+
+                        # mandat str -> bool
+                        if "MANDAT" in el and el["MANDAT"] not in ("", None):
+                            assert el["MANDAT"] in ("A", "1", "N", "0", 1, 0)
+                            el["MANDAT"] = (
+                                "true" if el["MANDAT"] in ("A", "1", 1) else "false"
+                            )
+
+                        # u nekterych voleb je uvedeno, ke kteremu dni plati, protoze
+                        # treba soud rozhodl o nejake zmene - tak pak muze byt datum
+                        # uvedeno dvakrat
+                        # 20181223 -> 2018-12-23
+                        if "DATUMVOLEB" in el:
+                            dv = el["DATUMVOLEB"]
+                            assert dv.isdigit(), dv
+                            assert len(dv) == 8, dv
+                            el["DATUMVOLEB"] = f"{dv[:4]}-{dv[4:6]}-{dv[6:8]}"
+
+                        el["DATUM"] = datum if datum != "*" else None
+                        # v pripade senatu mame bulk data za vsechno, takze musime
+                        # inferovat datum voleb jen z dat, ne z mappingu
+                        if volby == "senat" and datum == "*" and "DATUMVOLEB" in el:
+                            el["DATUM"] = el["DATUMVOLEB"]
+                            del el["DATUMVOLEB"]
+
+                        miss = set(cw.fieldnames) - set(el)
+                        if miss:
+                            logging.info("chybejici sloupce v datech: %s", miss)
+
+                        cw.writerow(el)
+
+
+def job_processor(args):
+    return process_url(*args)
 
 
 def main(outdir: str, partial: bool = False):
@@ -191,11 +202,12 @@ def main(outdir: str, partial: bool = False):
             if partial and datum != sorted(mp["url"].keys())[-1]:
                 continue
             for url in urls:
-                jobs.append((url, volby, datum))
+                jobs.append((outdir, partial, fnmap, url, volby, datum))
 
-    job_processor = functools.partial(process_url, outdir, partial, fnmap)
+    progress = tqdm(total=len(jobs))
     with multiprocessing.Pool(ncpu) as pool:
-        pool.starmap(job_processor, jobs)
+        for _ in pool.imap_unordered(job_processor, jobs):
+            progress.update(n=1)
 
 
 if __name__ == "__main__":
