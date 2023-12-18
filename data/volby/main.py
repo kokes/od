@@ -92,10 +92,16 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
 
     # bezny prubeh extrakce ze zipu
     with load_remote_data(url) as zf:
-        for ff in map(lambda x: x.filename, zf.filelist):
-            # jsou tam soubory v "csv" adresari, ktere nechceme
-            if not ff.startswith("csv_od/"):
-                continue
+        # zpravidla (ale ne vzdy!) mame zdvojena data:
+        # 'csv/eprk.csv', 'csv/eprkl.csv', 'csv/eprkl_slozeni.csv', 'csv_od/eprk.csv',
+        # 'csv_od/eprk.json', 'csv_od/eprkl.csv', 'csv_od/eprkl.json', 'csv_od/eprkl_slozeni.csv',
+        # 'csv_od/eprkl_slozeni.json'
+        # tak musime tuto situaci detekovat a deduplikovat
+        # bacha - csv_od jsou utf-8 s ',' delimitery, csv jsou cp1250 s ';' delimitery
+        filenames = [j.filename for j in zf.filelist]
+        if any(j.startswith("csv_od/") for j in filenames):
+            filenames = [j for j in filenames if not j.startswith("csv_od/")]
+        for ff in filenames:
             patterns = [
                 j for j in fnmap[volby].keys() if fnmatch(os.path.basename(ff), j)
             ]
@@ -119,7 +125,10 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                 )
                 cw.writeheader()
                 with zf.open(ff) as f:
-                    cr = csv.DictReader(io.TextIOWrapper(f))
+                    cr = csv.DictReader(
+                        io.TextIOWrapper(f, encoding="cp1250"),
+                        delimiter=";",
+                    )
                     for ne, el in enumerate(cr):
                         if partial and ne > 1e4:
                             break
