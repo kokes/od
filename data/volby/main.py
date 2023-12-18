@@ -11,6 +11,7 @@ from collections import defaultdict
 from contextlib import contextmanager
 from fnmatch import fnmatch
 from tempfile import TemporaryDirectory
+from tqdm import tqdm
 from urllib.error import URLError
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
@@ -47,7 +48,9 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
     # specialni handling davkovych exportu (nejsou v zipu)
     if not url.endswith(".zip"):
         ds, fmp = fnmap[volby]["davky.xml"]  # 'davky.xml' je dummy hodnota
-        tfn = os.path.join(outdir, f"{volby}_davky.csv")
+        ddir = os.path.join(outdir, f"{volby}_davky")
+        os.makedirs(ddir, exist_ok=True)
+        tfn = os.path.join(ddir, f"{datum}.csv")
         with open(tfn, "wt", encoding="utf8") as fw:
             schema = ["DATUM"] + [j for j in fmp["schema"]]
             if volby in DVOUKOLAK:
@@ -169,6 +172,10 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                         cw.writerow(el)
 
 
+def job_processor(args):
+    return process_url(*args)
+
+
 def main(outdir: str, partial: bool = False):
     cdir = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(cdir, "mapping.json"), encoding="utf-8") as f:
@@ -189,11 +196,12 @@ def main(outdir: str, partial: bool = False):
             for url in urls:
                 if "datumvoleb" in url:
                     continue
-                jobs.append((url, volby, datum))
+                jobs.append((outdir, partial, fnmap, url, volby, datum))
 
-    job_processor = functools.partial(process_url, outdir, partial, fnmap)
+    progress = tqdm(total=len(jobs))
     with multiprocessing.Pool(ncpu) as pool:
-        pool.starmap(job_processor, jobs)
+        for _ in pool.imap_unordered(job_processor, jobs):
+            progress.update(n=1)
 
 
 if __name__ == "__main__":
