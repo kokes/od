@@ -1,6 +1,7 @@
 import csv
 import gzip
 import io
+import logging
 import os
 from contextlib import contextmanager
 from urllib.request import Request, urlopen
@@ -104,8 +105,10 @@ def open_remote_gzipped(url: str, partial: bool):
 
 
 def main(outdir: str, partial: bool = False):
+    logging.getLogger().setLevel(logging.INFO)
     cls_data = dict()
     for cls_url in CLS_URLS:
+        logging.info("Nacitam %s", cls_url)
         with open_remote_gzipped(cls_url, partial) as r:
             cr = csv.DictReader(r)
             for row in cr:
@@ -121,7 +124,10 @@ def main(outdir: str, partial: bool = False):
 
                 cls_data[(int(kodcis), chodnota)] = text
 
+    logging.info("Ciselniky hotove")
+
     for url, filename in [DATA, NACE]:
+        logging.info("Nacitam %s", url)
         path = os.path.join(outdir, filename)
         with open_remote_gzipped(url, partial) as r, open(
             path, "wt", encoding="utf-8"
