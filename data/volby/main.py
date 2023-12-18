@@ -202,8 +202,6 @@ def main(outdir: str, partial: bool = False):
             if partial and datum != sorted(mp["url"].keys())[-1]:
                 continue
             for url in urls:
-                if "datumvoleb" in url:
-                    continue
                 jobs.append((outdir, partial, fnmap, url, volby, datum))
 
     progress = tqdm(total=len(jobs))
