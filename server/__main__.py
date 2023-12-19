@@ -42,12 +42,14 @@ class API(Flask):
 
         # TODO: neni tam zadne razeni
         # TODO: neni to kolace nad latin1_general_ci_ai (nejak mi nefungovala)
-        # TODO: neni to indexovane
+        # TODO: neni to indexovane (na sqlite mi to nechce chytit index na computed sloupec)
         tbl = self.table_schemas[("justice", "angazovane_osoby")]
         cols = {k: v for k, v in tbl.columns.items()}  # TODO: yikes
         query = (
             session.query(cols["jmeno"], cols["prijmeni"], cols["datum_narozeni"])
-            .filter((column("jmeno") + " " + column("prijmeni")).contains(q))
+            .filter(
+                func.lower((column("jmeno") + " " + column("prijmeni"))).contains(q)
+            )
             .group_by(column("jmeno"), column("prijmeni"), column("datum_narozeni"))
             .limit(100)
         )
