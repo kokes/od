@@ -3,8 +3,8 @@
 import argparse
 import logging
 
-from flask import Flask, jsonify, render_template
-from sqlalchemy import create_engine
+from flask import Flask, abort, jsonify, render_template, request
+from sqlalchemy import create_engine, text
 
 
 class API(Flask):
@@ -14,12 +14,26 @@ class API(Flask):
 
         self.route("/", methods=["GET"])(self.index)
         self.route("/status", methods=["GET"])(self.status)
+        self.route("/api/search", methods=["GET"])(self.search)
+        # self.route("/api/datasets", methods=["GET"])(self.datasets)
 
     def status(self):
         return jsonify({"status": "ok"})
 
     def index(self):
         return render_template("index.j2")
+
+    def search(self):
+        q = request.args.get("q")
+        if not q:
+            abort(400, "missing query parameter 'q'")
+
+        results = []
+        with self.engine.begin() as conn:
+            cursor = conn.execute(text("SELECT 1"))
+            results = [str(j) for j in cursor.fetchall()]
+
+        return jsonify({"status": "ok", "results": results})
 
 
 if __name__ == "__main__":
