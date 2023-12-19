@@ -41,15 +41,17 @@ class API(Flask):
         session = self.sessionmaker()
 
         # TODO: neni tam zadne razeni
-        # TODO: neni to kolace nad latin_ci_general_ai
+        # TODO: neni to kolace nad latin1_general_ci_ai (nejak mi nefungovala)
         # TODO: neni to indexovane
+        tbl = self.table_schemas[("justice", "angazovane_osoby")]
+        cols = {k: v for k, v in tbl.columns.items()}  # TODO: yikes
         query = (
-            session.query(self.table_schemas[("justice", "angazovane_osoby")])
-            .filter(
-                (column("jmeno") + " " + column("prijmeni")).ilike(text(f"'%{q}%'"))
-            )
+            session.query(cols["jmeno"], cols["prijmeni"], cols["datum_narozeni"])
+            .filter((column("jmeno") + " " + column("prijmeni")).contains(q))
+            .group_by(column("jmeno"), column("prijmeni"), column("datum_narozeni"))
             .limit(100)
         )
+        print(query)
         results = [
             {
                 "jmeno": j.jmeno,
