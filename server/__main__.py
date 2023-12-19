@@ -4,13 +4,22 @@ import argparse
 import logging
 
 from flask import Flask, abort, jsonify, render_template, request
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, func, column, collate
+from sqlalchemy.orm import sessionmaker
 
 
 class API(Flask):
     def __init__(self, import_name, connstring: str):
         super(API, self).__init__(import_name)
         self.engine = create_engine(connstring)
+        self.sessionmaker = sessionmaker(bind=self.engine)
+
+        self.table_schemas = {}
+        from data.justice.schema import meta
+
+        for table_name, table in meta.tables.items():
+            table.name = "justice_" + table.name  # TODO: jen pro sqlite
+            self.table_schemas[("justice", table_name)] = table
 
         self.route("/", methods=["GET"])(self.index)
         self.route("/status", methods=["GET"])(self.status)
@@ -28,10 +37,27 @@ class API(Flask):
         if not q:
             abort(400, "missing query parameter 'q'")
 
+        # sqlite: WHERE CONCAT(first_name COLLATE LATIN1_GENERAL_CI_AI, ' ', last_name COLLATE LATIN1_GENERAL_CI_AI) LIKE '%John Smith%';
+        # postgres: WHERE concat(first_name COLLATE 'latin1_general_ci_ai', ' ', last_name COLLATE 'latin1_general_ci_ai') LIKE '%John Smith%';
+        # func.concat(
+        # collate(column("jmeno"), "latin1_general_ci_ai"),
+        # " ",
+        # collate(column("prijmeni"), "latin1_general_ci_ai"),
+
         results = []
-        with self.engine.begin() as conn:
-            cursor = conn.execute(text("SELECT 1"))
-            results = [str(j) for j in cursor.fetchall()]
+        session = self.sessionmaker()
+
+        query = session.query(self.table_schemas[("justice", "subjekty")]).filter(
+            column("nazev").like(text(f"'%{q}%'"))
+        )
+        # query = session.query(text("justice_subjekty")).filter(
+        #     column("nazev").like("agro")
+        # )
+        results = [str(j) for j in query.all()]
+
+        # with self.engine.begin() as conn:
+        #     cursor = conn.execute(text("SELECT 1"))
+        #     results = [str(j) for j in cursor.fetchall()]
 
         return jsonify({"status": "ok", "results": results})
 
