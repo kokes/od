@@ -37,29 +37,31 @@ class API(Flask):
         if not q:
             abort(400, "missing query parameter 'q'")
 
-        # sqlite: WHERE CONCAT(first_name COLLATE LATIN1_GENERAL_CI_AI, ' ', last_name COLLATE LATIN1_GENERAL_CI_AI) LIKE '%John Smith%';
-        # postgres: WHERE concat(first_name COLLATE 'latin1_general_ci_ai', ' ', last_name COLLATE 'latin1_general_ci_ai') LIKE '%John Smith%';
-        # func.concat(
-        # collate(column("jmeno"), "latin1_general_ci_ai"),
-        # " ",
-        # collate(column("prijmeni"), "latin1_general_ci_ai"),
-
         results = []
         session = self.sessionmaker()
 
-        query = session.query(self.table_schemas[("justice", "subjekty")]).filter(
-            column("nazev").like(text(f"'%{q}%'"))
+        # TODO: neni tam zadne razeni
+        # TODO: neni to kolace nad latin_ci_general_ai
+        # TODO: neni to indexovane
+        query = (
+            session.query(self.table_schemas[("justice", "angazovane_osoby")])
+            .filter(
+                (column("jmeno") + " " + column("prijmeni")).ilike(text(f"'%{q}%'"))
+            )
+            .limit(100)
         )
-        # query = session.query(text("justice_subjekty")).filter(
-        #     column("nazev").like("agro")
-        # )
-        results = [str(j) for j in query.all()]
+        results = [
+            {
+                "jmeno": j.jmeno,
+                "prijmeni": j.prijmeni,
+                "datum_narozeni": j.datum_narozeni.isoformat()
+                if j.datum_narozeni
+                else None,
+            }
+            for j in query.all()
+        ]
 
-        # with self.engine.begin() as conn:
-        #     cursor = conn.execute(text("SELECT 1"))
-        #     results = [str(j) for j in cursor.fetchall()]
-
-        return jsonify({"status": "ok", "results": results})
+        return jsonify(result={"status": "ok", "results": results})
 
 
 if __name__ == "__main__":
@@ -88,5 +90,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = API(__name__, connstring=args.connstring)
+    app.json.ensure_ascii = False
 
     app.run(port=args.port, debug=args.debug)
