@@ -49,7 +49,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
         ds, fmp = fnmap[volby]["davky.xml"]  # 'davky.xml' je dummy hodnota
         ddir = os.path.join(outdir, f"{volby}_davky")
         os.makedirs(ddir, exist_ok=True)
-        tfn = os.path.join(ddir, f"{datum}.csv")
+        tfn = os.path.join(ddir, f"{datum.replace('*', 'vse')}.csv")
         with open(tfn, "wt", encoding="utf8") as fw:
             schema = ["DATUM"] + [j for j in fmp["schema"]]
             if volby in DVOUKOLAK:
