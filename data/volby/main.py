@@ -49,7 +49,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
         ds, fmp = fnmap[volby]["davky.xml"]  # 'davky.xml' je dummy hodnota
         ddir = os.path.join(outdir, f"{volby}_davky")
         os.makedirs(ddir, exist_ok=True)
-        tfn = os.path.join(ddir, f"{datum.replace('*', 'vse')}.csv")
+        tfn = os.path.join(ddir, f"{datum}.csv")
         with open(tfn, "wt", encoding="utf8") as fw:
             schema = ["DATUM"] + [j for j in fmp["schema"]]
             if volby in DVOUKOLAK:
@@ -113,7 +113,10 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
             tdir = os.path.join(outdir, f"{volby}_{ds}")
             os.makedirs(tdir, exist_ok=True)
             url_path = os.path.splitext(os.path.basename(urlparse(url).path))[0]
-            tfn = os.path.join(tdir, f"{datum}_{url_path}_{os.path.basename(ff)}")
+            # windows neumi mit v nazvu souboru hvezdicku
+            tfn = os.path.join(
+                tdir, f"{datum.replace('*', 'vse')}_{url_path}_{os.path.basename(ff)}"
+            )
             if os.path.isfile(tfn):
                 raise IOError(f"necekany prepis souboru: {tfn}")
             with open(tfn, "wt", encoding="utf8") as fw:
