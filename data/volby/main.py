@@ -199,7 +199,7 @@ def main(outdir: str, partial: bool = False):
                 fnmap[volby][fn] = (ds, spec)
 
         for datum, urls in mp["url"].items():
-            if partial and datum != sorted(mp["url"].keys())[-1]:
+            if partial and datum not in ("*", sorted(mp["url"].keys())[-1]):
                 continue
             for url in urls:
                 jobs.append((outdir, partial, fnmap, url, volby, datum))
