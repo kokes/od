@@ -113,7 +113,10 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
             tdir = os.path.join(outdir, f"{volby}_{ds}")
             os.makedirs(tdir, exist_ok=True)
             url_path = os.path.splitext(os.path.basename(urlparse(url).path))[0]
-            tfn = os.path.join(tdir, f"{datum}_{url_path}_{os.path.basename(ff)}")
+            # windows neumi mit v nazvu souboru hvezdicku
+            tfn = os.path.join(
+                tdir, f"{datum.replace('*', 'vse')}_{url_path}_{os.path.basename(ff)}"
+            )
             if os.path.isfile(tfn):
                 raise IOError(f"necekany prepis souboru: {tfn}")
             with open(tfn, "wt", encoding="utf8") as fw:
@@ -199,7 +202,7 @@ def main(outdir: str, partial: bool = False):
                 fnmap[volby][fn] = (ds, spec)
 
         for datum, urls in mp["url"].items():
-            if partial and datum != sorted(mp["url"].keys())[-1]:
+            if partial and datum not in ("*", sorted(mp["url"].keys())[-1]):
                 continue
             for url in urls:
                 jobs.append((outdir, partial, fnmap, url, volby, datum))
