@@ -44,6 +44,11 @@ if __name__ == "__main__":
         action="store_true",
         help="procesuj jen cast vstupnich dat - vhodne pro testovani, CI apod.",
     )
+    parser.add_argument(
+        "--preserve-csv",
+        action="store_true",
+        help="nemaz CSV soubory po nahrani do databaze",
+    )
     parser.add_argument("--all", action="store_true", help="procesuj vsechny moduly")
     parser.add_argument("modules", nargs="*", help="specify which datasets to include")
     args = parser.parse_args()
@@ -122,7 +127,6 @@ if __name__ == "__main__":
                         os.path.join(dir_cand, basename)
                     )
             else:
-                continue
                 raise IOError(f"neexistujou data pro {module_name}.{table.name}")
 
         for table in schemas[module_name]:
@@ -244,3 +248,7 @@ if __name__ == "__main__":
                         conn.execute(text(sql.string))
 
             print(f" ({time.time() - t:.2f}s)")
+
+        # data nahrana do db, muzu mazat CSV
+        if not args.preserve_csv:
+            shutil.rmtree(outdir)
