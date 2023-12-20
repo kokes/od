@@ -1,0 +1,10 @@
+lxml
+openpyxl
+psycopg2-binary
+requests
+tqdm
+xlrd
+cssselect
+sqlalchemy<2.0.0
+pyproj
+shapely
