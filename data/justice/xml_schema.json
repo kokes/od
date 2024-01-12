@@ -369,7 +369,6 @@
     "udaj": "ZRUSENI_KONKURSU",
     "soubor": "konkurs_zruseni",
     "schema": {
-      "hlavicka": "hlavicka",
       "datum_zapis": "zapisDatum",
       "datum_vymaz": "vymazDatum",
       "text": "hodnotaText"
@@ -426,7 +425,6 @@
       "aktivni": "hodnotaUdaje/typZapisu/aktivni",
       "key": "hodnotaUdaje/typZapisu/key",
       "nazev": "hodnotaUdaje/typZapisu/nazev",
-      "ciselnik": "hodnotaUdaje/typZapisu/ciselnikClass",
       "externi_kod": "hodnotaUdaje/typZapisu/externalCodes/int",
       "text": "hodnotaUdaje/text"
     }
