@@ -111,7 +111,7 @@ schema = [
         Column(
             "zkratka",
             Text,
-            # nakonec to muze byt prazdne, nove pro "Společné schůze Poslanecké sněmovny a Senátu"
+            # prazdne napr. pro "Společné schůze Poslanecké sněmovny a Senátu"
             nullable=True,
             comment="Zkratka orgánu, bez diakritiky, v některých připadech "
             "se zkratka při zobrazení nahrazuje jiným názvem",
