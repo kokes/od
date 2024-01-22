@@ -111,7 +111,8 @@ schema = [
         Column(
             "zkratka",
             Text,
-            nullable=False,
+            # nakonec to muze byt prazdne, nove pro "Společné schůze Poslanecké sněmovny a Senátu"
+            nullable=True,
             comment="Zkratka orgánu, bez diakritiky, v některých připadech "
             "se zkratka při zobrazení nahrazuje jiným názvem",
         ),
@@ -1037,7 +1038,7 @@ schema = [
             "druh_vysledek",
             Text,
             nullable=False,
-            unique=True,
+            unique=False,
             comment="Popis druhu výsledku",
         ),
     ),
@@ -1588,7 +1589,7 @@ schema = [
         Column(
             "jd",
             SmallInteger,
-            nullable=False,
+            nullable=True,
             comment="Číslo jednacího dne v rámci schůze (používá se např. při "
             "konstrukci URL na index stenozáznamu dle dnů).",
         ),
