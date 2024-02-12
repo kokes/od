@@ -106,7 +106,7 @@ def nahraj_ds(url):
             yield from et
 
 
-def zpracuj_ds(url, schemas, outdir, partial, autogen):
+def zpracuj_ds(url, schemas, outdir, partial, autogen, icos):
     et = nahraj_ds(url)
 
     fs, csvs, schemasd = dict(), dict(), dict()
@@ -140,7 +140,6 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen):
             fs[udaj] = f
             csvs[udaj] = cw
 
-    icos = set()  # TODO: tohle budem muset dostavat jak input (z minulych let)
     for num, (action, el) in enumerate(et):
         if partial and num > 1e5:
             break
@@ -162,11 +161,11 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen):
             #     fw.write(f"{nazev}\t{el.sourceline}\t{url}\n")
             continue
 
-        # TODO: kdyz zpracovavame data starsi nez letosni, musime
+        # kdyz zpracovavame data starsi nez letosni, musime
         # zahazovat jiz zpracovana data
-        # if ico in icos:
-        #     el.clear()
-        #     continue
+        if ico in icos:
+            el.clear()
+            continue
         icos.add(ico)
 
         csvs["subjekty"].writerow([ico, nazev, zapis, vymaz])
@@ -275,16 +274,11 @@ def main(outdir: str, partial: bool = False):
 
     # samotna multiprocessing.queue z nejakyho duvodu nefungovala
     autogen = multiprocessing.Manager().Queue()
-    zpracuj = functools.partial(
-        zpracuj_ds,
-        schemas=schemas,
-        outdir=outdir,
-        partial=partial,
-        autogen=autogen,
-    )
+
     # TODO: chcem fakt jet naplno? co kdyz budem parametrizovat jednotlivy moduly?
     ncpu = multiprocessing.cpu_count()
 
+    processed = set()
     for year in years:
         dss = dsm[year]
 
@@ -314,16 +308,23 @@ def main(outdir: str, partial: bool = False):
 
         progress = tqdm(total=len(urls), desc=year)
 
-        # chcem frontloadovat nejvetsi datasety, abychom optimalizovali runtime
-        # mohli bychom HEADnout ty soubory, ale najit sro/as je rychlejsi a good enough
-        urls.sort(key=lambda x: int("/sro" in x or "/as" in x), reverse=True)
-        # for url in urls:
-        #     zpracuj(url)
-        #     progress.update(n=1)
+        zpracuj = functools.partial(
+            zpracuj_ds,
+            schemas=schemas,
+            outdir=outdir,
+            partial=partial,
+            autogen=autogen,
+            icos=set(list(processed)),  # bojim se konkurence
+        )
+
+        year_icos = set()
         with multiprocessing.Pool(ncpu) as pool:
-            for _, _ in pool.imap_unordered(zpracuj, urls):
+            for _, icos in pool.imap_unordered(zpracuj, urls):
                 # logging.debug(url)?
                 progress.update(n=1)
+                year_icos.update(icos)
+
+        processed.update(year_icos)
 
     # nezpracovany objekty je treba rucne projit
     schema_autogen = dict()
