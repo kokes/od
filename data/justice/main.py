@@ -10,6 +10,7 @@ import multiprocessing
 import os
 import re
 import shutil
+import time
 from collections import defaultdict
 from urllib.parse import urlparse
 from urllib.request import urlopen
@@ -283,7 +284,7 @@ def main(outdir: str, partial: bool = False):
         dss = dsm[year]
 
         urls = []
-        for j, ds in enumerate(tqdm(dss)):
+        for j, ds in enumerate(tqdm(dss, desc=f"{year} meta")):
             if partial and len(urls) > 20:
                 break
             url = f"https://dataor.justice.cz/api/3/action/package_show?id={ds}"
@@ -306,7 +307,7 @@ def main(outdir: str, partial: bool = False):
 
             urls.append(ds_url[0])
 
-        progress = tqdm(total=len(urls), desc=year)
+        progress = tqdm(total=len(urls), desc=f"{year} data")
 
         zpracuj = functools.partial(
             zpracuj_ds,
@@ -318,13 +319,16 @@ def main(outdir: str, partial: bool = False):
         )
 
         year_icos = set()
+        t = time.time()
         with multiprocessing.Pool(ncpu) as pool:
             for _, icos in pool.imap_unordered(zpracuj, urls):
                 # logging.debug(url)?
                 progress.update(n=1)
                 year_icos.update(icos)
 
+        progress.close()
         processed.update(year_icos)
+        print(f"zpracovano {year} za {time.time() - t:.2f}s")
 
     # nezpracovany objekty je treba rucne projit
     schema_autogen = dict()
