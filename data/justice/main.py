@@ -10,6 +10,7 @@ import multiprocessing
 import os
 import re
 import shutil
+from collections import defaultdict
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
@@ -20,6 +21,7 @@ NON_ISO_DATUM = re.compile(r"^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$")
 HTTP_TIMEOUT = 60
 CACHE_DIR = "cache"
 CACHE_ENABLED = bool(int(os.environ.get("CACHE_ENABLED", "0")))
+CURRENT_YEAR_ONLY = bool(int(os.environ.get("CURRENT_YEAR_ONLY", "1")))
 
 
 def gen_schema(element, parent=None):
@@ -251,34 +253,21 @@ def main(outdir: str, partial: bool = False):
         assert data["success"]
 
     dss = [ds for ds in data["result"] if "-full-" in ds]
-    print(f"celkem {len(dss)} datasetu, ale filtruji jen na ty letosni")
-    # TODO: abychom zvladli i ty minuly roky, budem muset udelat batche po
-    # letech a udelat dycky kazdej rok zvlast a predavat si seznam zpracovanych ICO
-    dss = [j for j in dss if int(j.rpartition("-")[-1]) == dt.date.today().year]
-    print(f"po odfiltrovani {len(dss)} datasetu")
-    dss.sort(key=lambda x: int(x.rpartition("-")[-1]), reverse=True)
+    print(f"celkem {len(dss)} datasetu")
 
-    urls = []
-    for j, ds in enumerate(tqdm(dss)):
-        if partial and len(urls) > 20:
-            break
-        url = f"https://dataor.justice.cz/api/3/action/package_show?id={ds}"
-        with cached_urlopen(url, timeout=HTTP_TIMEOUT) as r:
-            dtp = json.load(r)
-            assert dtp["success"]
-        ds_url = [
-            j["url"] for j in dtp["result"]["resources"] if j["url"].endswith(".xml.gz")
-        ]
-        assert len(ds_url) == 1
+    dsm = defaultdict(list)
+    for ds in dss:
+        year = ds.rpartition("-")[-1]
+        # TODO(PR): remove
+        if int(year) < 2014:
+            continue
+        dsm[year].append(ds)
 
-        # mohli bychom to omezit jen na mensi soubory, ale radsi
-        # prectu trosku z vicero dat
-        # if partial:
-        #     req = urlopen(ds_url[0])
-        #     if int(req.headers.get("Content-Length")) > 10_000_000:
-        #         continue
-
-        urls.append(ds_url[0])
+    years = sorted(dsm.keys(), reverse=True)
+    print(f"mame data pro roky: {years}")
+    if CURRENT_YEAR_ONLY:
+        print(f"zpracovavame jen rok {years[0]}")
+        years = years[:1]
 
     cdir = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(cdir, "xml_schema.json"), encoding="utf-8") as f:
@@ -293,17 +282,48 @@ def main(outdir: str, partial: bool = False):
         partial=partial,
         autogen=autogen,
     )
-    progress = tqdm(total=len(urls))
     # TODO: chcem fakt jet naplno? co kdyz budem parametrizovat jednotlivy moduly?
     ncpu = multiprocessing.cpu_count()
 
-    # chcem frontloadovat nejvetsi datasety, abychom optimalizovali runtime
-    # mohli bychom HEADnout ty soubory, ale najit sro/as je rychlejsi a good enough
-    urls.sort(key=lambda x: int("/sro" in x or "/as" in x), reverse=True)
-    with multiprocessing.Pool(ncpu) as pool:
-        for _, _ in pool.imap_unordered(zpracuj, urls):
-            # logging.debug(url)?
-            progress.update(n=1)
+    for year in years:
+        dss = dsm[year]
+
+        urls = []
+        for j, ds in enumerate(tqdm(dss)):
+            if partial and len(urls) > 20:
+                break
+            url = f"https://dataor.justice.cz/api/3/action/package_show?id={ds}"
+            with cached_urlopen(url, timeout=HTTP_TIMEOUT) as r:
+                dtp = json.load(r)
+                assert dtp["success"]
+            ds_url = [
+                j["url"]
+                for j in dtp["result"]["resources"]
+                if j["url"].endswith(".xml.gz")
+            ]
+            assert len(ds_url) == 1
+
+            # mohli bychom to omezit jen na mensi soubory, ale radsi
+            # prectu trosku z vicero dat
+            # if partial:
+            #     req = urlopen(ds_url[0])
+            #     if int(req.headers.get("Content-Length")) > 10_000_000:
+            #         continue
+
+            urls.append(ds_url[0])
+
+        progress = tqdm(total=len(urls), desc=year)
+
+        # chcem frontloadovat nejvetsi datasety, abychom optimalizovali runtime
+        # mohli bychom HEADnout ty soubory, ale najit sro/as je rychlejsi a good enough
+        urls.sort(key=lambda x: int("/sro" in x or "/as" in x), reverse=True)
+        # for url in urls:
+        #     zpracuj(url)
+        #     progress.update(n=1)
+        with multiprocessing.Pool(ncpu) as pool:
+            for _, _ in pool.imap_unordered(zpracuj, urls):
+                # logging.debug(url)?
+                progress.update(n=1)
 
     # nezpracovany objekty je treba rucne projit
     schema_autogen = dict()
