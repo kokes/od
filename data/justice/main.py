@@ -19,7 +19,7 @@ import lxml.etree
 from tqdm import tqdm
 
 NON_ISO_DATUM = re.compile(r"^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$")
-HTTP_TIMEOUT = 60
+HTTP_TIMEOUT = 180
 CACHE_DIR = "cache"
 CACHE_ENABLED = bool(int(os.environ.get("CACHE_ENABLED", "0")))
 CURRENT_YEAR_ONLY = bool(int(os.environ.get("CURRENT_YEAR_ONLY", "1")))
@@ -258,9 +258,6 @@ def main(outdir: str, partial: bool = False):
     dsm = defaultdict(list)
     for ds in dss:
         year = ds.rpartition("-")[-1]
-        # TODO(PR): remove
-        if int(year) < 2014:
-            continue
         dsm[year].append(ds)
 
     years = sorted(dsm.keys(), reverse=True)
