@@ -7,7 +7,7 @@ from urllib.request import urlopen, urlretrieve
 
 import lxml.etree
 
-BASE_URL = "https://wwwinfo.mfcr.cz/_konec/ares_vreo_all.tar.gz"
+BASE_URL = "https://ares.gov.cz/otevrena-data/ares_vreo_all.tar.gz"
 
 
 def attr(root, parts, nsmap):
