@@ -46,6 +46,13 @@ schema = [
         Column("ico_organ", Integer, nullable=True, index=True),
         Column("adresa", JSON, nullable=True),
     ),
+    Table(
+        "cinnosti",
+        meta,
+        Column("ico", Integer, nullable=False, index=True),
+        Column("typ_cinnost", Text, nullable=True),
+        Column("text", Text, nullable=True),
+    )
 ]
 
 
