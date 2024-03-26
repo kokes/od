@@ -31,7 +31,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run partial processing
       id: main
-      if: matrix.module != 'eufondy'
+      if: matrix.module != 'eufondy' && !(matrix.module == 'psp' && matrix.os == 'windows-latest') && !(matrix.module == 'steno' && matrix.os == 'windows-latest')
       run: |
         python3 main.py --connstring sqlite:///data.db --partial ${{ matrix.module }}
     - name: Run partial processing (broken jobs)

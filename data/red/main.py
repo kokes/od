@@ -9,6 +9,8 @@ import os
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
+HTTP_TIMEOUT = 60
+
 # TODO: mozna nebude treba, mozna budou URL nemenne
 DATASETS_GRAPHQL_QUERY = (
     """
@@ -34,7 +36,9 @@ ID_COLS = ("iriDotace", "iriPrijemce", "iriRozhodnuti", "iriRozpoctoveObdobi")
 
 
 def remote_csv(url):
-    with urlopen(url, timeout=30) as r, gzip.open(r, encoding="utf-8", mode="rt") as f:
+    with urlopen(url, timeout=HTTP_TIMEOUT) as r, gzip.open(
+        r, encoding="utf-8", mode="rt"
+    ) as f:
         cr = csv.DictReader((line.replace("\0", "") for line in f), strict=True)
         yield from cr
 
@@ -119,7 +123,9 @@ def main(outdir: str, partial: bool = False):
     req = Request("https://data.gov.cz/graphql")
     req.add_header("content-type", "application/json")
     with urlopen(
-        req, json.dumps({"query": DATASETS_GRAPHQL_QUERY}).encode(), timeout=10
+        req,
+        json.dumps({"query": DATASETS_GRAPHQL_QUERY}).encode(),
+        timeout=HTTP_TIMEOUT,
     ) as r:
         distribution_urls = json.load(r)["data"]["datasets"]["data"]
 

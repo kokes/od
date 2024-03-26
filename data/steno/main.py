@@ -16,6 +16,8 @@ from urllib.request import urlopen
 import lxml.html
 from tqdm import tqdm
 
+HTTP_TIMEOUT = 90
+
 
 def clean_lines(rel_path):
     return list(
@@ -132,7 +134,7 @@ def zpracuj_schuzi(outdir, params):
     with tempfile.TemporaryDirectory() as tmpdir:
         base_name = os.path.basename(urlparse(url).path)
         tfn = os.path.join(tmpdir, base_name)
-        with urlopen(url, timeout=30) as r, open(tfn, "wb") as fw:
+        with urlopen(url, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
             shutil.copyfileobj(r, fw)
         tdir = os.path.join(outdir, "psp")
         os.makedirs(tdir, exist_ok=True)
@@ -178,7 +180,7 @@ def main(outdir: str, partial: bool = False):
     logging.getLogger().setLevel(logging.INFO)
     jobs = []
     for rok, burl in urls.items():
-        with urlopen(burl, timeout=30) as r:
+        with urlopen(burl, timeout=HTTP_TIMEOUT) as r:
             ht = lxml.html.parse(r).getroot()
 
         for num, ln in enumerate(ht.cssselect("div#main-content a")):
@@ -188,6 +190,9 @@ def main(outdir: str, partial: bool = False):
             jobs.append((rok, url))
 
     ncpu = multiprocessing.cpu_count()
+    if os.getenv("CI"):
+        logging.info("Pouze jedno CPU, abychom nepretizili psp.cz")
+        ncpu = 1
     func = functools.partial(zpracuj_schuzi, outdir)
     lnm = Counter()
     progress = tqdm(total=len(jobs))
