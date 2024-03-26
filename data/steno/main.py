@@ -190,6 +190,9 @@ def main(outdir: str, partial: bool = False):
             jobs.append((rok, url))
 
     ncpu = multiprocessing.cpu_count()
+    if os.getenv("CI"):
+        logging.info("Pouze jedno CPU, abychom nepretizili psp.cz")
+        ncpu = 1
     func = functools.partial(zpracuj_schuzi, outdir)
     lnm = Counter()
     progress = tqdm(total=len(jobs))

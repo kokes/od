@@ -118,6 +118,9 @@ def main(outdir: str, partial: bool = False):
 
     job = functools.partial(process_mapping, outdir, partial)
     ncpu = multiprocessing.cpu_count()
+    if os.getenv("CI"):
+        logging.info("Pouze jedno CPU, abychom nepretizili psp.cz")
+        ncpu = 1
     with multiprocessing.Pool(ncpu) as pool:
         for tema, tabulka in pool.imap_unordered(job, mapping):
             logging.info("hotovo: %s, %s", tema, tabulka)
