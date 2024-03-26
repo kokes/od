@@ -7,14 +7,16 @@ import json
 import logging
 import multiprocessing
 import os
+import shutil
 import zipfile
 from contextlib import contextmanager
 from datetime import datetime
 from io import TextIOWrapper
 from tempfile import TemporaryDirectory
-from urllib.request import urlretrieve
+from urllib.request import urlopen
 
 NULL_DATE = datetime(1900, 1, 1, 0, 0)
+HTTP_TIMEOUT = 90
 
 
 @contextmanager
@@ -22,7 +24,11 @@ def read_compressed(zipname, filename):
     burl = "http://www.psp.cz/eknih/cdrom/opendata/{}"
     with TemporaryDirectory() as tdir:
         tfn = os.path.join(tdir, "tmp.zip")
-        urlretrieve(burl.format(zipname), tfn)
+        with open(tfn, "wb") as f, urlopen(
+            burl.format(zipname), timeout=HTTP_TIMEOUT
+        ) as u:
+            shutil.copyfileobj(u, f)
+
         with zipfile.ZipFile(tfn) as zf, zf.open(filename) as zfh:
             # tisky.unl maj encoding chyby
             yield TextIOWrapper(zfh, "cp1250", errors="ignore")
