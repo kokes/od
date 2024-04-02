@@ -5,6 +5,7 @@ import multiprocessing
 import os
 import re
 import shutil
+import ssl
 import tempfile
 import zipfile
 from collections import Counter
@@ -15,6 +16,8 @@ from urllib.request import urlopen
 
 import lxml.html
 from tqdm import tqdm
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 HTTP_TIMEOUT = 90
 
