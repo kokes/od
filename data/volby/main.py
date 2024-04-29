@@ -17,6 +17,7 @@ from urllib.request import Request, urlopen
 import lxml.etree
 from tqdm import tqdm
 
+HTTP_TIMEOUT = 30
 RETRIES = 5
 DVOUKOLAK = ("senat", "prezident")
 
@@ -30,7 +31,7 @@ def load_remote_data(url: str):
             req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
             for j in range(RETRIES):
                 try:
-                    with urlopen(req, timeout=15) as r, open(tfn, "wb") as fw:
+                    with urlopen(req, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
                         shutil.copyfileobj(r, fw)
                         break
                 except URLError as e:
@@ -71,7 +72,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                         break
                     qs["davka"] = davka
                     parsed = parsed._replace(query=urlencode(qs))
-                    with urlopen(urlunparse(parsed)) as r:
+                    with urlopen(urlunparse(parsed), timeout=HTTP_TIMEOUT) as r:
                         et = lxml.etree.parse(r).getroot()
                     ns = et.nsmap[None]
                     if et.find(f"./{{{ns}}}CHYBA") is not None:
