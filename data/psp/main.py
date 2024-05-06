@@ -7,8 +7,8 @@ import json
 import logging
 import multiprocessing
 import os
-import ssl
 import shutil
+import ssl
 import zipfile
 from contextlib import contextmanager
 from datetime import datetime
