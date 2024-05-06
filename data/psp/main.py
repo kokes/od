@@ -7,6 +7,7 @@ import json
 import logging
 import multiprocessing
 import os
+import ssl
 import shutil
 import zipfile
 from contextlib import contextmanager
@@ -14,6 +15,8 @@ from datetime import datetime
 from io import TextIOWrapper
 from tempfile import TemporaryDirectory
 from urllib.request import urlopen
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 NULL_DATE = datetime(1900, 1, 1, 0, 0)
 HTTP_TIMEOUT = 90
