@@ -153,7 +153,8 @@ schema = [
             "priznak",
             Text,
             nullable=True,
-            comment="Vyjadřuje změnu oproti minulému stavu: P = přírůstek záznamu oproti",
+            comment="Vyjadřuje změnu oproti minulému stavu: "
+            "P = přírůstek záznamu oproti",
         ),
         # minulému stavu (může být i znovuobnovení IČO po více než 48 měsících,
         # např. IČO zaniklo v 2015-07 a znovu obnovilo činnost 2021-07-18 =>
