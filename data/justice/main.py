@@ -89,15 +89,22 @@ def cached_urlopen(url, timeout=HTTP_TIMEOUT):
         return
 
     with urlopen(url, timeout=timeout) as r:
-        if not CACHE_ENABLED:
-            yield r
-            return
         fn_tmp = fn_path + ".tmp"
+        # driv jsme cetli rovnou z webu, ale delalo to problemy,
+        # tak to holt docasne ukladame a poustime to z disku
         with open(fn_tmp, "wb") as f:
             shutil.copyfileobj(r, f)
-        os.rename(fn_tmp, fn_path)
-        with cached_urlopen(url, timeout) as r:
-            yield r
+
+    # pri vypnuty cache se jen cte s tempfilu a pak se maze
+    if not CACHE_ENABLED:
+        with open(fn_tmp, "rb") as f:
+            yield f
+        os.remove(fn_tmp)
+        return
+
+    os.rename(fn_tmp, fn_path)
+    with cached_urlopen(url, timeout) as r:
+        yield r
 
 
 def nahraj_ds(url):
