@@ -178,6 +178,7 @@ if __name__ == "__main__":
                 with engine.begin() as conn:
                     conn.execute(text(f"CREATE SCHEMA IF NOT EXISTS {table.schema}"))
             elif engine.name == "sqlite":
+                table.schema = ""
                 table.name = f"{args.schema_prefix}{module_name}_{table.name}"
 
             if args.drop_first:
