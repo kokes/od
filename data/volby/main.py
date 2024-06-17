@@ -4,6 +4,8 @@ import json
 import logging
 import multiprocessing
 import os
+import random
+import string
 import shutil
 import zipfile
 from collections import defaultdict
@@ -23,31 +25,32 @@ DVOUKOLAK = ("senat", "prezident")
 PARALLEL = os.environ.get("PARALLEL", "1") == "1"
 
 
-def fetch_as_file(url, tfn, retries=RETRIES):
+@contextmanager
+def fetch_as_file(url, tfn=None, retries=RETRIES):
     req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
-    for j in range(retries):
-        try:
-            with urlopen(req, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
-                shutil.copyfileobj(r, fw)
-                break
-        except URLError as e:
-            if j == retries - 1:
-                raise e
-            print(f"URLError ({e}), retrying {url}")
-            continue
-        except Exception as e:
-            print(f"TIMED OUT? {url}")
-            raise e
+    with TemporaryDirectory() as tmpdir:
+        tfn = os.path.join(
+            tmpdir,
+            "".join([random.choice(string.ascii_letters) for _ in range(10)]),
+        )
+
+        for j in range(retries):
+            try:
+                with urlopen(req, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
+                    shutil.copyfileobj(r, fw)
+                    break
+            except (URLError, TimeoutError) as e:
+                if j == retries - 1:
+                    raise e
+                print(f"{e}, retrying {url}")
+                continue
+
+        yield tfn
 
 
 @contextmanager
 def load_remote_data(url: str):
-    with TemporaryDirectory() as tmpdir:
-        fn = os.path.basename(url)
-        tfn = os.path.join(tmpdir, fn)
-        if not os.path.isfile(tfn):
-            fetch_as_file(url, tfn)
-
+    with fetch_as_file(url) as tfn:
         with zipfile.ZipFile(tfn) as zf:
             yield zf
 
@@ -80,9 +83,9 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                         break
                     qs["davka"] = davka
                     parsed = parsed._replace(query=urlencode(qs))
-                    fetch_as_file(urlunparse(parsed), tfn)
-                    with open(tfn, "rb") as r:
-                        et = lxml.etree.parse(r).getroot()
+                    with fetch_as_file(urlunparse(parsed)) as tfn:
+                        with open(tfn, "rb") as r:
+                            et = lxml.etree.parse(r).getroot()
                     ns = et.nsmap[None]
                     if et.find(f"./{{{ns}}}CHYBA") is not None:
                         break
@@ -218,14 +221,8 @@ def main(outdir: str, partial: bool = False):
                 jobs.append((outdir, partial, fnmap, url, volby, datum))
 
     progress = tqdm(total=len(jobs))
-    # meli jsme problem s dostupnosti webu CSU, tak jsme dali paralelizaci za gatu
-    if PARALLEL:
-        with multiprocessing.Pool(ncpu) as pool:
-            for _ in pool.imap_unordered(job_processor, jobs):
-                progress.update(n=1)
-    else:
-        for job in jobs:
-            job_processor(job)
+    with multiprocessing.Pool(ncpu) as pool:
+        for _ in pool.imap_unordered(job_processor, jobs):
             progress.update(n=1)
 
 
