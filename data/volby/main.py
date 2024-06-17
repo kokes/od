@@ -20,6 +20,24 @@ from tqdm import tqdm
 HTTP_TIMEOUT = 30
 RETRIES = 5
 DVOUKOLAK = ("senat", "prezident")
+PARALLEL = os.environ.get("PARALLEL", "1") == "1"
+
+
+def fetch_as_file(url, tfn, retries=RETRIES):
+    req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
+    for j in range(retries):
+        try:
+            with urlopen(req, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
+                shutil.copyfileobj(r, fw)
+                break
+        except URLError as e:
+            if j == retries - 1:
+                raise e
+            print(f"URLError ({e}), retrying {url}")
+            continue
+        except Exception as e:
+            print(f"TIMED OUT? {url}")
+            raise e
 
 
 @contextmanager
@@ -28,17 +46,7 @@ def load_remote_data(url: str):
         fn = os.path.basename(url)
         tfn = os.path.join(tmpdir, fn)
         if not os.path.isfile(tfn):
-            req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
-            for j in range(RETRIES):
-                try:
-                    with urlopen(req, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
-                        shutil.copyfileobj(r, fw)
-                        break
-                except URLError as e:
-                    if j == RETRIES - 1:
-                        raise e
-                    print(f"URLError ({e}), retrying {url}")
-                    continue
+            fetch_as_file(url, tfn)
 
         with zipfile.ZipFile(tfn) as zf:
             yield zf
@@ -72,7 +80,8 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                         break
                     qs["davka"] = davka
                     parsed = parsed._replace(query=urlencode(qs))
-                    with urlopen(urlunparse(parsed), timeout=HTTP_TIMEOUT) as r:
+                    fetch_as_file(urlunparse(parsed), tfn)
+                    with open(tfn, "rb") as r:
                         et = lxml.etree.parse(r).getroot()
                     ns = et.nsmap[None]
                     if et.find(f"./{{{ns}}}CHYBA") is not None:
@@ -209,8 +218,14 @@ def main(outdir: str, partial: bool = False):
                 jobs.append((outdir, partial, fnmap, url, volby, datum))
 
     progress = tqdm(total=len(jobs))
-    with multiprocessing.Pool(ncpu) as pool:
-        for _ in pool.imap_unordered(job_processor, jobs):
+    # meli jsme problem s dostupnosti webu CSU, tak jsme dali paralelizaci za gatu
+    if PARALLEL:
+        with multiprocessing.Pool(ncpu) as pool:
+            for _ in pool.imap_unordered(job_processor, jobs):
+                progress.update(n=1)
+    else:
+        for job in jobs:
+            job_processor(job)
             progress.update(n=1)
 
 

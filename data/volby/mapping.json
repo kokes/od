@@ -747,8 +747,9 @@
                 "https://www.volby.cz/opendata/ep2019/EP2019ciselniky20190513_csv.zip"
             ],
             "2024-06-07": [
-                "https://www.volby.cz/opendata/ep2024/EP2024reg20240423_csv.zip",
-                "https://www.volby.cz/opendata/ep2024/EP2024ciselniky20240423_csv.zip"
+                "https://www.volby.cz/opendata/ep2024/EP2024reg20240609_csv.zip",
+                "https://www.volby.cz/opendata/ep2024/EP2024ciselniky20240609_csv.zip",
+                "https://www.volby.cz/opendata/ep2024/EP2024data20240609_csv.zip"
             ]
         },
         "ds": {
