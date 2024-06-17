@@ -5,8 +5,8 @@ import logging
 import multiprocessing
 import os
 import random
-import string
 import shutil
+import string
 import zipfile
 from collections import defaultdict
 from contextlib import contextmanager
