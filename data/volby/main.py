@@ -22,7 +22,6 @@ from tqdm import tqdm
 HTTP_TIMEOUT = 30
 RETRIES = 5
 DVOUKOLAK = ("senat", "prezident")
-PARALLEL = os.environ.get("PARALLEL", "1") == "1"
 
 
 @contextmanager
