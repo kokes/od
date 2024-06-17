@@ -10,9 +10,12 @@ CLS_BASE_URL = "https://apl.czso.cz/iSMS/do_cis_export"
 CLS_URLS = [
     CLS_BASE_URL + j
     for j in (
+        # pro pravni formy potrebujem historicka i aktualni data
+        "?kodcis=56&typdat=0&datpohl=31.12.2021&cisjaz=203&format=2&separator=%2C",
         "?kodcis=56&typdat=0&cisjaz=203&format=2&separator=%2C",
         "?kodcis=109&typdat=0&cisjaz=203&format=2&separator=%2C",
         "?kodcis=149&typdat=0&cisjaz=203&format=2&separator=%2C",
+        "?kodcis=149&typdat=0&datpohl=31.12.2021&cisjaz=203&format=2&separator=%2C",
         "?kodcis=572&typdat=0&cisjaz=203&format=2&separator=%2C",
         "?kodcis=579&typdat=0&cisjaz=203&format=2&separator=%2C",
         "?kodcis=51&typdat=0&cisjaz=203&format=2&separator=%2C",
