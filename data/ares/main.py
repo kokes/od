@@ -97,8 +97,6 @@ def main(outdir: str, partial: bool = False):
         cols = [
             "zdroj",
             "aktualizace_db",
-            "datum_vypisu",
-            "cas_vypisu",
             "typ_vypisu",
             "rejstrik",
             "ico",
@@ -160,8 +158,6 @@ def main(outdir: str, partial: bool = False):
             uvod = vypis.find("./are:Uvod", namespaces=et.nsmap)
             uvod_cols = [
                 "Aktualizace_DB",
-                "Datum_vypisu",
-                "Cas_vypisu",
                 "Typ_vypisu",
             ]
 
