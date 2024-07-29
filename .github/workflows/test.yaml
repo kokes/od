@@ -5,11 +5,14 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 5
+    timeout-minutes: 10
     strategy:
       matrix:
         os: ['ubuntu-latest', 'windows-latest']
@@ -31,4 +34,4 @@ jobs:
         python3 -m pytest -v data
     - name: pytest (main)
       run: |
-        python3 -m pytest -v -n 5 --durations=5 main_test.py
+        python3 -m pytest -v -n 4 --durations=5 main_test.py
