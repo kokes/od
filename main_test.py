@@ -1,4 +1,5 @@
 import pytest
+from sqlalchemy import create_engine
 
 
 @pytest.mark.parametrize(
@@ -30,7 +31,7 @@ import pytest
 def test_partial(tmp_path, module):
     from . import main
 
-    engine = None  # TODO: pridat
+    engine = create_engine(f"sqlite:///{tmp_path / 'data.db'}")
 
     main.main(
         base_outdir=tmp_path,
