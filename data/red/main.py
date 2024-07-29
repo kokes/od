@@ -5,9 +5,12 @@ import gzip
 import json
 import logging
 import multiprocessing
+import ssl
 import os
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 HTTP_TIMEOUT = 60
 
