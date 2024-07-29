@@ -24,10 +24,10 @@ def main(
     module_name: str,
     engine,
     base_outdir: str,
-    load_only: bool,
     partial: bool,
-    drop_first: bool,
-    preserve_csv: bool,
+    load_only: bool = False,
+    drop_first: bool = False,
+    preserve_csv: bool = False,
     schema_prefix: str = "",
 ):
     print(module_name)

@@ -11,6 +11,11 @@ import pytest
 def test_partial(tmp_path, module):
     from . import main
 
-    main.main(outdir=tmp_path, module=module)
+    engine = None  # TODO: pridat
 
-    pass
+    main.main(
+        base_outdir=tmp_path,
+        module_name=module,
+        partial=True,
+        engine=engine,
+    )
