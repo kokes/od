@@ -5,8 +5,8 @@ import gzip
 import json
 import logging
 import multiprocessing
-import ssl
 import os
+import ssl
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
