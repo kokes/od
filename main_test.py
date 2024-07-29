@@ -6,7 +6,6 @@ from sqlalchemy import create_engine
     ["module"],
     [
         ("ares",),
-        ("cssz",),
         # czechinvest uplne zrusil svoje data asi - poptavam
         # ("czechinvest",),  # TODO
         ("czechpoint",),
