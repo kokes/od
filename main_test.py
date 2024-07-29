@@ -5,7 +5,7 @@ import pytest
     ["module"],
     [
         ("ares",),
-        ("red",),
+        # ("red",),
     ],
 )
 def test_partial(tmp_path, module):

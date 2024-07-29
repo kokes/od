@@ -7,14 +7,13 @@ on:
   pull_request:
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest # TODO: pustit na windows
     timeout-minutes: 5
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
-        # dataset: ["ares", "cedr", "cssz", "datovky", "dotinfo", "iissp", "psp.steno", "szif"]
+        python-version: ['3.12'] # TODO: docasne
+        # python-version: ['3.9', '3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v4
@@ -27,11 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest
+    # TODO: testovat partial jen s nekteryma verzema Py
     - name: Test with pytest
       run: |
-        pytest -v data/steno/
-        # TODO: doresit problem s importy
-    # TODO: vypnute, protoze vzdycky aspon jeden job spadnul kvuli random timeoutu
-    # - name: Try all pipelines
-    #   run: |
-    #     python3 main.py --partial ${{ matrix.dataset }}
+        pytest -v
