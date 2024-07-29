@@ -21,7 +21,7 @@ schema = [
         "fosoby",
         meta,
         Column("ico", Integer, nullable=False, index=True),
-        Column("nazev_organu", Text, nullable=False),
+        Column("nazev_organu", Text, nullable=True),
         Column("datum_zapisu", Date, nullable=False),
         Column("datum_vymazu", Date, nullable=True),
         Column("nazev_funkce", Text, nullable=True),
