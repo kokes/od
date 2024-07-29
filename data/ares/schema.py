@@ -9,8 +9,6 @@ schema = [
         meta,
         Column("zdroj", Text, nullable=False),
         Column("aktualizace_db", Date, nullable=False),
-        Column("datum_vypisu", Date, nullable=False),
-        Column("cas_vypisu", Time, nullable=False),
         Column("typ_vypisu", Text, nullable=False),
         Column("rejstrik", Text, nullable=True),
         Column("ico", Integer, nullable=False, primary_key=True, autoincrement=False),
