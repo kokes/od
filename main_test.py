@@ -5,7 +5,26 @@ import pytest
     ["module"],
     [
         ("ares",),
-        # ("red",),
+        ("cssz",),
+        # czechinvest uplne zrusil svoje data asi - poptavam
+        # ("czechinvest",),  # TODO
+        ("czechpoint",),
+        ("datovky",),
+        ("dotinfo",),
+        ("eufondy",),
+        ("iissp",),
+        ("justice",),
+        # TODO: psp ma problem s konektivitou
+        # ("psp",),
+        # ("steno",),
+        ("red",),
+        ("res",),
+        ("ruian",),
+        ("smlouvy",),
+        ("szif",),
+        ("udhpsh",),
+        ("volby",),
+        ("zakazky",),
     ],
 )
 def test_partial(tmp_path, module):

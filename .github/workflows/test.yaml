@@ -8,12 +8,12 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest # TODO: pustit na windows
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 5
     strategy:
       matrix:
-        python-version: ['3.12'] # TODO: docasne - mozna udelat jen min/max? I.e. 3.9 a 3.12 treba
-        # python-version: ['3.9', '3.10', '3.11', '3.12']
+        os: ['ubuntu-latest', 'windows-latest']
+        python-version: ['3.18', '3.12']
 
     steps:
     - uses: actions/checkout@v4
@@ -25,8 +25,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest
-    # TODO: testovat partial jen s nekteryma verzema Py
-    - name: Test with pytest
+        pip install pytest pytest-xdist
+    - name: pytest (pipeliny)
       run: |
-        python3 -m pytest -v
+        python3 -m pytest -v data
+    - name: pytest (main)
+      run: |
+        python3 -m pytest -v -n 5 --durations=5 main_test.py
