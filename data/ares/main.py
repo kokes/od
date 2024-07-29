@@ -32,7 +32,9 @@ def obj(root):
 
 
 def organi(root, ico, nsmap):
-    nazev = root.find("./are:Nazev", namespaces=nsmap).text
+    # ICO 1112 ma prazdny nazev statutaru
+    nazev_el = root.find("./are:Nazev", namespaces=nsmap)
+    nazev = nazev_el.text if nazev_el is not None else None
 
     fosoby, posoby = [], []
     for cl in root.findall("./are:Clen", namespaces=nsmap):
