@@ -73,12 +73,16 @@ def remote_data(partial):
         # pri castecnym loadu stahni jen megabyte
         if partial:
             with urlopen(BASE_URL) as r, open(tfn, "wb") as fw:
+                # v ARES je ted bug, kdy to obcas vraci naprostej garbage
+                # print(r.headers.__dict__["_headers"])
                 fw.write(r.read(1000_000))
         else:
             urlretrieve(BASE_URL, tfn)
         with tarfile.open(tfn, "r:gz") as tf:
             try:
-                for el in tf:
+                for j, el in enumerate(tf):
+                    if partial and j > 100:
+                        break
                     yield (el, tf.extractfile(el).read())
             except EOFError:
                 if partial:
