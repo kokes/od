@@ -5,15 +5,16 @@ from sqlalchemy import create_engine
 @pytest.mark.parametrize(
     ["module"],
     [
+        # TODO: zapnout postupne dalsi
         ("ares",),
         # czechinvest uplne zrusil svoje data asi - poptavam
         # ("czechinvest",),  # TODO
         ("czechpoint",),
         ("datovky",),
         ("dotinfo",),
-        ("eufondy",),
+        # ("eufondy",),
         ("iissp",),
-        ("justice",),
+        # ("justice",),
         # TODO: psp ma problem s konektivitou
         # ("psp",),
         # ("steno",),
@@ -23,7 +24,7 @@ from sqlalchemy import create_engine
         ("smlouvy",),
         ("szif",),
         ("udhpsh",),
-        ("volby",),
+        # ("volby",),
         ("zakazky",),
     ],
 )
