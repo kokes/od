@@ -18,7 +18,7 @@ from sqlalchemy import create_engine
         # TODO: psp ma problem s konektivitou
         # ("psp",),
         # ("steno",),
-        ("red",),
+        # ("red",),
         ("res",),
         ("ruian",),
         ("smlouvy",),
