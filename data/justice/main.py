@@ -78,7 +78,7 @@ def uprav_data(row, mapping):
 
 
 @contextlib.contextmanager
-def cached_urlopen(url, timeout=HTTP_TIMEOUT):
+def cached_urlopen(url, timeout=HTTP_TIMEOUT, partial=False):
     shasum = hashlib.sha256(url.encode("utf-8")).hexdigest()
     if url.endswith(".gz"):
         shasum += ".gz"
@@ -93,7 +93,10 @@ def cached_urlopen(url, timeout=HTTP_TIMEOUT):
         # driv jsme cetli rovnou z webu, ale delalo to problemy,
         # tak to holt docasne ukladame a poustime to z disku
         with open(fn_tmp, "wb") as f:
-            shutil.copyfileobj(r, f)
+            if partial:
+                f.write(r.read(1000_000))
+            else:
+                shutil.copyfileobj(r, f)
 
     # pri vypnuty cache se jen cte s tempfilu a pak se maze
     if not CACHE_ENABLED:
@@ -107,15 +110,15 @@ def cached_urlopen(url, timeout=HTTP_TIMEOUT):
         yield r
 
 
-def nahraj_ds(url):
-    with cached_urlopen(url, timeout=HTTP_TIMEOUT) as r:
+def nahraj_ds(url, partial=False):
+    with cached_urlopen(url, timeout=HTTP_TIMEOUT, partial=partial) as r:
         with gzip.open(r, "rb") as f:
             et = lxml.etree.iterparse(f)
             yield from et
 
 
 def zpracuj_ds(url, schemas, outdir, partial, autogen, icos):
-    et = nahraj_ds(url)
+    et = nahraj_ds(url, partial)
 
     fs, csvs, schemasd = dict(), dict(), dict()
     ds = os.path.basename(urlparse(url).path).partition(".")[0]
@@ -149,7 +152,7 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen, icos):
             csvs[udaj] = cw
 
     for num, (action, el) in enumerate(et):
-        if partial and num > 1e5:
+        if partial and num > 1e4:
             break
         assert action == "end", action
         if el.tag != "Subjekt":
@@ -289,7 +292,7 @@ def main(outdir: str, partial: bool = False):
 
         urls = []
         for j, ds in enumerate(tqdm(dss, desc=f"{year} meta")):
-            if partial and len(urls) > 20:
+            if partial and len(urls) > 10:
                 break
             url = f"https://dataor.justice.cz/api/3/action/package_show?id={ds}"
             with cached_urlopen(url, timeout=HTTP_TIMEOUT) as r:
