@@ -558,6 +558,10 @@
                 "https://www.volby.cz/opendata/kz2020/KZ2020_data_20201004a_csv.zip",
                 "https://www.volby.cz/opendata/kz2020/KZ2020ciselniky20200918_csv.zip",
                 "https://www.volby.cz/pls/kz2020/vysledky_okrsky"
+            ],
+            "2024-09-20": [
+                "https://www.volby.cz/opendata/kz2024/KZ2024ciselniky20240807_csv.zip",
+                "https://www.volby.cz/opendata/kz2024/KZ2024reg20240807_csv.zip"
             ]
         },
         "ds": {
@@ -869,6 +873,10 @@
             ],
             "2022-09-23": [
                 "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20220923"
+            ],
+            "2024-09-20": [
+                "https://www.volby.cz/opendata/se2024/SE2024ciselniky20240807_csv.zip",
+                "https://www.volby.cz/opendata/se2024/SE2024reg20240807_csv.zip"
             ]
         },
         "ds": {
