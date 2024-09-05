@@ -98,17 +98,16 @@ schema = [
         Column("kod_stavu_projektu", Text, nullable=False),
         Column("stav_projektu", Text, nullable=False),
         Column("prijemce_nazev", Text, nullable=False),
-        Column("ic_prijemce", Integer, nullable=False),
+        Column("ic_prijemce", Integer, nullable=True),
         Column("pravni_forma_prijemce", Text, nullable=False),
-        Column("psc_prijemce", Integer, nullable=False),
-        Column("datum_podepsani_pravniho_aktu", Date, nullable=True),
+        Column("psc_prijemce", Text, nullable=True),
         Column(
             "skutecne_datum_zahajeni_fyzicke_realizace_projektu", Date, nullable=True
         ),
         Column(
             "predpokladane_datum_ukonceni_fyzicke_realizace_projektu",
             Date,
-            nullable=False,
+            nullable=True,
         ),
         Column(
             "skutecne_datum_ukonceni_fyzicke_realizace_projektu", Date, nullable=True
@@ -122,17 +121,17 @@ schema = [
         Column(
             "financni_prostredky_v_pravnich_aktech_celkove_zpusobile_vydaje_czk",
             Numeric(16, 2),
-            nullable=False,
+            nullable=True,
         ),
         Column(
             "financni_prostredky_v_pravnich_aktech_prispevek_unie_czk",
             Numeric(16, 2),
-            nullable=False,
+            nullable=True,
         ),
         Column(
             "financni_prostredky_v_pravnich_aktech_narodni_verejne_zdroje_czk",
             Numeric(16, 2),
-            nullable=False,
+            nullable=True,
         ),
         Column(
             "financni_prostredky_v_pravnich_aktech_narodni_"
@@ -169,7 +168,7 @@ schema = [
         Column("typ_verejne_zakazky", Text, nullable=True),
         Column("nazev_dodavatele_verejne_zakazky", Text, nullable=True),
         Column("ic_dodavatele_verejne_zakazky", Integer, nullable=True),
-        Column("poddodavatel", Text, nullable=True),
+        Column("poddodavatel", Text, nullable=False),
         Column("datum_zahajeni_zadavaciho_vyberoveho_rizeni", Date, nullable=True),
         Column("datum_podpisu_smlouvy_dodatku", Date, nullable=True),
         Column(
