@@ -95,8 +95,8 @@ def prehled_2021_2027(outdir: str, partial: bool = False):
         hd = json.load(f)
 
     source_url = (
-        "https://dotaceeu.cz/getmedia/7d8be343-ef3c-4e62-b02a-a22ecffe45b6/"
-        "2023_08_Seznam-operaci_List-of-Operations_21.xlsx.aspx?ext=.xlsx"
+        "https://dotaceeu.cz/getmedia/23d032d3-55b4-4150-9349-55a015eb4ae0/"
+        "2024_08_Seznam-operaci_List-of-Operations_21.xlsx.aspx?ext=.xlsx"
     )
     print(
         f"Stahuji z seznam operaci z {source_url}, ale nemusi to byt nejaktualnejsi "
@@ -111,6 +111,7 @@ def prehled_2021_2027(outdir: str, partial: bool = False):
     assert sh.title == "Sheet1"
     rows = sh.iter_rows()
     next(rows), next(rows)  # nadpis, datum generovani
+    next(rows)  # prazdna radka
 
     fr = [j.value.strip() for j in next(rows) if j.value is not None]
     assert fr == hd["ocekavane"], [
