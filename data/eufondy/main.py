@@ -16,6 +16,9 @@ from functools import partial
 from lxml.etree import iterparse
 from openpyxl import load_workbook
 
+MS_2014_URL = "https://ms14opendata.mssf.cz/SeznamProjektu.xml"
+MS_2021_URL = "https://ms21opendata.mssf.cz/SeznamOperaci_21_27.xml"
+
 
 # TODO: nechcem strptime?
 def predatuj(s):
@@ -323,8 +326,10 @@ def opendata_xml(url: str, fn: str, outdir: str, partial: bool = False):
             cw.writerow(projekt)
             element.clear()
 
-opendata_2014_2020 = partial(opendata_xml, "https://ms14opendata.mssf.cz/SeznamProjektu.xml", "2014_2020.csv")
-opendata_2021_2027 = partial(opendata_xml, "https://ms21opendata.mssf.cz/SeznamOperaci_21_27.xml", "2021_2027.csv")
+
+opendata_2014_2020 = partial(opendata_xml, MS_2014_URL, "2014_2020.csv")
+opendata_2021_2027 = partial(opendata_xml, MS_2021_URL, "2021_2027.csv")
+
 
 # neimplementujem `partial`, protoze tech dat stejne neni moc
 def main(outdir: str, partial: bool = False):
