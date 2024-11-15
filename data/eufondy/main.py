@@ -11,6 +11,7 @@ import os
 import re
 from itertools import zip_longest
 from urllib.request import urlopen
+from functools import partial
 
 from lxml.etree import iterparse
 from openpyxl import load_workbook
@@ -274,7 +275,7 @@ def prehled_2007_2013(outdir: str, partial: bool = False):
             cw.writerow(dt)
 
 
-def opendata_2014_2020(outdir: str, partial: bool = False):
+def opendata_xml(url: str, fn: str, outdir: str, partial: bool = False):
     sloupce = [
         "id",
         "id_vyzva",
@@ -304,11 +305,11 @@ def opendata_2014_2020(outdir: str, partial: bool = False):
     ]
 
     with open(
-        os.path.join(outdir, "opendata_2014_2020.csv"), "w", encoding="utf8"
+        os.path.join(outdir, fn), "w", encoding="utf8"
     ) as fw:
         cw = csv.DictWriter(fw, fieldnames=sloupce, lineterminator="\n")
         cw.writeheader()
-        r = urlopen("https://ms14opendata.mssf.cz/SeznamProjektu.xml", timeout=300)
+        r = urlopen(url, timeout=300)
         et = iterparse(r)
 
         for j, (action, element) in enumerate(et):
@@ -322,13 +323,18 @@ def opendata_2014_2020(outdir: str, partial: bool = False):
             cw.writerow(projekt)
             element.clear()
 
+opendata_2014_2020 = partial(opendata_xml, "https://ms14opendata.mssf.cz/SeznamProjektu.xml", "2014_2020.csv")
+opendata_2021_2027 = partial(opendata_xml, "https://ms21opendata.mssf.cz/SeznamOperaci_21_27.xml", "2021_2027.csv")
 
 # neimplementujem `partial`, protoze tech dat stejne neni moc
 def main(outdir: str, partial: bool = False):
     prehled_2007_2013(outdir, partial)
     prehled_2014_2020(outdir, partial)
     prehled_2021_2027(outdir, partial)
-    opendata_2014_2020(outdir, partial)
+    od_outdir = os.path.join(outdir, "opendata")
+    os.makedirs(od_outdir, exist_ok=True)
+    opendata_2014_2020(od_outdir, partial)
+    opendata_2021_2027(od_outdir, partial)
 
 
 if __name__ == "__main__":
