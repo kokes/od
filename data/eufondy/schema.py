@@ -5,7 +5,7 @@ meta = MetaData()
 
 schema = [
     Table(
-        "opendata_2014_2020",
+        "opendata",
         meta,
         Column("id", BigInteger, nullable=False),
         Column("id_vyzva", BigInteger, nullable=False),
@@ -16,7 +16,7 @@ schema = [
         Column("problem", Text, nullable=True),
         Column("cil", Text, nullable=True),
         Column("datum_zahajeni", Date, nullable=True),
-        Column("datum_ukonceni_predp", Date, nullable=False),
+        Column("datum_ukonceni_predp", Date, nullable=True),
         Column("datum_ukonceni_skut", Date, nullable=True),
         Column("suk", Text, nullable=False),
         Column("zadatel_nazev", Text, nullable=False),
