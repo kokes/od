@@ -307,9 +307,7 @@ def opendata_xml(url: str, fn: str, outdir: str, partial: bool = False):
         "cilove_skupiny",
     ]
 
-    with open(
-        os.path.join(outdir, fn), "w", encoding="utf8"
-    ) as fw:
+    with open(os.path.join(outdir, fn), "w", encoding="utf8") as fw:
         cw = csv.DictWriter(fw, fieldnames=sloupce, lineterminator="\n")
         cw.writeheader()
         r = urlopen(url, timeout=300)
