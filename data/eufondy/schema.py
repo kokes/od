@@ -1,6 +1,5 @@
 from sqlalchemy import Column, MetaData, Table
-from sqlalchemy.sql.sqltypes import (JSON, BigInteger, Date, Integer, Numeric,
-                                     Text)
+from sqlalchemy.sql.sqltypes import JSON, BigInteger, Date, Integer, Numeric, Text
 
 meta = MetaData()
 
