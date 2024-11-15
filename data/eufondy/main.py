@@ -9,9 +9,9 @@ import io
 import json
 import os
 import re
+from functools import partial
 from itertools import zip_longest
 from urllib.request import urlopen
-from functools import partial
 
 from lxml.etree import iterparse
 from openpyxl import load_workbook
