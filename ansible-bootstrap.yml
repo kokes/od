@@ -1,0 +1,61 @@
+# TODO: apt update?
+
+- name: setup the server
+  hosts: all
+  become: yes
+  tasks:
+    - name: update apt
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: install base Python distro
+      ansible.builtin.apt:
+        name:
+          - python3-pip
+          - python3-venv
+    - name: install postgres
+      ansible.builtin.apt:
+        name:
+          - postgresql
+  
+- name: setup venv and code
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: clone od repo
+      ansible.builtin.git:
+        repo: 'https://github.com/kokes/od'
+        dest: '~/od/' # TODO: udelat z toho promennou
+        clone: yes
+        single_branch: yes
+        version: main
+    - name: create virtualenv
+      ansible.builtin.command:
+        cmd: python3 -m venv .venv
+        chdir: ~/od/
+        creates: ~/od/.venv/bin/activate
+    - name: install dependencies
+      # TODO: tohle bezi vzdy, se mi uplne nelibi
+      ansible.builtin.command:
+        cmd: ./.venv/bin/python -m pip install -r requirements.txt
+        chdir: ~/od/
+
+# TODO: use a dedicated postgres role?
+- name: create postgres db
+  hosts: all
+  gather_facts: false
+  become: yes
+  become_user: postgres
+  # TODO: `creates` pro tyhle tasky
+  tasks:
+    - name: setup user
+      ansible.builtin.command:
+        cmd: createuser ubuntu # TODO: promennou?
+    - name: create db
+      ansible.builtin.command:
+        cmd: createdb od
+
+# - name: setup crons and such
+#   hosts: all
+#   tasks:
+#     - name: foo
