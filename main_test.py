@@ -7,8 +7,6 @@ from sqlalchemy import create_engine
     [
         # TODO: zapnout postupne dalsi
         ("ares",),
-        # czechinvest uplne zrusil svoje data asi - poptavam
-        # ("czechinvest",),  # TODO
         ("czechpoint",),
         ("datovky",),
         ("dotinfo",),
