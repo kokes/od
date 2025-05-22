@@ -1,4 +1,5 @@
 import csv
+import gzip
 import io
 import json
 import logging
@@ -36,6 +37,8 @@ def fetch_as_file(url, tfn=None, retries=RETRIES):
         for j in range(retries):
             try:
                 with urlopen(req, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
+                    if r.headers.get("content-encoding") == "gzip":
+                        r = gzip.open(r)
                     shutil.copyfileobj(r, fw)
                     break
             except (URLError, TimeoutError) as e:

@@ -558,6 +558,11 @@
                 "https://www.volby.cz/opendata/kz2020/KZ2020_data_20201004a_csv.zip",
                 "https://www.volby.cz/opendata/kz2020/KZ2020ciselniky20200918_csv.zip",
                 "https://www.volby.cz/pls/kz2020/vysledky_okrsky"
+            ],
+            "2024-09-20": [
+                "https://www.volby.cz/opendata/kz2024/KZ2024ciselniky20240922_csv.zip",
+                "https://www.volby.cz/opendata/kz2024/KZ2024reg20240922_csv.zip",
+                "https://www.volby.cz/opendata/kz2024/KZ2024data20240922_csv.zip"
             ]
         },
         "ds": {
@@ -854,9 +859,9 @@
     "senat": {
         "url": {
             "*": [
-                "https://www.volby.cz/opendata/senat_vse/SENAT_reg_20230227_csv.zip",
-                "https://www.volby.cz/opendata/senat_vse/SENAT_cisel_20230227_csv.zip",
-                "https://www.volby.cz/opendata/senat_vse/SENAT_data_20230227_csv.zip"
+                "https://www.volby.cz/opendata/senat_vse/SENATreg20250118_csv.zip",
+                "https://www.volby.cz/opendata/senat_vse/SENATciselniky20250118_csv.zip",
+                "https://www.volby.cz/opendata/senat_vse/SENATdata20250118_csv.zip"
             ],
             "2019-04-05": [
                 "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20190405"
