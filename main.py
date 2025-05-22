@@ -147,7 +147,10 @@ def main(
             cur = conn.cursor()
             cur.execute(f"TRUNCATE {full_table_name} CASCADE")  # TODO: cascade yolo
             for filename in files:
-                cur.execute(f"INSERT INTO {full_table_name} SELECT * FROM '{filename}'")
+                # z nejakyho zahadnyho duvodu to muze obcas detekovat quote jako neco jineho nez uvozovku
+                cur.execute(
+                    f"INSERT INTO {full_table_name} SELECT * FROM read_csv('{filename}', quote='\"')"
+                )
         elif engine.name == "sqlite":
             conn = engine.raw_connection()
             conn.execute(f"DELETE FROM {table.name}")  # truncate v sqlite neni
