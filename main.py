@@ -238,7 +238,6 @@ if __name__ == "__main__":
     if args.connstring:
         engine = create_engine(args.connstring)
 
-    # TODO: nejak pridat `czechinvest` - je to ready, jen nefunguje stahovani souboru
     module_names = [
         "red",
         "datovky",
