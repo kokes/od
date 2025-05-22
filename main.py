@@ -88,7 +88,7 @@ def main(
                     if len(row) != len(db_column_names):
                         raise ValueError(
                             f"nečekaný počet sloupců, {len(row)} vs."
-                            f" {len(db_column_names)} (řádka {j+2}"
+                            f" {len(db_column_names)} (řádka {j + 2}"
                         )
                     for k, val in enumerate(row):
                         if val == "":
@@ -103,7 +103,7 @@ def main(
                     f" data ({dnull}) vs. DB ({dbnull})"
                 )
 
-        if engine.name == "postgresql":
+        if engine.name in ("postgresql", "duckdb"):
             table.schema = f"{schema_prefix}{module_name}"
             with engine.begin() as conn:
                 conn.execute(text(f"CREATE SCHEMA IF NOT EXISTS {table.schema}"))
@@ -116,6 +116,7 @@ def main(
 
         # dropni fkeys pred nahravanim dat
         # z nejakeho duvodu jsou v sqlite nepojmenovany klice
+        # a v duckdb tohle neexistuje
         if engine.name == "postgresql":
             dbtable = Table(
                 table.name,
@@ -140,6 +141,13 @@ def main(
                         f"COPY {full_table_name} FROM stdin WITH CSV HEADER", f
                     )
             conn.commit()  # TODO: proc nejde context manager? starej psycopg?
+        elif engine.name == "duckdb":
+            full_table_name = f"{table.schema}.{table.name}"
+            conn = engine.raw_connection()
+            cur = conn.cursor()
+            cur.execute(f"TRUNCATE {full_table_name} CASCADE")  # TODO: cascade yolo
+            for filename in files:
+                cur.execute(f"INSERT INTO {full_table_name} SELECT * FROM '{filename}'")
         elif engine.name == "sqlite":
             conn = engine.raw_connection()
             conn.execute(f"DELETE FROM {table.name}")  # truncate v sqlite neni
@@ -169,6 +177,7 @@ def main(
             raise IOError(f"{engine.name} not supported yet")
 
         # constrainty jsme neumeli dropnout u sqlite... a nejdou ani pridat
+        # a duckdb to taky neumi
         if engine.name == "postgresql":
             for fk in fkeys:
                 if not isinstance(fk, ForeignKeyConstraint):
