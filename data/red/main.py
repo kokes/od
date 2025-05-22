@@ -30,7 +30,7 @@ DATASETS_GRAPHQL_QUERY = (
   }
 }
 """
-    % "https://data.gov.cz/zdroj/datové-sady/00006947/4e4762f06ca63a491efc360e793abc09"
+    % "https://data.gov.cz/zdroj/datové-sady/00006947/eff92c79870f2dba48ac52c3f01635c0"
 )
 
 
