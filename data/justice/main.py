@@ -10,6 +10,7 @@ import multiprocessing
 import os
 import re
 import shutil
+import ssl
 import time
 from collections import defaultdict
 from urllib.parse import urlparse
@@ -17,6 +18,8 @@ from urllib.request import urlopen
 
 import lxml.etree
 from tqdm import tqdm
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 NON_ISO_DATUM = re.compile(r"^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$")
 HTTP_TIMEOUT = 180

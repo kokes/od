@@ -5,11 +5,13 @@ import multiprocessing
 import os
 import re
 import shutil
+import sys
 import tempfile
 import zipfile
 from collections import Counter
 from contextlib import closing
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.parse import urljoin, urlparse
 from urllib.request import urlopen
 
@@ -17,6 +19,7 @@ import lxml.html
 from tqdm import tqdm
 
 HTTP_TIMEOUT = 90
+csv.field_size_limit(sys.maxsize)
 
 
 def clean_lines(rel_path):
@@ -134,8 +137,14 @@ def zpracuj_schuzi(outdir, params):
     with tempfile.TemporaryDirectory() as tmpdir:
         base_name = os.path.basename(urlparse(url).path)
         tfn = os.path.join(tmpdir, base_name)
-        with urlopen(url, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
-            shutil.copyfileobj(r, fw)
+        try:
+            with urlopen(url, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
+                shutil.copyfileobj(r, fw)
+        except HTTPError as e:
+            if e.code == 404:
+                logging.info("steno na adrese %s neexistuje", url)
+                return lnm
+            raise e
         tdir = os.path.join(outdir, "psp")
         os.makedirs(tdir, exist_ok=True)
         csv_fn = os.path.join(tdir, f"{rok}_{os.path.splitext(base_name)[0]}.csv")

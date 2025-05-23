@@ -18,11 +18,11 @@ schema = [
         Column("pravni_forma", Text, nullable=False),
         Column("primarni_ovm", Boolean, nullable=True),
         Column("id_ds", Text, nullable=False),
-        Column("typ_ds", Text, nullable=True),
-        Column("stav_ds", SmallInteger, nullable=False),
+        Column("typ_ds", Text, nullable=False),
+        Column("stav_ds", SmallInteger, nullable=True),
         Column("stav_subjektu", SmallInteger, nullable=False),
         Column("detail_subjektu", Text, nullable=False),
-        Column("identifikator_ovm", Text, nullable=False),
+        Column("identifikator_ovm", Text, nullable=True),
         Column("kategorie_ovm", Text, nullable=True),  # TODO: array type?
     )
 ]
