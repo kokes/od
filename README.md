@@ -24,7 +24,7 @@ Posledním aspektem je aktualizace dat. V tuto chvíli máme hotové jednorázov
 
 ## Lokální spuštění
 
-Účelem projektu je, aby se dal snadno použít nejen autorem. Pro základní použití vám postačí Python (3.7+) a nic jiného. Stačí si nainstalovat pár základních závislostí a můžete data nahrát do CSV nebo i databáze - podporovaná je SQLite (vestavěná do Pythonu) nebo PostgreSQL.
+Účelem projektu je, aby se dal snadno použít nejen autorem. Pro základní použití vám postačí Python (3.9+) a nic jiného. Stačí si nainstalovat pár základních závislostí a můžete data nahrát do CSV nebo i databáze - podporovaná je SQLite (vestavěná do Pythonu), DuckDB a PostgreSQL.
 
 ```sh
 python3 -m venv .venv
