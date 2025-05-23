@@ -273,7 +273,7 @@ schema = [
         Column(
             "email",
             Text,
-            nullable=False,
+            nullable=True,
             comment="E-mailová adresa poslance, případně obecná posta@psp.cz.",
         ),
         Column(
@@ -304,7 +304,6 @@ schema = [
             "id_poslanec",
             ForeignKey("poslanci_poslanec.id_poslanec"),
             nullable=False,
-            unique=True,
             comment="Identifikátor poslance, viz poslanec:id_poslanec",
         ),
         Column(
