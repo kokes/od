@@ -1,6 +1,6 @@
 import argparse
-import logging
 import csv
+import logging
 import os
 import shutil
 import tempfile
