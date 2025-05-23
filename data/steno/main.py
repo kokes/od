@@ -5,7 +5,6 @@ import multiprocessing
 import os
 import re
 import shutil
-import sys
 import tempfile
 import zipfile
 from collections import Counter
@@ -19,7 +18,7 @@ import lxml.html
 from tqdm import tqdm
 
 HTTP_TIMEOUT = 90
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(2**12)
 
 
 def clean_lines(rel_path):
