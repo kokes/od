@@ -1,4 +1,5 @@
 import argparse
+import logging
 import csv
 import os
 import shutil
@@ -30,8 +31,12 @@ def main(
     preserve_csv: bool = False,
     schema_prefix: str = "",
 ):
-    print(module_name)
-    print("=" * len(module_name))
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    logging.info("Modul %s", module_name)
 
     module = import_module(f"data.{module_name}.main").main
     schema = import_module(f"data.{module_name}.schema").schema
@@ -65,7 +70,7 @@ def main(
 
     for table in schema:
         t = time.time()
-        print(f"Nahravam {table.name} do {module_name}", end="")
+        logging.info("Nahravam %s do %s", table.name, module_name)
         files = table_loads[(module_name, table.name)]
         fkeys = [j for j in table.constraints if isinstance(j, ForeignKeyConstraint)]
 
@@ -111,7 +116,9 @@ def main(
             table.name = f"{schema_prefix}{module_name}_{table.name}"
 
         if drop_first:
+            logging.info("Mazu tabulku %s", table.name)
             table.drop(engine, checkfirst=True)
+        logging.info("Vytvarim tabulku %s", table.name)
         table.create(engine, checkfirst=True)
 
         # dropni fkeys pred nahravanim dat
@@ -136,6 +143,7 @@ def main(
             cur = conn.cursor()
             cur.execute(f"TRUNCATE {full_table_name} CASCADE")  # TODO: cascade yolo
             for filename in files:
+                logging.info("Nahravam %s", filename)
                 with open(filename, "rt", encoding="utf-8") as f:
                     cur.copy_expert(
                         f"COPY {full_table_name} FROM stdin WITH CSV HEADER", f
@@ -147,9 +155,13 @@ def main(
             cur = conn.cursor()
             cur.execute(f"TRUNCATE {full_table_name} CASCADE")  # TODO: cascade yolo
             for filename in files:
-                # z nejakyho zahadnyho duvodu to muze obcas detekovat quote jako neco jineho nez uvozovku
+                # TODO(PR): logging u ostatnich enginu
+                logging.info("Nahravam %s", filename)
+                # z nejakyho zahadnyho duvodu to muze obcas detekovat quote
+                # jako neco jineho nez uvozovku
                 cur.execute(
-                    f"INSERT INTO {full_table_name} SELECT * FROM read_csv('{filename}', quote='\"')"
+                    f"INSERT INTO {full_table_name} SELECT * FROM "
+                    f"read_csv('{filename}', quote='\"')"
                 )
         elif engine.name == "sqlite":
             conn = engine.raw_connection()
@@ -159,6 +171,7 @@ def main(
             query = f"INSERT INTO {table.name} VALUES({ph})"
             bools = [isinstance(j.type, Boolean) for j in table.columns]
             for filename in files:
+                logging.info("Nahravam %s", filename)
                 buffer = []
                 with open(filename, "rt", encoding="utf-8") as f:
                     cr = csv.reader(f)
@@ -189,7 +202,7 @@ def main(
                 with engine.begin() as conn:
                     conn.execute(text(sql.string))
 
-        print(f" ({time.time() - t:.2f}s)")
+        logging.info("Hotovo za %.2fs", time.time() - t)
 
     # data nahrana do db, muzu mazat CSV
     if not preserve_csv:
