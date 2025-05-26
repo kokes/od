@@ -14,7 +14,7 @@ from sqlalchemy import create_engine
         ("iissp",),
         # ("justice",),
         # TODO: psp ma problem s konektivitou
-        # ("psp",),
+        ("psp",),
         # ("steno",),
         # ("red",),
         ("res",),
