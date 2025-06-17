@@ -7,7 +7,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlparse
 
 
-def make_handler_class(db_connection):
+def make_handler_class(conn):
     # TODO: ThreadingHTTPServer? Nebude pak problem s sqlite, ktera je pinovana na thread?
     class CustomHandler(BaseHTTPRequestHandler):
         def do_GET(self):
@@ -48,49 +48,45 @@ def make_handler_class(db_connection):
                 self.send_error(400, "Missing query parameter 'q'")
                 return
 
-            # Reuse injected connection
-            cursor = db_connection.cursor()
-            # Example query
-            cursor.execute("SELECT ? as result", (q,))
-            rows = [row[0] for row in cursor.fetchall()]
+            sql = """
+            SELECT jmeno, prijmeni, datum_narozeni
+            FROM justice_angazovane_osoby
+            WHERE lower(jmeno || ' ' || prijmeni) LIKE ?
+            GROUP BY jmeno, prijmeni, datum_narozeni
+            LIMIT 100
+            """
+
+            like_pattern = f"%{q.lower()}%"
+
+            cursor = conn.execute(sql, (like_pattern,))
+            rows = cursor.fetchall()
+
+            results = []
+            for row in rows:
+                print("jmeno", type(row["jmeno"]))
+                print("prijmeni", type(row["prijmeni"]))
+                print("dn", type(row["datum_narozeni"]))
+                results.append(
+                    {
+                        "jmeno": row["jmeno"],
+                        "prijmeni": row["prijmeni"],
+                        "datum_narozeni": row["datum_narozeni"],
+                    }
+                )
 
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps({"query": q, "results": rows}).encode("utf-8"))
+            self.wfile.write(
+                json.dumps({"query": q, "results": results}).encode("utf-8")
+            )
 
     return CustomHandler
-
-    # TODO: neni tam zadne razeni
-    # TODO: neni to kolace nad latin1_general_ci_ai (nejak mi nefungovala)
-    # TODO: neni to indexovane (na sqlite mi to nechce chytit index na computed sloupec)
-    # tbl = self.table_schemas[("justice", "angazovane_osoby")]
-    # cols = {k: v for k, v in tbl.columns.items()}  # TODO: yikes
-    # query = (
-    #     session.query(cols["jmeno"], cols["prijmeni"], cols["datum_narozeni"])
-    #     .filter(
-    #         func.lower((column("jmeno") + " " + column("prijmeni"))).contains(q)
-    #     )
-    #     .group_by(column("jmeno"), column("prijmeni"), column("datum_narozeni"))
-    #     .limit(100)
-    # )
-    # print(query)
-    # results = [
-    #     {
-    #         "jmeno": j.jmeno,
-    #         "prijmeni": j.prijmeni,
-    #         "datum_narozeni": j.datum_narozeni.isoformat()
-    #         if j.datum_narozeni
-    #         else None,
-    #     }
-    #     for j in query.all()
-    # ]
-
-    # return jsonify(result={"status": "ok", "results": results})
 
 
 def run_server(db_path, port):
     conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
     handler_class = make_handler_class(conn)
 
     httpd = HTTPServer(("localhost", port), handler_class)
