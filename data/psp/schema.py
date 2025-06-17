@@ -178,14 +178,7 @@ schema = [
             comment="Identifikátor osoby",
         ),
         Column("pred", Text, nullable=True, comment="Titul pred jmenem"),
-        Column(
-            "prijmeni",
-            Text,
-            nullable=False,
-            comment="Příjmení, v některých případech obsahuje i dodatek "
-            'typu "st.", "ml."',
-        ),
-        Column("jmeno", Text, nullable=False, comment="Jméno"),
+        Column("jmeno_prijmeni", Text, nullable=False, comment="Jméno"),
         Column("za", Text, nullable=True, comment="Titul za jménem"),
         Column("narozeni", Date, nullable=True, comment="Datum narození"),
         Column(
