@@ -3,6 +3,8 @@
 import json
 import logging
 import sqlite3
+import threading
+import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlparse
 
@@ -95,3 +97,26 @@ def run_server(db_path, port):
         httpd.serve_forever()
     finally:
         conn.close()
+
+
+def run_server_in_thread(db_path, port):
+    httpd_container = {}
+
+    def target():
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        handler_class = make_handler_class(conn)
+
+        httpd = HTTPServer(("localhost", port), handler_class)
+        httpd_container["httpd"] = httpd
+        httpd.serve_forever()
+        conn.close()
+
+    thread = threading.Thread(target=target, daemon=True)
+    thread.start()
+    while True:
+        if "httpd" in httpd_container:
+            break
+        time.sleep(0.1)
+
+    return httpd_container["httpd"], thread
