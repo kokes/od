@@ -44,7 +44,11 @@ def main(outdir: str, partial: bool = False):
     for dataset, mapping in mappings.items():
         print(f"Nahravam dataset: {dataset}")
         with open(os.path.join(outdir, dataset + ".csv"), "w", encoding="utf8") as fw:
-            columns = ["rok", "ico_prijemce", "nazev_prijemce"] + list(mapping.values())
+            cnames = list(mapping.values())
+            if dataset == "penizefo":
+                cnames.remove("prijmeni")
+                cnames[cnames.index("jmeno")] = "jmeno_prijmeni"
+            columns = ["rok", "ico_prijemce", "nazev_prijemce"] + cnames
             cw = csv.DictWriter(fw, fieldnames=columns, lineterminator="\n")
             cw.writeheader()
             for year, index in indices.items():
@@ -73,6 +77,13 @@ def main(outdir: str, partial: bool = False):
                                 ):
                                     print(f"preskakuju zaznam s neplatnym ICO: {row}")
                                     row["ico_darce"] = None
+
+                                if dataset == "penizefo":
+                                    row["jmeno_prijmeni"] = (
+                                        f"{row['jmeno'] or ''} {row['prijmeni'] or ''}".strip().title()
+                                    )
+                                    del row["jmeno"]
+                                    del row["prijmeni"]
 
                                 cw.writerow(
                                     {
