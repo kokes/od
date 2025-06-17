@@ -1,3 +1,3 @@
-from server.__main__ import API
+from .api import run_server
 
-__all__ = ["API"]
+__all__ = ["run_server"]
