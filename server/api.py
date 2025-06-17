@@ -31,7 +31,7 @@ def make_handler_class(conn):
                 self.send_error(500, "oops")
 
         def index(self):
-            with open("server/templates/index.j2", "r", encoding="utf-8") as f:
+            with open("server/assets/index.html", "r", encoding="utf-8") as f:
                 content = f.read()
             self.send_response(200)
             self.send_header("Content-Type", "text/html; charset=utf-8")

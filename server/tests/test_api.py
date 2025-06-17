@@ -27,3 +27,10 @@ def test_status(server):
     assert response.status == 200
     data = json.load(response)
     assert data == {"status": "ok"}
+
+
+def test_index(server):
+    server.request("GET", "/")
+    response = server.getresponse()
+    assert response.status == 200
+    assert b"<title>" in response.read()
