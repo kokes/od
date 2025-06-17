@@ -6,7 +6,7 @@ import pytest
 from server import run_server_in_thread
 
 PORT = 8089
-TEST_DB = "data.sqlite"  # TODO: priprav v ramci testu
+TEST_DB = "test.sqlite"  # TODO: priprav v ramci testu
 
 
 @pytest.fixture(scope="module")

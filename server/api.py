@@ -10,7 +10,8 @@ from urllib.parse import parse_qs, urlparse
 
 
 def make_handler_class(conn):
-    # TODO: ThreadingHTTPServer? Nebude pak problem s sqlite, ktera je pinovana na thread?
+    # TODO: ThreadingHTTPServer? Nebude pak problem s sqlite,
+    # ktera je pinovana na thread?
     class CustomHandler(BaseHTTPRequestHandler):
         def do_GET(self):
             parsed_path = urlparse(self.path)
