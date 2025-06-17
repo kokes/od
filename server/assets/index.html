@@ -1,0 +1,32 @@
+<title>ODAN</title>
+
+<form action="/" method="get">
+    <input name="q" id="q" />
+    <input type="submit" id="search" value="Hledat" />
+</form>
+
+<div id="results"></div>
+
+<script type="text/javascript">
+    document.getElementById("search").addEventListener("click", async function(e) {
+        e.preventDefault();
+        const q = document.getElementById("q").value;
+        if (q.length < 3) {
+            alert("Zadejte alespoň 3 znaky");
+            return false;
+        }
+
+        const results = document.getElementById("results");
+        console.log("Hledam " + q);
+        const data = await fetch("/api/search?q=" + q); // TODO: cistsi parametrizace?
+        const json = await data.json();
+        results.innerHTML = `Nalezeno ${json.results.length} výsledků`;
+
+        json.results.forEach(function(item) {
+            const div = document.createElement("div");
+            div.innerHTML = `<h3>${item.jmeno} ${item.prijmeni}</h3><p>${item.datum_narozeni}</p>`;
+            results.appendChild(div);
+        });
+    });
+
+</script>
