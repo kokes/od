@@ -5,16 +5,18 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+  test:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
-        # dataset: ["ares", "cedr", "cssz", "datovky", "dotinfo", "iissp", "psp.steno", "szif"]
+        os: ['ubuntu-latest', 'windows-latest']
+        python-version: ['3.9', '3.13']
 
     steps:
     - uses: actions/checkout@v4
@@ -26,12 +28,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest
-    - name: Test with pytest
+        pip install pytest pytest-xdist
+    - name: pytest (pipeliny)
       run: |
-        pytest -v data/steno/
-        # TODO: doresit problem s importy
-    # TODO: vypnute, protoze vzdycky aspon jeden job spadnul kvuli random timeoutu
-    # - name: Try all pipelines
-    #   run: |
-    #     python3 main.py --partial ${{ matrix.dataset }}
+        python3 -m pytest -v data
+    - name: pytest (main)
+      run: |
+        python3 -m pytest -v -n 4 --durations=5 main_test.py

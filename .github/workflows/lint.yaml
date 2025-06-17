@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
@@ -26,7 +26,7 @@ jobs:
         pip install flake8 black isort
     - name: Lint with flake8
       run: |
-        flake8
+        flake8 --max-line-length=88 --extend-ignore=E203
     - name: Lint with black
       run: |
         black --check .

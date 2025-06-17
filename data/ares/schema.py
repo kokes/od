@@ -1,5 +1,5 @@
 from sqlalchemy import Column, MetaData, Table
-from sqlalchemy.sql.sqltypes import JSON, Date, Integer, Text, Time
+from sqlalchemy.sql.sqltypes import JSON, Date, Integer, Text
 
 meta = MetaData()
 
@@ -9,8 +9,6 @@ schema = [
         meta,
         Column("zdroj", Text, nullable=False),
         Column("aktualizace_db", Date, nullable=False),
-        Column("datum_vypisu", Date, nullable=False),
-        Column("cas_vypisu", Time, nullable=False),
         Column("typ_vypisu", Text, nullable=False),
         Column("rejstrik", Text, nullable=True),
         Column("ico", Integer, nullable=False, primary_key=True, autoincrement=False),
@@ -23,7 +21,7 @@ schema = [
         "fosoby",
         meta,
         Column("ico", Integer, nullable=False, index=True),
-        Column("nazev_organu", Text, nullable=False),
+        Column("nazev_organu", Text, nullable=True),
         Column("datum_zapisu", Date, nullable=False),
         Column("datum_vymazu", Date, nullable=True),
         Column("nazev_funkce", Text, nullable=True),
@@ -38,7 +36,7 @@ schema = [
         "posoby",
         meta,
         Column("ico", Integer, nullable=False, index=True),
-        Column("nazev_organu", Text, nullable=False),
+        Column("nazev_organu", Text, nullable=True),
         Column("datum_zapisu", Date, nullable=False),
         Column("datum_vymazu", Date, nullable=True),
         Column("nazev_funkce", Text, nullable=True),

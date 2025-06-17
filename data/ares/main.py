@@ -7,7 +7,7 @@ from urllib.request import urlopen, urlretrieve
 
 import lxml.etree
 
-BASE_URL = "https://wwwinfo.mfcr.cz/_konec/ares_vreo_all.tar.gz"
+BASE_URL = "https://ares.gov.cz/otevrena-data/ares_vreo_all.tar.gz"
 
 
 def attr(root, parts, nsmap):
@@ -32,7 +32,9 @@ def obj(root):
 
 
 def organi(root, ico, nsmap):
-    nazev = root.find("./are:Nazev", namespaces=nsmap).text
+    # ICO 1112 ma prazdny nazev statutaru
+    nazev_el = root.find("./are:Nazev", namespaces=nsmap)
+    nazev = nazev_el.text if nazev_el is not None else None
 
     fosoby, posoby = [], []
     for cl in root.findall("./are:Clen", namespaces=nsmap):
@@ -71,12 +73,16 @@ def remote_data(partial):
         # pri castecnym loadu stahni jen megabyte
         if partial:
             with urlopen(BASE_URL) as r, open(tfn, "wb") as fw:
+                # v ARES je ted bug, kdy to obcas vraci naprostej garbage
+                # print(r.headers.__dict__["_headers"])
                 fw.write(r.read(1000_000))
         else:
             urlretrieve(BASE_URL, tfn)
         with tarfile.open(tfn, "r:gz") as tf:
             try:
-                for el in tf:
+                for j, el in enumerate(tf):
+                    if partial and j > 100:
+                        break
                     yield (el, tf.extractfile(el).read())
             except EOFError:
                 if partial:
@@ -95,8 +101,6 @@ def main(outdir: str, partial: bool = False):
         cols = [
             "zdroj",
             "aktualizace_db",
-            "datum_vypisu",
-            "cas_vypisu",
             "typ_vypisu",
             "rejstrik",
             "ico",
@@ -158,8 +162,6 @@ def main(outdir: str, partial: bool = False):
             uvod = vypis.find("./are:Uvod", namespaces=et.nsmap)
             uvod_cols = [
                 "Aktualizace_DB",
-                "Datum_vypisu",
-                "Cas_vypisu",
                 "Typ_vypisu",
             ]
 

@@ -9,68 +9,153 @@ schema = [
         "subjekty",
         meta,
         Column(
-            "ico", Integer, nullable=False, primary_key=True, autoincrement=False
-        ),  # Identifikační číslo
+            "ico",
+            Integer,
+            nullable=False,
+            primary_key=True,
+            autoincrement=False,
+            comment="Identifikační číslo",
+        ),
         Column(
-            "okres_lau", Text, nullable=True
-        ),  # Kód okresu sídla (dle CZ-NUTS) dle číselníku ČSÚ (109)
+            "okres_lau",
+            Text,
+            nullable=True,
+            comment="Kód okresu sídla (dle CZ-NUTS) dle číselníku ČSÚ (109)",
+        ),
         Column(
-            "datum_vznik", Date, nullable=True
-        ),  # Datum vzniku ve formátu YYYY-MM-DD
+            "datum_vznik",
+            Date,
+            nullable=True,
+            comment="Datum vzniku ve formátu YYYY-MM-DD",
+        ),
         Column(
-            "datum_zanik", Date, nullable=True
-        ),  # Datum zániku ve formátu YYYY-MM-DD
+            "datum_zanik",
+            Date,
+            nullable=True,
+            comment="Datum zániku ve formátu YYYY-MM-DD",
+        ),
         Column(
-            "zpusob_zanik", Text, nullable=True
-        ),  # Způsob zániku dle číselníku ČSÚ (572)
+            "zpusob_zanik",
+            Text,
+            nullable=True,
+            comment="Způsob zániku dle číselníku ČSÚ (572)",
+        ),
         Column(
-            "datum_aktualizace", Date, nullable=True
-        ),  # Datum aktualizace ve formátu YYYY-MM-DD
+            "datum_aktualizace",
+            Date,
+            nullable=True,
+            comment="Datum aktualizace ve formátu YYYY-MM-DD",
+        ),
         Column(
-            "pravni_forma", Text, nullable=True
-        ),  # Právní forma (statistická) dle číselníku ČSÚ (56)
+            "pravni_forma",
+            Text,
+            nullable=True,
+            comment="Právní forma (statistická) dle číselníku ČSÚ (56)",
+        ),
         Column(
-            "pravni_forma_ros", Text, nullable=True
-        ),  # Právní forma (registr osob) dle číselníku ČSÚ (149)
+            "pravni_forma_ros",
+            Text,
+            nullable=True,
+            comment="Právní forma (registr osob) dle číselníku ČSÚ (149)",
+        ),
         Column(
-            "kategorie_zamestnanci", Text, nullable=True
-        ),  # Kategorie dle počtu pracovníků dle číselníku ČSÚ (579)
+            "kategorie_zamestnanci",
+            Text,
+            nullable=True,
+            comment="Kategorie dle počtu pracovníků dle číselníku ČSÚ (579)",
+        ),
         Column(
-            "nace", Text, nullable=True
-        ),  # Převažující činnost (statistická) dle klasifikace ČSÚ (80004)
+            "nace",
+            Text,
+            nullable=True,
+            comment="Převažující činnost (statistická) dle klasifikace ČSÚ (80004)",
+        ),
         Column(
-            "ic_zuj", Text, nullable=True
-        ),  # Identifikační číslo základní územní jednotky sídla organizace dle
+            "ic_zuj",
+            Text,
+            nullable=True,
+            comment="Identifikační číslo základní územní jednotky sídla organizace dle",
+        ),
         # číselníku ČSÚ (51)
-        Column("firma", Text, nullable=True),  # Firma, název (jméno)
         Column(
-            "esa2010", Text, nullable=True
-        ),  # Kód institucionálního sektoru (ESA2010) dle číselníku ČSÚ (5161)
+            "firma",
+            Text,
+            nullable=True,
+            comment="Firma, název (jméno)",
+        ),
         Column(
-            "adresni_misto", Text, nullable=True
-        ),  # Kód adresního místa dle ISUI (ČÚZK)
+            "esa2010",
+            Text,
+            nullable=True,
+            comment="Kód institucionálního sektoru (ESA2010) dle číselníku ČSÚ (5161)",
+        ),
         Column(
-            "adresa", Text, nullable=True
-        ),  # Text adresy (pro místa s chybějícím KODADM)
-        Column("psc", Text, nullable=True),  # Adresa sídla dle KODADM: PSČ
-        Column("obec", Text, nullable=True),  # Adresa sídla dle KODADM: obec
-        Column("cast_obce", Text, nullable=True),  # Adresa sídla dle KODADM: část obce
-        Column("ulice", Text, nullable=True),  # Adresa sídla dle KODADM: ulice
+            "adresni_misto",
+            Text,
+            nullable=True,
+            comment="Kód adresního místa dle ISUI (ČÚZK)",
+        ),
         Column(
-            "typ_cislo_domovni", Text, nullable=True
-        ),  # Typ čísla domovního dle číselníku ČSÚ (73)
+            "adresa",
+            Text,
+            nullable=True,
+            comment="Text adresy (pro místa s chybějícím KODADM)",
+        ),
         Column(
-            "cislo_domovni", Text, nullable=True
-        ),  # Adresa sídla dle KODADM: číslo domovní
+            "psc",
+            Text,
+            nullable=True,
+            comment="Adresa sídla dle KODADM: PSČ",
+        ),
         Column(
-            "cislo_orientacni", Text, nullable=True
-        ),  # Adresa sídla dle KODADM: číslo orientační
+            "obec",
+            Text,
+            nullable=True,
+            comment="Adresa sídla dle KODADM: obec",
+        ),
         Column(
-            "datum_platnost", Date, nullable=False
-        ),  # Datum platnosti dat ve formátu YYYY-MM-DD
+            "cast_obce",
+            Text,
+            nullable=True,
+            comment="Adresa sídla dle KODADM: část obce",
+        ),
         Column(
-            "priznak", Text, nullable=True
-        ),  # Vyjadřuje změnu oproti minulému stavu: P = přírůstek záznamu oproti
+            "ulice",
+            Text,
+            nullable=True,
+            comment="Adresa sídla dle KODADM: ulice",
+        ),
+        Column(
+            "typ_cislo_domovni",
+            Text,
+            nullable=True,
+            comment="Typ čísla domovního dle číselníku ČSÚ (73)",
+        ),
+        Column(
+            "cislo_domovni",
+            Text,
+            nullable=True,
+            comment="Adresa sídla dle KODADM: číslo domovní",
+        ),
+        Column(
+            "cislo_orientacni",
+            Text,
+            nullable=True,
+            comment="Adresa sídla dle KODADM: číslo orientační",
+        ),
+        Column(
+            "datum_platnost",
+            Date,
+            nullable=False,
+            comment="Datum platnosti dat ve formátu YYYY-MM-DD",
+        ),
+        Column(
+            "priznak",
+            Text,
+            nullable=True,
+            comment="Vyjadřuje změnu oproti minulému stavu: "
+            "P = přírůstek záznamu oproti",
+        ),
         # minulému stavu (může být i znovuobnovení IČO po více než 48 měsících,
         # např. IČO zaniklo v 2015-07 a znovu obnovilo činnost 2021-07-18 =>
         # dostane v dávce k 31.7.2021 příznak P, neboť z výstupů vypadl již
@@ -80,21 +165,48 @@ schema = [
         # https://opendata.czso.cz/data/od_org03/res_pf_nace-metadata.json
         "nace",
         meta,
-        Column("ico", Integer, nullable=False),  # Identifikační číslo
         Column(
-            "zdroj_udaj", Text, nullable=True
-        ),  # Zdroj údaje dle číselníku ČSÚ (564)
-        Column("kod_ciselnik", Text, nullable=True),  # Kód číselníku
-        Column("hodnota", Text, nullable=True),  # Kód atributu
+            "ico",
+            Integer,
+            nullable=False,
+            comment="Identifikační číslo",
+        ),
         Column(
-            "datum_platnost", Date, nullable=False
-        ),  # Datum platnosti dat ve formátu YYYY-MM-DD
+            "zdroj_udaj",
+            Text,
+            nullable=True,
+            comment="Zdroj údaje dle číselníku ČSÚ (564)",
+        ),
         Column(
-            "datum_aktualizace", Date, nullable=True
-        ),  # Datum aktualizace záznamu ve formátu YYYY-MM-DD
+            "kod_ciselnik",
+            Text,
+            nullable=True,
+            comment="Kód číselníku",
+        ),
         Column(
-            "priznak", Text, nullable=True
-        ),  # Vyjadřuje změnu oproti minulému stavu: P = přírůstek záznamu
+            "hodnota",
+            Text,
+            nullable=True,
+            comment="Kód atributu",
+        ),
+        Column(
+            "datum_platnost",
+            Date,
+            nullable=False,
+            comment="Datum platnosti dat ve formátu YYYY-MM-DD",
+        ),
+        Column(
+            "datum_aktualizace",
+            Date,
+            nullable=True,
+            comment="Datum aktualizace záznamu ve formátu YYYY-MM-DD",
+        ),
+        Column(
+            "priznak",
+            Text,
+            nullable=True,
+            comment="Vyjadřuje změnu oproti minulému stavu: P = přírůstek záznamu",
+        ),
         # oproti minulému stavu (může být i znovuobnovení IČO po více než
         # 48 měsících, např. IČO zaniklo v 2015-07 a znovu obnovilo
         # činnost 2021-07-18 => dostane v dávce k 31.7.2021 příznak P,

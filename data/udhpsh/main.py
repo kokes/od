@@ -12,6 +12,8 @@ indices = {
     "2020": "https://zpravy.udhpsh.cz/zpravy/vfz2020.json",
     "2021": "https://zpravy.udhpsh.cz/zpravy/vfz2021.json",
     "2022": "https://zpravy.udhpsh.cz/zpravy/vfz2022.json",
+    "2023": "https://zpravy.udh.gov.cz/zpravy/vfz2023.json",
+    "2024": "https://zpravy.udh.gov.cz/zpravy/vfz2024.json",
 }
 years = sorted(indices.keys())
 

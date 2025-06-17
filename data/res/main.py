@@ -10,7 +10,12 @@ CLS_BASE_URL = "https://apl.czso.cz/iSMS/do_cis_export"
 CLS_URLS = [
     CLS_BASE_URL + j
     for j in (
+        # pro pravni formy potrebujem historicka i aktualni data
+        "?kodcis=56&typdat=0&datpohl=31.12.2021&cisjaz=203&format=2&separator=%2C",
+        "?kodcis=56&typdat=0&cisjaz=203&format=2&separator=%2C",
         "?kodcis=109&typdat=0&cisjaz=203&format=2&separator=%2C",
+        "?kodcis=149&typdat=0&cisjaz=203&format=2&separator=%2C",
+        "?kodcis=149&typdat=0&datpohl=31.12.2021&cisjaz=203&format=2&separator=%2C",
         "?kodcis=572&typdat=0&cisjaz=203&format=2&separator=%2C",
         "?kodcis=579&typdat=0&cisjaz=203&format=2&separator=%2C",
         "?kodcis=51&typdat=0&cisjaz=203&format=2&separator=%2C",
@@ -23,15 +28,6 @@ CLS_URLS = [
 CLS_URLS.extend(
     [
         "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=CZ_NACE_RES",
-        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=56",
-        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=149",
-        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=109",
-        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=572",
-        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=579",
-        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=51",
-        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=5161",
-        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=73",
-        "https://vdb.czso.cz/opendata/ciselniky/polozky?kod=564",
     ]
 )
 
@@ -111,7 +107,9 @@ def main(outdir: str, partial: bool = False):
         logging.info("Nacitam %s", cls_url)
         with open_remote_gzipped(cls_url, partial) as r:
             cr = csv.DictReader(r)
+            nrows = 0
             for row in cr:
+                nrows += 1
                 # jsou dva typy ciselniku, tak musime nacitat hodnoty z ruznych klicu
                 kodcis = row.get("KODCIS", row.get("kodcis", row.get("ciselnik")))
                 chodnota = row.get(
@@ -123,6 +121,9 @@ def main(outdir: str, partial: bool = False):
                     raise ValueError(f"nerozumim radce v {cls_url}: {row}")
 
                 cls_data[(int(kodcis), chodnota)] = text
+
+            if nrows == 0:
+                raise ValueError(f"prazdny soubor {cls_url}")
 
     logging.info("Ciselniky hotove")
 

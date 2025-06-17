@@ -6,8 +6,13 @@ import json
 import logging
 import multiprocessing
 import os
+import ssl
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
+
+ssl._create_default_https_context = ssl._create_unverified_context
+
+HTTP_TIMEOUT = 60
 
 # TODO: mozna nebude treba, mozna budou URL nemenne
 DATASETS_GRAPHQL_QUERY = (
@@ -25,7 +30,7 @@ DATASETS_GRAPHQL_QUERY = (
   }
 }
 """
-    % "https://data.gov.cz/zdroj/datové-sady/00006947/4e4762f06ca63a491efc360e793abc09"
+    % "https://data.gov.cz/zdroj/datové-sady/00006947/eff92c79870f2dba48ac52c3f01635c0"
 )
 
 
@@ -34,7 +39,9 @@ ID_COLS = ("iriDotace", "iriPrijemce", "iriRozhodnuti", "iriRozpoctoveObdobi")
 
 
 def remote_csv(url):
-    with urlopen(url, timeout=30) as r, gzip.open(r, encoding="utf-8", mode="rt") as f:
+    with urlopen(url, timeout=HTTP_TIMEOUT) as r, gzip.open(
+        r, encoding="utf-8", mode="rt"
+    ) as f:
         cr = csv.DictReader((line.replace("\0", "") for line in f), strict=True)
         yield from cr
 
@@ -119,7 +126,9 @@ def main(outdir: str, partial: bool = False):
     req = Request("https://data.gov.cz/graphql")
     req.add_header("content-type", "application/json")
     with urlopen(
-        req, json.dumps({"query": DATASETS_GRAPHQL_QUERY}).encode(), timeout=10
+        req,
+        json.dumps({"query": DATASETS_GRAPHQL_QUERY}).encode(),
+        timeout=HTTP_TIMEOUT,
     ) as r:
         distribution_urls = json.load(r)["data"]["datasets"]["data"]
 

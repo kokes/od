@@ -1,10 +1,13 @@
 import csv
+import gzip
 import io
 import json
 import logging
 import multiprocessing
 import os
+import random
 import shutil
+import string
 import zipfile
 from collections import defaultdict
 from contextlib import contextmanager
@@ -17,28 +20,39 @@ from urllib.request import Request, urlopen
 import lxml.etree
 from tqdm import tqdm
 
+HTTP_TIMEOUT = 30
 RETRIES = 5
 DVOUKOLAK = ("senat", "prezident")
 
 
 @contextmanager
-def load_remote_data(url: str):
+def fetch_as_file(url, tfn=None, retries=RETRIES):
+    req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
     with TemporaryDirectory() as tmpdir:
-        fn = os.path.basename(url)
-        tfn = os.path.join(tmpdir, fn)
-        if not os.path.isfile(tfn):
-            req = Request(url, headers={"User-Agent": "https://github.com/kokes/od"})
-            for j in range(RETRIES):
-                try:
-                    with urlopen(req, timeout=15) as r, open(tfn, "wb") as fw:
-                        shutil.copyfileobj(r, fw)
-                        break
-                except URLError as e:
-                    if j == RETRIES - 1:
-                        raise e
-                    print(f"URLError ({e}), retrying {url}")
-                    continue
+        tfn = os.path.join(
+            tmpdir,
+            "".join([random.choice(string.ascii_letters) for _ in range(10)]),
+        )
 
+        for j in range(retries):
+            try:
+                with urlopen(req, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
+                    if r.headers.get("content-encoding") == "gzip":
+                        r = gzip.open(r)
+                    shutil.copyfileobj(r, fw)
+                    break
+            except (URLError, TimeoutError) as e:
+                if j == retries - 1:
+                    raise e
+                print(f"{e}, retrying {url}")
+                continue
+
+        yield tfn
+
+
+@contextmanager
+def load_remote_data(url: str):
+    with fetch_as_file(url) as tfn:
         with zipfile.ZipFile(tfn) as zf:
             yield zf
 
@@ -71,8 +85,9 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                         break
                     qs["davka"] = davka
                     parsed = parsed._replace(query=urlencode(qs))
-                    with urlopen(urlunparse(parsed)) as r:
-                        et = lxml.etree.parse(r).getroot()
+                    with fetch_as_file(urlunparse(parsed)) as tfn:
+                        with open(tfn, "rb") as r:
+                            et = lxml.etree.parse(r).getroot()
                     ns = et.nsmap[None]
                     if et.find(f"./{{{ns}}}CHYBA") is not None:
                         break

@@ -3,18 +3,24 @@
 
 import csv
 import functools
+import io
 import json
 import logging
 import multiprocessing
 import os
+import shutil
+import ssl
 import zipfile
 from contextlib import contextmanager
 from datetime import datetime
 from io import TextIOWrapper
 from tempfile import TemporaryDirectory
-from urllib.request import urlretrieve
+from urllib.request import urlopen
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 NULL_DATE = datetime(1900, 1, 1, 0, 0)
+HTTP_TIMEOUT = 90
 
 
 @contextmanager
@@ -22,8 +28,33 @@ def read_compressed(zipname, filename):
     burl = "http://www.psp.cz/eknih/cdrom/opendata/{}"
     with TemporaryDirectory() as tdir:
         tfn = os.path.join(tdir, "tmp.zip")
-        urlretrieve(burl.format(zipname), tfn)
+        with (
+            open(tfn, "wb") as f,
+            urlopen(burl.format(zipname), timeout=HTTP_TIMEOUT) as u,
+        ):
+            shutil.copyfileobj(u, f)
+
         with zipfile.ZipFile(tfn) as zf, zf.open(filename) as zfh:
+            # organy.unl maj wrapnuty radky z nejakyho duvodu
+            if filename == "organy.unl":
+                buf = io.StringIO()
+                lines = zfh.read().decode("cp1250", errors="ignore").splitlines()
+                j = 0
+                while True:
+                    if j >= len(lines):
+                        break
+                    line = lines[j]
+                    if j + 1 < len(lines) and lines[j + 1].startswith("|"):
+                        # trimni pajpu ze sudych radek, je tam navic
+                        line += lines[j + 1][1:]
+                        j += 1
+                    buf.write(line + "\n")
+                    j += 1
+
+                buf.seek(0)
+                yield buf
+                return
+
             # tisky.unl maj encoding chyby
             yield TextIOWrapper(zfh, "cp1250", errors="ignore")
 
@@ -63,7 +94,7 @@ def read_compressed_csv(zf, fn, mp, partial):
                         elif "." in v:
                             dt[k] = datetime.strptime(v, "%d.%m.%Y")
                         else:
-                            raise ValueError(v)
+                            raise ValueError(f"neplatne datum/cas ve sloupci {k}: {v}")
                     elif lv == 13:
                         dt[k] = datetime.strptime(v, "%Y-%m-%d %H")
                     elif lv == 16:
@@ -74,8 +105,11 @@ def read_compressed_csv(zf, fn, mp, partial):
                     elif lv == 25:
                         # 1999-01-12 14:14:41.35000
                         dt[k] = datetime.strptime(v, "%Y-%m-%d %H:%M:%S.%f")
+                    # tisky maj divny sloupec, ktery neodpovida schematu
+                    elif k == "dal" and v == "23:59":
+                        dt[k] = None
                     else:
-                        raise ValueError(v)
+                        raise ValueError(f"neplatne datum/cas ve sloupci {k}: {v}")
 
                     if dt[k] == NULL_DATE:
                         dt[k] = None
@@ -86,7 +120,7 @@ def read_compressed_csv(zf, fn, mp, partial):
 
 
 def process_mapping(outdir, partial, mp):
-    tbl = f'{mp["tema"]}_{mp["tabulka"]}'
+    tbl = f"{mp['tema']}_{mp['tabulka']}"
     tfn = os.path.join(outdir, f"{tbl}.csv")
     assert not os.path.isfile(tfn), tfn
     cols = [j["sloupec"] for j in mp["sloupce"]]
@@ -112,6 +146,10 @@ def main(outdir: str, partial: bool = False):
 
     job = functools.partial(process_mapping, outdir, partial)
     ncpu = multiprocessing.cpu_count()
+    if os.getenv("CI"):
+        logging.info("Pouze jedno CPU, abychom nepretizili psp.cz")
+        ncpu = 1
+
     with multiprocessing.Pool(ncpu) as pool:
         for tema, tabulka in pool.imap_unordered(job, mapping):
             logging.info("hotovo: %s, %s", tema, tabulka)

@@ -1,11 +1,12 @@
 lxml
 openpyxl
 psycopg2-binary
-requests
 tqdm
 xlrd
 cssselect
 sqlalchemy
 pyproj
 shapely
+duckdb
+duckdb_engine
 flask

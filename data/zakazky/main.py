@@ -71,7 +71,7 @@ root_url = "https://isvz.nipez.cz/sites/default/files/content/opendata-predchozi
 url_sources = {
     "zzvz": (
         root_url + "ODZZVZ/{}.xml",
-        list(range(2016, 2023 + 1)),
+        list(range(2016, 2024 + 1)),
     ),
     "vvz": (
         root_url + "ODVVZ/{}.xml",
@@ -135,6 +135,9 @@ def main(outdir: str, partial: bool = False):
                             if ico is None and v is not None:
                                 print("nevalidni ico", v, f"({full_ds}, {url})")
                             row[k] = ico
+                        if k == "OteviraniNabidekDatumCas" and v and "-" not in v:
+                            print("nevalidni datum/cas", v)
+                            row[k] = None
 
                     csvwriters[full_ds].writerow(row)
 

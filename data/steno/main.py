@@ -10,11 +10,15 @@ import zipfile
 from collections import Counter
 from contextlib import closing
 from pathlib import Path
+from urllib.error import HTTPError
 from urllib.parse import urljoin, urlparse
 from urllib.request import urlopen
 
 import lxml.html
 from tqdm import tqdm
+
+HTTP_TIMEOUT = 90
+csv.field_size_limit(2**12)
 
 
 def clean_lines(rel_path):
@@ -132,8 +136,14 @@ def zpracuj_schuzi(outdir, params):
     with tempfile.TemporaryDirectory() as tmpdir:
         base_name = os.path.basename(urlparse(url).path)
         tfn = os.path.join(tmpdir, base_name)
-        with urlopen(url, timeout=30) as r, open(tfn, "wb") as fw:
-            shutil.copyfileobj(r, fw)
+        try:
+            with urlopen(url, timeout=HTTP_TIMEOUT) as r, open(tfn, "wb") as fw:
+                shutil.copyfileobj(r, fw)
+        except HTTPError as e:
+            if e.code == 404:
+                logging.info("steno na adrese %s neexistuje", url)
+                return lnm
+            raise e
         tdir = os.path.join(outdir, "psp")
         os.makedirs(tdir, exist_ok=True)
         csv_fn = os.path.join(tdir, f"{rok}_{os.path.splitext(base_name)[0]}.csv")
@@ -178,7 +188,7 @@ def main(outdir: str, partial: bool = False):
     logging.getLogger().setLevel(logging.INFO)
     jobs = []
     for rok, burl in urls.items():
-        with urlopen(burl, timeout=30) as r:
+        with urlopen(burl, timeout=HTTP_TIMEOUT) as r:
             ht = lxml.html.parse(r).getroot()
 
         for num, ln in enumerate(ht.cssselect("div#main-content a")):
@@ -188,6 +198,9 @@ def main(outdir: str, partial: bool = False):
             jobs.append((rok, url))
 
     ncpu = multiprocessing.cpu_count()
+    if os.getenv("CI"):
+        logging.info("Pouze jedno CPU, abychom nepretizili psp.cz")
+        ncpu = 1
     func = functools.partial(zpracuj_schuzi, outdir)
     lnm = Counter()
     progress = tqdm(total=len(jobs))

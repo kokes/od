@@ -131,7 +131,7 @@ schema = [
         Column("ico", ForeignKey("subjekty.ico"), nullable=False),
         Column("datum_zapis", Date, nullable=False),
         Column("datum_vymaz", Date, nullable=True),
-        Column("text", Text, nullable=False),
+        Column("text", Text, nullable=True),
     ),
     Table(
         "pravni_forma_text",
@@ -466,7 +466,9 @@ schema = [
         Column("datum_zapis", Date, nullable=False),
         Column("datum_vymaz", Date, nullable=True),
         Column("vklad_typ", Text, nullable=False),
-        Column("vklad", Numeric, nullable=False),
+        # nechtel se mi delat vlastni parser, prece jen tu muzou dat cokoliv
+        # co mi to rozbilo: 199.004.000,- Kč; 159.203.000,- Kč; 5,5 miliardy Kč
+        Column("vklad", Text, nullable=False),
     ),
     Table(
         "evidence",

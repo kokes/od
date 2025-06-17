@@ -10,16 +10,22 @@ import multiprocessing
 import os
 import re
 import shutil
+import ssl
+import time
+from collections import defaultdict
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
 import lxml.etree
 from tqdm import tqdm
 
+ssl._create_default_https_context = ssl._create_unverified_context
+
 NON_ISO_DATUM = re.compile(r"^(\d{1,2})[\.\-](\d{1,2})[\.\-](\d{4})$")
-HTTP_TIMEOUT = 60
+HTTP_TIMEOUT = 180
 CACHE_DIR = "cache"
 CACHE_ENABLED = bool(int(os.environ.get("CACHE_ENABLED", "0")))
+CURRENT_YEAR_ONLY = bool(int(os.environ.get("CURRENT_YEAR_ONLY", "1")))
 
 
 def gen_schema(element, parent=None):
@@ -75,7 +81,7 @@ def uprav_data(row, mapping):
 
 
 @contextlib.contextmanager
-def cached_urlopen(url, timeout=HTTP_TIMEOUT):
+def cached_urlopen(url, timeout=HTTP_TIMEOUT, partial=False):
     shasum = hashlib.sha256(url.encode("utf-8")).hexdigest()
     if url.endswith(".gz"):
         shasum += ".gz"
@@ -86,26 +92,36 @@ def cached_urlopen(url, timeout=HTTP_TIMEOUT):
         return
 
     with urlopen(url, timeout=timeout) as r:
-        if not CACHE_ENABLED:
-            yield r
-            return
         fn_tmp = fn_path + ".tmp"
+        # driv jsme cetli rovnou z webu, ale delalo to problemy,
+        # tak to holt docasne ukladame a poustime to z disku
         with open(fn_tmp, "wb") as f:
-            shutil.copyfileobj(r, f)
-        os.rename(fn_tmp, fn_path)
-        with cached_urlopen(url, timeout) as r:
-            yield r
+            if partial:
+                f.write(r.read(1000_000))
+            else:
+                shutil.copyfileobj(r, f)
+
+    # pri vypnuty cache se jen cte s tempfilu a pak se maze
+    if not CACHE_ENABLED:
+        with open(fn_tmp, "rb") as f:
+            yield f
+        os.remove(fn_tmp)
+        return
+
+    os.rename(fn_tmp, fn_path)
+    with cached_urlopen(url, timeout) as r:
+        yield r
 
 
-def nahraj_ds(url):
-    with cached_urlopen(url, timeout=HTTP_TIMEOUT) as r:
+def nahraj_ds(url, partial=False):
+    with cached_urlopen(url, timeout=HTTP_TIMEOUT, partial=partial) as r:
         with gzip.open(r, "rb") as f:
             et = lxml.etree.iterparse(f)
             yield from et
 
 
-def zpracuj_ds(url, schemas, outdir, partial, autogen):
-    et = nahraj_ds(url)
+def zpracuj_ds(url, schemas, outdir, partial, autogen, icos):
+    et = nahraj_ds(url, partial)
 
     fs, csvs, schemasd = dict(), dict(), dict()
     ds = os.path.basename(urlparse(url).path).partition(".")[0]
@@ -138,9 +154,8 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen):
             fs[udaj] = f
             csvs[udaj] = cw
 
-    icos = set()  # TODO: tohle budem muset dostavat jak input (z minulych let)
     for num, (action, el) in enumerate(et):
-        if partial and num > 1e5:
+        if partial and num > 1e4:
             break
         assert action == "end", action
         if el.tag != "Subjekt":
@@ -160,11 +175,11 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen):
             #     fw.write(f"{nazev}\t{el.sourceline}\t{url}\n")
             continue
 
-        # TODO: kdyz zpracovavame data starsi nez letosni, musime
+        # kdyz zpracovavame data starsi nez letosni, musime
         # zahazovat jiz zpracovana data
-        # if ico in icos:
-        #     el.clear()
-        #     continue
+        if ico in icos:
+            el.clear()
+            continue
         icos.add(ico)
 
         csvs["subjekty"].writerow([ico, nazev, zapis, vymaz])
@@ -251,34 +266,18 @@ def main(outdir: str, partial: bool = False):
         assert data["success"]
 
     dss = [ds for ds in data["result"] if "-full-" in ds]
-    print(f"celkem {len(dss)} datasetu, ale filtruji jen na ty letosni")
-    # TODO: abychom zvladli i ty minuly roky, budem muset udelat batche po
-    # letech a udelat dycky kazdej rok zvlast a predavat si seznam zpracovanych ICO
-    dss = [j for j in dss if int(j.rpartition("-")[-1]) == dt.date.today().year]
-    print(f"po odfiltrovani {len(dss)} datasetu")
-    dss.sort(key=lambda x: int(x.rpartition("-")[-1]), reverse=True)
+    print(f"celkem {len(dss)} datasetu")
 
-    urls = []
-    for j, ds in enumerate(tqdm(dss)):
-        if partial and len(urls) > 20:
-            break
-        url = f"https://dataor.justice.cz/api/3/action/package_show?id={ds}"
-        with cached_urlopen(url, timeout=HTTP_TIMEOUT) as r:
-            dtp = json.load(r)
-            assert dtp["success"]
-        ds_url = [
-            j["url"] for j in dtp["result"]["resources"] if j["url"].endswith(".xml.gz")
-        ]
-        assert len(ds_url) == 1
+    dsm = defaultdict(list)
+    for ds in dss:
+        year = ds.rpartition("-")[-1]
+        dsm[year].append(ds)
 
-        # mohli bychom to omezit jen na mensi soubory, ale radsi
-        # prectu trosku z vicero dat
-        # if partial:
-        #     req = urlopen(ds_url[0])
-        #     if int(req.headers.get("Content-Length")) > 10_000_000:
-        #         continue
-
-        urls.append(ds_url[0])
+    years = sorted(dsm.keys(), reverse=True)
+    print(f"mame data pro roky: {years}")
+    if CURRENT_YEAR_ONLY:
+        print(f"zpracovavame jen rok {years[0]}")
+        years = years[:1]
 
     cdir = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(cdir, "xml_schema.json"), encoding="utf-8") as f:
@@ -286,24 +285,60 @@ def main(outdir: str, partial: bool = False):
 
     # samotna multiprocessing.queue z nejakyho duvodu nefungovala
     autogen = multiprocessing.Manager().Queue()
-    zpracuj = functools.partial(
-        zpracuj_ds,
-        schemas=schemas,
-        outdir=outdir,
-        partial=partial,
-        autogen=autogen,
-    )
-    progress = tqdm(total=len(urls))
+
     # TODO: chcem fakt jet naplno? co kdyz budem parametrizovat jednotlivy moduly?
     ncpu = multiprocessing.cpu_count()
 
-    # chcem frontloadovat nejvetsi datasety, abychom optimalizovali runtime
-    # mohli bychom HEADnout ty soubory, ale najit sro/as je rychlejsi a good enough
-    urls.sort(key=lambda x: int("/sro" in x or "/as" in x), reverse=True)
-    with multiprocessing.Pool(ncpu) as pool:
-        for _, _ in pool.imap_unordered(zpracuj, urls):
-            # logging.debug(url)?
-            progress.update(n=1)
+    processed = set()
+    for year in years:
+        dss = dsm[year]
+
+        urls = []
+        for j, ds in enumerate(tqdm(dss, desc=f"{year} meta")):
+            if partial and len(urls) > 10:
+                break
+            url = f"https://dataor.justice.cz/api/3/action/package_show?id={ds}"
+            with cached_urlopen(url, timeout=HTTP_TIMEOUT) as r:
+                dtp = json.load(r)
+                assert dtp["success"]
+            ds_url = [
+                j["url"]
+                for j in dtp["result"]["resources"]
+                if j["url"].endswith(".xml.gz")
+            ]
+            assert len(ds_url) == 1
+
+            # mohli bychom to omezit jen na mensi soubory, ale radsi
+            # prectu trosku z vicero dat
+            # if partial:
+            #     req = urlopen(ds_url[0])
+            #     if int(req.headers.get("Content-Length")) > 10_000_000:
+            #         continue
+
+            urls.append(ds_url[0])
+
+        progress = tqdm(total=len(urls), desc=f"{year} data")
+
+        zpracuj = functools.partial(
+            zpracuj_ds,
+            schemas=schemas,
+            outdir=outdir,
+            partial=partial,
+            autogen=autogen,
+            icos=set(list(processed)),  # bojim se konkurence
+        )
+
+        year_icos = set()
+        t = time.time()
+        with multiprocessing.Pool(ncpu) as pool:
+            for _, icos in pool.imap_unordered(zpracuj, urls):
+                # logging.debug(url)?
+                progress.update(n=1)
+                year_icos.update(icos)
+
+        progress.close()
+        processed.update(year_icos)
+        print(f"zpracovano {year} za {time.time() - t:.2f}s")
 
     # nezpracovany objekty je treba rucne projit
     schema_autogen = dict()
