@@ -24,7 +24,7 @@
 
         json.results.forEach(function(item) {
             const div = document.createElement("div");
-            div.innerHTML = `<h3>${item.jmeno} ${item.prijmeni}</h3><p>${item.datum_narozeni}</p>`;
+            div.innerHTML = `<h3>${item.jmeno_prijmeni}</h3><p>${item.datum_narozeni}</p>`;
             results.appendChild(div);
         });
     });
