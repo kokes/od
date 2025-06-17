@@ -9,4 +9,3 @@ pyproj
 shapely
 duckdb
 duckdb_engine
-flask
