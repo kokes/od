@@ -35,3 +35,6 @@ jobs:
     - name: pytest (main)
       run: |
         python3 -m pytest -v -n 4 --durations=5 main_test.py
+    - name: pytest (server)
+      run: |
+        python3 -m pytest -v server
