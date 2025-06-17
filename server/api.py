@@ -33,7 +33,7 @@ def make_handler_class(conn):
             with open("server/templates/index.j2", "r", encoding="utf-8") as f:
                 content = f.read()
             self.send_response(200)
-            self.send_header("Content-Type", "text/html")
+            self.send_header("Content-Type", "text/html; charset=utf-8")
             self.end_headers()
             self.wfile.write(content.encode("utf-8"))
 
@@ -65,9 +65,6 @@ def make_handler_class(conn):
 
             results = []
             for row in rows:
-                print("jmeno", type(row["jmeno"]))
-                print("prijmeni", type(row["prijmeni"]))
-                print("dn", type(row["datum_narozeni"]))
                 results.append(
                     {
                         "jmeno": row["jmeno"],

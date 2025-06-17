@@ -20,9 +20,9 @@
         console.log("Hledam " + q);
         const data = await fetch("/api/search?q=" + q); // TODO: cistsi parametrizace?
         const json = await data.json();
-        results.innerHTML = `Nalezeno ${json.result.results.length} výsledků`;
+        results.innerHTML = `Nalezeno ${json.results.length} výsledků`;
 
-        json.result.results.forEach(function(item) {
+        json.results.forEach(function(item) {
             const div = document.createElement("div");
             div.innerHTML = `<h3>${item.jmeno} ${item.prijmeni}</h3><p>${item.datum_narozeni}</p>`;
             results.appendChild(div);
