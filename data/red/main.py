@@ -39,9 +39,10 @@ ID_COLS = ("iriDotace", "iriPrijemce", "iriRozhodnuti", "iriRozpoctoveObdobi")
 
 
 def remote_csv(url):
-    with urlopen(url, timeout=HTTP_TIMEOUT) as r, gzip.open(
-        r, encoding="utf-8", mode="rt"
-    ) as f:
+    with (
+        urlopen(url, timeout=HTTP_TIMEOUT) as r,
+        gzip.open(r, encoding="utf-8", mode="rt") as f,
+    ):
         cr = csv.DictReader((line.replace("\0", "") for line in f), strict=True)
         yield from cr
 
@@ -74,6 +75,9 @@ def process_ds(outdir, partial, fn_url_mapping, csl, ds):
                     decamel(j[3].lower() + j[4:] if j.startswith("iri") else j)
                     for j in clean_header
                 ]
+                if "jmeno" in clean_header:
+                    clean_header.remove("prijmeni")
+                    clean_header[clean_header.index("jmeno")] = "jmeno_prijmeni"
                 cw = csv.DictWriter(fw, fieldnames=clean_header, lineterminator="\n")
                 cw.writeheader()
             if partial and num > 5e3:
@@ -113,6 +117,13 @@ def process_ds(outdir, partial, fn_url_mapping, csl, ds):
                     ln[new_key[0].lower() + new_key[1:]] = val
 
                 del ln[key]
+
+            if "jmeno" in ln:
+                ln["jmeno_prijmeni"] = (
+                    f"{ln['jmeno'] or ''} {ln['prijmeni'] or ''}".strip().title()
+                )
+                del ln["jmeno"]
+                del ln["prijmeni"]
 
             cw.writerow({decamel(k): v for k, v in ln.items()})
 

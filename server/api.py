@@ -52,10 +52,10 @@ def make_handler_class(conn):
                 return
 
             sql = """
-            SELECT jmeno, prijmeni, datum_narozeni
+            SELECT jmeno_prijmeni, datum_narozeni
             FROM justice_angazovane_osoby
-            WHERE lower(jmeno || ' ' || prijmeni) LIKE ?
-            GROUP BY jmeno, prijmeni, datum_narozeni
+            WHERE jmeno_prijmeni LIKE ?
+            GROUP BY jmeno_prijmeni, datum_narozeni
             LIMIT 100
             """
 
@@ -68,8 +68,7 @@ def make_handler_class(conn):
             for row in rows:
                 results.append(
                     {
-                        "jmeno": row["jmeno"],
-                        "prijmeni": row["prijmeni"],
+                        "jmeno_prijmeni": row["jmeno_prijmeni"],
                         "datum_narozeni": row["datum_narozeni"],
                     }
                 )

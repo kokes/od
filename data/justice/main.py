@@ -77,6 +77,13 @@ def uprav_data(row, mapping):
         den, mesic, rok = NON_ISO_DATUM.match(row[col]).groups()
         row[col] = dt.date(int(rok), int(mesic), int(den))
 
+    if "jmeno" in row:
+        row["jmeno_prijmeni"] = (
+            f"{row['jmeno'] or ''} {row['prijmeni'] or ''}".strip().title()
+        )
+        del row["jmeno"]
+        del row["prijmeni"]
+
     return row
 
 
@@ -144,9 +151,11 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen, icos):
         os.makedirs(os.path.join(outdir, el["soubor"]), exist_ok=True)
         ffn = os.path.join(outdir, el["soubor"], fn)
         f = open(ffn, "w", encoding="utf8")
-        cw = csv.DictWriter(
-            f, fieldnames=["ico"] + list(el["schema"].keys()), lineterminator="\n"
-        )
+        cols = list(el["schema"].keys())
+        if "jmeno" in cols:
+            cols.remove("prijmeni")
+            cols[cols.index("jmeno")] = "jmeno_prijmeni"
+        cw = csv.DictWriter(f, fieldnames=["ico"] + cols, lineterminator="\n")
         cw.writeheader()
 
         for udaj in udaje:

@@ -3,7 +3,6 @@
 
 import csv
 import functools
-import io
 import json
 import logging
 import multiprocessing
@@ -35,26 +34,6 @@ def read_compressed(zipname, filename):
             shutil.copyfileobj(u, f)
 
         with zipfile.ZipFile(tfn) as zf, zf.open(filename) as zfh:
-            # organy.unl maj wrapnuty radky z nejakyho duvodu
-            if filename == "organy.unl":
-                buf = io.StringIO()
-                lines = zfh.read().decode("cp1250", errors="ignore").splitlines()
-                j = 0
-                while True:
-                    if j >= len(lines):
-                        break
-                    line = lines[j]
-                    if j + 1 < len(lines) and lines[j + 1].startswith("|"):
-                        # trimni pajpu ze sudych radek, je tam navic
-                        line += lines[j + 1][1:]
-                        j += 1
-                    buf.write(line + "\n")
-                    j += 1
-
-                buf.seek(0)
-                yield buf
-                return
-
             # tisky.unl maj encoding chyby
             yield TextIOWrapper(zfh, "cp1250", errors="ignore")
 
@@ -116,6 +95,13 @@ def read_compressed_csv(zf, fn, mp, partial):
                 else:
                     dt[k] = v
 
+            if "jmeno" in dt:
+                dt["jmeno_prijmeni"] = (
+                    f"{dt['jmeno'] or ''} {dt['prijmeni'] or ''}".strip().title()
+                )
+                del dt["jmeno"]
+                del dt["prijmeni"]
+
             yield dt
 
 
@@ -124,6 +110,9 @@ def process_mapping(outdir, partial, mp):
     tfn = os.path.join(outdir, f"{tbl}.csv")
     assert not os.path.isfile(tfn), tfn
     cols = [j["sloupec"] for j in mp["sloupce"]]
+    if "jmeno" in cols:
+        cols[cols.index("jmeno")] = "jmeno_prijmeni"
+        cols.remove("prijmeni")
     with open(tfn, encoding="utf-8", mode="wt") as fw:
         cw = csv.DictWriter(fw, fieldnames=cols, lineterminator="\n")
         cw.writeheader()

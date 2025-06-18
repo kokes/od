@@ -134,10 +134,16 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
             )
             if os.path.isfile(tfn):
                 raise IOError(f"necekany prepis souboru: {tfn}")
+
             with open(tfn, "wt", encoding="utf8") as fw:
+                scols = list(fmp["schema"])
+                if "JMENO" in scols:
+                    scols.remove("PRIJMENI")
+                    scols[scols.index("JMENO")] = "JMENO_PRIJMENI"
+
                 cw = csv.DictWriter(
                     fw,
-                    fieldnames=["DATUM"] + fmp["schema"] + fmp.get("extra_schema", []),
+                    fieldnames=["DATUM"] + scols + fmp.get("extra_schema", []),
                     lineterminator="\n",
                 )
                 cw.writeheader()
@@ -151,6 +157,14 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                             break
                         for k in fmp.get("vynechej", []):
                             el.pop(k, None)
+
+                        if "JMENO" in el:
+                            el["JMENO_PRIJMENI"] = (
+                                f"{el['JMENO'] or ''} "
+                                f"{el['PRIJMENI'] or ''}".strip().title()
+                            )
+                            del el["JMENO"]
+                            del el["PRIJMENI"]
 
                         # TODO: TEST: HLASY_01 vs. HLASY_K1
                         hk = [
