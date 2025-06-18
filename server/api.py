@@ -56,6 +56,8 @@ def make_handler_class(conn):
                 jmeno_prijmeni, datum_narozeni,
                 MAX(COALESCE(datum_vymaz, datum_zapis)) posledni_zmena,
                 -- TODO: co kdyz neni v RES? udelame COALESCE(rs.ico, angos.nazev)?
+                -- TODO: rozlisit aktualni a historicka angazma
+                --       neco jako COUNT(datum_vymaz IS NULL) > 0
                 json_group_array(
                     distinct json_object('ico', rs.ico, 'subjekt', rs.firma, 'pravni_forma', rs.pravni_forma)
                 ) subjekty

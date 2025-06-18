@@ -47,8 +47,21 @@
             const tr = document.createElement("tr");
             for (const [k, v] of Object.entries(item)) {
                 const td = document.createElement("td");
-                if (typeof v == "object") {
-                    td.innerText = JSON.stringify(v); // TODO: udelame nejakej hezkej render
+                if (k == "subjekty") {
+                    const details = document.createElement('details');
+                    const summary = document.createElement('summary');
+                    summary.textContent = `Angažoval se v ${v.length} subjektech`;
+                    details.appendChild(summary);
+
+                    const ul = document.createElement('ul');
+                    v.forEach(s => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `${s.subjekt} <small>(${s.ico}, ${s.pravni_forma})</small>`;
+                        ul.appendChild(li);
+                    });
+
+                    details.appendChild(ul);
+                    td.appendChild(details);
                 } else {
                     td.innerText = v;
                 }
