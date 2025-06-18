@@ -160,7 +160,8 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
 
                         if "JMENO" in el:
                             el["JMENO_PRIJMENI"] = (
-                                f"{el['JMENO'] or ''} {el['PRIJMENI'] or ''}".strip().title()
+                                f"{el['JMENO'] or ''} "
+                                f"{el['PRIJMENI'] or ''}".strip().title()
                             )
                             del el["JMENO"]
                             del el["PRIJMENI"]

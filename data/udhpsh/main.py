@@ -79,9 +79,11 @@ def main(outdir: str, partial: bool = False):
                                     row["ico_darce"] = None
 
                                 if dataset == "penizefo":
-                                    row["jmeno_prijmeni"] = (
-                                        f"{row['jmeno'] or ''} {row['prijmeni'] or ''}".strip().title()
+                                    jp = (
+                                        f"{row['jmeno'] or ''} "
+                                        f"{row['prijmeni'] or ''}".strip().title()
                                     )
+                                    row["jmeno_prijmeni"] = jp
                                     del row["jmeno"]
                                     del row["prijmeni"]
 
