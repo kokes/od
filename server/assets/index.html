@@ -3,6 +3,10 @@
 <form action="/" method="get">
     <input name="q" id="q" />
     <input type="submit" id="search" value="Hledat" />
+    <!--
+        TODO: checkboxy:
+         - jen s aktivnim jednim ICO
+    -->
 </form>
 
 <div id="results"></div>
@@ -16,17 +20,55 @@
             return false;
         }
 
+        const url = new URL(window.location.href);
+        url.searchParams.set('q', q);
+        window.history.pushState({}, '', url);
+
         const results = document.getElementById("results");
         console.log("Hledam " + q);
         const data = await fetch("/api/search?q=" + q); // TODO: cistsi parametrizace?
         const json = await data.json();
         results.innerHTML = `Nalezeno ${json.results.length} výsledků`;
 
+        if (json.results.length == 0) {
+            return;
+        }
+
+        const tbl = document.createElement("table");
+        const tr = document.createElement("tr");
+        for (const k of Object.keys(json.results[0])) {
+            const th = document.createElement("th");
+            th.innerText = k;
+            tr.appendChild(th);
+        }
+        tbl.appendChild(tr);
+
         json.results.forEach(function(item) {
-            const div = document.createElement("div");
-            div.innerHTML = `<h3>${item.jmeno_prijmeni}</h3><p>${item.datum_narozeni}</p>`;
-            results.appendChild(div);
+            const tr = document.createElement("tr");
+            for (const [k, v] of Object.entries(item)) {
+                const td = document.createElement("td");
+                if (typeof v == "object") {
+                    td.innerText = JSON.stringify(v); // TODO: udelame nejakej hezkej render
+                } else {
+                    td.innerText = v;
+                }
+                tr.appendChild(td);
+            }
+            tbl.appendChild(tr);
         });
+        results.appendChild(tbl);
     });
+
+    // mrkni na query param a updatni search field pokud je treba
+    const url = new URL(window.location.href);
+    const paramValue = url.searchParams.get('q');
+
+    const input = document.getElementById('q');
+    const button = document.getElementById('search');
+
+    if (paramValue !== null && input && button &&  (input.value !== paramValue)) {
+        input.value = paramValue;
+        button.click();
+    }
 
 </script>

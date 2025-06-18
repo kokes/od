@@ -52,9 +52,16 @@ def make_handler_class(conn):
                 return
 
             sql = """
-            SELECT jmeno_prijmeni, datum_narozeni
-            FROM justice_angazovane_osoby
-            WHERE jmeno_prijmeni LIKE ?
+            SELECT
+                jmeno_prijmeni, datum_narozeni,
+                MAX(COALESCE(datum_vymaz, datum_zapis)) posledni_zmena,
+                -- TODO: co kdyz neni v RES? udelame COALESCE(rs.ico, angos.nazev)?
+                json_group_array(
+                    distinct json_object('ico', rs.ico, 'subjekt', rs.firma, 'pravni_forma', rs.pravni_forma)
+                ) subjekty
+            FROM justice_angazovane_osoby ao
+            LEFT JOIN res_subjekty rs USING(ico)
+            WHERE jmeno_prijmeni LIKE ? AND datum_narozeni IS NOT NULL
             GROUP BY jmeno_prijmeni, datum_narozeni
             LIMIT 100
             """
@@ -66,11 +73,14 @@ def make_handler_class(conn):
 
             results = []
             for row in rows:
+                el = {k: row[k] for k in row.keys()}
+                el["subjekty"] = json.loads(el["subjekty"])
                 results.append(
-                    {
-                        "jmeno_prijmeni": row["jmeno_prijmeni"],
-                        "datum_narozeni": row["datum_narozeni"],
-                    }
+                    el
+                    # {
+                    #     "jmeno_prijmeni": row["jmeno_prijmeni"],
+                    #     "datum_narozeni": row["datum_narozeni"],
+                    # }
                 )
 
             self.send_response(200)
@@ -89,7 +99,7 @@ def run_server(db_path, port):
     handler_class = make_handler_class(conn)
 
     httpd = HTTPServer(("localhost", port), handler_class)
-    print(f"Serving on http://localhost:{port}")
+    logging.info(f"Serving on http://localhost:{port}")
     try:
         httpd.serve_forever()
     finally:
