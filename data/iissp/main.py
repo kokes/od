@@ -2,12 +2,12 @@ import csv
 import gzip
 import os
 from datetime import date
+from io import TextIOWrapper
 from urllib.request import Request, urlopen
 
-import lxml.etree
 from tqdm import tqdm
 
-url = "https://monitor.statnipokladna.cz/data/xml/ucjed.xml"
+url = "https://monitor.statnipokladna.gov.cz/data/csv/CIS_UCJED.CSV"
 table_name = "ucetni_jednotky"
 
 # XSD nema vsechno, dafuq
@@ -71,7 +71,8 @@ def main(outdir: str, partial: bool = False):
         cw = csv.DictWriter(fw, fieldnames=cols, lineterminator="\n")
         cw.writeheader()
 
-        et = lxml.etree.iterparse(f)
+        tr = TextIOWrapper(f, encoding="utf-8")
+        cr = csv.DictReader(tr, delimiter=";")
 
         for num, (action, element) in tqdm(enumerate(et)):
             if partial and num > 4e5:
