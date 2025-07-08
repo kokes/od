@@ -28,6 +28,10 @@ CACHE_ENABLED = bool(int(os.environ.get("CACHE_ENABLED", "0")))
 CURRENT_YEAR_ONLY = bool(int(os.environ.get("CURRENT_YEAR_ONLY", "1")))
 
 def datum_narozeni(raw):
+    # l196l -> 1961
+    for ch in ("Ll"):
+        raw = raw.replace(ch, "1")
+
     parts = raw.split(".")
     if len(parts) != 3:
         raise ValueError(f"nepodporovane datum narozeni: {raw}")
