@@ -28,6 +28,9 @@ CACHE_ENABLED = bool(int(os.environ.get("CACHE_ENABLED", "0")))
 CURRENT_YEAR_ONLY = bool(int(os.environ.get("CURRENT_YEAR_ONLY", "1")))
 
 
+def jmeno_narozeni(jmeno):
+    return jmeno, None
+
 def gen_schema(element, parent=None):
     ret = {}
     for j in element:
