@@ -27,8 +27,27 @@ CACHE_DIR = "cache"
 CACHE_ENABLED = bool(int(os.environ.get("CACHE_ENABLED", "0")))
 CURRENT_YEAR_ONLY = bool(int(os.environ.get("CURRENT_YEAR_ONLY", "1")))
 
+def datum_narozeni(raw):
+    parts = raw.split(".")
+    if len(parts) != 3:
+        raise ValueError(f"nepodporovane datum narozeni: {raw}")
+
+    mesic = int(parts[1])
+    rok = int(parts[2])
+    if rok < 1900:
+        rok += 1900
+    den = int(parts[0])
+
+    return dt.date(rok, mesic, den)
 
 def jmeno_narozeni(jmeno):
+    if "Nar." in jmeno:
+        pre, _, post = jmeno.partition("Nar.")
+        pre = pre.rstrip(", ")
+        pre = pre.removesuffix("Dat.")
+        pre = pre.rstrip(", ")
+        return pre, datum_narozeni(post)
+
     return jmeno, None
 
 def gen_schema(element, parent=None):
