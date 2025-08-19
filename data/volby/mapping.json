@@ -159,6 +159,10 @@
                 "https://www.volby.cz/opendata/ps2021/PS2021_data_20211010_csv.zip",
                 "https://www.volby.cz/opendata/ps2021/PS2021ciselniky20211006_csv.zip",
                 "https://www.volby.cz/pls/ps2021/vysledky_okrsky"
+            ],
+            "2025-10-03": [
+                "https://www.volby.cz/opendata/ps2025/PS2025reg20250819_csv.zip",
+                "https://www.volby.cz/opendata/ps2025/PS2025ciselniky20250819_csv.zip"
             ]
         },
         "ds": {
