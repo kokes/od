@@ -1,35 +1,22 @@
 from sqlalchemy import Column, MetaData, Table
-from sqlalchemy.sql.sqltypes import BigInteger, Integer, Numeric, Text
+from sqlalchemy.sql.sqltypes import Date, Integer, Numeric, Text
 
 meta = MetaData()
 
 schema = [
     Table(
-        "zadatele",
+        "platby",
         meta,
-        Column(
-            "id_prijemce",
-            BigInteger,
-            nullable=False,
-            primary_key=True,
-            autoincrement=False,
-        ),
-        Column("rok", Integer, nullable=False, primary_key=True, autoincrement=False),
+        Column("rok", Integer, nullable=False),
+        Column("datum", Date, nullable=True),
         Column("jmeno_nazev", Text, nullable=False),
         Column("obec", Text, nullable=True),
         Column("okres", Text, nullable=True),
-        Column("castka_bez_pvp", Numeric(12, 2), nullable=False),
-    ),
-    Table(
-        "platby",
-        meta,
-        Column("id_prijemce", BigInteger, nullable=False),
-        Column("rok", Integer, nullable=False),
-        Column("fond_typ_podpory", Text, nullable=False),
-        Column("opatreni", Text, nullable=False),
+        Column("fond_typ_podpory", Text, nullable=True),
+        Column("opatreni", Text, nullable=True),
         Column("zdroje_cr", Numeric(12, 2), nullable=True),
         Column("zdroje_eu", Numeric(12, 2), nullable=True),
-        Column("celkem_czk", Numeric(12, 2), nullable=False),
+        Column("celkem_czk", Numeric(12, 2), nullable=True),
     ),
 ]
 

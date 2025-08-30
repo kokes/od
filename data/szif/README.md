@@ -4,6 +4,8 @@ Státní zemědělský intervenční fond (SZIF) dlouhodobě vydává seznam př
 
 Pro jejich zpracování do relační formy stačí pustit tento jeden Python skript.
 
+TODO(PR): revidovat
+
 Poznámky:
 - v datech není žádný unikátní identifikátor přijemce, vytváříme si tedy jeden syntetický identifikátor
 - v datech chybí IČO, takže pro další propojení s daty je třeba udělat vazbu přes název a okres, takto jdou propojit jen vyšší desítky procent příjemců
