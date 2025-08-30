@@ -92,6 +92,7 @@ def parse_csv_czk(r, partial):
             "datum": row["Datum nabytí právní moci rozhodnutí"],
             "jmeno_nazev": row["Název příjemce (právnická osoba)"]
             or row["Příjmení a jméno příjemce"],
+            "ico": int(row["IČ Příjemce"]) if row["IČ Příjemce"].isdigit() else None,
             "obec": row["Obec"],
             "okres": row["Okres (NUTS 4)"],
             "fond_typ_podpory": row["Fond"],
@@ -117,15 +118,14 @@ def parse_csv_czk(r, partial):
 
 
 def main(outdir: str, partial: bool = False):
-    with (
-        open(os.path.join(outdir, "platby.csv"), "w", encoding="utf8") as fp,
-    ):
+    with open(os.path.join(outdir, "platby.csv"), "w", encoding="utf8") as fp:
         cp = csv.DictWriter(
             fp,
             [
                 "rok",
                 "datum",
                 "jmeno_nazev",
+                "ico",
                 "obec",
                 "okres",
                 "fond_typ_podpory",

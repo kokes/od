@@ -10,6 +10,7 @@ schema = [
         Column("rok", Integer, nullable=False),
         Column("datum", Date, nullable=True),
         Column("jmeno_nazev", Text, nullable=False),
+        Column("ico", Integer, nullable=True),
         Column("obec", Text, nullable=True),
         Column("okres", Text, nullable=True),
         Column("fond_typ_podpory", Text, nullable=True),
