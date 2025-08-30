@@ -14,9 +14,9 @@ schema = [
         Column("okres", Text, nullable=True),
         Column("fond_typ_podpory", Text, nullable=True),
         Column("opatreni", Text, nullable=True),
-        Column("zdroje_cr", Numeric(12, 2), nullable=True),
-        Column("zdroje_eu", Numeric(12, 2), nullable=True),
-        Column("celkem_czk", Numeric(12, 2), nullable=True),
+        Column("zdroje_cr", Numeric(12, 2), nullable=False),
+        Column("zdroje_eu", Numeric(12, 2), nullable=False),
+        Column("celkem_czk", Numeric(12, 2), nullable=False),
     ),
 ]
 

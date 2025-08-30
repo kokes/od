@@ -88,7 +88,7 @@ def parse_csv_czk(r, partial):
     for num, row in enumerate(cr):
         if partial and num > 1e3:
             break
-        yield {
+        platba = {
             "datum": row["Datum nabytí právní moci rozhodnutí"],
             "jmeno_nazev": row["Název příjemce (právnická osoba)"]
             or row["Příjmení a jméno příjemce"],
@@ -96,12 +96,24 @@ def parse_csv_czk(r, partial):
             "okres": row["Okres (NUTS 4)"],
             "fond_typ_podpory": row["Fond"],
             "opatreni": row["Název opatření"],
-            "zdroje_cr": row[
-                "Celková částka spolufinancovaná pro tohoto příjemce EZZF"
-            ],
-            "zdroje_eu": row["Celková částka z EU pro tohoto příjemce"],
-            "celkem_czk": row["Celkem EZZF a spolufinancované částky"],
+            "zdroje_cr": (
+                float(
+                    row["Celková částka spolufinancovaná pro tohoto příjemce EZZF"] or 0
+                )
+                + float(
+                    row["Celková částka spolufinancovaná pro tohoto příjemce EZFRV"]
+                    or 0
+                )
+                # obcas je tam tenhle sloupec misto toho predchoziho
+                + float(row["Částka podle operace v rámci spolufinancování EZFRV"] or 0)
+            ),
+            "zdroje_eu": float(row["Celková částka z EU pro tohoto příjemce"] or 0),
         }
+        if platba["zdroje_eu"] == 0:
+            platba["zdroje_eu"] = float(row["Částka podle operací v rámci EZZF"] or 0)
+            platba["zdroje_eu"] += float(row["Částka podle operací v rámci EZFRV"] or 0)
+        platba["celkem_czk"] = platba["zdroje_cr"] + platba["zdroje_eu"]
+        yield platba
 
 
 def main(outdir: str, partial: bool = False):
@@ -141,4 +153,7 @@ def main(outdir: str, partial: bool = False):
 
                 for platba in parser(r, partial):
                     platba["rok"] = year
+                    for c in ["zdroje_cr", "zdroje_eu", "celkem_czk"]:
+                        if not platba.get(c):
+                            platba[c] = 0.0
                     cp.writerow(platba)
