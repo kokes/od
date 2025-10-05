@@ -205,7 +205,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                             el["DATUM"] = el["DATUMVOLEB"]
                             del el["DATUMVOLEB"]
 
-                        # nove sloupce pro PSP 2025 (TODO: zpracovat?)
+                        # data ke korespondencni volbe pro PSP 2025 (TODO: zpracovat?)
                         if "DOR_ODLOZ" in el:
                             del el["DOR_ODLOZ"]
                         if "DOR_OBALKY" in el:
