@@ -225,7 +225,7 @@ schema = [
         Column("nuts", Text, nullable=True),  # kvuli zahranicnimu "okresu"
         Column("nazev", Text, nullable=False),
         Column("ciselnik_kod", Integer, nullable=True),
-        Column("ciselnik_hodnota", Integer, nullable=True),
+        Column("ciselnik_hodnota", Text, nullable=True),
         UniqueConstraint("datum", "num_nuts"),
     ),
     Table(
