@@ -7,5 +7,5 @@ cssselect
 sqlalchemy
 pyproj
 shapely
-duckdb
+duckdb!=1.4.0
 duckdb_engine
