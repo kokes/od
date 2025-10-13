@@ -4,7 +4,6 @@ from sqlalchemy.sql.sqltypes import (
     Date,
     JSON,
     DateTime,
-    Integer,
     Numeric,
     SmallInteger,
     Text,
@@ -130,6 +129,12 @@ schema = [
             "informace_o_otevirani_podani_v_zadavacim_postupu_pro_zavedeni_dynamickeho_nakupniho_systemu",
             Text,
             nullable=False,
+        ),
+        Column("predmet", JSON, nullable=False),
+        Column(
+            "evidencni_cislo_zadavaciho_postupu_ve_vestniku_verejnych_zakazek",
+            Text,
+            nullable=True,
         ),
     ),
     Table(

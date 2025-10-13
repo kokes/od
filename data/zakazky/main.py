@@ -72,10 +72,12 @@ def main(outdir: str, partial: bool = False):
                     data = json.load(f)
                     # VZ 08-2025 ma najednou klic Data :shrug:
                     for rel in data.get("data", data.get("Data", [])):
-                        el = rel[key]
+                        el = {k.lower(): v for k, v in rel[key].items()}
                         # neni v datech zadny sloupec navic (ale muze jich byt mene)
+                        if (set(el.keys()) - sheader) != set():
+                            breakpoint()
                         assert (set(el.keys()) - sheader) == set(), (
-                            set(el.keys()) ^ sheader
+                            set(el.keys()) - sheader
                         )
                         row = {dk: el.get(sk) for sk, dk in zip(header, dbheader)}
 
