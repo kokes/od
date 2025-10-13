@@ -37,7 +37,8 @@ def read_url(url):
         with open(cache_filename, "wb") as cache_file:
             shutil.copyfileobj(r, cache_file)
 
-        yield read_url(url)
+        with read_url(url) as cached_file:
+            yield cached_file
 
 
 def main(outdir: str, partial: bool = False):
