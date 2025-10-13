@@ -178,7 +178,12 @@
             "informace_o_pracovnepravnich_predpisech",
             "informace_o_predpisech_v_oblasti_zivotniho_prostredi",
             "nestandardni_stavy",
-            "dokumenty"
+            "dokumenty",
+            "informace_o_druhe_fazi_uzsi_souteze_o_navrh",
+            "vylouceni_ucastnici_kteri_podali_vybrany_navrh",
+            "kriteria_enviromentalnich_verejnych_zakazek",
+            "vylouceni_ucastnici_zadavaciho_postupu",
+            "evidencni_cislo_zadavaciho_postupu_ve_vestniku_verejnych_zakazek"
         ],
         "dbheader": [
             "casova_znacka",
@@ -235,7 +240,12 @@
             "informace_o_pracovnepravnich_predpisech",
             "informace_o_predpisech_v_oblasti_zivotniho_prostredi",
             "nestandardni_stavy",
-            "dokumenty"
+            "dokumenty",
+            "informace_o_druhe_fazi_uzsi_souteze_o_navrh",
+            "vylouceni_ucastnici_kteri_podali_vybrany_navrh",
+            "kriteria_enviromentalnich_verejnych_zakazek",
+            "vylouceni_ucastnici_zadavaciho_postupu",
+            "evidencni_cislo_zadavaciho_postupu_ve_vestniku_verejnych_zakazek"
         ]
     },
     "SK": {

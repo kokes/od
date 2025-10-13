@@ -227,6 +227,15 @@ schema = [
         ),
         Column("nestandardni_stavy", JSON, nullable=False),
         Column("dokumenty", JSON, nullable=False),
+        Column("informace_o_druhe_fazi_uzsi_souteze_o_navrh", Text, nullable=True),
+        Column("vylouceni_ucastnici_kteri_podali_vybrany_navrh", JSON, nullable=True),
+        Column("kriteria_enviromentalnich_verejnych_zakazek", JSON, nullable=True),
+        Column("vylouceni_ucastnici_zadavaciho_postupu", JSON, nullable=True),
+        Column(
+            "evidencni_cislo_zadavaciho_postupu_ve_vestniku_verejnych_zakazek",
+            Text,
+            nullable=True,
+        ),
     ),
     Table(
         "system_kvalifikace",
