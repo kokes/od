@@ -14,7 +14,6 @@ START_YEAR, START_MONTH = 2024, 2
 
 
 # TODO(PR):
-# - zpracovat vsechny mesice
 # - rozdelit VZ tabulku na vic tabulek (jsou tam obrovsky JSONB sloupce)
 # - opravit db sloupce, at nemaj tak dlouhy nazvy - v pg je to problem
 
