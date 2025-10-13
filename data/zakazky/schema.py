@@ -2,6 +2,7 @@ from sqlalchemy import Column, MetaData, Table
 from sqlalchemy.sql.sqltypes import (
     Boolean,
     Date,
+    JSON,
     DateTime,
     Integer,
     Numeric,
@@ -18,7 +19,7 @@ schema = [
         Column("casova_znacka", DateTime, nullable=False),
         Column("identifikator_NIPEZ", Text, nullable=False, index=True),
         Column("identifikator_v_elektronickem_nastroji", Text, nullable=True),
-        Column("identifikatory_v_elektronickem_nastroji", Text, nullable=False),
+        Column("identifikatory_v_elektronickem_nastroji", JSON, nullable=False),
         Column(
             "interniIdentifikatorVerejneZakazkyPridelenyZadavatelem",
             Text,
@@ -44,10 +45,10 @@ schema = [
             nullable=True,
         ),
         Column("druh_verejne_zakazky", Text, nullable=True),
-        Column("vedlejsi_druhy_verejne_zakazky", Text, nullable=False),
+        Column("vedlejsi_druhy_verejne_zakazky", JSON, nullable=False),
         Column("rezim_verejne_zakazky", Text, nullable=False),
         Column("rezim_dle_volby_zadavatele", Text, nullable=True),
-        Column("predmet", Text, nullable=False),
+        Column("predmet", JSON, nullable=False),
         Column(
             "oduvodneni_nerozdeleni_nadlimitni_verejne_zakazky_na_casti",
             Text,
@@ -56,8 +57,9 @@ schema = [
         Column(
             "typ_verejne_zakazky_dle_vyse_predpokladane_hodnoty", Text, nullable=False
         ),
-        Column("hodnoty_koncese", Text, nullable=False),
-        Column("casti_verejne_zakazky", Text, nullable=False),
+        Column("hodnoty_koncese", JSON, nullable=False),
+        # TODO: splitni tohle do zvlast tabulky
+        Column("casti_verejne_zakazky", JSON, nullable=False),
         Column("zadavaci_postupy", Text, nullable=False),
     )
     # Table(
