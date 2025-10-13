@@ -6,6 +6,7 @@ import os
 import logging
 from contextlib import contextmanager
 from urllib.request import Request, urlopen
+import urllib.error
 
 
 CACHE_DIR = "cache"
@@ -15,7 +16,7 @@ START_YEAR, START_MONTH = 2024, 2
 # TODO(PR):
 # - zpracovat vsechny mesice
 # - rozdelit VZ tabulku na vic tabulek (jsou tam obrovsky JSONB sloupce)
-# - opravit db sloupce, at nemaj tak dlouhy nazvy
+# - opravit db sloupce, at nemaj tak dlouhy nazvy - v pg je to problem
 
 
 @contextmanager
@@ -46,35 +47,47 @@ def main(outdir: str, partial: bool = False):
     with open(os.path.join(cdir, "mapping.json"), encoding="utf-8") as f:
         mp = json.load(f)
 
-    for ds, mapping in mp.items():
+    for _, mapping in mp.items():
         base_url = mapping["base_url"]
         key = mapping["key"]
         header = mapping["srcheader"]
+        sheader = set(header)
         dbheader = mapping["dbheader"]
 
         tdir = os.path.join(outdir, key)
         os.makedirs(tdir, exist_ok=True)
 
-        for idx in range(0, 1):
+        for idx in range(0, 100 if not partial else 1):
             year = START_YEAR + (START_MONTH + idx - 1) // 12
             month = (START_MONTH + idx - 1) % 12 + 1
             URL = base_url.format(year=year, month=month)
             logging.info("Nahravam %s", URL)
 
             fn = os.path.join(tdir, os.path.splitext(os.path.basename(URL))[0] + ".csv")
-            with read_url(URL) as f, open(fn, "wt", encoding="utf-8") as fw:
-                cw = csv.DictWriter(fw, fieldnames=dbheader)
-                cw.writeheader()
-                data = json.load(f)
-                for rel in data["data"]:
-                    el = rel[key]
-                    assert list(el.keys()) == header, el.keys()
-                    row = {dk: el[sk] for sk, dk in zip(header, dbheader)}
+            # break in case of 404
+            try:
+                with read_url(URL) as f, open(fn, "wt", encoding="utf-8") as fw:
+                    cw = csv.DictWriter(fw, fieldnames=dbheader)
+                    cw.writeheader()
+                    data = json.load(f)
+                    # VZ 08-2025 ma najednou klic Data :shrug:
+                    for rel in data.get("data", data.get("Data", [])):
+                        el = rel[key]
+                        # neni v datech zadny sloupec navic (ale muze jich byt mene)
+                        assert (set(el.keys()) - sheader) == set(), (
+                            set(el.keys()) ^ sheader
+                        )
+                        row = {dk: el.get(sk) for sk, dk in zip(header, dbheader)}
 
-                    for k, v in row.items():
-                        if isinstance(v, (list, dict)):
-                            row[k] = json.dumps(v, ensure_ascii=False)
-                    cw.writerow(row)
+                        for k, v in row.items():
+                            if isinstance(v, (list, dict)):
+                                row[k] = json.dumps(v, ensure_ascii=False)
+                        cw.writerow(row)
+            except urllib.error.HTTPError as e:
+                if e.code != 404:
+                    raise
+                logging.info("Chybi data pro %04d-%02d, koncim", year, month)
+                break
 
 
 if __name__ == "__main__":

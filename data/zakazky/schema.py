@@ -29,18 +29,19 @@ schema = [
         Column("predpokladana_hodnota_bez_DPH_v_CZK", Numeric(16, 2), nullable=True),
         Column("predpokladana_hodnota_bez_DPH", Numeric(16, 2), nullable=True),
         Column("predpokladana_hodnota_bez_DPH_mena", Text, nullable=True),
+        Column("predpokladana_hodnota_bude_uverejnena", Boolean, nullable=False),
         Column(
-            "predpokladana_hodnota_vsech_verejnych_zakazek_ktere_mohou_byt_zadany_na_zaklade_ramcove_dohody_bez_DPH_v_CZK",
+            "predp_hodnota_vz__ramcove_dohody_bez_DPH_v_CZK",
             Numeric(16, 2),
             nullable=True,
         ),
         Column(
-            "predpokladana_hodnota_vsech_verejnych_zakazek_ktere_mohou_byt_zadany_na_zaklade_ramcove_dohody_bez_DPH",
+            "predp_hodnota_vz__ramcove_dohody_bez_DPH",
             Numeric(16, 2),
             nullable=True,
         ),
         Column(
-            "predpokladana_hodnota_vsech_verejnych_zakazek_ktere_mohou_byt_zadany_na_zaklade_ramcove_dohody_bez_DPH_mena",
+            "predp_hodnota_vz__ramcove_dohody_bez_DPH_mena",
             Text,
             nullable=True,
         ),
