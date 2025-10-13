@@ -19,6 +19,8 @@ def warninger(message, category, filename, lineno, line=None):
 
 warnings.formatwarning = warninger
 
+csv.field_size_limit(2**20)
+
 
 def main(
     *,

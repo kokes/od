@@ -52,7 +52,8 @@ def main(outdir: str, partial: bool = False):
         header = mapping["srcheader"]
         dbheader = mapping["dbheader"]
 
-        os.makedirs(os.path.join(outdir, ds), exist_ok=True)
+        tdir = os.path.join(outdir, key)
+        os.makedirs(tdir, exist_ok=True)
 
         for idx in range(0, 1):
             year = START_YEAR + (START_MONTH + idx - 1) // 12
@@ -60,9 +61,7 @@ def main(outdir: str, partial: bool = False):
             URL = base_url.format(year=year, month=month)
             logging.info("Nahravam %s", URL)
 
-            fn = os.path.join(
-                outdir, ds, os.path.splitext(os.path.basename(URL))[0] + ".csv"
-            )
+            fn = os.path.join(tdir, os.path.splitext(os.path.basename(URL))[0] + ".csv")
             with read_url(URL) as f, open(fn, "wt", encoding="utf-8") as fw:
                 cw = csv.DictWriter(fw, fieldnames=dbheader)
                 cw.writeheader()
