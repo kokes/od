@@ -222,6 +222,28 @@ schema = [
         Column("nestandardni_stavy", JSON, nullable=False),
         Column("dokumenty", JSON, nullable=False),
     ),
+    Table(
+        "system_kvalifikace",
+        meta,
+        Column("casova_znacka", DateTime, nullable=False),
+        Column("identifikator_NIPEZ", Text, nullable=False, index=True),
+        Column("identifikator_v_elektronickem_nastroji", Text, nullable=True),
+        Column("identifikatory_v_elektronickem_nastroji", JSON, nullable=False),
+        Column("datum_zavedeni_systemu_kvalifikace", Date, nullable=False),
+        Column("nazev_systemu_kvalifikace", Text, nullable=False),
+        Column("predmet", JSON, nullable=False),
+        Column("platba_za_zarazeni_do_systemu_kvalifikace", Boolean, nullable=False),
+        Column("vyse_platby_bez_DPH", Numeric(16, 2), nullable=True),
+        Column("vyse_platby_s_DPH", Numeric(16, 2), nullable=True),
+        Column("mena", Text, nullable=True),
+        Column("kvalifikace", JSON, nullable=False),
+        Column("zadavatel_systemu_kvalifikace", JSON, nullable=False),
+        Column("kategorie_systemu_kvalifikace", Text, nullable=False),
+        Column("dodavatele_zarazeni_do_systemu_kvalifikace", JSON, nullable=False),
+        Column("lhuty", JSON, nullable=False),
+        Column("doba_trvani", Text, nullable=False),
+        Column("uverejnovaci_formulare", JSON, nullable=False),
+    ),
 ]
 
 # -- TODO: foreign keys? composite primary keys?
