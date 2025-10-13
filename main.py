@@ -19,7 +19,7 @@ def warninger(message, category, filename, lineno, line=None):
 
 warnings.formatwarning = warninger
 
-csv.field_size_limit(2**20)
+csv.field_size_limit(2**24)  # velky fieldy v zakazkach
 
 
 def main(
@@ -161,9 +161,11 @@ def main(
                 logging.info("Nahravam %s", filename)
                 # z nejakyho zahadnyho duvodu to muze obcas detekovat quote
                 # jako neco jineho nez uvozovku
+                # max_line_size je kvuli embedovanym tabulkam v zakazkach - casem to snad
+                # nebude nutny, az to splitnem
                 cur.execute(
                     f"INSERT INTO {full_table_name} SELECT * FROM "
-                    f"read_csv('{filename}', quote='\"')"
+                    f"read_csv('{filename}', quote='\"', sep=',', max_line_size=100000000)"
                 )
         elif engine.name == "sqlite":
             conn = engine.raw_connection()

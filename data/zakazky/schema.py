@@ -28,7 +28,7 @@ schema = [
         Column("predpokladana_hodnota_bez_DPH_v_CZK", Numeric(16, 2), nullable=True),
         Column("predpokladana_hodnota_bez_DPH", Numeric(16, 2), nullable=True),
         Column("predpokladana_hodnota_bez_DPH_mena", Text, nullable=True),
-        Column("predpokladana_hodnota_bude_uverejnena", Boolean, nullable=False),
+        Column("predpokladana_hodnota_bude_uverejnena", Boolean, nullable=True),
         Column(
             "predp_hodnota_vz__ramcove_dohody_bez_DPH_v_CZK",
             Numeric(16, 2),
@@ -46,7 +46,7 @@ schema = [
         ),
         Column("druh_verejne_zakazky", Text, nullable=True),
         Column("vedlejsi_druhy_verejne_zakazky", JSON, nullable=False),
-        Column("rezim_verejne_zakazky", Text, nullable=False),
+        Column("rezim_verejne_zakazky", Text, nullable=True),
         Column("rezim_dle_volby_zadavatele", Text, nullable=True),
         Column("predmet", JSON, nullable=False),
         Column(
@@ -55,7 +55,7 @@ schema = [
             nullable=True,
         ),
         Column(
-            "typ_verejne_zakazky_dle_vyse_predpokladane_hodnoty", Text, nullable=False
+            "typ_verejne_zakazky_dle_vyse_predpokladane_hodnoty", Text, nullable=True
         ),
         Column("hodnoty_koncese", JSON, nullable=False),
         # TODO: splitni tohle do zvlast tabulky
@@ -79,7 +79,7 @@ schema = [
         Column(
             "predpokladana_hodnota_dynamickeho_nakupniho_systemu_bez_DPH_v_CZK",
             Numeric(16, 2),
-            nullable=False,
+            nullable=True,
         ),
         Column(
             "predpokladana_hodnota_dynamickeho_nakupniho_systemu_bez_DPH",
@@ -91,10 +91,10 @@ schema = [
             Text,
             nullable=True,
         ),
-        Column("predpokladana_hodnota_bude_uverejnena", Boolean, nullable=False),
+        Column("predpokladana_hodnota_bude_uverejnena", Boolean, nullable=True),
         Column("url", Text, nullable=True),
         Column("druh_verejne_zakazky", Text, nullable=False),
-        Column("rezim_verejne_zakazky", Text, nullable=False),
+        Column("rezim_verejne_zakazky", Text, nullable=True),
         Column("rezim_dle_volby_zadavatele", Text, nullable=True),
         Column(
             "zadavaci_postup_pro_zavedeni_dynamickeho_nakupniho_systemu",
@@ -104,7 +104,7 @@ schema = [
         Column(
             "predmet_verejne_zakazky_zadavany_v_dynamickem_nakupnim_systemu",
             JSON,
-            nullable=False,
+            nullable=True,
         ),
         Column("kriteria_kvalifikace", JSON, nullable=True),
         Column(
@@ -128,9 +128,9 @@ schema = [
         Column(
             "informace_o_otevirani_podani_v_zadavacim_postupu_pro_zavedeni_dynamickeho_nakupniho_systemu",
             Text,
-            nullable=False,
+            nullable=True,
         ),
-        Column("predmet", JSON, nullable=False),
+        Column("predmet", JSON, nullable=True),
         Column(
             "evidencni_cislo_zadavaciho_postupu_ve_vestniku_verejnych_zakazek",
             Text,
@@ -149,7 +149,7 @@ schema = [
             Text,
             nullable=True,
         ),
-        Column("identifikator_CELEX_pravniho_predpisu_EU", Text, nullable=False),
+        Column("identifikator_CELEX_pravniho_predpisu_EU", Text, nullable=True),
         Column("zadavatel_zadavaciho_postupu", JSON, nullable=False),
         Column("evidencni_cislo_ve_VVZ", Text, nullable=True),
         Column("nazev_souteze_o_navrh", Text, nullable=False),
@@ -159,12 +159,12 @@ schema = [
         Column(
             "pravni_predpis_EU_na_zaklade_nehoz_probiha_zadavaci_postup",
             Text,
-            nullable=False,
+            nullable=True,
         ),
-        Column("pravni_predpis_EU", Text, nullable=False),
+        Column("pravni_predpis_EU", Text, nullable=True),
         Column("datum_zahajeni_zadavaciho_postupu", Date, nullable=True),
         Column("datum_ukonceni_zadavaciho_postupu", Date, nullable=True),
-        Column("evidence_vysledku_zadavaciho_postupu", JSON, nullable=True),
+        Column("evidence_vysledku_zadavaciho_postupu", Text, nullable=True),
         Column("udeleni_cen_odmen_nebo_jinych_plateb", Boolean, nullable=True),
         Column(
             "predpokladana_vyse_cen_odmen_nebo_jinych_plateb",
@@ -194,12 +194,10 @@ schema = [
         Column(
             "soutez_o_navrh_a_navazujici_verejna_zakazka_jsou_alespon_castecne_financovany_z_prostredku_Evropske_unie",
             Boolean,
-            nullable=False,
+            nullable=True,
         ),
         Column("ucastnici_zadavaciho_postupu", JSON, nullable=False),
-        Column(
-            "ucastnici_jimz_zanikla_ucast_v_zadavacim_postupu", JSON, nullable=False
-        ),
+        Column("ucastnici_jimz_zanikla_ucast_v_zadavacim_postupu", JSON, nullable=True),
         Column("vysledek_zadavaciho_postupu", JSON, nullable=True),
         Column("podane_soutezni_navrhy", JSON, nullable=False),
         Column("pravidla_pro_hodnoceni_souteznich_navrhu", Text, nullable=True),
@@ -218,15 +216,15 @@ schema = [
         Column("zadavani_inovaci", Text, nullable=False),
         Column("socialne_odpovedne_zadavani", Text, nullable=False),
         Column("environmentalni_zadavani", Text, nullable=False),
-        Column("enviromentalni_zadavani_podle_kriterii", JSON, nullable=False),
+        Column("enviromentalni_zadavani_podle_kriterii", JSON, nullable=True),
         Column("popis_odpovedneho_zadavani", Text, nullable=False),
         Column("informace_o_danovych_pravnich_predpisech", Text, nullable=False),
         Column("informace_o_pracovnepravnich_predpisech", Text, nullable=False),
         Column(
             "informace_o_predpisech_v_oblasti_zivotniho_prostredi", Text, nullable=False
         ),
-        Column("nestandardni_stavy", JSON, nullable=False),
-        Column("dokumenty", JSON, nullable=False),
+        Column("nestandardni_stavy", JSON, nullable=True),
+        Column("dokumenty", JSON, nullable=True),
         Column("informace_o_druhe_fazi_uzsi_souteze_o_navrh", Text, nullable=True),
         Column("vylouceni_ucastnici_kteri_podali_vybrany_navrh", JSON, nullable=True),
         Column("kriteria_enviromentalnich_verejnych_zakazek", JSON, nullable=True),
