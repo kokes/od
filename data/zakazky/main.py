@@ -1,150 +1,94 @@
-# - http://www.isvz.cz/ISVZ/Podpora/ISVZ_open_data_vz.aspx
-# - http://www.isvz.cz/ISVZ/MetodickaPodpora/Napovedaopendata.pdf
-
 import csv
-import datetime as dt
-import gzip
+import shutil
+import hashlib
 import json
 import os
-import re
-import ssl
+import logging
 from contextlib import contextmanager
-from datetime import datetime
 from urllib.request import Request, urlopen
-
-from lxml.etree import iterparse
-
-# ISVZ nema duveryhodny certy
-ssl._create_default_https_context = ssl._create_unverified_context
+import urllib.error
 
 
-dtpt = re.compile(r"^\d{1,2}\.\d{1,2}\.\d{4}$")
-isodate = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
-isodatetime = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$")
+CACHE_DIR = "cache"
+START_YEAR, START_MONTH = 2024, 2
 
 
-def fix_date(s):
-    if s is None or len(s) == 0:
-        return None
-
-    if isodate.match(s) is not None:
-        return dt.date.fromisoformat(s).isoformat()
-    if isodatetime.match(s) is not None:
-        return dt.datetime.fromisoformat(s).isoformat()
-
-    if dtpt.match(s) is not None:
-        d, m, y = map(int, s.split("."))
-        return f"{y}-{m:02d}-{d:02d}"
-    else:
-        return datetime.strptime(s, "%d.%m.%Y %H:%M:%S").isoformat()
-
-
-# '000 23 234' - takhle se obcas zadavaj ICO
-def fix_ico(s):
-    if s is None or len(s) == 0:
-        return None
-    elif s.isdigit():
-        rv = int(s)
-    elif s.startswith("CZ") and s[2:].isdigit():  # CZ00000205
-        rv = int(s[2:])
-    else:
-        try:
-            rv = int(s.replace(" ", "").replace("\xa0", ""))
-        except ValueError:
-            return None
-
-    if rv < 100 * 10**6:
-        return rv
-    else:
-        return None
+# TODO(PR):
+# - rozdelit VZ tabulku na vic tabulek (jsou tam obrovsky JSONB sloupce)
+# - opravit db sloupce, at nemaj tak dlouhy nazvy - v pg je to problem
 
 
 @contextmanager
 def read_url(url):
+    if not os.path.exists(CACHE_DIR):
+        os.mkdir(CACHE_DIR)
+
+    url_hash = hashlib.sha256(url.encode("utf-8")).hexdigest()
+    cache_filename = os.path.join(CACHE_DIR, f"{url_hash}")
+
+    if os.path.exists(cache_filename):
+        print(f"Nahravam z cache {url}")
+        with open(cache_filename, "rb") as cached_file:
+            yield cached_file
+        return
+
     request = Request(url, headers={"Accept-Encoding": "gzip"})
     with urlopen(request, timeout=60) as r:
-        assert r.headers.get("Content-Encoding") == "gzip"
-        yield gzip.open(r)
+        with open(cache_filename, "wb") as cache_file:
+            shutil.copyfileobj(r, cache_file)
 
-
-root_url = "https://isvz.nipez.cz/sites/default/files/content/opendata-predchozi/"
-url_sources = {
-    "zzvz": (
-        root_url + "ODZZVZ/{}.xml",
-        list(range(2016, 2024 + 1)),
-    ),
-    "vvz": (
-        root_url + "ODVVZ/{}.xml",
-        list(range(2006, 2016 + 1)),
-    ),
-    "etrziste": (
-        root_url + "ODET/{}.xml",
-        list(range(2012, 2017 + 1)),
-    ),
-}
+        with read_url(url) as cached_file:
+            yield cached_file
 
 
 def main(outdir: str, partial: bool = False):
     cdir = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(cdir, "mapping.json"), encoding="utf-8") as f:
-        allmaps = json.load(f)
+        mp = json.load(f)
 
-    assert list(allmaps.keys()) == ["etrziste", "vvz", "zzvz"]
+    for _, mapping in mp.items():
+        base_url = mapping["base_url"]
+        key = mapping["key"]
+        header = mapping["srcheader"]
+        sheader = set(header)
+        dbheader = mapping["dbheader"]
 
-    for ds, mapping in allmaps.items():
-        filehandles, csvwriters = {}, {}
+        tdir = os.path.join(outdir, key)
+        os.makedirs(tdir, exist_ok=True)
 
-        for v in mapping.values():
-            full_ds = f"{ds}_{v['table']}"
-            tfn = os.path.join(outdir, f"{full_ds}.csv")
-            filehandles[full_ds] = open(tfn, "w", encoding="utf8")
-            csvwriters[full_ds] = csv.DictWriter(
-                filehandles[full_ds],
-                fieldnames=v["header"],
-                lineterminator="\n",
-            )
-            csvwriters[full_ds].writeheader()
+        for idx in range(0, 100 if not partial else 1):
+            year = START_YEAR + (START_MONTH + idx - 1) // 12
+            month = (START_MONTH + idx - 1) % 12 + 1
+            URL = base_url.format(year=year, month=month)
+            logging.info("Nahravam %s", URL)
 
-        base_url, years = url_sources[ds]
+            fn = os.path.join(tdir, os.path.splitext(os.path.basename(URL))[0] + ".csv")
+            # break in case of 404
+            try:
+                with read_url(URL) as f, open(fn, "wt", encoding="utf-8") as fw:
+                    cw = csv.DictWriter(fw, fieldnames=dbheader)
+                    cw.writeheader()
+                    data = json.load(f)
+                    # VZ 08-2025 ma najednou klic Data :shrug:
+                    for rel in data.get("data", data.get("Data", [])):
+                        el = {k.lower(): v for k, v in rel[key].items()}
+                        # neni v datech zadny sloupec navic (ale muze jich byt mene)
+                        if (set(el.keys()) - sheader) != set():
+                            breakpoint()
+                        assert (set(el.keys()) - sheader) == set(), (
+                            set(el.keys()) - sheader
+                        )
+                        row = {dk: el.get(sk) for sk, dk in zip(header, dbheader)}
 
-        for year in years:
-            if partial and year != years[-1]:
-                continue
-            print(ds, year)
-            url = base_url.format(year)
-            with read_url(url) as resp:
-                for action, element in iterparse(resp):
-                    assert action == "end"
-                    if element.tag not in mapping:
-                        continue
-                    mp = mapping[element.tag]
-                    full_ds = f"{ds}_{mp['table']}"
-
-                    row = {
-                        el.tag: el.text.strip() if el.text else None
-                        for el in element.getchildren()
-                    }
-
-                    for k, v in row.items():
-                        if k in mp.get("dates", []):
-                            row[k] = fix_date(v)
-                        if v and k in mp.get("numeric", []):
-                            row[k] = v.replace(",", ".")
-                        if "ICO" in k:
-                            ico = fix_ico(v)
-                            if ico is None and v is not None:
-                                print("nevalidni ico", v, f"({full_ds}, {url})")
-                            row[k] = ico
-                        if k == "OteviraniNabidekDatumCas" and v and "-" not in v:
-                            print("nevalidni datum/cas", v)
-                            row[k] = None
-
-                    csvwriters[full_ds].writerow(row)
-
-                    element.clear()
-
-        for fh in filehandles.values():
-            fh.close()
+                        for k, v in row.items():
+                            if isinstance(v, (list, dict)):
+                                row[k] = json.dumps(v, ensure_ascii=False)
+                        cw.writerow(row)
+            except urllib.error.HTTPError as e:
+                if e.code != 404:
+                    raise
+                logging.info("Chybi data pro %04d-%02d, koncim", year, month)
+                break
 
 
 if __name__ == "__main__":
