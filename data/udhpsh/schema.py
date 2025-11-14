@@ -22,7 +22,7 @@ schema = [
         Column("jmeno_prijmeni", Text, nullable=False),
         Column("titul_pred", Text, nullable=True),
         Column("titul_za", Text, nullable=True),
-        Column("datum_narozeni", Date, nullable=False),
+        Column("datum_narozeni", Date, nullable=True),
         Column("adresa_mesto", Text, nullable=True),
     ),
     Table(
