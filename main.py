@@ -168,7 +168,7 @@ def main(
                 # jako neco jineho nez uvozovku
                 q = (
                     f"INSERT INTO {full_table_name} SELECT * FROM "
-                    f"read_csv('{filename}', quote='\"')"
+                    f"read_csv('{filename}', quote='\"', escape='\"')"
                 )
                 if table.name == "subjekty":
                     q += " ON CONFLICT(ico) DO NOTHING"
