@@ -72,6 +72,10 @@ def main(
         t = time.time()
         logging.info("Nahravam %s do %s", table.name, module_name)
         files = table_loads[(module_name, table.name)]
+        # zacni nejnovejsima (bude to dobre pro deduplikaci)
+        files.sort(
+            key=lambda x: int(x.rpartition(".")[0].rpartition("-")[-1]), reverse=True
+        )
         fkeys = [j for j in table.constraints if isinstance(j, ForeignKeyConstraint)]
 
         # základní kontrola integrity (oflagovat?)
@@ -159,10 +163,14 @@ def main(
                 logging.info("Nahravam %s", filename)
                 # z nejakyho zahadnyho duvodu to muze obcas detekovat quote
                 # jako neco jineho nez uvozovku
-                cur.execute(
+                q = (
                     f"INSERT INTO {full_table_name} SELECT * FROM "
                     f"read_csv('{filename}', quote='\"')"
                 )
+                if table.name == "subjekty":
+                    q += " ON CONFLICT(ico) DO NOTHING"
+
+                cur.execute(q)
         elif engine.name == "sqlite":
             conn = engine.raw_connection()
             conn.execute(f"DELETE FROM {table.name}")  # truncate v sqlite neni
