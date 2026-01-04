@@ -72,10 +72,13 @@ def main(
         t = time.time()
         logging.info("Nahravam %s do %s", table.name, module_name)
         files = table_loads[(module_name, table.name)]
-        # zacni nejnovejsima (bude to dobre pro deduplikaci)
-        files.sort(
-            key=lambda x: int(x.rpartition(".")[0].rpartition("-")[-1]), reverse=True
-        )
+
+        if module_name == "justice":
+            # zacni nejnovejsima (bude to dobre pro deduplikaci)
+            files.sort(
+                key=lambda x: int(x.rpartition(".")[0].rpartition("-")[-1]),
+                reverse=True,
+            )
         fkeys = [j for j in table.constraints if isinstance(j, ForeignKeyConstraint)]
 
         # základní kontrola integrity (oflagovat?)
