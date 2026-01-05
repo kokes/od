@@ -149,6 +149,8 @@ def main(
             conn = engine.raw_connection()
             cur = conn.cursor()
             cur.execute(f"TRUNCATE {full_table_name} CASCADE")  # TODO: cascade yolo
+            # TODO: pg neumi `ON CONFLICT(ico) DO NOTHING` v `COPY`, takze nam nebude fungovat
+            # historicky load justice
             for filename in files:
                 logging.info("Nahravam %s", filename)
                 with open(filename, "rt", encoding="utf-8") as f:
@@ -170,7 +172,7 @@ def main(
                     f"INSERT INTO {full_table_name} SELECT * FROM "
                     f"read_csv('{filename}', quote='\"', escape='\"')"
                 )
-                if table.name == "subjekty":
+                if table.schema == "justice" and table.name == "subjekty":
                     q += " ON CONFLICT(ico) DO NOTHING"
 
                 cur.execute(q)
@@ -180,6 +182,8 @@ def main(
 
             ph = ", ".join(["?"] * len(table.columns))
             query = f"INSERT INTO {table.name} VALUES({ph})"
+            if table.name == "justice_subjekty":
+                query += " ON CONFLICT(ico) DO NOTHING"
             bools = [isinstance(j.type, Boolean) for j in table.columns]
             for filename in files:
                 logging.info("Nahravam %s", filename)
