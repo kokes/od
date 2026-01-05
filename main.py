@@ -149,8 +149,8 @@ def main(
             conn = engine.raw_connection()
             cur = conn.cursor()
             cur.execute(f"TRUNCATE {full_table_name} CASCADE")  # TODO: cascade yolo
-            # TODO: pg neumi `ON CONFLICT(ico) DO NOTHING` v `COPY`, takze nam nebude fungovat
-            # historicky load justice
+            # TODO: pg neumi `ON CONFLICT(ico) DO NOTHING` v `COPY`,
+            # takze nam nebude fungovat historicky load justice
             for filename in files:
                 logging.info("Nahravam %s", filename)
                 with open(filename, "rt", encoding="utf-8") as f:
