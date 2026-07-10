@@ -15,8 +15,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 HTTP_TIMEOUT = 60
 
 # TODO: mozna nebude treba, mozna budou URL nemenne
-DATASETS_GRAPHQL_QUERY = (
-    """
+DATASETS_GRAPHQL_QUERY = """
 {
   datasets(limit: 100, filters: {isPartOf: "%s"}) {
     data {
@@ -29,9 +28,7 @@ DATASETS_GRAPHQL_QUERY = (
     }
   }
 }
-"""
-    % "https://data.gov.cz/zdroj/datové-sady/00006947/eff92c79870f2dba48ac52c3f01635c0"
-)
+""" % "https://data.gov.cz/zdroj/datové-sady/00006947/eff92c79870f2dba48ac52c3f01635c0"
 
 
 DATASETS = ["prijemce", "dotace", "rozhodnuti", "rozpoctoveobdobi"]

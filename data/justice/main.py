@@ -235,9 +235,11 @@ def zpracuj_ds(url, schemas, outdir, partial, autogen, icos):
                         row = extrahuj(podudaj_raw, schema)
                         row = uprav_data(row, schemasd[podudaj_typ])
                         row = {
-                            k: json.dumps(v, ensure_ascii=False)
-                            if isinstance(v, dict)
-                            else v
+                            k: (
+                                json.dumps(v, ensure_ascii=False)
+                                if isinstance(v, dict)
+                                else v
+                            )
                             for k, v in row.items()
                         }
                         row["ico"] = ico
