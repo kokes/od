@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, JSON, MetaData, Table
+from sqlalchemy import JSON, Column, ForeignKey, MetaData, Table
 from sqlalchemy.sql.sqltypes import Boolean, Date, Integer, Numeric, Text
 
 meta = MetaData()
