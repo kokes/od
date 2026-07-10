@@ -462,13 +462,17 @@
       "ZVLASTNI_INSOLVENCNI_SPRAVCE",
       "ZVLASTNI_SPRAVCE",
       "STATUTAR_ZRIZOVATELE_ZASTOUPENI",
-      "ZASTUPCE_SPRAVCE"
+      "ZASTUPCE_SPRAVCE",
+      "OBHOSPODAROVATEL_ANGAZMA",
+      "OBHOSPODAROVATEL_SPOLECNIK",
+      "SPOLUVLASTNIK_AKCIE"
     ],
     "soubor": "angazovane_osoby",
     "schema": {
       "datum_zapis": "zapisDatum",
       "datum_vymaz": "vymazDatum",
       "udaj_typ": "udajTyp/nazev",
+      "text_za_osobu": "hodnotaUdaje/textZaOsobu/value",
       "funkce": "funkce",
       "funkce_od": "funkceOd",
       "clenstvi_od": "clenstviOd",

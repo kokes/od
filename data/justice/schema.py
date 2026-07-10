@@ -254,6 +254,7 @@ schema = [
         Column("datum_zapis", Date, nullable=False),
         Column("datum_vymaz", Date, nullable=True),
         Column("udaj_typ", Text, nullable=False),
+        Column("text_za_osobu", Text, nullable=True),
         Column("funkce", Text, nullable=True),
         Column("funkce_od", Date, nullable=True),
         Column("clenstvi_od", Date, nullable=True),
