@@ -93,10 +93,12 @@ def remote_data(partial):
 def main(outdir: str, partial: bool = False):
     with open(os.path.join(outdir, "firmy.csv"), "w", encoding="utf8") as ud, open(
         os.path.join(outdir, "fosoby.csv"), "w", encoding="utf8"
-    ) as fo, open(os.path.join(outdir, "posoby.csv"), "w", encoding="utf8") as po:
+    ) as fo, open(os.path.join(outdir, "posoby.csv"), "w", encoding="utf8"
+    ) as po, open(os.path.join(outdir,"cinnosti.csv"),"w",encoding="utf-8") as co:
         udc = csv.writer(ud, lineterminator="\n")
         foc = csv.writer(fo, lineterminator="\n")
         poc = csv.writer(po, lineterminator="\n")
+        coc = csv.writer(co,lineterminator="\n")
 
         cols = [
             "zdroj",
@@ -135,6 +137,14 @@ def main(outdir: str, partial: bool = False):
                 "obchodni_firma",
                 "ico_organ",
                 "adresa",
+            ]
+        )
+
+        coc.writerow(
+            [
+                "ico",
+                "typ_cinnosti",
+                "text",
             ]
         )
 
@@ -205,6 +215,12 @@ def main(outdir: str, partial: bool = False):
                 for j in org["posoby"]:
                     poc.writerow(j)
 
+            for txt in vypis.iterfind(
+                ".//are:Cinnosti/*/are:Text", namespaces=et.nsmap
+            ):
+                text = txt.text.strip()
+                ctype = txt.getparent().tag.rpartition("}")[-1]
+                coc.writerow([ico, ctype, text])
 
 if __name__ == "__main__":
     main(".")
