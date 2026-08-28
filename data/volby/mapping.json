@@ -324,6 +324,10 @@
                 "https://www.volby.cz/opendata/kv2022/KV2022ciselniky20230326_csv.zip",
                 "https://www.volby.cz/opendata/kv2022/KV2022_data_20230326_csv.zip",
                 "https://www.volby.cz/pls/kv2022/vysledky_okrsky?datumvoleb=20220923"
+            ],
+            "2026-10-09": [
+                "https://volby.gov.cz/opendata/kv2026/KV2026reg20260826_csv.zip",
+                "https://volby.gov.cz/opendata/kv2026/KV2026ciselniky20260826_csv.zip"
             ]
         },
         "ds": {
