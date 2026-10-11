@@ -205,7 +205,8 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                             el["DATUM"] = el["DATUMVOLEB"]
                             del el["DATUMVOLEB"]
                         elif "DATUMVOLEB" in cw.fieldnames and not el.get("DATUMVOLEB"):
-                            # KV2026+ kvt3 nemaji DATUMVOLEB; v DB jde o sloupec platnostk
+                            # KV2026+ kvt3 nemaji DATUMVOLEB;
+                            # v DB jde o sloupec platnostk
                             el["DATUMVOLEB"] = el["DATUM"]
 
                         if (
