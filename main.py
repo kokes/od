@@ -9,8 +9,34 @@ import warnings
 from collections import defaultdict
 from importlib import import_module
 
-from sqlalchemy import Boolean, Table, create_engine, text
+from sqlalchemy import Boolean, Date, DateTime, Table, create_engine, text
 from sqlalchemy.schema import AddConstraint, DropConstraint, ForeignKeyConstraint
+from sqlalchemy.sql.sqltypes import Float, Integer, Numeric, SmallInteger, String, Text
+
+
+def duckdb_column_type(column):
+    col_type = column.type
+    if isinstance(col_type, Boolean):
+        return "BOOLEAN"
+    if isinstance(col_type, (SmallInteger, Integer)):
+        return "BIGINT"
+    if isinstance(col_type, (Float, Numeric)):
+        return "DOUBLE"
+    if isinstance(col_type, Date):
+        return "DATE"
+    if isinstance(col_type, DateTime):
+        return "TIMESTAMP"
+    if isinstance(col_type, (String, Text)):
+        return "VARCHAR"
+    return "VARCHAR"
+
+
+def duckdb_read_csv_columns(table):
+    pairs = []
+    for column in table.columns:
+        safe_name = column.name.replace("'", "''")
+        pairs.append(f"'{safe_name}': '{duckdb_column_type(column)}'")
+    return "{" + ", ".join(pairs) + "}"
 
 
 def warninger(message, category, filename, lineno, line=None):
@@ -122,7 +148,9 @@ def main(
         elif engine.name == "sqlite":
             table.name = f"{schema_prefix}{module_name}_{table.name}"
 
-        if drop_first:
+        # duckdb: create(checkfirst=True) neaktualizuje typy sloupcu, takze po
+        # zmene schema.py (treba ciselnik_hodnota Text) musime tabulku znovu vytvorit
+        if drop_first or engine.name == "duckdb":
             logging.info("Mazu tabulku %s", table.name)
             table.drop(engine, checkfirst=True)
         logging.info("Vytvarim tabulku %s", table.name)
@@ -161,21 +189,19 @@ def main(
         elif engine.name == "duckdb":
             full_table_name = f"{table.schema}.{table.name}"
             conn = engine.raw_connection()
-            cur = conn.cursor()
-            cur.execute(f"TRUNCATE {full_table_name} CASCADE")  # TODO: cascade yolo
+            csv_columns = duckdb_read_csv_columns(table)
             for filename in files:
-                # TODO(PR): logging u ostatnich enginu
                 logging.info("Nahravam %s", filename)
-                # z nejakyho zahadnyho duvodu to muze obcas detekovat quote
-                # jako neco jineho nez uvozovku
+                path = os.path.abspath(filename).replace("'", "''")
                 q = (
-                    f"INSERT INTO {full_table_name} SELECT * FROM "
-                    f"read_csv('{filename}', quote='\"', escape='\"')"
+                    f"INSERT INTO {full_table_name} SELECT * FROM read_csv("
+                    f"'{path}', header=true, auto_detect=false, quote='\"',"
+                    f" escape='\"', columns={csv_columns})"
                 )
                 if table.schema == "justice" and table.name == "subjekty":
                     q += " ON CONFLICT(ico) DO NOTHING"
-
-                cur.execute(q)
+                conn.execute(q)
+            conn.commit()
         elif engine.name == "sqlite":
             conn = engine.raw_connection()
             conn.execute(f"DELETE FROM {table.name}")  # truncate v sqlite neni
