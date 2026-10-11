@@ -192,7 +192,7 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                         # treba soud rozhodl o nejake zmene - tak pak muze byt datum
                         # uvedeno dvakrat
                         # 20181223 -> 2018-12-23
-                        if "DATUMVOLEB" in el:
+                        if "DATUMVOLEB" in el and el["DATUMVOLEB"] not in ("", None):
                             dv = el["DATUMVOLEB"]
                             assert dv.isdigit(), dv
                             assert len(dv) == 8, dv
@@ -204,6 +204,18 @@ def process_url(outdir, partial, fnmap, url: str, volby: str, datum: str):
                         if volby == "senat" and datum == "*" and "DATUMVOLEB" in el:
                             el["DATUM"] = el["DATUMVOLEB"]
                             del el["DATUMVOLEB"]
+                        elif "DATUMVOLEB" in cw.fieldnames and not el.get("DATUMVOLEB"):
+                            # KV2026+ kvt3 nemaji DATUMVOLEB; v DB jde o sloupec platnostk
+                            el["DATUMVOLEB"] = el["DATUM"]
+
+                        if (
+                            volby == "komunalni"
+                            and "KRAJ" in cw.fieldnames
+                            and not el.get("KRAJ")
+                            and el.get("OKRES")
+                        ):
+                            okres = int(el["OKRES"])
+                            el["KRAJ"] = str((okres // 100) * 100)
 
                         # data ke korespondencni volbe pro PSP 2025 (TODO: zpracovat?)
                         if "DOR_ODLOZ" in el:
