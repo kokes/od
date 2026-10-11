@@ -326,8 +326,9 @@
                 "https://www.volby.cz/pls/kv2022/vysledky_okrsky?datumvoleb=20220923"
             ],
             "2026-10-09": [
-                "https://volby.gov.cz/opendata/kv2026/KV2026reg20260826_csv.zip",
-                "https://volby.gov.cz/opendata/kv2026/KV2026ciselniky20260826_csv.zip"
+                "https://volby.gov.cz/opendata/kv2026/KV2026reg20261011_csv.zip",
+                "https://volby.gov.cz/opendata/kv2026/KV2026ciselniky20261011_csv.zip",
+                "https://volby.gov.cz/opendata/kv2026/KV2026_data_20261011_csv.zip"
             ]
         },
         "ds": {
@@ -416,7 +417,8 @@
                     "TYPVS"
                 ],
                 "vynechej": [
-                    "PLNYNAZEV"
+                    "PLNYNAZEV",
+                    "NAZEVPLNY"
                 ]
             },
             "obce": {
@@ -487,7 +489,9 @@
                     "COBVODU",
                     "VOL_SEZNAM",
                     "VYD_OBALKY",
+                    "VOL_PRUKAZ",
                     "ODEVZ_OBAL",
+                    "PLAT_LISTKY",
                     "PL_HL_CELK",
                     "POCET_VS",
                     "POC_VS_HL",
