@@ -100,7 +100,7 @@ schema = [
         Column("nuts", Text, nullable=True),  # kvuli zahranicnimu "okresu"
         Column("nazev", Text, nullable=False),
         Column("ciselnik_kod", Integer, nullable=True),
-        Column("ciselnik_hodnota", Integer, nullable=True),
+        Column("ciselnik_hodnota", Text, nullable=True),
         UniqueConstraint("datum", "num_nuts"),
     ),
     Table(
@@ -406,7 +406,7 @@ schema = [
         Column("nuts", Text, nullable=True),  # kvuli zahranicnimu "okresu"
         Column("nazev", Text, nullable=False),
         Column("ciselnik_kod", Integer, nullable=True),
-        Column("ciselnik_hodnota", Integer, nullable=True),
+        Column("ciselnik_hodnota", Text, nullable=True),
         UniqueConstraint("datum", "num_nuts"),
     ),
     Table(
@@ -675,12 +675,12 @@ schema = [
         Column("proc_k1", Numeric(5, 2), nullable=False),
         Column("uriz_pr_k1", Float, nullable=False),
         Column("zvolen_k1", SmallInteger, nullable=False),
-        Column("los_k1", SmallInteger, nullable=False),
+        Column("los_k1", SmallInteger, nullable=True),
         Column("hlasy_k2", Integer, nullable=False),
         Column("proc_k2", Numeric(5, 2), nullable=False),
         Column("uriz_pr_k2", Float, nullable=False),
         Column("zvolen_k2", SmallInteger, nullable=False),
-        Column("los_k2", SmallInteger, nullable=False),
+        Column("los_k2", SmallInteger, nullable=True),
         Column("nazev_vs", Text, nullable=True),
         UniqueConstraint("datum", "obvod", "ckand"),
     ),
