@@ -889,9 +889,9 @@
                 "https://www.volby.cz/pls/senat/vysledky_okrsky?datum_voleb=20220923"
             ],
             "2026-10-09": [
-                "https://volby.gov.cz/opendata/se2026/SE2026reg20261011_csv.zip",
-                "https://volby.gov.cz/opendata/se2026/SE2026ciselniky20261011_csv.zip",
-                "https://volby.gov.cz/opendata/se2026/SE2026data20261011_csv.zip"
+                "https://volby.gov.cz/opendata/se2026/SE2026reg20261017_csv.zip",
+                "https://volby.gov.cz/opendata/se2026/SE2026ciselniky20261017_csv.zip",
+                "https://volby.gov.cz/opendata/se2026/SE2026data20261017_csv.zip"
             ]
         },
         "ds": {
